@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "The Space previews on the Mac setup pages and in the Space setup wizard ask the core to resolve the draft only when it changes, not on every redraw."
+}
