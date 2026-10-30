@@ -1,0 +1,4 @@
+{
+  "category": "fixed",
+  "message": "Clicking a command palette row right after typing opens that row instead of doing nothing, and the arrow keys move the selection once the results for what was typed arrive."
+}
