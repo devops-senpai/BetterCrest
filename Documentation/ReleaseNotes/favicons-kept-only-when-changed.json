@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "Renaming or navigating a tab no longer checks every open tab's saved icon; the saved icons are brought up to date only when a tab or an icon changed."
+}
