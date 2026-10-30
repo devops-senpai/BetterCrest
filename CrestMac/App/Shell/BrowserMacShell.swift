@@ -19,6 +19,7 @@ final class BrowserMacShell {
         let dockMenu: BrowserMacDockMenu
         let externalOpening: BrowserMacExternalOpening
         let agents: BrowserMacAgents
+        let commands: BrowserMacCommands
     }
 
     /// A system sign-in that arrived before the launch finished.
@@ -90,7 +91,8 @@ final class BrowserMacShell {
             quit: BrowserMacQuit(application: application, windows: windows), menuBar: menuBar,
             dockMenu: BrowserMacDockMenu(application: application, windows: windows),
             externalOpening: BrowserMacExternalOpening(application: application, windows: windows),
-            agents: BrowserMacAgents(application: application, windows: windows))
+            agents: BrowserMacAgents(application: application, windows: windows),
+            commands: BrowserMacCommands(application: application))
         recovery?.close()
         recovery = nil
         guard application.presentsInstalledApplicationUI else { return }
@@ -106,6 +108,7 @@ final class BrowserMacShell {
         mouseButtons.start()
         recentTabSwitcher.start(in: self)
         running?.agents.start()
+        running?.commands.start()
         Task { await application.cloudSync.start() }
         if !background { NSApp.activate(ignoringOtherApps: true) }
         openPending()
@@ -131,8 +134,11 @@ final class BrowserMacShell {
     func requestQuit(finish: @escaping @MainActor (_ allowed: Bool) -> Void) -> Bool {
         guard let running else { return false }
         return running.quit.request { allowed in
-            // No agent reaches a Crest that is going.
-            if allowed { running.agents.stop() }
+            // No agent or command reaches a Crest that is going.
+            if allowed {
+                running.agents.stop()
+                running.commands.stop()
+            }
             finish(allowed)
         }
     }

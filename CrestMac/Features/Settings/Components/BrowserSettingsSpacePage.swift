@@ -14,6 +14,8 @@ struct BrowserSettingsSpacePage: View {
     @State private var passwordSearchText = ""
     @State private var pendingDeletionID: UUID?
     @State private var showsArtworkCredits = false
+    /// Why the last theme file could not be read or written, until the next try.
+    @State private var themeFileProblem: String?
 
     var body: some View {
         VStack(spacing: 0) {
@@ -53,6 +55,20 @@ struct BrowserSettingsSpacePage: View {
         browser.spaceBrandingBinding(in: space).wrappedValue = startingAppearance
     }
 
+    /// Writes the Space's look to a theme file the person chooses.
+    private func exportTheme() {
+        Task { @MainActor in
+            themeFileProblem = await BrowserSpaceThemeFiles(browser: browser, space: space).export()
+        }
+    }
+
+    /// Dresses the Space in a theme file the person chooses.
+    private func importTheme() {
+        Task { @MainActor in
+            themeFileProblem = await BrowserSpaceThemeFiles(browser: browser, space: space).load()
+        }
+    }
+
     // MARK: - Header
 
     private var header: some View {
@@ -73,6 +89,9 @@ struct BrowserSettingsSpacePage: View {
                 Button("Reset Appearance") { resetAppearance() }
                     .disabled(startingAppearance == nil || startingAppearance == space.settings.look)
                 Button("Artwork Credits") { showsArtworkCredits = true }
+                Divider()
+                Button("Export Theme…") { exportTheme() }
+                Button("Import Theme…") { importTheme() }
             } label: {
                 Image(systemName: "ellipsis.circle")
             }
@@ -85,6 +104,15 @@ struct BrowserSettingsSpacePage: View {
         }
         .padding(.horizontal, 20)
         .frame(minHeight: 52)
+        .overlay(alignment: .bottomTrailing) {
+            if let themeFileProblem {
+                Text(themeFileProblem)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 4)
+            }
+        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("settings-page-header")
     }

@@ -16,6 +16,7 @@ internal sealed partial record SpacePayload(
     string Symbol,
     SpaceAccent Accent,
     SpaceBranding Branding,
+    SpaceBranding? DarkBranding,
     BrowsingPreferences BrowsingPreferences,
     SpaceAccessPolicy AccessPolicy,
     SyncTime? AccessPolicyModifiedAt,
@@ -31,8 +32,8 @@ internal sealed partial record SpacePayload(
     /// writes beside them.
     public static IReadOnlyList<string> Members { get; } = [
         StoredSessionCodec.Key.Id, StoredSessionCodec.Key.ProfileId, StoredSessionCodec.Key.Name, StoredSessionCodec.Key.Symbol,
-        StoredSessionCodec.Key.Accent, StoredSessionCodec.Key.Branding, StoredSessionCodec.Key.BrowsingPreferences,
-        StoredSessionCodec.Key.AccessPolicy, StoredSessionCodec.Key.AccessPolicyModifiedAt, SyncPayload.Key.CredentialsEnabled,
+        StoredSessionCodec.Key.Accent, StoredSessionCodec.Key.Branding, StoredSessionCodec.Key.DarkBranding,
+        StoredSessionCodec.Key.BrowsingPreferences, StoredSessionCodec.Key.AccessPolicy, StoredSessionCodec.Key.AccessPolicyModifiedAt, SyncPayload.Key.CredentialsEnabled,
         StoredSessionCodec.Key.CredentialsEnabledModifiedAt, StoredSessionCodec.Key.IsSavedTabsExpanded,
         StoredSessionCodec.Key.SavedTabsExpansionModifiedAt, StoredSessionCodec.Key.SplitGroups, SyncPayload.Key.OrderToken
     ];
@@ -67,6 +68,7 @@ internal sealed partial record SpacePayload(
                 ? (enabled, modifiedAt) : ((bool?)null, (SyncTime?)null);
         return new(value.WrappedIdentity(StoredSessionCodec.Key.Id), value.Identity(StoredSessionCodec.Key.ProfileId), name, symbol, accent,
             value.OptionalNested(StoredSessionCodec.Key.Branding) is { } branding ? ReadBranding(branding) : SpaceBranding.Legacy(accent, symbol),
+            value.OptionalNested(StoredSessionCodec.Key.DarkBranding) is { } darkBranding ? ReadBranding(darkBranding) : null,
             value.OptionalNested(StoredSessionCodec.Key.BrowsingPreferences) is { } browsing ? ReadBrowsingPreferences(browsing)
                 : StoredSessionCodec.DefaultBrowsingPreferences,
             value.OptionalText(StoredSessionCodec.Key.AccessPolicy) is { } access
@@ -92,6 +94,7 @@ internal sealed partial record SpacePayload(
             [StoredSessionCodec.Key.AccessPolicy] = StoredSessionCodec.SpaceAccessPolicies.Name(AccessPolicy),
             [StoredSessionCodec.Key.IsSavedTabsExpanded] = IsSavedTabsExpanded
         };
+        if (DarkBranding is { } darkBranding) value[StoredSessionCodec.Key.DarkBranding] = EncodeBranding(darkBranding);
         Put(value, StoredSessionCodec.Key.AccessPolicyModifiedAt, AccessPolicyModifiedAt, form);
         Put(value, StoredSessionCodec.Key.SavedTabsExpansionModifiedAt, SavedTabsExpansionModifiedAt, form);
         if (CredentialsEnabled is { } credentialsEnabled && CredentialsEnabledModifiedAt is { } credentialsModifiedAt) {

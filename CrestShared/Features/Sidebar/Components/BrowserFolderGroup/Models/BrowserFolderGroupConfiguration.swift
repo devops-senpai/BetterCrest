@@ -40,7 +40,7 @@ struct BrowserFolderGroupConfiguration {
     var showsContents: Bool { !folder.isCollapsed && inheritedKeptTabID == nil }
 
     var displayBranding: SpaceBranding? {
-        guard let spacePresentation else { return context.space.settings.look }
+        guard let spacePresentation else { return context.space.settings.shownLook }
         return spacePresentation.assignment == assignment ? spacePresentation.branding : nil
     }
 

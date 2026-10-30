@@ -9,6 +9,8 @@ namespace CrestCore.Contracts;
 /// on or off, on any device, or null when nobody has since Crest kept that time.
 /// <see cref="Branding"/> is null for a Space stored before branding existed, which
 /// wears the look its accent and symbol give it; <see cref="Look"/> is what it wears.
+/// <see cref="DarkBranding"/> is the look it wears instead while windows are dark, or null to
+/// wear <see cref="Look"/> in both appearances; <see cref="DarkLook"/> is what it wears in the dark.
 /// </summary>
 [Observed]
 public sealed record SpaceSettings(
@@ -22,7 +24,8 @@ public sealed record SpaceSettings(
     bool IsSavedTabsExpanded,
     DateTimeOffset? SavedTabsExpansionModifiedAt,
     DateTimeOffset? CredentialsEnabledModifiedAt = null,
-    DateTimeOffset? AccessPolicyModifiedAt = null) {
+    DateTimeOffset? AccessPolicyModifiedAt = null,
+    SpaceBranding? DarkBranding = null) {
     #region Variables
 
     /// <summary>The branding the Space wears: its own, with a banner strength stored
@@ -30,6 +33,11 @@ public sealed record SpaceSettings(
     /// branding existed, the legacy look of its accent and symbol.</summary>
     [Resolved]
     public SpaceBranding Look => Branding?.InTodaysUnits() ?? SpaceBranding.Legacy(Accent, Symbol);
+
+    /// <summary>The branding the Space wears while windows are dark: its dark look in
+    /// today's units, or <see cref="Look"/> when it keeps one look for both.</summary>
+    [Resolved]
+    public SpaceBranding DarkLook => DarkBranding?.InTodaysUnits() ?? Look;
 
     /// <summary>The Space shows only while this process holds the grant for its
     /// profile. A policy this build cannot name reads as guarded (see

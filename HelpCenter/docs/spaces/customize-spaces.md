@@ -23,11 +23,44 @@ Crest Studio is on the Space’s Appearance page. The crest sits on the Space’
 - **Crest:** Field, Second field, Band, Emblem, Border and Edge. A color for a part the crest doesn’t draw is dimmed.
 - **Sidebar:** Background, Accent (selected tabs, pins, the address field and the Space picker) and Pattern.
 
-Click or tap a color to choose one of the templates’ tinctures or a custom color. Below the crest, work through **Start from**, **Shape**, **Field**, **Band**, **Emblem**, **Border**, **Finish** and **Sidebar**; each step shows your crest with each choice applied. On iPhone, the steps are a list showing what each has chosen; tap one to open it. Choose **Icon** at the top of **Emblem** to use an SF Symbol or emoji instead of a crest. **Shuffle** suggests a new crest in the templates’ colors, and **Undo** steps back through your changes. **Reset Appearance** and **Artwork Credits** are in the **…** menu on the Space’s page.
+Click or tap a color to choose one of the templates’ tinctures or a custom color. Below the crest, work through **Start from**, **Shape**, **Field**, **Band**, **Emblem**, **Border**, **Finish**, **Sidebar** and **Other**; each step shows your crest with each choice applied. On iPhone, the steps are a list showing what each has chosen; tap one to open it. Choose **Icon** at the top of **Emblem** to use an SF Symbol or emoji instead of a crest. **Shuffle** suggests a new crest in the templates’ colors, and **Undo** steps back through your changes. **Reset Appearance** and **Artwork Credits** are in the **…** menu on the Space’s page.
 
 ## Customize folders
 
-Choose folder color intensity and text color on the Space’s Appearance page. Individual folder menus let you set colors, search the full SF Symbols catalog, or choose emoji. You can show a custom icon on its own instead of the animated folder artwork. In **Settings → Appearance**, enable **Tint Folder Title** to use semibold titles in the folder’s color, adjusted for stronger contrast against light or dark sidebars.
+The **Folders** group in the **Sidebar** step of the Space’s Appearance page sets the color every folder in the Space wears until you give it one of its own, the color of the folder’s back face, and how strongly folders tint their rows. The Sidebar step also chooses the text tone, or one exact text color for the sidebar. Individual folder menus let you set colors, search the full SF Symbols catalog, or choose emoji. You can show a custom icon on its own instead of the animated folder artwork. In **Settings → Appearance**, enable **Tint Folder Title** to use semibold titles in the folder’s color, adjusted for stronger contrast against light or dark sidebars.
+
+## Tint the command palette
+
+The **Command Palette** group in the **Other** step of the Space’s Appearance page lays a color over the palette’s glass in this Space, with its own tint, opacity and text color for the light and the dark appearance. Opacity runs from the glass alone to the solid color. Each group has a **Reset** that puts its choices back to the Space’s starting look, and each row keeps its own reset.
+
+## A look for dark windows
+
+Turn on **Dark look** at the top of a Space’s Appearance page to give the Space a second look that it wears while Crest’s windows are dark, starting from its light look. Choose **Light** or **Dark** beside the switch to edit either one; the sidebar switches between them with the system appearance or your Appearance mode. Turn the switch off to wear one look in both again.
+
+## Share a theme
+
+On Mac, choose **Export Theme…** at the bottom of the **Other** step, or in the **…** menu on a Space’s page, to save its look as a theme file, and **Load Theme from File…** to dress the Space in one someone shared. The `crest-browser` tool inside Crest does the same from the terminal while Crest is open. It needs only Crest running; agents can stay off.
+
+```sh
+/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Personal --export ~/Desktop/dusk.json
+/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --from-file ~/Desktop/dusk.json
+/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --folder-color "#7a8bb0" --palette-dark "#101218" --palette-dark-opacity 0.7
+/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --reset command-palette
+```
+
+A theme file is JSON with a section for each part of the look, and a theme can name only the parts it changes:
+
+```json
+{
+  "name": "Dusk",
+  "background": { "colors": ["#1b1f2a", "#3a2f5b"], "style": "gradient", "angle": 135, "intensity": 0.8, "sidebarText": "#e6e9ef" },
+  "icon": { "color": "#ffd166" },
+  "folders": { "color": "#7a8bb0", "backColor": "#5c6b8a", "intensity": 0.3 },
+  "commandPalette": { "light": { "tint": "#ffffff", "opacity": 0.5 }, "dark": { "tint": "#101218", "opacity": 0.7, "text": "#cdd6f4" } }
+}
+```
+
+Colors are `#RRGGBB` or `#RRGGBBAA`; the word `default` lets a chosen color go. A `"dark"` object with the same sections gives the Space its look for dark windows, and `--dark-from-file` applies a second theme file as that look. Run `crest-browser theme` with no options to see every flag.
 
 ## Customize the browser around your Spaces
 

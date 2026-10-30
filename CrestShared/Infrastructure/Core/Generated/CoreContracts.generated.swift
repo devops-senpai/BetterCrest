@@ -5655,6 +5655,12 @@ struct SetSpaceBranding: Intent, SessionIntent, Equatable, Sendable {
     let branding: SpaceBranding
 }
 
+struct SetSpaceDarkBranding: Intent, SessionIntent, Equatable, Sendable {
+    let workspaceID: UUID
+    let spaceID: UUID
+    let branding: SpaceBranding?
+}
+
 struct SetSpaceIdentity: Intent, SessionIntent, Equatable, Sendable {
     let workspaceID: UUID
     let spaceID: UUID
@@ -6108,7 +6114,11 @@ struct SpaceBranding: Equatable, Sendable {
         renderingVersion: 2,
         folderColorIntensity: 0,
         textColorMode: SpaceTextColorMode.automatic,
-        hasCustomAppearance: nil
+        hasCustomAppearance: nil,
+        folderColor: nil,
+        folderBackColor: nil,
+        commandPalette: nil,
+        sidebarTextColor: nil
     )
 
     var colors: ColorPalette
@@ -6126,6 +6136,10 @@ struct SpaceBranding: Equatable, Sendable {
     var folderColorIntensity: Double
     var textColorMode: SpaceTextColorMode
     var hasCustomAppearance: Bool?
+    var folderColor: BrandColor?
+    var folderBackColor: BrandColor?
+    var commandPalette: SpacePaletteLook?
+    var sidebarTextColor: BrandColor?
 }
 
 struct SpaceCrest: Equatable, Sendable {
@@ -6213,6 +6227,25 @@ struct SpaceLocked: Equatable, Sendable {
     }
 }
 
+struct SpacePaletteLook: Equatable, Sendable {
+    static let neutral = SpacePaletteLook(
+        light: SpacePaletteSurface(tint: nil, opacity: 0, textColor: nil),
+        dark: SpacePaletteSurface(tint: nil, opacity: 0, textColor: nil)
+    )
+
+    var light: SpacePaletteSurface
+    var dark: SpacePaletteSurface
+}
+
+struct SpacePaletteSurface: Equatable, Sendable {
+    static let defaultOpacity: Double = 0.6
+    static let neutral = SpacePaletteSurface(tint: nil, opacity: 0, textColor: nil)
+
+    var tint: BrandColor?
+    var opacity: Double
+    var textColor: BrandColor?
+}
+
 struct SpaceProfileChanged: Equatable, Sendable {
     let spaceID: UUID
 
@@ -6233,7 +6266,9 @@ struct SpaceSettings: Equatable, Sendable {
     let savedTabsExpansionModifiedAt: Date?
     let credentialsEnabledModifiedAt: Date?
     let accessPolicyModifiedAt: Date?
+    let darkBranding: SpaceBranding?
     let look: SpaceBranding
+    let darkLook: SpaceBranding
     let requiresAuthentication: Bool
 
     /// The fields of a `SpaceSettings` alone, as a platform builds one to send. The
@@ -6250,6 +6285,7 @@ struct SpaceSettings: Equatable, Sendable {
         var savedTabsExpansionModifiedAt: Date?
         var credentialsEnabledModifiedAt: Date?
         var accessPolicyModifiedAt: Date?
+        var darkBranding: SpaceBranding?
     }
 
     /// The record's fields alone, as a platform sends it back.
@@ -6265,7 +6301,8 @@ struct SpaceSettings: Equatable, Sendable {
             isSavedTabsExpanded: isSavedTabsExpanded,
             savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt,
             credentialsEnabledModifiedAt: credentialsEnabledModifiedAt,
-            accessPolicyModifiedAt: accessPolicyModifiedAt
+            accessPolicyModifiedAt: accessPolicyModifiedAt,
+            darkBranding: darkBranding
         )
     }
 }
@@ -20827,7 +20864,11 @@ struct SpaceAccent: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         swatch: BrandColor(red: 0.29, green: 0.25, blue: 0.58, alpha: 1)
     )
@@ -20900,7 +20941,11 @@ struct SpaceAccent: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         swatch: BrandColor(red: 0.85, green: 0.27, blue: 0.2, alpha: 1)
     )
@@ -20973,7 +21018,11 @@ struct SpaceAccent: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         swatch: BrandColor(red: 0.12, green: 0.49, blue: 0.52, alpha: 1)
     )
@@ -21046,7 +21095,11 @@ struct SpaceAccent: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         swatch: BrandColor(red: 0.72, green: 0.25, blue: 0.42, alpha: 1)
     )
@@ -21289,7 +21342,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestWinter"
     )
@@ -21357,7 +21414,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestLion"
     )
@@ -21425,7 +21486,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestStorm"
     )
@@ -21493,7 +21558,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestDragon"
     )
@@ -21561,7 +21630,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestMeadow"
     )
@@ -21629,7 +21702,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestIron"
     )
@@ -21697,7 +21774,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestRiver"
     )
@@ -21765,7 +21846,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestSun"
     )
@@ -21833,7 +21918,11 @@ struct SpaceHouse: Hashable, Sendable {
             renderingVersion: 5,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.automatic,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         ),
         appIconName: "CrestVigil"
     )
@@ -21987,7 +22076,11 @@ struct SpaceScheme: Hashable, Sendable {
             renderingVersion: 2,
             folderColorIntensity: 0,
             textColorMode: SpaceTextColorMode.system,
-            hasCustomAppearance: false
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil
         )
     )
 
@@ -23812,9 +23905,17 @@ final class SpaceSettingsModel: ObservedModel {
         access(keyPath: \.accessPolicyModifiedAt)
         return accessPolicyModifiedAtStorage
     }
+    var darkBranding: SpaceBranding? {
+        access(keyPath: \.darkBranding)
+        return darkBrandingStorage
+    }
     var look: SpaceBranding {
         access(keyPath: \.look)
         return lookStorage
+    }
+    var darkLook: SpaceBranding {
+        access(keyPath: \.darkLook)
+        return darkLookStorage
     }
     var requiresAuthentication: Bool {
         access(keyPath: \.requiresAuthentication)
@@ -23832,7 +23933,9 @@ final class SpaceSettingsModel: ObservedModel {
     @ObservationIgnored private var savedTabsExpansionModifiedAtStorage: Date?
     @ObservationIgnored private var credentialsEnabledModifiedAtStorage: Date?
     @ObservationIgnored private var accessPolicyModifiedAtStorage: Date?
+    @ObservationIgnored private var darkBrandingStorage: SpaceBranding?
     @ObservationIgnored private var lookStorage: SpaceBranding
+    @ObservationIgnored private var darkLookStorage: SpaceBranding
     @ObservationIgnored private var requiresAuthenticationStorage: Bool
 
     var value: SpaceSettings {
@@ -23848,7 +23951,9 @@ final class SpaceSettingsModel: ObservedModel {
             savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt,
             credentialsEnabledModifiedAt: credentialsEnabledModifiedAt,
             accessPolicyModifiedAt: accessPolicyModifiedAt,
+            darkBranding: darkBranding,
             look: look,
+            darkLook: darkLook,
             requiresAuthentication: requiresAuthentication
         )
     }
@@ -23865,7 +23970,9 @@ final class SpaceSettingsModel: ObservedModel {
         savedTabsExpansionModifiedAtStorage = value.savedTabsExpansionModifiedAt
         credentialsEnabledModifiedAtStorage = value.credentialsEnabledModifiedAt
         accessPolicyModifiedAtStorage = value.accessPolicyModifiedAt
+        darkBrandingStorage = value.darkBranding
         lookStorage = value.look
+        darkLookStorage = value.darkLook
         requiresAuthenticationStorage = value.requiresAuthentication
     }
 
@@ -23914,9 +24021,17 @@ final class SpaceSettingsModel: ObservedModel {
             accessPolicyModifiedAtStorage = value.accessPolicyModifiedAt
             withMutation(keyPath: \.accessPolicyModifiedAt) {}
         }
+        if darkBrandingStorage != value.darkBranding {
+            darkBrandingStorage = value.darkBranding
+            withMutation(keyPath: \.darkBranding) {}
+        }
         if lookStorage != value.look {
             lookStorage = value.look
             withMutation(keyPath: \.look) {}
+        }
+        if darkLookStorage != value.darkLook {
+            darkLookStorage = value.darkLook
+            withMutation(keyPath: \.darkLook) {}
         }
         if requiresAuthenticationStorage != value.requiresAuthentication {
             requiresAuthenticationStorage = value.requiresAuthentication

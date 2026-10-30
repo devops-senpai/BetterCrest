@@ -36,7 +36,8 @@ internal static partial class StoredSessionCodec {
                 Flag(value[Key.IsSavedTabsExpanded]) ?? true,
                 OptionalDate(value[Key.SavedTabsExpansionModifiedAt]),
                 OptionalDate(value[Key.CredentialsEnabledModifiedAt]),
-                OptionalDate(value[Key.AccessPolicyModifiedAt])),
+                OptionalDate(value[Key.AccessPolicyModifiedAt]),
+                value[Key.DarkBranding] is JsonObject darkBranding ? DecodeBranding(darkBranding) : null),
             [.. Items(value[Key.Folders]).Select(DecodeFolder)],
             [.. Items(value[Key.Tabs]).Select(DecodeTab)],
             [.. Items(value[Key.SplitGroups]).Select(DecodeSplitGroup)],
@@ -54,6 +55,7 @@ internal static partial class StoredSessionCodec {
             [Key.Accent] = settings.Accent.Name
         };
         if (settings.Branding is { } branding) value[Key.Branding] = Encode(branding);
+        if (settings.DarkBranding is { } darkBranding) value[Key.DarkBranding] = Encode(darkBranding);
         value[Key.Folders] = EncodeAll(space.Folders, Encode);
         value[Key.Tabs] = EncodeAll(space.Tabs, Encode);
         value[Key.SplitGroups] = EncodeAll(space.SplitGroups, Encode);
