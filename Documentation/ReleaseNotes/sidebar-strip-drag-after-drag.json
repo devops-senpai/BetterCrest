@@ -1,0 +1,4 @@
+{
+  "category": "fixed",
+  "message": "Dragging the window by the empty sidebar strip works every time: the strip moves the window itself instead of asking the system, which ignored most trackpad presses, and pressing again where a drag just ended no longer counts as a title-bar double-click."
+}
