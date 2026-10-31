@@ -81,7 +81,9 @@ final class BrowserMacAgents {
         self.windows = windows
         self.approvals = approvals
         helper = BrowserAgentHelperRequirement(bundle: .main)
-        path = helper == nil ? nil : Bundle.main.bundleIdentifier.flatMap(AgentSocketLocation.path(forApp:))
+        path =
+            helper == nil
+            ? nil : Bundle.main.bundleIdentifier.flatMap { AgentSocketLocation.path(forApp: $0, lane: .agents) }
     }
 
     // MARK: - Actions - Lifecycle
