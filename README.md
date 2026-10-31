@@ -54,6 +54,7 @@ change; the commit of the same name has the detail.
 
 ### Bug fixes
 
+- The sidebar keeps its rows when the window enters or leaves full screen or changes size while scrolled; a list at its end stays at its end.
 - Dragging the window by the empty sidebar strip works every time; a trackpad press there often moved nothing, and a press right after a drag counted as a double-click.
 - What's New in Settings lists the newest changes instead of the ones whose names sort last.
 - A tab an extension closes during an engine switch stays closed instead of coming back empty.
