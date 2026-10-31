@@ -15,7 +15,7 @@ A Space and its Sub-Spaces form a group. The Space that leads it is the group's 
 
 <GuideScreenshot
   src="/img/guides/sub-spaces/settings-group.png"
-  alt="Crest Settings with Client A and Client B indented under Work in the sidebar, and Work's page showing the crests of Work, Client A and Client B"
+  alt="Arma Settings with Client A and Client B indented under Work in the sidebar, and Work's page showing the crests of Work, Client A and Client B"
   caption="Sub-Spaces sit under their primary in Settings, and a group's page shows the crests of its Spaces."
 />
 
@@ -25,7 +25,7 @@ Every Space of a group uses the same:
 
 - Sign-ins, cookies, caches and other website data
 - History
-- Crest Passwords
+- Arma Passwords
 - Extensions on Mac
 - Site permissions and content-blocking choices
 - Lock, and whether coding agents may use it
@@ -64,12 +64,12 @@ Right-click the Space in the Settings sidebar, or open the **…** menu on its p
   caption="Make Sub-Space of lists the groups a Space can join."
 />
 
-Crest asks first. The Space keeps its tabs and starts using the group's sign-ins, history and extensions. Its own sign-ins and website data stay on this device, unused, and come back if you separate it.
+Arma asks first. The Space keeps its tabs and starts using the group's sign-ins, history and extensions. Its own sign-ins and website data stay on this device, unused, and come back if you separate it.
 
 <GuideScreenshot
   src="/img/guides/sub-spaces/make-sub-space.png"
   alt="A confirmation asking to make Personal a Sub-Space of Work, with Make Sub-Space and Cancel buttons"
-  caption="Crest says what a Space will use before it joins a group."
+  caption="Arma says what a Space will use before it joins a group."
 />
 
 A Space that leads Sub-Spaces can't join another group, and private windows can't have Sub-Spaces.
@@ -110,8 +110,8 @@ To open a link with another Space's sign-ins on Mac, right-click it and choose a
 
 ## Use Sub-Spaces on older devices
 
-Devices that run an earlier version of Crest keep syncing. They show each Sub-Space as a Space on its own, signed out, until they update. The first group you make reminds you to update Crest on your other devices.
+Devices that run an earlier version of Arma keep syncing. They show each Sub-Space as a Space on its own, signed out, until they update. The first group you make reminds you to update Arma on your other devices.
 
 ## Import groups from Arc and Zen
 
-Importing from Arc brings the Spaces of one Arc profile in as one group. Importing from Zen brings each profile's workspaces in as one group. The import review outlines each group and can bring a Space in on its own. See [Move your browser data to Crest](../getting-started/move-to-crest.md).
+Importing from Arc brings the Spaces of one Arc profile in as one group. Importing from Zen brings each profile's workspaces in as one group. The import review outlines each group and can bring a Space in on its own. See [Move your browser data to Arma](../getting-started/move-to-crest.md).

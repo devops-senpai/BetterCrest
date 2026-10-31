@@ -36,7 +36,7 @@ struct BrowserCredentialSuggestionPromptContent: View {
             )
             if model.hasFailed {
                 BrowserCredentialPromptError(
-                    "Crest couldn’t read this Space’s passwords."
+                    "Arma couldn’t read this Space’s passwords."
                 )
             }
             if let fillErrorMessage {

@@ -1,6 +1,6 @@
 # Portable browser control plane
 
-Crest's browser state and rules live in one portable core, `CrestCore`, written
+Arma's browser state and rules live in one portable core, `CrestCore`, written
 in C# and compiled with NativeAOT. Each Apple platform supplies its SwiftUI and
 AppKit or UIKit views, its engine bindings and its OS services. On macOS
 Chromium is the default engine and WebKit stays registered beside it; iPhone
@@ -454,7 +454,7 @@ or Objective-C between them. `CreatePage` names the page's window, so Chromium
 creates the page in that window's `Browser` as soon as the core asks.
 
 The binding also keeps Chromium's `Browser`s (`EngineBrowsers`): one for each
-profile whose pages a Crest window shows, and those the engine creates for
+profile whose pages a Arma window shows, and those the engine creates for
 itself for `chrome.windows.create`, a renderer's popup or an extension's app
 window. It creates, finds and closes them, moves a page's tab between them
 when its view attaches in another window, offers the tabs the engine opens
@@ -465,7 +465,7 @@ remains the extension's window.
 
 Chromium's Mac shell (`crest_chrome_host.mm` behind the typed `CrestMacShell`
 and `CrestMacUI` protocols in `CrestChromiumHost.h`) does only what AppKit
-must: it reserves and opens the Crest windows the binding's `Browser`s show
+must: it reserves and opens the Arma windows the binding's `Browser`s show
 in, hosts each page's view and the views an extension or the inspector puts
 beside it, shows extension popups, runs system sign-in, and answers the close
 and quit preflight. Each `Browser` is built on the shell's
@@ -494,7 +494,7 @@ non-persistent store of its own, made the first time a page of the profile
 opens and dropped when the core erases the profile; any other profile opens
 its store on disk. Private browsing ending erases its profiles
 (`DeleteProfileData`, ephemeral), so the next private window starts in a new
-store. The binding also compiles Crest's content rules once and builds each
+store. The binding also compiles Arma's content rules once and builds each
 page with the rules its Space's protection applies; each page owner still
 applies a changed protection to its live pages. A popup WebKit makes keeps the
 configuration WebKit derived from its opener's.
@@ -575,7 +575,7 @@ engine.
   other registered engine (**Open Page in WebKit**), recording no choice.
   Both read the registered engines, not what the device offers, so they are
   there before any page has opened on the other engine.
-- **Protected media.** Crest's Chromium carries no Widevine. When a page, or
+- **Protected media.** Arma's Chromium carries no Widevine. When a page, or
   a frame of its own site, asks for Widevine or PlayReady, Chromium reports
   `ProtectedMediaUnavailable`. The core automatically attempts a move once per
   document to an engine with the `protected-media` capability, which WebKit has
@@ -685,7 +685,7 @@ core no longer hosts, or that another engine hosts, changes nothing.
   `TransientPageClosed`, which closes whatever shows it. A page in a Space
   being deleted has nothing left to close. The acknowledgement of a close the
   core asked for finds the page already gone or moved to another engine, and
-  changes nothing. Chromium never discards a Crest page, since a discard
+  changes nothing. Chromium never discards a Arma page, since a discard
   would replace its WebContents; the core's memory pressure unloads pages
   instead.
 - **Prompts.** Script dialogs, sign-ins, permission requests and extension
@@ -733,12 +733,12 @@ core no longer hosts, or that another engine hosts, changes nothing.
   window. Automatic entry is the platform's, through each engine's own path
   (see [Desktop Picture in Picture](DesktopPictureInPicture.md)).
 - **Web notifications.** A document's notifications on either engine show
-  through Crest's own delivery on the Mac. Chromium presents
+  through Arma's own delivery on the Mac. Chromium presents
   `WebNotificationPosted` and `WebNotificationClosed`, and WebKit pages post
-  through Crest's bridge in the page. The page shows each one as Crest's
+  through Arma's bridge in the page. The page shows each one as Arma's
   (`BrowserPage.showWebNotification`) when the Space's choice for the site
-  allows notifications and the system lets Crest show them. A click brings the
-  page's tab and Crest forward, then tells the document, which on Chromium
+  allows notifications and the system lets Arma show them. A click brings the
+  page's tab and Arma forward, then tells the document, which on Chromium
   hears it through `AnswerWebNotification`. A page whose document changes or
   that leaves its engine takes its notifications down. Chromium's local worker
   and extension notifications instead report `ProfileNotificationPosted` and
@@ -780,11 +780,11 @@ must decide.
 The upgrade carries exactly two values: the installed release's `UserDefaults`
 session core with its per-Space history keys, and its sync journal. Everything
 else keeps the identifier it had and is read in place, because the products
-share one identity. `ProductIdentity` resolves the same `com.pauldavis.crest`
-defaults domain, `Application Support/Crest` directory, keychain service
-namespace and `iCloud.com.pauldavis.crest` container for the WebKit `Crest`
+share one identity. `ProductIdentity` resolves the same `com.senpaimedia.arma`
+defaults domain, `Application Support/Arma` directory, keychain service
+namespace and `iCloud.com.senpaimedia.arma` container for the WebKit `Crest`
 target, `CrestMobile` and the packaged Chromium product, which rewrites
-`CFBundleIdentifier` to `com.pauldavis.crest` and omits `CREST_REVIEW_BUILD`.
+`CFBundleIdentifier` to `com.senpaimedia.arma` and omits `CREST_REVIEW_BUILD`.
 None of these products is App-Sandboxed; adding the sandbox to either side
 would move every path into a container and strand the installed data, so the
 product package must be signed with the Mac target's own entitlements.
@@ -861,12 +861,12 @@ documents and sign-ins that arrived before it was ready.
   product enters through `crest_native_host_run`, runs `ChromiumApplication`
   with `ChromiumApplicationDelegate`, and starts the same native shell and
   core before loading Chromium. The engine's first page or extension stops
-  the initial AppKit loop and enters Chromium's normal browser loop. Crest
+  the initial AppKit loop and enters Chromium's normal browser loop. Arma
   keeps its delegate and windows; Chromium attaches its binding and event
   adapter to that existing application. Once started it remains until quit.
 - **Shortcuts.** Both engines' page views take key equivalents before the
   menu bar does, so the shell offers every key down to its shortcuts first,
-  through a local key monitor. While Crest's own views have focus, Crest's
+  through a local key monitor. While Arma's own views have focus, Arma's
   shortcuts win. While a page has focus it sees the key first, as in other
   browsers, and only the commands the core marks `IsReservedFromPages` run
   ahead of it: opening, closing and switching tabs and windows, plus quit. An
@@ -899,21 +899,21 @@ documents and sign-ins that arrived before it was ready.
 - **The engine's part.** `BrowserMacEngineHost` is all the shell asks of the
   engine: the About panel's credits; letting go of what
   it kept for a closed window, and of the profiles named; and a key equivalent
-  no Crest command claimed, such as an extension's `chrome.commands` binding.
+  no Arma command claimed, such as an extension's `chrome.commands` binding.
   `ChromiumRuntimeShell` forwards to Chromium's Mac shell after it is loaded,
   and `WebKitShellHost` needs none of them.
 
 ## Chromium host
 
 The host overlay uses Chromium's browser startup, `Browser` and
-`TabStripModel`. A packaged host first loads only Crest's UI framework
+`TabStripModel`. A packaged host first loads only Arma's UI framework
 (`CrestChromiumUIProduct`, or `CrestChromiumUI` for review), whose exported
 `crest_native_host_run` starts the native shell. `ChromiumRuntime` exposes a
 stable deferred binding to the core. On the first Chromium request, the
 launcher loads Chromium and enters its normal startup. Chromium calls
 `crest_chromium_ui_start` with its Mac shell, binding and page-request table;
 the framework attaches these to the existing runtime and drains its queued
-commands. It has no `@main`. Crest owns `NSApplication` and its delegate;
+commands. It has no `@main`. Arma owns `NSApplication` and its delegate;
 Chromium contributes native event processing and accessibility without
 replacing them. A WebKit-only session never loads Chromium's framework.
 
@@ -926,17 +926,17 @@ merely visiting engine Settings does not.
 
 - **Profiles.** Each Space uses a regular Chromium profile under the engine's
   user-data directory; the product keeps it in
-  `~/Library/Application Support/Crest/Chromium`. A review package requires an
+  `~/Library/Application Support/Arma/Chromium`. A review package requires an
   explicit `--user-data-dir`. A private window uses a separate in-memory
   profile for each private Space, derived from the engine's own startup
   profile, never a Space's, and destroyed with the window; it runs no
   extension a person installed. Chromium's password manager is off for every
   page, in Space and private profiles alike.
-- **Identity and lifecycle.** The packager includes Crest's icons and Dock
-  tile plug-in. Crest's shell installs its menus, About identity and Dock tile,
+- **Identity and lifecycle.** The packager includes Arma's icons and Dock
+  tile plug-in. Arma's shell installs its menus, About identity and Dock tile,
   answers external URL and document opens, Dock reopen and the Dock menu in
   place of Chromium's profiles and incognito window, and reopens the windows
-  open at quit. The product registers Crest for HTTP, HTTPS and HTML documents
+  open at quit. The product registers Arma for HTTP, HTTPS and HTML documents
   and carries the Sparkle feed.
 - **Links.** Chromium's binding asks the core `LinkActivation` for each link
   the person follows in an owned page, from its modified-link hook and its
@@ -950,8 +950,8 @@ merely visiting engine Settings does not.
   source SiteInstance. The platform asks the core `StageLink` to hand it to
   the new page, which the core allows only on the same engine and profile, or
   `DiscardStagedLink` to drop it; the new page receives only a one-shot token.
-  Context-menu rows reach Crest as typed rows, never as dictionaries.
-- **Internal pages.** Crest's session and address controls spell internal
+  Context-menu rows reach Arma as typed rows, never as dictionaries.
+- **Internal pages.** Arma's session and address controls spell internal
   addresses `crest://`; the binding translates them to `chrome://` for
   navigation and back for observations. Internal navigation is gated by the
   `internal-pages` capability. The feature flags page Settings shows opens
@@ -959,16 +959,16 @@ merely visiting engine Settings does not.
   `settings`), in the Settings tab's Space and window, so a private window's
   flags page is private too.
 - **Extensions.** Chromium owns verification, runtime permissions, updates,
-  execution and pin state. Crest's toolbar, Site Controls, install review,
+  execution and pin state. Arma's toolbar, Site Controls, install review,
   Space-scoped management and copying read the binding's model; the toolbar
   and Site Controls take their Space from the read model, and the install
   review shows the question the core asks (`ExtensionInstallAsked`). Action popups
-  appear in a child window of the Crest window; side panels are cards in the
+  appear in a child window of the Arma window; side panels are cards in the
   page row that follow the focused tab, as Chromium's side panel does: a panel
   an extension gave one tab shows only beside that tab and returns with it,
   while its panel for every tab (`HasSidePanel` answers which) stays open as
   the person moves between tabs of the Space. A Chrome Web Store listing
-  installs through Crest's review.
+  installs through Arma's review.
 - **Downloads, favicons and archives.** Chromium's downloads report to the
   core's ledger; destinations resolve per Space. Opaque navigation archives
   carry an engine and version tag, stay local to the profile, and never enter

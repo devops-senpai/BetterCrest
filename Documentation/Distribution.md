@@ -1,9 +1,9 @@
-# Crest distribution
+# Arma distribution
 
-Crest has one official distribution path per platform:
+Arma has one official distribution path per platform:
 
-- **macOS:** one app, Crest, with the Chromium and WebKit engines. It is
-  distributed directly via GitHub Releases and official Homebrew cask (`crest-browser`),
+- **macOS:** one app, Arma, with the Chromium and WebKit engines. It is
+  distributed directly via GitHub Releases and official Homebrew cask (`arma`),
   signed with Developer ID, notarized by Apple, and updated through Sparkle 2;
 - **iPhone and iPad:** TestFlight and the App Store.
 
@@ -14,8 +14,8 @@ behavior, and user confusion over which build supports extensions.
 The Homebrew cask fetches un-modified binaries from GitHub Releases, 
 thus it is still updated through Sparkle 2. 
 
-Crest 0.8 opens the release line with `MARKETING_VERSION = 0.8.0` and stable
-tag `v0.8.0`. User-facing release copy calls it Crest 0.8. Mac requires Apple
+Arma 0.8 opens the release line with `MARKETING_VERSION = 0.8.0` and stable
+tag `v0.8.0`. User-facing release copy calls it Arma 0.8. Mac requires Apple
 silicon and macOS 26.1 or later; iPhone and iPad remain WebKit apps with 26.1
 deployment targets. The packaged Mac app and Sparkle feed take the higher
 minimum macOS version required by the engine and the native UI framework.
@@ -37,9 +37,9 @@ release before signing.
 | Development | PR merged into `main`, or manual workflow dispatch | New `development-<version>-<date>-<build>-r<run>.<attempt>` prerelease | `development` |
 | Experimental | Manual dispatch of **Publish experimental macOS release** for a branch | New `experimental-<version>-<branch>-<date>-<build>-r<run>.<attempt>` prerelease | `experimental` |
 
-Browse [Stable](https://github.com/pauljoda/Crest/releases?q=prerelease%3Afalse),
-[Nightly](https://github.com/pauljoda/Crest/releases?q=prerelease%3Atrue+%22Nightly+builds%22), or
-[Development](https://github.com/pauljoda/Crest/releases?q=prerelease%3Atrue+%22Development+builds%22).
+_Placeholder: Arma has published no releases yet._ When it does they
+appear under [Releases](https://github.com/devops-senpai/BetterCrest/releases),
+filtered by channel.
 The README links to every channel, and each release's notes link to its own
 channel. GitHub's
 [release search](https://docs.github.com/en/repositories/releasing-projects-on-github/searching-a-repositorys-releases)
@@ -61,7 +61,7 @@ line's base version, and each build adds the number of first-parent commits
 since the base last changed (`Scripts/derive-version.py`). Every workflow that
 builds stamps it into its checkout first. Stable tags must match the version
 the tagged commit derives exactly. Distributed build numbers add the GitHub Actions run number
-to Crest's public-repository build epoch. The epoch keeps Sparkle ordering
+to Arma's public-repository build epoch. The epoch keeps Sparkle ordering
 strictly increasing across the repository migration; the run number keeps every
 subsequent published update newer than the prior build. Preflight also reads
 every signed appcast and raises the build number above every published build,
@@ -69,16 +69,18 @@ so retries and delayed runs cannot publish an update that Sparkle considers olde
 
 The appcast is hosted at:
 
-`https://raw.githubusercontent.com/pauljoda/Crest/updates/appcast.xml`
+`https://raw.githubusercontent.com/devops-senpai/BetterCrest/updates/appcast.xml`
+(placeholder: the fork's `updates` branch and Sparkle key do not exist yet)
 
 Development builds use a separate signed feed so frequent commits cannot prune
 stable or nightly entries:
 
-`https://raw.githubusercontent.com/pauljoda/Crest/updates/appcast-development.xml`
+`https://raw.githubusercontent.com/devops-senpai/BetterCrest/updates/appcast-development.xml`
+(placeholder, as above)
 
 Experimental builds use `appcast-experimental.xml`. Each feed also has a
-`-webkit` twin, such as `appcast-webkit.xml`, which WebKit-only builds of Crest
-read. Those twins now offer the same Crest installer, so a WebKit-only copy
+`-webkit` twin, such as `appcast-webkit.xml`, which WebKit-only builds of Arma
+read. Those twins now offer the same Arma installer, so a WebKit-only copy
 updates into the dual-engine app on its next check.
 
 The `updates` branch is workflow-owned. It contains the appcasts, a short
@@ -129,7 +131,7 @@ contract tests locally for the exact commit, following the
 [repository guardrails](RepositoryGuardrails.md). The production workflow follows
 these steps:
 
-1. validate the exact source SHA through the reusable **Build Crest** workflow
+1. validate the exact source SHA through the reusable **Build Arma** workflow
    and find the Chromium engine for its engine key, building it on the registered
    Mac when it is missing and that builder is enabled. Signing waits for both;
 2. regenerate the project and check version metadata, product identity, and
@@ -137,9 +139,9 @@ these steps:
 3. import the Developer ID identity into a temporary keychain and install the
    matching release provisioning profile;
 4. archive and export the WebKit composition as an arm64 Developer ID build.
-   Xcode's export resolves Crest's production CloudKit, push, and keychain
+   Xcode's export resolves Arma's production CloudKit, push, and keychain
    entitlements; the exported app only supplies them and is not published;
-5. download and checksum the Chromium engine, build the native core and Crest's
+5. download and checksum the Chromium engine, build the native core and Arma's
    interface framework, and package them with the engine as `Crest.app`, signed
    with hardened runtime and those entitlements;
 6. verify the app's signature, bundle identifier, update channel, and build
@@ -165,7 +167,7 @@ new signed appcast is pushed. If a release is created but its appcast fails to
 publish, the next run still uses the last successfully published channel cursor
 for release notes and the signed appcast for nightly deduplication.
 
-When a user chooses Download Update from an available update card, Crest ends
+When a user chooses Download Update from an available update card, Arma ends
 that undownloaded offer and asks Sparkle to check the selected channel again.
 It downloads the newly selected compatible build without an extra click. A
 failed or cancelled check does not install the old offer. Sparkle continues to
@@ -184,7 +186,7 @@ exposed to pull-request builds.
 | --- | --- |
 | `DEVELOPER_ID_APPLICATION_P12_BASE64` | Developer ID certificate and private key exported as an encrypted PKCS #12 archive, then base64 encoded |
 | `DEVELOPER_ID_APPLICATION_P12_PASSWORD` | Password used for that PKCS #12 archive |
-| `DEVELOPER_ID_PROVISIONING_PROFILE_BASE64` | `Crest Developer ID` provisioning profile that grants the direct build access to Apple services |
+| `DEVELOPER_ID_PROVISIONING_PROFILE_BASE64` | `Arma Developer ID` provisioning profile that grants the direct build access to Apple services |
 | `APP_STORE_CONNECT_API_ISSUER_ID` | App Store Connect API issuer used by Xcode and `notarytool` |
 | `APP_STORE_CONNECT_API_KEY_ID` | Identifier of the App Store Connect API key |
 | `APP_STORE_CONNECT_API_PRIVATE_KEY_BASE64` | Downloaded `.p8` private key, base64 encoded |
@@ -201,7 +203,7 @@ Before publishing a stable tag:
 1. confirm `CHANGELOG.md` and the release-note entries are ready, and read the
    version the commit builds as with `Scripts/derive-version.py version`;
 2. complete local app and release-script tests for the commit being published;
-3. confirm **Build Crest** passed on the intended `main` commit and the Pages
+3. confirm **Build Arma** passed on the intended `main` commit and the Pages
    workflow is green. The stable release will validate its exact source again;
 4. confirm the commit's Chromium engine is published:
    `gh release view "$(python3 Scripts/control-plane/chromium_engine.py tag)"`;
@@ -223,7 +225,7 @@ the public roadmap with `Scripts/render-roadmap.py --write`, and review the
 maintained [iPhone and iPad listing](../Marketing/AppStore/README.md) against
 the release's mobile capabilities.
 
-Merge the release documentation to `main` and wait for a **Build Crest** run
+Merge the release documentation to `main` and wait for a **Build Arma** run
 on that commit to pass. Then tag that same commit with the version it derives:
 `git tag -a "$(Scripts/derive-version.py tag --ref <commit>)" <commit>`, and
 push the tag. The release workflow refuses a tag that differs from the derived
@@ -248,7 +250,7 @@ way the release workflow packages it, without publishing an update:
 Scripts/install-local-macos-release.sh
 ```
 
-The command requires Crest's Developer ID identity and provisioning profile in
+The command requires Arma's Developer ID identity and provisioning profile in
 the local keychain/Xcode profile directory, the .NET SDK, and the GitHub CLI. It
 downloads the published Chromium engine matching the checkout's engine inputs
 and caches it in `~/Library/Caches/Crest-local-release`. Set
@@ -256,9 +258,9 @@ and caches it in `~/Library/Caches/Crest-local-release`. Set
 instead. It then archives and exports the WebKit composition to resolve the
 production iCloud, push, and keychain entitlements, builds the native core and
 `CrestChromiumUIProduct`, and packages them with the engine, signed with
-hardened runtime. Finally it quits the installed Crest, replaces
-`/Applications/Crest.app`, and relaunches it. The app is signed but not
-notarized. Builds reuse `~/Library/Developer/Xcode/DerivedData/Crest-LocalRelease`.
+hardened runtime. Finally it quits the installed Arma, replaces
+`/Applications/Arma.app`, and relaunches it. The app is signed but not
+notarized. Builds reuse `~/Library/Developer/Xcode/DerivedData/Arma-LocalRelease`.
 
 The build number defaults to the greater of the installed build number and the
 current development appcast. That prevents the current public build from
@@ -277,10 +279,10 @@ After mounting a published disk image, users and maintainers can inspect it
 with standard macOS tools:
 
 ```bash
-shasum -a 256 -c Checksum-Crest-*.dmg.sha256
-codesign --verify --deep --strict --verbose=2 /Volumes/Crest/Crest.app
-spctl --assess --type execute --verbose=4 /Volumes/Crest/Crest.app
-xcrun stapler validate /Volumes/Crest/Crest.app
+shasum -a 256 -c Checksum-Arma-*.dmg.sha256
+codesign --verify --deep --strict --verbose=2 /Volumes/Arma/Arma.app
+spctl --assess --type execute --verbose=4 /Volumes/Arma/Arma.app
+xcrun stapler validate /Volumes/Arma/Arma.app
 ```
 
 GitHub's build-provenance attestation and the checksum file provide independent

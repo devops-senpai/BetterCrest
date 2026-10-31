@@ -17,7 +17,7 @@ final class BrowserAgentConnection: @unchecked Sendable {
     // MARK: - Variables
 
     let peer: BrowserAgentPeer
-    private let queue = DispatchQueue(label: "com.pauldavis.crest.agents.connection")
+    private let queue = DispatchQueue(label: "com.senpaimedia.arma.agents.connection")
     private let channel: DispatchIO
     // Touched only on `queue`: what arrived after the last complete line, the
     // lines not yet answered, the writes not yet finished, and whether the

@@ -1,6 +1,6 @@
 import Foundation
 
-/// `crest-browser theme`: dresses a Space from the terminal, from flags, from
+/// `arma theme`: dresses a Space from the terminal, from flags, from
 /// a theme file, or both, and writes a Space's theme out to share. Each flag
 /// names one part of the look; what a flag and the file both name, the flag
 /// decides. The request reaches the running Crest over the commands socket.
@@ -15,7 +15,7 @@ struct ThemeCommandLine {
     // MARK: - Static Variables
 
     static let usage = """
-        usage: crest-browser theme --space <name> [options]
+        usage: arma theme --space <name> [options]
 
         Apply a look to one Space of the running Crest, and share it.
 

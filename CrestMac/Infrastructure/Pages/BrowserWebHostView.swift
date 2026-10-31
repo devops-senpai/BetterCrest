@@ -337,7 +337,7 @@ final class BrowserWebHostView: NSView {
     // MARK: - Static Variables
 
     private static let lifecycleSignposter = OSSignposter(
-        subsystem: "com.pauldavis.crest",
+        subsystem: "com.senpaimedia.arma",
         category: "BrowserSurfaceLifecycle"
     )
     /// Every host that claimed a page view and has not let it go.

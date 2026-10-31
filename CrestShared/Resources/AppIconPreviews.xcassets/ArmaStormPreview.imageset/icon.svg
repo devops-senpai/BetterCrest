@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect x="0" y="0" width="1024" height="1024" rx="232" fill="#DEE0E4"/>
+  <g transform="translate(201.50 116.46) scale(1.9777)">
+  <defs><clipPath id="banner"><path d="M0 0H314V400L157 305L0 400Z"/></clipPath></defs>
+  <path d="M0 0H314V400L157 305L0 400Z" fill="#475569"/>
+  <g clip-path="url(#banner)">
+    <path d="M130 0H184V400H130Z" fill="#FFFFFF"/>
+    <path d="M140 0H174V400H140Z" fill="#D73743"/>
+
+    <path d="M43 28L181 134L199 173L226 140L260 134L292 142L253 158L216 204L17 314L123 211L84 202L54 174L123 181L68 160L28 108L123 143L83 108Z" fill="#FFFFFF"/>
+    <g fill="#B99B60"><path d="M26 270L17 289L25 304L34 288Z M10 303L15 320L32 324L26 309Z M40 305L32 322L42 335L48 319Z M28 331L40 345L60 346L48 335Z"/><path d="M25 298L35 322L65 342L85 345" fill="none" stroke="#B99B60" stroke-width="2"/><g transform="translate(314 0) scale(-1 1)"><path d="M26 270L17 289L25 304L34 288Z M10 303L15 320L32 324L26 309Z M40 305L32 322L42 335L48 319Z M28 331L40 345L60 346L48 335Z"/><path d="M25 298L35 322L65 342L85 345" fill="none" stroke="#B99B60" stroke-width="2"/></g></g>
+  </g>
+
+</g>
+</svg>

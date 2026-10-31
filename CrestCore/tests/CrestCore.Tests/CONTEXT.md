@@ -20,7 +20,7 @@ ownership, privacy and security decisions) at the layer that owns them.
 | `Pages/` | Page lifecycle: navigation recording, rehosting, offered pages, crashes, groups, cross-engine history, prompts, close preparation |
 | `Downloads/` | The download ledger, download risk policy and engine download reports |
 | `Credentials/` | Credential policy, password import and export, and `SecretContainmentTests` |
-| `Portability/` | Browser imports and Crest's browser-data file; `Fixtures/` holds one folder per browser profile, session or archive case |
+| `Portability/` | Browser imports and Arma's browser-data file; `Fixtures/` holds one folder per browser profile, session or archive case |
 | `Interop/` | The C exports driven through bytes (`AppClient`), the generated codec, app-level credential and search calls; `SetFixtures/` holds fixed sets the codec tests use and never send |
 | `Domain/` | Domain rules: browsing policy, link decisions, organization, splits, Space access |
 | `Windows/` | The device store and the Dock menu |

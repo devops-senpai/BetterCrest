@@ -146,7 +146,7 @@ final class BrowserSidebarUtilityCoordinatorTests: XCTestCase {
         let downloadCenter = BrowserDownloadCenter()
         let downloadItemID = downloadCenter.begin(
             profileID: source.profileID,
-            filename: "Crest.dmg",
+            filename: "Arma.dmg",
             createdAt: Date(timeIntervalSince1970: 1_700_000_004)
         )
         return Context(
@@ -170,7 +170,7 @@ final class BrowserSidebarUtilityCoordinatorTests: XCTestCase {
     private func downloadItem(profileID: UUID, id: UUID) -> DownloadState {
         DownloadState.fixture(
             id: id, profileID: profileID, createdAt: Date(timeIntervalSince1970: 1_700_000_004),
-            filename: "Crest.dmg", progress: 0.5, phase: .downloading)
+            filename: "Arma.dmg", progress: 0.5, phase: .downloading)
     }
 
     private static func uuid(_ finalByte: UInt8) -> UUID {

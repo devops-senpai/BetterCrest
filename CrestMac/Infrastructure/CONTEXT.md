@@ -44,7 +44,7 @@ Consumed by `CrestMac/App/` and `CrestMac/Features/`.
 - A protocol needs two production implementations or a real system boundary (`Documentation/RepositoryGuardrails.md`, "Feature organization").
 - Import exemptions are exact entries with a reason in `Config/ArchitectureGuardrails.json`; an exemption is not precedent (`Documentation/RepositoryGuardrails.md`, "Architecture and Xcode 27 compatibility").
 - Download risk, Keychain access and other security decisions are contracts worth a test (skill, "Tests").
-- Only this Crest's own `crest-browser` helper, running as this user, may use the agent socket (`CrestMac/Infrastructure/Agents/BrowserAgentListener.swift`).
+- Only this Arma's own `arma` helper, running as this user, may use the agent socket (`CrestMac/Infrastructure/Agents/BrowserAgentListener.swift`).
 
 ## Read next
 

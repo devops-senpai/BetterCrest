@@ -79,7 +79,7 @@ final class BrowserSpaceDownloadSettingsModel {
                 errorMessage = nil
                 refresh(for: space.id)
             } catch {
-                errorMessage = "Crest couldn’t retain access to this folder."
+                errorMessage = "Arma couldn’t retain access to this folder."
             }
         }
     }

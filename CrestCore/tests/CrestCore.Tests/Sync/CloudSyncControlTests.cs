@@ -44,8 +44,8 @@ public sealed partial class BrowserContractsTests {
         using var app = SyncingApp();
         long start = Advance(app, new StartCloudSync()).Steps[0].Attempt;
         Advance(app, new CloudEntitlementChecked(start, Granted: true));
-        var (status, steps) = Advance(app, new CloudStepFailed(start, CloudSyncStepKind.CheckAccount, "Crest can’t reach iCloud right now.", null));
-        Assert.Equal((CloudSyncPhase.Failed, "Crest can’t reach iCloud right now."), (status.Phase, status.FailureMessage));
+        var (status, steps) = Advance(app, new CloudStepFailed(start, CloudSyncStepKind.CheckAccount, "Arma can’t reach iCloud right now.", null));
+        Assert.Equal((CloudSyncPhase.Failed, "Arma can’t reach iCloud right now."), (status.Phase, status.FailureMessage));
         Assert.Equal([CloudSyncStepKind.ScheduleRetry], Kinds(steps));
 
         long retried = Assert.Single(Advance(app, new RetryCloudSync()).Steps).Attempt;

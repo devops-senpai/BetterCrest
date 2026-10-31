@@ -168,7 +168,7 @@ struct BrowserFindBar: View {
 
 #if DEBUG
     #Preview("Interactive find field") {
-        @Previewable @State var query = "Crest"
+        @Previewable @State var query = "Arma"
         @Previewable @State var match: BrowserFindMatchState = .found
         BrowserFindBar(
             port: BrowserFindPort(

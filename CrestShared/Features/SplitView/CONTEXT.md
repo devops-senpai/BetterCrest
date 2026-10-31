@@ -1,6 +1,6 @@
 # CrestShared/Features/SplitView
 
-Crest's split view: an ordered row of page cards, the gaps between them and
+Arma's split view: an ordered row of page cards, the gaps between them and
 the dividers in those gaps, card focus, placeholders, and the drop zones that
 add a page to a split. `BrowserSplitColumnsView` owns geometry only; widths
 come from `BrowserSplitColumnLayout` and membership from the session.

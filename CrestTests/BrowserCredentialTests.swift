@@ -391,7 +391,7 @@ final class BrowserCredentialTests: XCTestCase {
             password: "line one\n\"line two\"",
             for: try XCTUnwrap(URL(string: "https://accounts.crest.test/login")),
             in: work.id,
-            displayName: "Crest, Account"
+            displayName: "Arma, Account"
         )
         _ = try await store.saveCredential(
             username: "personal@example.com",

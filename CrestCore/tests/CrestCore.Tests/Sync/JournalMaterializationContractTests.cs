@@ -40,7 +40,7 @@ public sealed partial class BrowserContractsTests {
     public void NestedFoldersTravelInSiblingOrderWithTheirLook() {
         var session = OneSpaceSession();
         var (root, child, sibling) = (Fixed(240), Fixed(241), Fixed(242));
-        var childFolder = FolderOf(child, "Crest", "folder.fill", parent: root);
+        var childFolder = FolderOf(child, "Arma", "folder.fill", parent: root);
         childFolder["color"] = new JsonObject { ["red"] = 0.18, ["green"] = 0.42, ["blue"] = 0.72, ["alpha"] = 1.0 };
         childFolder["isCollapsed"] = true;
         childFolder["collapseModifiedAt"] = At(90);

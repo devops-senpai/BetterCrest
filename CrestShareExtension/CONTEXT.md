@@ -1,12 +1,12 @@
 # CrestShareExtension
 
-The iPhone and iPad share-sheet entry for Crest. It reads the web link
-another app shared and hands it to Crest by opening a `crest://open` URL, or
+The iPhone and iPad share-sheet entry for Arma. It reads the web link
+another app shared and hands it to Arma by opening a `crest://open` URL, or
 shows a short notice when it cannot.
 
 ## Goal
 
-Get a shared link into Crest with no UI beyond what the failure case needs.
+Get a shared link into Arma with no UI beyond what the failure case needs.
 
 ## Contents
 

@@ -16,7 +16,7 @@ struct MobileBrowserSidebarPreviewFixture {
         )
         let pinnedTab = Self.tab(
             id: 0x31,
-            title: "Crest Guide",
+            title: "Arma Guide",
             path: "/CrestPreview/guide.html",
             emoji: "🧭",
             placement: .pinned
@@ -54,7 +54,7 @@ struct MobileBrowserSidebarPreviewFixture {
                 HistoryEntryState(
                     id: Self.uuid(0x41),
                     url: URL(filePath: "/CrestPreview/history.html"),
-                    title: "Crest History",
+                    title: "Arma History",
                     firstVisitedAt: Self.epoch,
                     lastVisitedAt: Self.epoch,
                     visitCount: 2

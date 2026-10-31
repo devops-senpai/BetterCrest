@@ -138,7 +138,7 @@ A fixed set of kinds is one type whose static instances define its members. That
 - User-facing text uses `String(localized:)` / `LocalizedStringResource`; that is text, not a code.
 - `///` documentation for non-obvious contracts.
 - SwiftUI views follow the same order (stored inputs/environment/state as Variables, `init`, `body`, then subviews and helpers as Actions); defer view composition, state and performance questions to `swiftui-expert-skill` and visual design to `apple-native-swiftui-design`.
-- Run the repository formatter (Crest: `.swift-format` via `Scripts/check-swift-format.sh`) and build affected targets.
+- Run the repository formatter (Arma: `.swift-format` via `Scripts/check-swift-format.sh`) and build affected targets.
 
 ## Working method
 

@@ -1,6 +1,6 @@
 ---
 title: Keyboard shortcuts
-description: Reference every default Crest browser shortcut and customize the complete Mac command map.
+description: Reference every default Arma browser shortcut and customize the complete Mac command map.
 slug: /keyboard-shortcuts
 keywords: [keyboard, shortcuts, commands, customize, rebind, Mac, iPad]
 ---
@@ -92,7 +92,7 @@ Tap **Control-Tab** to jump to the tab you used last. On a Mac, hold it to see y
 
 ## iPad hardware keyboards
 
-iPad uses Crest’s shipped defaults for the commands available on that platform. Hold the Command key to inspect commands exposed by the current menu context. Full shortcut rebinding is a Mac feature.
+iPad uses Arma’s shipped defaults for the commands available on that platform. Hold the Command key to inspect commands exposed by the current menu context. Full shortcut rebinding is a Mac feature.
 
 On iPad, **Option-Command-N** remains New Quick Window. New Blank Window is a Mac command.
 
@@ -102,4 +102,4 @@ Some temporary interfaces have their own local actions. In Peek, **Command-W** c
 
 ## Resolve a conflict on Mac
 
-Search for either command in **Settings → Shortcuts**, select the row, and record a different key combination. Crest shows collisions before the replacement becomes part of your command map. Clearing a shortcut makes the action unassigned; resetting restores the shipped default.
+Search for either command in **Settings → Shortcuts**, select the row, and record a different key combination. Arma shows collisions before the replacement becomes part of your command map. Clearing a shortcut makes the action unassigned; resetting restores the shipped default.

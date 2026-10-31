@@ -1,7 +1,7 @@
 # CrestDockTilePlugin
 
-The macOS Dock tile plug-in. The Dock loads it to draw Crest's chosen app
-icon palette even while Crest is not running, and redraws when the choice or
+The macOS Dock tile plug-in. The Dock loads it to draw Arma's chosen app
+icon palette even while Arma is not running, and redraws when the choice or
 the system appearance changes.
 
 ## Goal

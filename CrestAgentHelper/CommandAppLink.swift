@@ -17,9 +17,9 @@ struct CommandAppLink {
         var message: String {
             switch self {
             case .unreachable:
-                "Crest isn't running. Open Crest, then run the command again."
+                "Arma isn't running. Open Arma, then run the command again."
             case .closed:
-                "Crest closed the connection before it answered."
+                "Arma closed the connection before it answered."
             }
         }
     }

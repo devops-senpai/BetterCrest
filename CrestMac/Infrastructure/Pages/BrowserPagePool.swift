@@ -14,7 +14,7 @@ final class BrowserPagePool:
     /// its page before the page goes.
     private static let popupWindowWait: Duration = .seconds(30)
     @ObservationIgnored private static let lifecycleSignposter = OSSignposter(
-        subsystem: "com.pauldavis.crest",
+        subsystem: "com.senpaimedia.arma",
         category: "WebKitLifecycle"
     )
 

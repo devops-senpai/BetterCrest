@@ -4,7 +4,7 @@ import WebKit
 enum BrowserUserActivityBridge {
     static let messageHandlerName = "crestUserActivity"
     static let contentWorld = WKContentWorld.world(
-        name: "com.pauldavis.crest.user-activity"
+        name: "com.senpaimedia.arma.user-activity"
     )
 
     static func install(

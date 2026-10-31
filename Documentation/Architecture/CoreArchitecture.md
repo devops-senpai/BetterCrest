@@ -1,6 +1,6 @@
 # Core architecture
 
-Crest's state and app logic live in one portable core, `CrestCore`, written in
+Arma's state and app logic live in one portable core, `CrestCore`, written in
 C#. Each platform supplies only its UI, its engine bindings and its OS
 services. Adding a platform means writing those three things and nothing else.
 
@@ -121,7 +121,7 @@ for `EnginePage` lists every direct engine call.
    set (`EngineCapability`). No capability is a string.
 4. Identifiers are plain `Guid` in C# and `UUID` in Swift, and they appear only
    at boundaries. Inside the core, methods take the objects themselves
-   (`window.Show(space, tab)`), not their identifiers. Crest does not wrap a
+   (`window.Show(space, tab)`), not their identifiers. Arma does not wrap a
    GUID in a type just to name it; Swift uses `UUID` for every identity.
 5. A wrapper type is justified only when it carries behavior or an invariant,
    as `SiteOrigin` does with normalization. A record whose constructor
@@ -212,12 +212,12 @@ commands the core issues (`CreatePage`, `LoadPage`, `ClosePage`,
 generator emits a C++ codec for the Chromium binding. Chromium implements it
 in portable C++ and reports events straight to the core, with no Objective-C
 or Swift in between. Chromium's Mac shell around it handles only view
-embedding, popups and web authentication. Crest's own Mac shell, which both
+embedding, popups and web authentication. Arma's own Mac shell, which both
 Mac products run, owns the windows, menus, launch, reopen, external opens and
 quit, and asks the core each decision it makes about them. WebKit implements
 the same contract in Swift, once, for macOS and iOS.
 
-Crest can run more than one engine at a time.
+Arma can run more than one engine at a time.
 
 - A composition registers a default engine and any others it carries. On the
   Mac, Chromium is the default and WebKit is available. An engine that isn't
@@ -268,9 +268,9 @@ address.
 
 ### Protected media fallback
 
-Crest's Chromium has no Widevine. WebKit plays FairPlay through the system's
+Arma's Chromium has no Widevine. WebKit plays FairPlay through the system's
 own content decryption, so a page whose video needs DRM can move to WebKit.
-Crest licenses nothing for this: it uses the platform's WebKit.
+Arma licenses nothing for this: it uses the platform's WebKit.
 
 1. A page asks for a key system Chromium cannot provide. The Chromium binding
    reports `ProtectedMediaUnavailable(page, keySystem)`.

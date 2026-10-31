@@ -13,8 +13,8 @@ enum BrowserCommandPalettePreviewFixture {
         tabs: [
             TabState.Seed(
                 id: selectedTabID,
-                title: "Crest",
-                url: url("https://crestbrowser.com"),
+                title: "Arma",
+                url: url("https://example.com"),
                 placement: .current,
                 lastActivatedAt: date(offset: 400)
             ),

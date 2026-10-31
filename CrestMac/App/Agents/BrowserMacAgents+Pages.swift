@@ -228,7 +228,7 @@ extension BrowserMacAgents {
             let shown = headers.map { header in
                 let name = header.name.lowercased()
                 let isPrivate = privateHeaderMarks.contains { name.contains($0) }
-                return (header.name, isPrivate ? "(hidden by Crest)" : header.value)
+                return (header.name, isPrivate ? "(hidden by Arma)" : header.value)
             }
             return Dictionary(shown, uniquingKeysWith: { first, _ in first })
         }
@@ -355,7 +355,7 @@ extension BrowserMacAgents {
         let press = try call.arguments(KeyPress.self)
         guard let key = BrowserAgentKey.named(press.key) else {
             throw .invalidArguments(
-                "\(press.key) is not a key Crest knows; use a KeyboardEvent key such as Enter or a.")
+                "\(press.key) is not a key Arma knows; use a KeyboardEvent key such as Enter or a.")
         }
         let modifiers = (press.modifiers ?? []).reduce(into: KeyModifiers()) { $0.formUnion($1.keys) }
         return try await serially(on: press.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
@@ -589,7 +589,7 @@ extension AgentJSON {
     /// something else.
     fileprivate func decoded<Value: Decodable>(_: Value.Type) throws(BrowserAgentFailure) -> Value {
         guard let value = try? decoded(as: Value.self) else {
-            throw .refused("The page answered something Crest can’t read.")
+            throw .refused("The page answered something Arma can’t read.")
         }
         return value
     }
