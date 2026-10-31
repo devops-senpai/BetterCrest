@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "Merging upstream Crest into this fork is one script: it takes upstream's version line, merges the release-note catalog three ways, regenerates generated sources and the Xcode project, runs the checks and commits, leaving only real code conflicts to a person."
+}
