@@ -169,7 +169,7 @@ def write_preview(name, light, dark=None):
     """The picker preview: one drawing, or a light and a dark one."""
     preview = PREVIEWS / f"{name}Preview.imageset"
     preview.mkdir(exist_ok=True)
-    for stale in preview.glob("*.svg"):
+    for stale in [*preview.glob("*.svg"), *preview.glob("*.png")]:
         stale.unlink()
     (preview / "icon.svg").write_text(light)
     images = [{"filename": "icon.svg", "idiom": "universal"}]
