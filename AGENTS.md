@@ -54,6 +54,28 @@ the same commit.
   commit subjects, implementation details, issue IDs, or test descriptions.
 - Never reuse, rename, edit, or delete an existing entry or entry file.
 
+## Keeping up with upstream
+
+BetterCrest is a fork of pauljoda/Crest. It merges upstream's `main`
+regularly and never rebases its own `main`.
+
+- Sync with `Scripts/sync-upstream.sh`. It fetches upstream, merges without
+  committing, takes upstream's copy of `Config/Version.xcconfig`, merges
+  `Documentation/ReleaseNotes.json` three ways with
+  `Scripts/merge-release-notes.py`, takes upstream's copy of every generated
+  file and regenerates them, runs the lint, the script tests and the version
+  check, then commits. Anything else that conflicts it leaves for a person.
+- Fork work never edits `Config/Version.xcconfig` or
+  `Documentation/ReleaseNotes.json`. Those two files change only as upstream
+  wrote them, through a merge; a fork change adds its note as
+  `Documentation/ReleaseNotes/<id>.json`. This keeps both files out of every
+  merge conflict.
+- Resolve a code conflict by reading both sides' commits. When upstream fixed
+  what a fork commit fixed, keep upstream's version and drop the fork's.
+- A merge resolution never changes anything under `CrestEngines/Chromium` or
+  `CrestContracts/include/crest_engine_contract.h` beyond what upstream
+  shipped, because those are engine inputs (see "Published Chromium engine").
+
 ## Generated localization catalog
 
 - Whenever `CrestShared/Resources/Localizable.xcstrings` changes, treat the
