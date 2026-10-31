@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "The empty sidebar strip moves the window from its own drag events instead of asking the system to start the drag."
+}
