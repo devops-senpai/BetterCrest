@@ -9,7 +9,7 @@ struct BrowserWindowAtmosphere: View {
     /// The Space's look as the current appearance shows it, read in `body`
     /// so it follows the appearance and Space-colors preferences.
     private var branding: SpaceBranding? {
-        space.map(\.settings.look.shown)
+        space.map(\.settings.shownLook.shown)
     }
 
     var body: some View {

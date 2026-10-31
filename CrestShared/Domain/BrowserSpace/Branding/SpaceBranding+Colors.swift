@@ -30,9 +30,11 @@ extension SpaceBranding {
 
     // MARK: - Actions - Text
 
-    /// The tone that reads best over the banner, unless the text color mode
+    /// The tone that reads best over the banner, unless the Space chose its
+    /// text color, whose brightness sets the tone, or the text color mode
     /// names one or follows the device, whose appearance reads in `system`.
     func foregroundTone(system: BrowserSpaceForegroundTone) -> BrowserSpaceForegroundTone {
+        if let chosen = sidebarTextColor { return chosen.luminance > 0.5 ? .light : .dark }
         if let override = textColorMode.foregroundTone(system: system) { return override }
         return (colors.isEmpty ? [.indigo] : colors).foregroundTone(
             strength: bannerStrength, readabilityFade: readabilityFade)

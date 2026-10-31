@@ -198,7 +198,7 @@ struct MobileBrowserSidebarSurface: View {
     /// does, so they keep agreeing.
     private var selectedSidebarColorScheme: ColorScheme {
         guard let space = browser.shownSpace else { return colorScheme }
-        return space.settings.look.colorScheme(over: colorScheme)
+        return space.settings.shownLook.colorScheme(over: colorScheme)
     }
 
     private var selectedSpaceAssignment: BrowserSpaceRuntimeAssignment? {

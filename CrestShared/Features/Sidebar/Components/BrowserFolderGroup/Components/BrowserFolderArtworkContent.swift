@@ -4,6 +4,8 @@ import SwiftUI
 struct BrowserFolderArtworkContent: View {
     let symbol: String
     let color: BrandColor
+    /// The back face's own color, or nil to shade `color` for it.
+    var backColor: BrandColor? = nil
     var isExpanded = false
     let iconOnly: Bool
     var tintsTitle = false
@@ -25,8 +27,11 @@ struct BrowserFolderArtworkContent: View {
             .foregroundStyle(symbolStyle)
             .transaction { $0.animation = nil }
         } else {
-            BrowserFolderFaces(glyph: Self.customGlyph(for: symbol), color: color, isExpanded: isExpanded)
-                .foregroundStyle(faceForeground)
+            BrowserFolderFaces(
+                glyph: Self.customGlyph(for: symbol), color: color, backColor: backColor ?? color.folderBackShade,
+                isExpanded: isExpanded
+            )
+            .foregroundStyle(faceForeground)
         }
     }
 
@@ -68,6 +73,7 @@ private enum BrowserFolderGeometry {
 private struct BrowserFolderFaces: View {
     let glyph: Text?
     let color: BrandColor
+    let backColor: BrandColor
     let isExpanded: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -105,8 +111,7 @@ private struct BrowserFolderFaces: View {
                             center: CGPoint(x: radius, y: radius), radius: radius,
                             startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
                         path.closeSubpath()
-                        context.fill(path, with: .color(faceColor))
-                        context.fill(path, with: .color(.black.opacity(0.22)))
+                        context.fill(path, with: .color(backColor.color))
                     }
                     .modifier(
                         BrowserFolderFaceProjection(front: false, openness: isExpanded ? 1 : 0)

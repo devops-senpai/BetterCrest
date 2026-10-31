@@ -113,7 +113,9 @@ public sealed class SpaceHouse {
         double gradientAngle = 0) =>
         new(new([.. colors.Select(tincture => tincture.Color)]), pattern, BannerStrength: 1, ReadabilityFade: 0.45,
             KeepsControlsReadable: true, mode, gradientAngle, ShowsTexture: false, SpaceIconStyle.LayeredCrest, SymbolColor: null,
-            arms, CrestVocabulary.Studio.Version, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: false);
+            arms, CrestVocabulary.Studio.Version, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: false,
+            FolderColor: null, FolderBackColor: null, CommandPalette: null,
+            SidebarTextColor: null);
 
     /// A house's arms: its figure on its field, each part in a tincture of its
     /// own, `colors` holding the field, second field, band, emblem, border and
