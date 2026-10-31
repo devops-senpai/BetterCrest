@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "channels": {
+    "stable": "bettercrest-name-and-icon",
+    "development": "bettercrest-name-and-icon",
+    "nightly": "bettercrest-name-and-icon"
+  }
+}
