@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "The app icon picker's palette previews no longer carry unused bitmap copies beside their vector drawings."
+}
