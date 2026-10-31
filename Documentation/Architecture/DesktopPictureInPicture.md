@@ -1,6 +1,6 @@
 # Desktop Picture in Picture
 
-On WebKit pages, Crest uses macOS's native video Picture in Picture
+On WebKit pages, BetterCrest uses macOS's native video Picture in Picture
 presentation, including its system window and controls; Chromium pages use
 Chromium's own Picture in Picture window. Automatic entry is enabled by default
 and can be disabled in Settings → General → Video. Manual entry remains
@@ -17,12 +17,12 @@ Requests can fail with `NotSupportedError` even when those APIs are present.
 WebKit's own MiniBrowser enables the desktop preference through
 `-[WKPreferences _setAllowsPictureInPictureMediaPlayback:]`.
 `BrowserDesktopPictureInPictureAccess` resolves this selector at runtime and
-uses a typed implementation pointer, following Crest's existing inspector
+uses a typed implementation pointer, following BetterCrest's existing inspector
 access pattern. The preference is enabled before constructing each page's
 WKWebView, including adopted popup configurations. Missing SPI fails closed.
 The iOS configuration property with a similar name is unavailable on macOS.
 
-Crest's direct-distribution Mac app uses hardened runtime without App Sandbox.
+BetterCrest's direct-distribution Mac app uses hardened runtime without App Sandbox.
 
 Reference implementation and definitions:
 
@@ -40,12 +40,12 @@ tab set. Moving focus between cards in a visible split does not enter PiP.
 If multiple cards leave together, the focused card is considered first.
 Entering an unlocked empty Space or start page follows the same departure
 lifecycle. Locking a protected Space withdraws its pages' pending automatic
-requests. A departing WebKit page enters through Crest's bridge in the page,
+requests. A departing WebKit page enters through BetterCrest's bridge in the page,
 after the player checks below. A departing Chromium page that is playing, and
 not already in Picture in Picture, enters through the `EnterPictureInPicture`
 page request, which asks Chromium's media session to move its video.
 
-Coming back to the source page ends its PiP session, whether Crest started it
+Coming back to the source page ends its PiP session, whether BetterCrest started it
 automatically or the person entered it: the video returns to its place in the
 page. The core decides this once for both engines. Each page reports its PiP
 activity in its snapshot, and when a window shows a page again (by the sidebar,
@@ -57,7 +57,7 @@ its PiP. The page controller's `returnToTab()` only withdraws an automatic
 request still pending.
 
 A Space this process may not show keeps no video on screen. When a protected
-Space locks, on demand or as Crest goes to the background, or a Space is being
+Space locks, on demand or as BetterCrest goes to the background, or a Space is being
 deleted or is gone, the core sends `ExitPictureInPicture` to every page of that
 Space that reports PiP: its tabs' pages, in the background or not, and its Quick
 Window and Peek pages. A page that reports PiP again while its Space is locked

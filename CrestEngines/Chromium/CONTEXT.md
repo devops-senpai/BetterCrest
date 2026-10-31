@@ -1,6 +1,6 @@
 # CrestEngines/Chromium
 
-Crest's maintained Chromium fork and its Swift adapter. The upstream recipe,
+BetterCrest's maintained Chromium fork and its Swift adapter. The upstream recipe,
 patches, overlay and C ABI headers form one versioned engine definition; the
 expanded source and builds live outside the checkout. The release workflow
 cannot build Chromium: it downloads a prebuilt engine named by a key over its
@@ -16,8 +16,8 @@ WebKit, with every engine change reviewed beside its Swift caller.
 | Path | What it is |
 | --- | --- |
 | `fork.json`, `source.lock.json`, `host-inputs.json` | The upstream repository and channel, the pinned recipe, the host patch's inputs and outputs |
-| `Patches/` | Crest's patches over upstream (`native-host.patch` selects the Crest window) |
-| `Overlay/` | C++ and Objective-C++ added to the Chromium tree: the engine binding, the Crest `BrowserWindow`, user-data-directory adoption (see "Overlay" below) |
+| `Patches/` | BetterCrest's patches over upstream (`native-host.patch` selects the BetterCrest window) |
+| `Overlay/` | C++ and Objective-C++ added to the Chromium tree: the engine binding, the BetterCrest `BrowserWindow`, user-data-directory adoption (see "Overlay" below) |
 | `Apple/` | The Swift adapter: `ChromiumEngine`, `ChromiumPageAdapter`, runtime, extensions, presentations; `CrestChromiumHost.h` ([CONTEXT](Apple/CONTEXT.md)) |
 | `Composition/` | The `Crest-Native-Host` resource marker bundled with the Chromium UI product |
 | `ThirdParty/` | Provenance and retained licenses for adapted code |
@@ -45,7 +45,7 @@ and `CrestChromiumUIProduct` targets in `project.yml` compile `Apple/`.
 The C++ and Objective-C++ sources `Scripts/control-plane/apply-chromium-host.py`
 copies into the Chromium tree, at the paths they take there, after
 `Patches/native-host.patch` applies. They let Chrome's own `Browser`, tab model
-and extension system drive Crest's UI and report to the core, behind the same
+and extension system drive BetterCrest's UI and report to the core, behind the same
 engine contract as WebKit.
 
 | Path in `Overlay/` | What it is |
@@ -61,9 +61,9 @@ The install also copies `Apple/CrestChromiumHost.h` and the engine contract
 headers into `chrome/browser/ui/crest/`. The binding reports what Chromium did
 and never decides browser rules; a Space is one profile and a private window a
 fresh incognito profile (`Documentation/Architecture/EngineAbstractionCompletion.md`,
-"Ownership"). The Crest window is selected only with `--crest-control-plane`,
+"Ownership"). The BetterCrest window is selected only with `--crest-control-plane`,
 and the overlay installs only after the baseline build has stopped
-(`README.md`, "Native Crest host overlay").
+(`README.md`, "Native BetterCrest host overlay").
 
 ## Read next
 

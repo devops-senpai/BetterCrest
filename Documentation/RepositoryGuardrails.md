@@ -1,10 +1,10 @@
 # Repository guardrails
 
-Crest keeps repository checks narrow enough to express real architecture contracts. They intentionally do not guess whether a number is a design token, whether a declaration reported by static analysis is safe to delete, or how many declarations and folders a cohesive feature needs.
+BetterCrest keeps repository checks narrow enough to express real architecture contracts. They intentionally do not guess whether a number is a design token, whether a declaration reported by static analysis is safe to delete, or how many declarations and folders a cohesive feature needs.
 
 ## Changed-file formatting
 
-The root `.swift-format` configuration preserves Crest's four-space indentation and 120-column style. Check current staged, unstaged, and untracked Swift changes without rewriting them:
+The root `.swift-format` configuration preserves BetterCrest's four-space indentation and 120-column style. Check current staged, unstaged, and untracked Swift changes without rewriting them:
 
 ```sh
 Scripts/check-swift-format.sh
@@ -100,7 +100,7 @@ An exemption is not precedent for another file: add new debt only with a focused
 
 ## Feature organization
 
-Review applies Crest's deliberately small organization contract across `CrestShared`, `CrestMac`, and `CrestMobile`:
+Review applies BetterCrest's deliberately small organization contract across `CrestShared`, `CrestMac`, and `CrestMobile`:
 
 - Organize code by user-visible feature or runtime capability. Folder names describe the behavior a developer is looking for; `Components`, `Models`, `Services`, and `Support` are available vocabulary, not mandatory layers.
 - A file holds one cohesive concept. Name it for either its primary owner or the role of a tightly related group; small single-use values, private helpers, related global declarations, and nested types should live with that concept. Multiple extensions may share a file when they extend that same owner. Use `// MARK:` sections named for the behavior they contain, rather than generic labels such as `Utilities` or `Animation`.
@@ -117,7 +117,7 @@ UI components are canonical in `CrestShared` and read what their environment can
 
 ## Isolated validation sessions
 
-Every fixture, forced-onboarding, setup, showcase, credential test, SwiftUI Preview, or automated app launch must use Crest's isolated launch graph. Set `CREST_ISOLATED_SESSION=1` for validation launches even when another fixture flag already implies isolation.
+Every fixture, forced-onboarding, setup, showcase, credential test, SwiftUI Preview, or automated app launch must use BetterCrest's isolated launch graph. Set `CREST_ISOLATED_SESSION=1` for validation launches even when another fixture flag already implies isolation.
 
 Use `CREST_ISOLATED_PERSISTENCE_ID=<name>` when a validation profile needs to survive relaunches. Keep fixture launches isolated from normal browsing data.
 
@@ -132,7 +132,7 @@ python3 -m unittest discover -s Scripts/Tests
 ```
 
 `Scripts/validate.sh` runs this suite before the app tests. The manually
-dispatched **Build Crest** workflow also runs it in a separate macOS job,
+dispatched **Build BetterCrest** workflow also runs it in a separate macOS job,
 including release workflow, version, release-note publication, public-source,
 and CloudKit environment contracts. These tests do
 not build the app; the shell-based version tests require macOS `plutil`, Git,

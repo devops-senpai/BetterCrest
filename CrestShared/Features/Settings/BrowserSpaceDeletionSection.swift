@@ -81,7 +81,7 @@ struct BrowserSpaceDeletionSection: View {
 
     private func disclosure(_ plan: BrowserSpaceDeletionPlan?) -> String {
         if browser.spaceModels.count <= 1 {
-            return String(localized: "Crest needs at least one Space.")
+            return String(localized: "BetterCrest needs at least one Space.")
         }
         guard let space = browser.spaceModel(spaceID) else { return "" }
         if browser.isSubSpace(space) {

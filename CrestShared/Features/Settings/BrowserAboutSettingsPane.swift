@@ -43,7 +43,7 @@ struct BrowserAboutSettingsPane: View {
                         }
                         .padding(.vertical, CrestSpacing.small)
                     } label: {
-                        Text("What's New in Crest \(buildInformation.version)")
+                        Text("What's New in BetterCrest \(buildInformation.version)")
                             .font(.body.weight(.medium))
                     }
                     .disclosureGroupStyle(
@@ -54,8 +54,8 @@ struct BrowserAboutSettingsPane: View {
 
             Section {
                 BrowserAboutLink(
-                    title: "Share Feedback on r/CrestBrowser",
-                    imageName: "AboutReddit",
+                    title: "Share Feedback on GitHub",
+                    imageName: "AboutGitHub",
                     destination: BrowserAboutLinks.feedback,
                     identifier: "about-feedback-link"
                 )

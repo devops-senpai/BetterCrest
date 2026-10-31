@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 /// A Space's looks as a theme file people share: written with a save panel,
 /// read with an open panel and laid onto the looks. The file is the same JSON
-/// `crest-browser theme` writes and reads, with a `dark` object when the
+/// `bettercrest theme` writes and reads, with a `dark` object when the
 /// Space has a look of its own for dark windows.
 @MainActor
 struct BrowserSpaceThemeFiles {
@@ -84,7 +84,7 @@ struct BrowserSpaceThemeFiles {
         do {
             theme = try CrestTheme(json: try Data(contentsOf: url))
         } catch {
-            return "\(url.lastPathComponent) is not a Crest theme."
+            return "\(url.lastPathComponent) is not a BetterCrest theme."
         }
         let current = branding.wrappedValue
         let currentDark = darkBranding.wrappedValue

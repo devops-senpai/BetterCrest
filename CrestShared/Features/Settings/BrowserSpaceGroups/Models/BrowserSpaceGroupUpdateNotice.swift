@@ -7,7 +7,7 @@ import Foundation
 enum BrowserSpaceGroupUpdateNotice {
     // MARK: - Static Variables
 
-    static let message = String(localized: "Update Crest on your other devices to share sign-ins there.")
+    static let message = String(localized: "Update BetterCrest on your other devices to share sign-ins there.")
 
     private static let shownKey = "crest.subSpaces.updateNoticeShown"
 

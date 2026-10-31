@@ -18,7 +18,7 @@ import WebKit
 enum BrowserLinkContextContentBridge {
     static let messageHandlerName = "crestLinkContext"
     static let contentWorld = WKContentWorld.world(
-        name: "com.pauldavis.crest.link-context"
+        name: "com.senpaimedia.bettercrest.link-context"
     )
 
     static func install(

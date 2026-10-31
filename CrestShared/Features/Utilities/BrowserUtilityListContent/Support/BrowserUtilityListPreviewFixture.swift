@@ -10,7 +10,7 @@ enum BrowserUtilityListPreviewFixture {
     static let historyEntry = HistoryEntryState(
         id: identifier(0x31),
         url: previewURL("history").absoluteString,
-        title: "Crest Project Notes",
+        title: "BetterCrest Project Notes",
         firstVisitedAt: referenceDate.addingTimeInterval(-3_600),
         lastVisitedAt: referenceDate,
         visitCount: 3
@@ -67,27 +67,27 @@ enum BrowserUtilityListPreviewFixture {
 
     static let preparingDownload = download(
         id: identifier(0x51),
-        filename: "Crest.dmg",
+        filename: "BetterCrest.dmg",
         phase: .preparing
     )
 
     static let activeDownload = download(
         id: identifier(0x52),
-        filename: "Crest.dmg",
+        filename: "BetterCrest.dmg",
         progress: 0.64,
         phase: .downloading
     )
 
     static let finishedDownload = download(
         id: identifier(0x53),
-        filename: "Crest.dmg",
+        filename: "BetterCrest.dmg",
         progress: 1,
         phase: .finished
     )
 
     static let failedDownload = download(
         id: identifier(0x54),
-        filename: "Crest.dmg",
+        filename: "BetterCrest.dmg",
         phase: .failed,
         message: "The connection was interrupted."
     )

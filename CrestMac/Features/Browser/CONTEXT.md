@@ -32,7 +32,7 @@ window content.
 
 - Informational feedback goes through `BrowserChromeState.showNotice` and `BrowserNoticeLayer`; alerts and sheets only when the person must decide (skill, "Windows and UI").
 - A window a page asks for opens as a Quick Window over its opener's window, never a window of its own (`Documentation/ARCHITECTURE.md`, "Windows on macOS").
-- The content under the title bar keeps the window from moving while the pointer is on a page; Crest's own chrome acts as the title bar (`Documentation/ARCHITECTURE.md`, "Windows on macOS").
+- The content under the title bar keeps the window from moving while the pointer is on a page; BetterCrest's own chrome acts as the title bar (`Documentation/ARCHITECTURE.md`, "Windows on macOS").
 - The focused window hosts a tab's live view; other windows show its preview (`Documentation/ARCHITECTURE.md`, "Windows on macOS").
 - Keep root `body` implementations small and compose narrowly scoped views (`Documentation/RepositoryGuardrails.md`, "Feature organization").
 - Visual changes are checked in the running app with `CREST_ISOLATED_SESSION=1` and shown in the pull request (skill, "Verification and reporting").

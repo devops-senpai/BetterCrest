@@ -25,7 +25,7 @@ struct DiagnosticLog: Sendable {
     // MARK: - Initializers
 
     private init(category: String) {
-        logger = Logger(subsystem: "com.pauldavis.crest", category: category)
+        logger = Logger(subsystem: "com.senpaimedia.bettercrest", category: category)
     }
 
     // MARK: - Actions - Describing

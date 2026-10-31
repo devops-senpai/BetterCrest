@@ -74,7 +74,7 @@ never saved or synced.
 
 The application and domain have no native engine references.
 
-The native Crest apps use the `crest_app_*` entry points, plus
+The native BetterCrest apps use the `crest_app_*` entry points, plus
 `crest_core_answer` for questions that need no app. The cloud transport sends its
 `CloudSyncIntent`s through `crest_app_dispatch` from its own thread, and asks
 `PendingUploads`, `RecordsToUpload` and `CloudComparison` through
@@ -182,7 +182,7 @@ Link preferences are device state too, never synced. `AddLinkRoute`,
 document earlier releases kept under `crest.link-preferences.v1` into the
 device store once. A deleted Space takes its routes with it and is forgotten
 wherever the preferences remembered it. The `RouteExternalLink` query answers
-where a link another app hands Crest opens, over the windows as the platform
+where a link another app hands BetterCrest opens, over the windows as the platform
 stacks them: the Space and window, which is the frontmost over the persistent
 session or, with none open, one to open (`OpensWindow`), or a Quick Window
 alone. A link routed to a locked Space opens in a Quick Window on an unlocked

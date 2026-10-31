@@ -5,7 +5,7 @@ import Foundation
 /// an Application Support directory use.
 final class InMemoryBrowserFaviconStore: BrowserFaviconStoring, @unchecked Sendable {
     private let accessQueue = DispatchQueue(
-        label: "com.pauldavis.crest.favicon-store.memory"
+        label: "com.senpaimedia.bettercrest.favicon-store.memory"
     )
     private var favicons: [UUID: Data] = [:]
 

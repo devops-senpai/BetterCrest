@@ -16,7 +16,7 @@ components never branch on a device.
 | --- | --- |
 | `Models/` | `BrowserInteractionCapabilities`, chrome appearance and models, utility presentation, sidebar width transaction, command-surface morph and palette handoff |
 | `BrowserAddressContent/` | The address text and its controls, long-press style and focus dismissal |
-| `Components/BrowserCommandPalette/` | Crest's launcher: model, command registry, completion, result rows, provider chips |
+| `Components/BrowserCommandPalette/` | BetterCrest's launcher: model, command registry, completion, result rows, provider chips |
 | `Components/BrowserSpacePager/` | Paging between Spaces with a shared selection contract |
 | `Components/BrowserSidebarResizeHandle/` | Dragging the sidebar width |
 | `Components/BrowserChromeAppearancePersistence.swift` | Window corner and sidebar side at the scene boundary |

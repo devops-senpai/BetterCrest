@@ -29,7 +29,7 @@ read model.
 | `HostedWebNotifications/` | The port that delivers web notifications through the system |
 | `Launch/` | Application launch, process launch flags, store composition, persistence flush at quit |
 | `Links/` | Link and split hosts a page needs from its tab owner |
-| `MediaSessions/` | How a page's Media Session state and commands cross to Crest |
+| `MediaSessions/` | How a page's Media Session state and commands cross to BetterCrest |
 | `PageActions/` | Page operations: find, zoom, reload, export, translation, Reader bridge, developer panel, back/forward items |
 | `Pages/` | `BrowserPageHost`, `BrowserPageOwner`, `BrowserTabRuntime`, page reconciliation, tab state, memory pressure |
 | `Popups/` | Popup scheme routing and blocked-popup decisions |

@@ -4,7 +4,7 @@ WebKit's binding, shared by the Mac, iPhone and iPad. `WebKitEngineBinding`
 builds each page the core asks WebKit to create, performs the core's engine
 commands, raises sign-ins, script dialogs and permission requests with the
 core, runs WebKit's downloads, keeps each profile's website data store, and
-compiles Crest's content rules. Platform hosting of the web view stays in
+compiles BetterCrest's content rules. Platform hosting of the web view stays in
 `CrestMac/Infrastructure/WebKit/` and `CrestMobile/Infrastructure/WebKit/`.
 
 ## Goal
@@ -39,7 +39,7 @@ happened and deciding no browser rule itself.
 | `BrowserLinkPull*.swift` | Decoding the link-pull bridge for Peek |
 | `WebKitPopup.swift`, `WebKitSignInResponder.swift` | A popup WebKit makes from its opener's configuration; a sign-in answered through the core |
 | `BrowserTransientPageLease.swift`, `BrowserPageHost+TransientLeases.swift` | Quick Window and Peek page leases |
-| `BrowserPageContentRuleSession.swift`, `BrowserPageNavigationHistory.swift`, `BrowserPageOwner+ScriptMessages.swift`, `ScriptMessageProxy.swift` | Crest's content rules on a page, its back/forward lists, and content-bridge messages |
+| `BrowserPageContentRuleSession.swift`, `BrowserPageNavigationHistory.swift`, `BrowserPageOwner+ScriptMessages.swift`, `ScriptMessageProxy.swift` | BetterCrest's content rules on a page, its back/forward lists, and content-bridge messages |
 | `PageConfiguration.swift`, `PageSecurity+WebKit.swift`, `VisitedLinkStyler.swift` | Page configuration defaults, WebKit's security judgment, visited-link styling |
 | `BrowserAppPreferenceStore+WebKitSpelling.swift`, `BrowserMacWebTextAssistancePreference.swift` | Spelling and text-checking preferences WebKit reads |
 

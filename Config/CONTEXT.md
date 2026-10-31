@@ -14,7 +14,7 @@ workflow validates.
 
 | File | What it is |
 | --- | --- |
-| `Version.xcconfig` | `MARKETING_VERSION`, the only source of Crest's public version |
+| `Version.xcconfig` | `MARKETING_VERSION`, the only source of BetterCrest's public version |
 | `ArchitectureGuardrails.json` | Exact, reasoned exemptions read by `Scripts/check-architecture.py` |
 | `ThirdPartyDependencies.json` | Runtime dependencies and bundled data with their licenses and notices, read by `Scripts/audit-licenses.py` |
 | `DeveloperIDExportOptions.plist` | Developer ID export for release packages (`.github/workflows/release.yml`, `Scripts/install-local-macos-release.sh`) |

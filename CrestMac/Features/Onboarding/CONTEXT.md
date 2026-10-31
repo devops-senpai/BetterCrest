@@ -1,13 +1,13 @@
 # Onboarding
 
-The Mac setup window: welcome, importing from installed browsers or a Crest
+The Mac setup window: welcome, importing from installed browsers or a BetterCrest
 archive, reviewing and customizing the Spaces an import makes, choosing a
 look, manual setup and completion. It also holds the Mac readers that find
 installed browsers and read their saved passwords.
 
 ## Goal
 
-A person moves into Crest from another browser in one reviewed pass, with the
+A person moves into BetterCrest from another browser in one reviewed pass, with the
 core holding the setup flow and committing the import.
 
 ## Contents

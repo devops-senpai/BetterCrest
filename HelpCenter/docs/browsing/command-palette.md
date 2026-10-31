@@ -1,13 +1,13 @@
 ---
 title: Use the command palette
-description: Search, navigate, switch tabs, revisit history, search any site or ask an AI assistant, and run Crest commands from one field.
+description: Search, navigate, switch tabs, revisit history, search any site or ask an AI assistant, and run BetterCrest commands from one field.
 slug: /command-palette
 keywords: [command palette, address bar, search, commands, tabs, history, top hit, recent tabs, search providers, site search, AI assistant, Tab, autocomplete, scopes, calculator]
 ---
 
 # Use the command palette
 
-Click the address display or press **Command-L**. The same palette can resolve a web address, search query, open tab, saved page, history entry, Space, settings page, or Crest command.
+Click the address display or press **Command-L**. The same palette can resolve a web address, search query, open tab, saved page, history entry, Space, settings page, or BetterCrest command.
 
 ## Read the results
 
@@ -25,7 +25,7 @@ As you type the start of a site you've typed or opened before, or one a tab show
 
 Type a provider's shortcut, such as **g** for Google, **ddg** for DuckDuckGo, **yt** for YouTube, **w** for Wikipedia, or **claude**, and press **Tab**; this needs **Tab to search providers**, which is on unless you turn it off. While you type the first word, every provider it names or starts to name shows as a chip under the field, with its shortcut; the first is the one **Tab** chooses, and you can click any of them. Once a provider is chosen, a chip with its icon and color appears beside the field. Type your search and press **Return** to search that provider, or to ask an AI assistant. When what you typed is exactly a shortcut, **Tab** chooses the provider even while the field completes an address. Type `$` before a shortcut, such as `$yt`, and a space to choose the provider without pressing **Tab**. **Space to search providers** in **Settings → Search** turns this off, or lets a shortcut alone, such as `yt`, and a space choose the provider too. Its suggestions, where it offers them, come only from that provider. Press **Escape**, **Delete** in an empty field, or the chip's close control to leave and keep your text.
 
-Crest offers search engines such as Google, DuckDuckGo, Bing, Brave Search and Startpage; AI assistants such as ChatGPT, Claude and Perplexity; and websites such as YouTube, Wikipedia, GitHub, Reddit and Amazon. Turn providers on or off, change their shortcuts, set their options, choose your default search and the one private windows use, and add your own in **Settings → Search**. Search providers stay on this device.
+BetterCrest offers search engines such as Google, DuckDuckGo, Bing, Brave Search and Startpage; AI assistants such as ChatGPT, Claude and Perplexity; and websites such as YouTube, Wikipedia, GitHub, Reddit and Amazon. Turn providers on or off, change their shortcuts, set their options, choose your default search and the one private windows use, and add your own in **Settings → Search**. Search providers stay on this device.
 
 ## Narrow to one kind of result
 

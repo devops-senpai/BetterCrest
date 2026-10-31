@@ -4,7 +4,7 @@ import WebKit
 // MARK: - Actions - WebKit
 
 extension BrowserCredentialContentBridge {
-    static let contentWorld = WKContentWorld.world(name: "com.pauldavis.crest.credentials")
+    static let contentWorld = WKContentWorld.world(name: "com.senpaimedia.bettercrest.credentials")
 
     static func install(
         in userContentController: WKUserContentController,

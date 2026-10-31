@@ -24,7 +24,9 @@
                         Spacer()
                         Label("Practice window", systemImage: "leaf").font(CrestTypography.sans(11, weight: .medium))
                         Spacer()
-                        Text("Crest").font(CrestTypography.sans(10, weight: .semibold)).foregroundStyle(.secondary)
+                        Text("BetterCrest")
+                            .font(CrestTypography.sans(10, weight: .semibold))
+                            .foregroundStyle(.secondary)
                     }.padding(14)
                     Divider()
                     HStack(spacing: 0) {

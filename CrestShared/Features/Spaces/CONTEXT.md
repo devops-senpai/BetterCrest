@@ -38,7 +38,7 @@ identity), `Browser/` (banner backdrop), the Space editors in
 
 - Spaces live in the core; Swift edits them through intents (skill, "Architecture").
 - A Space is the privacy boundary; what it owns is listed in `Documentation/ARCHITECTURE.md`, "Space isolation".
-- Colours come from the Crest tokens and template house palettes, never system rainbow colours (skill, "Windows and UI").
+- Colours come from the BetterCrest tokens and template house palettes, never system rainbow colours (skill, "Windows and UI").
 - Previews reuse the feature's fixture, `CrestShared/Features/Spaces/Support/BrowserSpaceBrandingPreviewFixture.swift`, with fixed identities and dates (`Documentation/RepositoryGuardrails.md`, "Feature organization").
 
 ## Read next

@@ -872,7 +872,7 @@ struct AgentIdentity: Equatable, Sendable {
 
 struct AgentNotApproved: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("The person hasn’t allowed this agent to use Crest.")
+        LocalizedStringResource("The person hasn’t allowed this agent to use BetterCrest.")
     }
 }
 
@@ -919,7 +919,7 @@ struct AgentSessionsFull: Equatable, Sendable {
     let maximum: Int
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Too many agents are using Crest right now.")
+        LocalizedStringResource("Too many agents are using BetterCrest right now.")
     }
 }
 
@@ -972,13 +972,13 @@ struct AgentsFull: Equatable, Sendable {
 
 struct AgentsOff: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Agents are turned off in Crest’s settings.")
+        LocalizedStringResource("Agents are turned off in BetterCrest’s settings.")
     }
 }
 
 struct AgentsUnavailable: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Agents can’t use Crest on this device.")
+        LocalizedStringResource("Agents can’t use BetterCrest on this device.")
     }
 }
 
@@ -1155,13 +1155,13 @@ struct ArchiveChanged: CoreChange, Equatable, Sendable {
 
 struct ArchiveInvalid: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This file does not contain valid Crest browser data.")
+        LocalizedStringResource("This file does not contain valid BetterCrest browser data.")
     }
 }
 
 struct ArchiveTooLarge: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This file is larger than Crest’s 50 MB import limit.")
+        LocalizedStringResource("This file is larger than BetterCrest’s 50 MB import limit.")
     }
 }
 
@@ -1344,25 +1344,25 @@ struct BlockedPopupTransitioned: Equatable, Sendable {
 
 struct BookmarksHaveNoLinks: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This file does not contain any HTTP or HTTPS bookmarks Crest can import.")
+        LocalizedStringResource("This file does not contain any HTTP or HTTPS bookmarks BetterCrest can import.")
     }
 }
 
 struct BookmarksOverLimits: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This bookmark file exceeds Crest’s folder, depth, tab, or Space limits.")
+        LocalizedStringResource("This bookmark file exceeds BetterCrest’s folder, depth, tab, or Space limits.")
     }
 }
 
 struct BookmarksTooLarge: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This bookmark file is larger than Crest’s 50 MB import limit.")
+        LocalizedStringResource("This bookmark file is larger than BetterCrest’s 50 MB import limit.")
     }
 }
 
 struct BookmarksUnrecognized: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest could not recognize this browser’s bookmark data.")
+        LocalizedStringResource("BetterCrest could not recognize this browser’s bookmark data.")
     }
 }
 
@@ -1439,7 +1439,7 @@ struct CancelImportRead: Intent, SetupFlowIntent, Equatable, Sendable {
 
 struct CannotDeleteLastSpace: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest needs at least one Space.")
+        LocalizedStringResource("BetterCrest needs at least one Space.")
     }
 }
 
@@ -2794,7 +2794,7 @@ struct FileTabs: Intent, SessionIntent, Equatable, Sendable {
 
 struct FileUnreadable: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest could not read this file.")
+        LocalizedStringResource("BetterCrest could not read this file.")
     }
 }
 
@@ -3280,7 +3280,7 @@ struct InvalidAgent: Equatable, Sendable {
     let maximumName: Int
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest couldn’t tell which program this agent is.")
+        LocalizedStringResource("BetterCrest couldn’t tell which program this agent is.")
     }
 }
 
@@ -3327,7 +3327,7 @@ struct InvalidImport: Equatable, Sendable {
     let flaw: ImportFlaw
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest couldn’t read the Spaces to import.")
+        LocalizedStringResource("BetterCrest couldn’t read the Spaces to import.")
     }
 }
 
@@ -3403,7 +3403,7 @@ struct InvalidSyncRecords: Equatable, Sendable {
     let subject: UUID?
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest couldn’t apply the latest changes from iCloud.")
+        LocalizedStringResource("BetterCrest couldn’t apply the latest changes from iCloud.")
     }
 }
 
@@ -3578,7 +3578,7 @@ struct LegacyAppPreferences: Equatable, Sendable {
 
 struct LegacyCloudStateUnreadable: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest couldn’t read the iCloud sync state an earlier version saved.")
+        LocalizedStringResource("BetterCrest couldn’t read the iCloud sync state an earlier version saved.")
     }
 }
 
@@ -3988,7 +3988,7 @@ struct NormalizedBranding: Equatable, Sendable {
 
 struct NotAnArchive: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This is not a Crest browser-data file.")
+        LocalizedStringResource("This is not a BetterCrest browser-data file.")
     }
 }
 
@@ -5291,7 +5291,7 @@ struct SaveFailed: Equatable, Sendable {
     let reason: StorageFailure
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest couldn’t save this change. Try again.")
+        LocalizedStringResource("BetterCrest couldn’t save this change. Try again.")
     }
 }
 
@@ -5555,13 +5555,13 @@ struct SessionEncrypted: Equatable, Sendable {
 
 struct SessionHasNoTabs: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This session has no HTTP or HTTPS tabs Crest can import.")
+        LocalizedStringResource("This session has no HTTP or HTTPS tabs BetterCrest can import.")
     }
 }
 
 struct SessionOverLimits: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This session exceeds Crest’s Space, tab, folder, or text limits.")
+        LocalizedStringResource("This session exceeds BetterCrest’s Space, tab, folder, or text limits.")
     }
 }
 
@@ -5596,13 +5596,13 @@ struct SessionState: Equatable, Sendable {
 
 struct SessionTooLarge: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("This session file is larger than Crest’s 512 MB import limit.")
+        LocalizedStringResource("This session file is larger than BetterCrest’s 512 MB import limit.")
     }
 }
 
 struct SessionUnrecognized: Equatable, Sendable {
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest could not recognize this browser’s tab-session data.")
+        LocalizedStringResource("BetterCrest could not recognize this browser’s tab-session data.")
     }
 }
 
@@ -6089,7 +6089,7 @@ struct SitePermissionLimitReached: Equatable, Sendable {
     let limit: Int
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest can keep up to \(limit) saved site permissions. Reset some to save more.")
+        LocalizedStringResource("BetterCrest can keep up to \(limit) saved site permissions. Reset some to save more.")
     }
 }
 
@@ -6290,7 +6290,7 @@ struct SpaceDeletionUnderway: Equatable, Sendable {
     let spaceIDs: [UUID]
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest will quit once the Space is deleted.")
+        LocalizedStringResource("BetterCrest will quit once the Space is deleted.")
     }
 }
 
@@ -6298,7 +6298,7 @@ struct SpaceLimitReached: Equatable, Sendable {
     let limit: Int
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest supports up to \(limit) Spaces.")
+        LocalizedStringResource("BetterCrest supports up to \(limit) Spaces.")
     }
 }
 
@@ -6996,7 +6996,7 @@ struct UnknownAgentSession: Equatable, Sendable {
     let sessionID: UUID
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("This agent is no longer connected to Crest.")
+        LocalizedStringResource("This agent is no longer connected to BetterCrest.")
     }
 }
 
@@ -7008,7 +7008,7 @@ struct UnknownCloudMerge: Equatable, Sendable {
     let mergeID: Int64
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("Crest lost track of an iCloud download it was applying.")
+        LocalizedStringResource("BetterCrest lost track of an iCloud download it was applying.")
     }
 }
 
@@ -7078,7 +7078,7 @@ struct UnsupportedArchiveVersion: Equatable, Sendable {
     let version: Int
 
     var message: LocalizedStringResource {
-        LocalizedStringResource("This Crest browser-data version (\(version)) is not supported.")
+        LocalizedStringResource("This BetterCrest browser-data version (\(version)) is not supported.")
     }
 }
 
@@ -8173,7 +8173,7 @@ struct BlockedPopupStatus: Hashable, Sendable {
         tag: 1,
         name: "allowedAwaitingRetry",
         symbol: "checkmark.circle",
-        guidance: LocalizedStringResource("Retry the action on the page. Crest did not reopen the blocked pop-up."),
+        guidance: LocalizedStringResource("Retry the action on the page. BetterCrest did not reopen the blocked pop-up."),
         offersAllow: false
     )
 
@@ -9238,7 +9238,7 @@ struct CloudSyncProblem: Hashable, Sendable {
         tag: 1,
         name: "entitlementMissing",
         reportsError: true,
-        message: LocalizedStringResource("The app is missing access to Crest’s CloudKit container.")
+        message: LocalizedStringResource("The app is missing access to BetterCrest’s CloudKit container.")
     )
     static let localChangesUnsaved = CloudSyncProblem(
         tag: 2,
@@ -9633,7 +9633,7 @@ struct CredentialFileFlaw: Hashable, Sendable {
     static let tooLarge = CredentialFileFlaw(
         tag: 0,
         name: "tooLarge",
-        message: LocalizedStringResource("This password file is larger than Crest’s 16 MB import limit.")
+        message: LocalizedStringResource("This password file is larger than BetterCrest’s 16 MB import limit.")
     )
     static let notText = CredentialFileFlaw(
         tag: 1,
@@ -9883,7 +9883,7 @@ struct CredentialRowCaution: Hashable, Sendable {
     static let insecureOrigin = CredentialRowCaution(
         tag: 0,
         name: "insecureOrigin",
-        message: LocalizedStringResource("This HTTP site is not encrypted. Crest will import the password for manual access but will not autofill it on an insecure connection.")
+        message: LocalizedStringResource("This HTTP site is not encrypted. BetterCrest will import the password for manual access but will not autofill it on an insecure connection.")
     )
 
     static let all: [CredentialRowCaution] = [insecureOrigin]
@@ -13146,7 +13146,7 @@ struct ExportFormat: Hashable, Sendable {
     static let browserData = ExportFormat(
         tag: 0,
         name: "browserData",
-        fileName: "Crest Browser Data.json",
+        fileName: "BetterCrest Browser Data.json",
         contentType: "public.json",
         preparingMessage: LocalizedStringResource("Preparing browser data…"),
         savedMessage: LocalizedStringResource("Browser data exported.")
@@ -13154,7 +13154,7 @@ struct ExportFormat: Hashable, Sendable {
     static let bookmarks = ExportFormat(
         tag: 1,
         name: "bookmarks",
-        fileName: "Crest Bookmarks.html",
+        fileName: "BetterCrest Bookmarks.html",
         contentType: "public.html",
         preparingMessage: LocalizedStringResource("Preparing bookmarks…"),
         savedMessage: LocalizedStringResource("Bookmarks exported.")
@@ -14357,7 +14357,7 @@ struct NavigationError: Hashable, Sendable {
         name: "offline",
         code: "CREST_INTERNET_DISCONNECTED",
         title: LocalizedStringResource("You’re offline"),
-        message: LocalizedStringResource("Crest can’t reach %@ without a network connection."),
+        message: LocalizedStringResource("BetterCrest can’t reach %@ without a network connection."),
         primarySuggestion: LocalizedStringResource("Reconnect to Wi-Fi or Ethernet, then try again."),
         secondarySuggestion: LocalizedStringResource("If you use a VPN or proxy, confirm that it is connected."),
         symbol: "wifi.slash"
@@ -14377,7 +14377,7 @@ struct NavigationError: Hashable, Sendable {
         name: "cannotFindServer",
         code: "CREST_NAME_NOT_RESOLVED",
         title: LocalizedStringResource("Server not found"),
-        message: LocalizedStringResource("Crest couldn’t find the server for %@."),
+        message: LocalizedStringResource("BetterCrest couldn’t find the server for %@."),
         primarySuggestion: LocalizedStringResource("Check the address for typing mistakes."),
         secondarySuggestion: LocalizedStringResource("If the address is correct, check your DNS or VPN settings."),
         symbol: "network.slash"
@@ -14407,7 +14407,7 @@ struct NavigationError: Hashable, Sendable {
         name: "secureConnectionFailed",
         code: "CREST_CERTIFICATE_INVALID",
         title: LocalizedStringResource("A secure connection couldn’t be made"),
-        message: LocalizedStringResource("Crest couldn’t verify a private, secure connection to %@."),
+        message: LocalizedStringResource("BetterCrest couldn’t verify a private, secure connection to %@."),
         primarySuggestion: LocalizedStringResource("Check that your device’s date and time are correct."),
         secondarySuggestion: LocalizedStringResource("Avoid entering private information until the site fixes its certificate."),
         symbol: "lock.trianglebadge.exclamationmark"
@@ -14417,7 +14417,7 @@ struct NavigationError: Hashable, Sendable {
         name: "tooManyRedirects",
         code: "CREST_TOO_MANY_REDIRECTS",
         title: LocalizedStringResource("This page is redirecting incorrectly"),
-        message: LocalizedStringResource("%@ sent Crest through too many redirects."),
+        message: LocalizedStringResource("%@ sent BetterCrest through too many redirects."),
         primarySuggestion: LocalizedStringResource("Try again later; the site may be temporarily misconfigured."),
         secondarySuggestion: LocalizedStringResource("Opening the site’s home page may avoid the redirect loop."),
         symbol: "arrow.trianglehead.2.clockwise.rotate.90"
@@ -14426,8 +14426,8 @@ struct NavigationError: Hashable, Sendable {
         tag: 7,
         name: "unsupportedAddress",
         code: "CREST_UNSUPPORTED_ADDRESS",
-        title: LocalizedStringResource("Crest can’t open this address"),
-        message: LocalizedStringResource("The address uses a format or protocol Crest doesn’t support."),
+        title: LocalizedStringResource("BetterCrest can’t open this address"),
+        message: LocalizedStringResource("The address uses a format or protocol BetterCrest doesn’t support."),
         primarySuggestion: LocalizedStringResource("Check the address for typing mistakes."),
         secondarySuggestion: LocalizedStringResource("Try an address beginning with http:// or https://."),
         symbol: "link.badge.plus"
@@ -14447,7 +14447,7 @@ struct NavigationError: Hashable, Sendable {
         name: "unavailable",
         code: "CREST_RESOURCE_UNAVAILABLE",
         title: LocalizedStringResource("This page isn’t available"),
-        message: LocalizedStringResource("%@ returned a response Crest couldn’t load."),
+        message: LocalizedStringResource("%@ returned a response BetterCrest couldn’t load."),
         primarySuggestion: LocalizedStringResource("Check whether the site is available in another browser or device."),
         secondarySuggestion: LocalizedStringResource("For an intranet site, confirm that you are on the required network."),
         symbol: "exclamationmark.icloud"
@@ -14467,7 +14467,7 @@ struct NavigationError: Hashable, Sendable {
         name: "unknown",
         code: "CREST_NAVIGATION_FAILED",
         title: LocalizedStringResource("This page couldn’t be opened"),
-        message: LocalizedStringResource("Crest encountered an unexpected problem while opening %@."),
+        message: LocalizedStringResource("BetterCrest encountered an unexpected problem while opening %@."),
         primarySuggestion: LocalizedStringResource("Try the address again or open a different page."),
         secondarySuggestion: LocalizedStringResource("The technical details below can help identify the cause."),
         symbol: "doc.badge.ellipsis"
@@ -15863,9 +15863,9 @@ struct PasskeyAccessStatus: Hashable, Sendable {
         tag: 0,
         name: "managedCapabilityRequired",
         title: LocalizedStringResource("Awaiting Apple approval"),
-        detail: LocalizedStringResource("This build cannot request browser-wide passkey access until Apple approves Crest’s managed capability."),
+        detail: LocalizedStringResource("This build cannot request browser-wide passkey access until Apple approves BetterCrest’s managed capability."),
         symbol: "checkmark.seal",
-        settingsDetail: LocalizedStringResource("This build of Crest does not include permission to request browser passkey access."),
+        settingsDetail: LocalizedStringResource("This build of BetterCrest does not include permission to request browser passkey access."),
         isReady: false,
         needsAttention: false,
         canRequestAccess: false,
@@ -15875,7 +15875,7 @@ struct PasskeyAccessStatus: Hashable, Sendable {
         tag: 1,
         name: "deviceNotConfigured",
         title: LocalizedStringResource("Passkeys aren’t configured"),
-        detail: LocalizedStringResource("Configure passkeys in system settings, then reopen Crest."),
+        detail: LocalizedStringResource("Configure passkeys in system settings, then reopen BetterCrest."),
         symbol: "key.slash",
         settingsDetail: LocalizedStringResource("Finish setting up passkeys in System Settings, then check again."),
         isReady: false,
@@ -15887,7 +15887,7 @@ struct PasskeyAccessStatus: Hashable, Sendable {
         tag: 2,
         name: "notDetermined",
         title: LocalizedStringResource("Permission required"),
-        detail: LocalizedStringResource("Allow Crest to use the system’s passkey providers for the website in the active page."),
+        detail: LocalizedStringResource("Allow BetterCrest to use the system’s passkey providers for the website in the active page."),
         symbol: "person.badge.key",
         settingsDetail: nil,
         isReady: false,
@@ -15911,9 +15911,9 @@ struct PasskeyAccessStatus: Hashable, Sendable {
         tag: 4,
         name: "denied",
         title: LocalizedStringResource("Passkey access is off"),
-        detail: LocalizedStringResource("Turn on Crest under Privacy & Security > Passkeys Access for Web Browsers in system settings."),
+        detail: LocalizedStringResource("Turn on BetterCrest under Privacy & Security > Passkeys Access for Web Browsers in system settings."),
         symbol: "hand.raised.slash",
-        settingsDetail: LocalizedStringResource("Turn on Crest under Privacy & Security > Passkeys Access for Web Browsers in system settings."),
+        settingsDetail: LocalizedStringResource("Turn on BetterCrest under Privacy & Security > Passkeys Access for Web Browsers in system settings."),
         isReady: false,
         needsAttention: true,
         canRequestAccess: false,
@@ -15923,7 +15923,7 @@ struct PasskeyAccessStatus: Hashable, Sendable {
         tag: 5,
         name: "checking",
         title: LocalizedStringResource("Checking passkey access"),
-        detail: LocalizedStringResource("Crest is checking this build and the system’s browser-passkey setting."),
+        detail: LocalizedStringResource("BetterCrest is checking this build and the system’s browser-passkey setting."),
         symbol: "ellipsis.circle",
         settingsDetail: nil,
         isReady: false,
@@ -21460,7 +21460,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestWinter"
+        appIconName: "BetterCrestWinter"
     )
     static let lion = SpaceHouse(
         tag: 1,
@@ -21532,7 +21532,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestLion"
+        appIconName: "BetterCrestLion"
     )
     static let storm = SpaceHouse(
         tag: 2,
@@ -21604,7 +21604,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestStorm"
+        appIconName: "BetterCrestStorm"
     )
     static let dragon = SpaceHouse(
         tag: 3,
@@ -21676,7 +21676,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestDragon"
+        appIconName: "BetterCrestDragon"
     )
     static let meadow = SpaceHouse(
         tag: 4,
@@ -21748,7 +21748,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestMeadow"
+        appIconName: "BetterCrestMeadow"
     )
     static let iron = SpaceHouse(
         tag: 5,
@@ -21820,7 +21820,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestIron"
+        appIconName: "BetterCrestIron"
     )
     static let river = SpaceHouse(
         tag: 6,
@@ -21892,7 +21892,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestRiver"
+        appIconName: "BetterCrestRiver"
     )
     static let sun = SpaceHouse(
         tag: 7,
@@ -21964,7 +21964,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestSun"
+        appIconName: "BetterCrestSun"
     )
     static let vigil = SpaceHouse(
         tag: 8,
@@ -22036,7 +22036,7 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil
         ),
-        appIconName: "CrestVigil"
+        appIconName: "BetterCrestVigil"
     )
 
     static let all: [SpaceHouse] = [winter, lion, storm, dragon, meadow, iron, river, sun, vigil]
@@ -22509,12 +22509,12 @@ struct SyncRecordFlaw: Hashable, Sendable {
     static let unexpected = SyncRecordFlaw(
         tag: 10,
         name: "unexpected",
-        title: LocalizedStringResource("Crest hit a problem applying these records.")
+        title: LocalizedStringResource("BetterCrest hit a problem applying these records.")
     )
     static let unreadablePayload = SyncRecordFlaw(
         tag: 11,
         name: "unreadablePayload",
-        title: LocalizedStringResource("Some iCloud records can’t be read. Update Crest on all your devices and try again.")
+        title: LocalizedStringResource("Some iCloud records can’t be read. Update BetterCrest on all your devices and try again.")
     )
 
     static let all: [SyncRecordFlaw] = [

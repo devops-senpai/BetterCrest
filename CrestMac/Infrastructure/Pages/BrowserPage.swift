@@ -28,7 +28,7 @@ final class BrowserPage: NSObject, BrowserMediaSessionCommandEndpoint {
     // MARK: - Static Variables
 
     @ObservationIgnored static let lifecycleSignposter = OSSignposter(
-        subsystem: "com.pauldavis.crest",
+        subsystem: "com.senpaimedia.bettercrest",
         category: "WebKitLifecycle"
     )
 

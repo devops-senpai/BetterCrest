@@ -1,13 +1,13 @@
 ---
 title: Gestures and pointer actions
-description: Learn Crest’s swipes, drags, middle-click actions, context menus, and other less-obvious interactions.
+description: Learn BetterCrest’s swipes, drags, middle-click actions, context menus, and other less-obvious interactions.
 slug: /gestures-and-pointer
 keywords: [gestures, swipe, drag, drop, middle click, right click, long press, iPhone, iPad]
 ---
 
 # Gestures and pointer actions
 
-Many Crest actions stay out of the permanent chrome. This is the practical map for touch, trackpad, mouse, and drag and drop.
+Many BetterCrest actions stay out of the permanent chrome. This is the practical map for touch, trackpad, mouse, and drag and drop.
 
 ## iPhone
 

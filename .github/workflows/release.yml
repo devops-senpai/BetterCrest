@@ -138,15 +138,15 @@ jobs:
             fi
             release_tag="$expected_tag"
             release_title="Crest Stable ${marketing_version}"
-            asset_base="Crest-${marketing_version}-arm64"
+            asset_base="BetterCrest-${marketing_version}-arm64"
           elif [[ "$channel" == "nightly" ]]; then
             release_tag="nightly-${marketing_version}-${release_date}-${build_number}-r${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
             release_title="Crest Nightly ${marketing_version} · ${release_date} · Build ${build_number}"
-            asset_base="Crest-${marketing_version}-nightly-${release_date}-${short_sha}-arm64"
+            asset_base="BetterCrest-${marketing_version}-nightly-${release_date}-${short_sha}-arm64"
           else
             release_tag="development-${marketing_version}-${release_date}-${build_number}-r${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
             release_title="Crest Development ${marketing_version} · ${release_date} · Build ${build_number}"
-            asset_base="Crest-${marketing_version}-development-${release_date}-${short_sha}-arm64"
+            asset_base="BetterCrest-${marketing_version}-development-${release_date}-${short_sha}-arm64"
           fi
 
           previous_commit=""
@@ -354,7 +354,7 @@ jobs:
 
           identity_hash="$(
             security find-identity -v -p codesigning "$keychain_path" \
-              | awk '/Developer ID Application: .*\(3U2R97HLXF\)/ { print $2; exit }'
+              | awk '/Developer ID Application: .*\(U5WBZPZ4X7\)/ { print $2; exit }'
           )"
           if [[ -z "$identity_hash" ]]; then
             print -u2 "The imported archive does not contain Crest's Developer ID Application identity."
@@ -379,7 +379,7 @@ jobs:
             xcrun stapler validate "$app"
             spctl --assess --type execute --verbose=4 "$app"
             mkdir -p "$staging"
-            ditto "$app" "$staging/Crest.app"
+            ditto "$app" "$staging/BetterCrest.app"
             ln -s /Applications "$staging/Applications"
             diskutil image create from --volumeName "$volume" --format ULFO "$staging" "$image"
             codesign --force --timestamp --sign "$identity_hash" "$image"
@@ -401,7 +401,7 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/crest-release-derived-data" \
             CURRENT_PROJECT_VERSION="$RELEASE_BUILD_NUMBER" \
             CREST_DEFAULT_UPDATE_CHANNEL="$RELEASE_CHANNEL" \
-            DEVELOPMENT_TEAM=3U2R97HLXF \
+            DEVELOPMENT_TEAM=U5WBZPZ4X7 \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Developer ID Application" \
             CREST_PROVISIONING_PROFILE_SPECIFIER="Crest Developer ID"
@@ -411,10 +411,10 @@ jobs:
             -exportPath "$export_path" \
             -exportOptionsPlist Config/DeveloperIDExportOptions.plist
 
-          app_path="$export_path/Crest.app"
+          app_path="$export_path/BetterCrest.app"
           test -d "$app_path"
           codesign --verify --deep --strict --verbose=2 "$app_path"
-          test "$(defaults read "$app_path/Contents/Info" CFBundleIdentifier)" = "com.pauldavis.crest"
+          test "$(defaults read "$app_path/Contents/Info" CFBundleIdentifier)" = "com.senpaimedia.bettercrest"
           test "$(defaults read "$app_path/Contents/Info" CrestDefaultUpdateChannel)" = "$RELEASE_CHANNEL"
           test "$(lipo -archs "$app_path/Contents/MacOS/Crest")" = "arm64"
 
@@ -422,13 +422,13 @@ jobs:
           codesign -d --entitlements :- "$app_path" \
             > "$exported_entitlements" 2>/dev/null
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.application-identifier' "$exported_entitlements")" \
-            = "3U2R97HLXF.com.pauldavis.crest"
+            = "U5WBZPZ4X7.com.senpaimedia.bettercrest"
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.aps-environment' "$exported_entitlements")" \
             = "production"
           test "$(/usr/libexec/PlistBuddy -c 'Print :com.apple.developer.icloud-container-identifiers:0' "$exported_entitlements")" \
-            = "iCloud.com.pauldavis.crest"
+            = "iCloud.com.senpaimedia.bettercrest"
           test "$(/usr/libexec/PlistBuddy -c 'Print :keychain-access-groups:0' "$exported_entitlements")" \
-            = "3U2R97HLXF.com.pauldavis.crest"
+            = "U5WBZPZ4X7.com.senpaimedia.bettercrest"
           if /usr/libexec/PlistBuddy -c 'Print :com.apple.security.app-sandbox' "$exported_entitlements" >/dev/null 2>&1; then
             print -u2 "The product entitlements must not enable the app sandbox; it would strand installed data."
             exit 1
@@ -472,7 +472,7 @@ jobs:
           test -d "$ui_framework"
 
           mkdir -p "$release_root/chromium"
-          chromium_app="$release_root/chromium/Crest.app"
+          chromium_app="$release_root/chromium/BetterCrest.app"
           CREST_DEFAULT_UPDATE_CHANNEL="$RELEASE_CHANNEL" python3 Scripts/control-plane/package-chromium-host.py \
             --browser "$engine_root/Chromium.app" \
             --product \
@@ -484,11 +484,11 @@ jobs:
             --signing-identity "$identity_hash" \
             --output "$chromium_app"
           codesign --verify --deep --strict --verbose=2 "$chromium_app"
-          test "$(defaults read "$chromium_app/Contents/Info" CFBundleIdentifier)" = "com.pauldavis.crest"
+          test "$(defaults read "$chromium_app/Contents/Info" CFBundleIdentifier)" = "com.senpaimedia.bettercrest"
           test "$(defaults read "$chromium_app/Contents/Info" CrestDefaultUpdateChannel)" = "$RELEASE_CHANNEL"
           test "$(defaults read "$chromium_app/Contents/Info" CFBundleVersion)" = "$RELEASE_BUILD_NUMBER"
 
-          package_disk_image "$chromium_app" "$publish_path/$installer_name" "Crest" chromium
+          package_disk_image "$chromium_app" "$publish_path/$installer_name" "BetterCrest" chromium
           ditto -c -k --keepParent \
             "$ui_framework.dSYM" \
             "$publish_path/$symbols_name"

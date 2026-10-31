@@ -3,7 +3,7 @@ import WebKit
 @MainActor
 enum BrowserLinkDragContentBridge {
     static let name = "crestLinkDrag"
-    static let world = WKContentWorld.world(name: "com.pauldavis.crest.link-drag")
+    static let world = WKContentWorld.world(name: "com.senpaimedia.bettercrest.link-drag")
 
     static func install(in controller: WKUserContentController) {
         controller.add(

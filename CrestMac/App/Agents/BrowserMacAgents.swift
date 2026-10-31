@@ -2,7 +2,7 @@ import AppKit
 import os
 
 /// Lets agents the person runs, such as coding agents, use Crest while the
-/// person allows it in Settings. An agent runs the `crest-browser` helper
+/// person allows it in Settings. An agent runs the `bettercrest` helper
 /// this Crest ships, which speaks the Model Context Protocol with the agent
 /// and reaches Crest through a Unix domain socket that exists only while
 /// agents are on, and that only this Crest's own helper may use.
@@ -19,7 +19,7 @@ final class BrowserMacAgents {
 
     static let maximumConnections = 32
 
-    private static let logger = Logger(subsystem: "com.pauldavis.crest", category: "Agents")
+    private static let logger = Logger(subsystem: "com.senpaimedia.bettercrest", category: "Agents")
 
     // MARK: - Types
 
@@ -233,7 +233,7 @@ final class BrowserMacAgents {
         _ = try? core.send(EndAgentSession(sessionID: sessionID))
         if let name {
             BrowserNoticeCenter.shared.post(
-                BrowserNotice(message: String(localized: "\(name) stopped using Crest"), systemImage: "sparkles"))
+                BrowserNotice(message: String(localized: "\(name) stopped using BetterCrest"), systemImage: "sparkles"))
         }
     }
 
@@ -366,7 +366,8 @@ final class BrowserMacAgents {
         }
         link.sessionID = sessionID
         BrowserNoticeCenter.shared.post(
-            BrowserNotice(message: String(localized: "\(agent.agentName) is using Crest"), systemImage: "sparkles"))
+            BrowserNotice(
+                message: String(localized: "\(agent.agentName) is using BetterCrest"), systemImage: "sparkles"))
         return sessionID
     }
 

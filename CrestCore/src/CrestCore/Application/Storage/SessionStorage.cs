@@ -133,7 +133,7 @@ internal sealed class SessionStorage : IDisposable {
         writtenDevice = device;
         writtenJournal = journal;
         this.announce = announce;
-        worker = new Thread(Run) { IsBackground = true, Name = "Crest session storage" };
+        worker = new Thread(Run) { IsBackground = true, Name = "BetterCrest session storage" };
         worker.Start();
     }
 

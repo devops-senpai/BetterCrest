@@ -1,7 +1,7 @@
 # Portability
 
 Reading other browsers' data (Arc, Chrome and other Chromium browsers,
-Firefox, Zen, Safari) and Crest's own browser-data file, and writing exports.
+Firefox, Zen, Safari) and BetterCrest's own browser-data file, and writing exports.
 Reading changes nothing and holds no lock, so the platform asks away from the
 main thread; what it reads reaches a workspace only through `ImportSpaces`
 and the other import intents, which check it again.
@@ -16,13 +16,13 @@ sanitation, so an import behaves the same on every platform.
 | Path | What it is |
 | --- | --- |
 | `Portability.cs`, `PortabilityModels.cs` | The area: reading, finding and exporting; plain data shared by readers |
-| `InstalledBrowser.cs`, `InstalledBrowser.Search.cs` | Each browser Crest imports from: where it keeps bookmarks, sessions and passwords, and the readers for them |
+| `InstalledBrowser.cs`, `InstalledBrowser.Search.cs` | Each browser BetterCrest imports from: where it keeps bookmarks, sessions and passwords, and the readers for them |
 | `ArcSidebar.cs`, `ZenSessions.cs`, `FirefoxSession.cs`, `SafariSession.cs`, `Chromium*.cs` | Session readers per browser; Chromium's SNSS session, pickles, extensions and profile order |
 | `ChromeBookmarks.cs`, `SafariBookmarks.cs`, `BookmarkDraft.cs` | Bookmark readers and what they find |
 | `SessionDraft.cs`, `SpaceSites.cs` | One window or Space a reader found; the sites a Space's saved passwords belong with |
 | `Import*.cs` | Shared sanitation: addresses, text, dates, JSON values, files and folders an import reads |
 | `PropertyList*.cs`, `MozillaLz4.cs` | Binary property lists (Safari) and Mozilla's compressed JSON (Firefox, Zen) |
-| `BrowserData*.cs` | Crest's own browser-data file: Spaces, tabs, folders, splits, archive and history |
+| `BrowserData*.cs` | BetterCrest's own browser-data file: Spaces, tabs, folders, splits, archive and history |
 | `BookmarkFile.cs`, `ExportWriter.cs` | The Netscape bookmark export and the writer for each `ExportFormat` |
 | `Queries/` | `FindChromiumBrowsers`, `FindImportData`, `ReadImport`, `ReadArchive` |
 

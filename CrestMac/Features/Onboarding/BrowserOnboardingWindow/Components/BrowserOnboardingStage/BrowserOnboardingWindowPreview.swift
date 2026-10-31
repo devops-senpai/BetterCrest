@@ -52,7 +52,7 @@ struct BrowserOnboardingWindowPreview<Page: View>: View {
         .shadow(color: .black.opacity(0.45), radius: 30, y: 24)
         .environment(\.colorScheme, branding.colorScheme(over: colorScheme))
         .accessibilityElement(children: editableName == nil ? .ignore : .contain)
-        .accessibilityLabel("Preview of \(shownName) in a Crest window")
+        .accessibilityLabel("Preview of \(shownName) in a BetterCrest window")
         .onChange(of: draft, initial: true) { _, draft in space = SpaceModel.detached(draft) }
     }
 

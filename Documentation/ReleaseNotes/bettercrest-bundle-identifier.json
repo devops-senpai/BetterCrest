@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "BetterCrest builds carry their own bundle identifier, iCloud container, keychain group and update feed instead of upstream Crest's, so a BetterCrest install is a separate app with separate data."
+}

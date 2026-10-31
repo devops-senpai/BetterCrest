@@ -21,7 +21,7 @@ struct MobileOnboardingSyncFeaturePage: View {
             VStack(spacing: MobileOnboardingLayout.syncFeaturePageSpacing) {
                 MobileOnboardingTitle(
                     title: "Yours on every device",
-                    detail: "Crest syncs privately with iCloud while keeping every Space isolated."
+                    detail: "BetterCrest syncs privately with iCloud while keeping every Space isolated."
                 )
 
                 Image(systemName: "laptopcomputer.and.iphone")

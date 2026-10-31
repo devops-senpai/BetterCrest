@@ -32,7 +32,7 @@ final class BrowserCloudSyncControllerTests: XCTestCase {
     }
 
     private var testConfiguration: BrowserCloudSyncConfiguration {
-        BrowserCloudSyncConfiguration(containerIdentifier: "iCloud.com.pauldavis.crest")
+        BrowserCloudSyncConfiguration(containerIdentifier: "iCloud.com.senpaimedia.bettercrest")
     }
 
     /// What another device holding `session` keeps in iCloud.

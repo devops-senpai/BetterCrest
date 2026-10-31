@@ -49,7 +49,7 @@ final class BrowserStoreTests: XCTestCase {
                 password: "private-secret",
                 for: url
             )
-            XCTFail("Private browsing must not save a Crest Password")
+            XCTFail("Private browsing must not save a BetterCrest Password")
         } catch {
             XCTAssertEqual(
                 error as? CredentialVaultError,

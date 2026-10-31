@@ -39,7 +39,7 @@ device store, `Application/Session/` for the workspaces its windows show.
 - The device store's tables are additive so older builds ignore them (`Documentation/Architecture/ControlPlane.md`, "Storage").
 - What an older release kept is adopted once under an append-only marker, and the old values stay readable (`Documentation/Architecture/ControlPlane.md`, "Upgrading an installed session").
 - Each device family's case overrides its `Apply` in its own file under `Intents/` (`Documentation/Architecture/ControlPlane.md`, "The typed contract").
-- Crest never opens a window the person did not ask for (`.agents/skills/crest-contribution/SKILL.md`, "Windows and UI").
+- BetterCrest never opens a window the person did not ask for (`.agents/skills/crest-contribution/SKILL.md`, "Windows and UI").
 
 ## Read next
 

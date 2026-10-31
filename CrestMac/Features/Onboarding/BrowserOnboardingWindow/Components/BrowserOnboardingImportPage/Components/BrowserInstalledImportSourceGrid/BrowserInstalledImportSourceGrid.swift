@@ -100,10 +100,10 @@ private struct BrowserInstalledImportSourceCard: View {
     /// Crest asks for the folder.
     private var accessibilityHint: Text {
         guard source.detectedPayload != nil else {
-            return Text("Crest reads its data when you continue, which may ask for access")
+            return Text("BetterCrest reads its data when you continue, which may ask for access")
         }
         return source.hasDetectedData
             ? Text("Review its Spaces and tabs")
-            : Text("Crest locates the browser data folder and asks for one-time read access")
+            : Text("BetterCrest locates the browser data folder and asks for one-time read access")
     }
 }

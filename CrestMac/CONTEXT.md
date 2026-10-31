@@ -37,7 +37,7 @@ SecurityInterface (`Scripts/check-architecture.py`).
 - Informational feedback goes through `BrowserChromeState.showNotice` (`CrestMac/Features/Browser/Models/`), not alerts or sheets (skill, "Windows and UI").
 - A platform file exists only for a genuine seam; never fork a shared component's behavior (`Documentation/RepositoryGuardrails.md`, "Feature organization").
 - Validation launches use `CREST_ISOLATED_SESSION=1` (`Documentation/RepositoryGuardrails.md`, "Isolated validation sessions").
-- Quit, unregister and delete every test copy of Crest before handing off (skill, "Verification and reporting").
+- Quit, unregister and delete every test copy of BetterCrest before handing off (skill, "Verification and reporting").
 - Visual changes are checked in the running app and shown in the pull request, never tested (skill, "Tests", "Verification and reporting").
 
 ## Read next

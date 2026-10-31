@@ -19,7 +19,7 @@ message is one file beside the area it changes.
 | `Device/` | `Device`: windows and what each shows, per-site engines, site permissions, shortcuts, links, palette memory, setup, agents, the device store ([CONTEXT](Device/CONTEXT.md)) |
 | `Pages/` | `Pages`: every open page, its engine, history and live state; page intents and engine page events ([CONTEXT](Pages/CONTEXT.md)) |
 | `Sync/` | `NativeSyncAuthority`, the sync journal, payload codec, staging and the cloud sync controller ([CONTEXT](Sync/CONTEXT.md)) |
-| `Portability/` | Reading other browsers' bookmarks, sessions and passwords; Crest's browser-data file; export writers ([CONTEXT](Portability/CONTEXT.md)) |
+| `Portability/` | Reading other browsers' bookmarks, sessions and passwords; BetterCrest's browser-data file; export writers ([CONTEXT](Portability/CONTEXT.md)) |
 | `Downloads/` | This run's download ledger, download intents and engine download reports ([CONTEXT](Downloads/CONTEXT.md)) |
 | `Credentials/` | Password-file reading and the stateless credential and passkey queries ([CONTEXT](Credentials/CONTEXT.md)) |
 | `Storage/` | `SessionStorage`: `session.sqlite`, its parts, durability and the system SQLite binding |

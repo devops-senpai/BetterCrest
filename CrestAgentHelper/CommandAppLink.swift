@@ -17,9 +17,9 @@ struct CommandAppLink {
         var message: String {
             switch self {
             case .unreachable:
-                "Crest isn't running. Open Crest, then run the command again."
+                "BetterCrest isn't running. Open BetterCrest, then run the command again."
             case .closed:
-                "Crest closed the connection before it answered."
+                "BetterCrest closed the connection before it answered."
             }
         }
     }

@@ -4,7 +4,7 @@ import AppKit
 enum BrowserMacAppIconAssets {
     static let preferenceKey = "crest.appearance.appIcon"
     static let preferenceDomainKey = "CrestAppIconPreferenceDomain"
-    static let changedNotification = Notification.Name("com.pauldavis.crest.appIconChanged")
+    static let changedNotification = Notification.Name("com.senpaimedia.bettercrest.appIconChanged")
     static let systemAppearanceKey = "AppleIconAppearanceTheme"
 
     static var usesSystemAppearance: Bool {
@@ -18,7 +18,7 @@ enum BrowserMacAppIconAssets {
 
     @MainActor
     static func image(named name: String, in bundle: Bundle) -> NSImage? {
-        guard name.range(of: "^Crest[A-Z][a-z]{1,20}$", options: .regularExpression) != nil,
+        guard name.range(of: "^BetterCrest[A-Z][a-z]{1,20}$", options: .regularExpression) != nil,
             let light = loadedImage(name + "DockLight", in: bundle)
         else { return nil }
         let theme = UserDefaults.standard.string(forKey: systemAppearanceKey)?.lowercased() ?? ""

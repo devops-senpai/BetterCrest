@@ -9,7 +9,7 @@ import WebKit
 enum MobileLinkActivationContentBridge {
     static let messageHandlerName = "crestLinkActivation"
     static let contentWorld = WKContentWorld.world(
-        name: "com.pauldavis.crest.link-activation"
+        name: "com.senpaimedia.bettercrest.link-activation"
     )
 
     static func install(

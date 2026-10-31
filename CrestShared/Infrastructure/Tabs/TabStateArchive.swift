@@ -68,7 +68,7 @@ final class BrowserTabStateArchive: BrowserTabStateArchiving, @unchecked Sendabl
         self.maximumStateByteCount = maximumStateByteCount
         self.maximumStatesPerProfile = maximumStatesPerProfile
         writeQueue = DispatchQueue(
-            label: "com.pauldavis.crest.tab-state-archive",
+            label: "com.senpaimedia.bettercrest.tab-state-archive",
             qos: .utility
         )
     }

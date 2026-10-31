@@ -2,7 +2,7 @@ import Foundation
 
 enum BrowserAddressFocusDismissal {
     static let notification = Notification.Name(
-        "com.pauldavis.crest.dismiss-address-focus"
+        "com.senpaimedia.bettercrest.dismiss-address-focus"
     )
 
     static func dismiss() {

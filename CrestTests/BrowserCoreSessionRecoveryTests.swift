@@ -89,7 +89,7 @@ final class BrowserCoreSessionRecoveryTests: XCTestCase {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
-        let suiteName = "com.pauldavis.crest.tests.upgrade." + UUID().uuidString
+        let suiteName = "com.senpaimedia.bettercrest.tests.upgrade." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         let journalSuiteName = suiteName + ".journal"
         let journalDefaults = try XCTUnwrap(UserDefaults(suiteName: journalSuiteName))

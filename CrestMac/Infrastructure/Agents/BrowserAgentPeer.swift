@@ -3,7 +3,7 @@ import Foundation
 import Security
 
 /// The program at the other end of an agent connection, as macOS vouches for
-/// it: the bundled `crest-browser` helper of this very Crest, whose process
+/// it: the bundled `bettercrest` helper of this very Crest, whose process
 /// started it, and the agent that started the helper. Nothing here comes from
 /// what either program says about itself.
 struct BrowserAgentPeer: Sendable {
@@ -212,7 +212,7 @@ struct BrowserAgentHelperRequirement: @unchecked Sendable {
     /// The requirement of the helper inside `bundle`, or nil when the app
     /// carries none it can read.
     init?(bundle: Bundle) {
-        let helper = bundle.bundleURL.appendingPathComponent("Contents/Helpers/crest-browser", isDirectory: false)
+        let helper = bundle.bundleURL.appendingPathComponent("Contents/Helpers/bettercrest", isDirectory: false)
             .resolvingSymlinksInPath()
         var code: SecStaticCode?
         var requirement: SecRequirement?

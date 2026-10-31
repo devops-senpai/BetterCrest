@@ -178,7 +178,7 @@ private enum MobileBrowserInteropTestError: Error {
 
 private final class MobileDownloadHTTPServer: @unchecked Sendable {
     private let listener: NWListener
-    private let queue = DispatchQueue(label: "com.pauldavis.crest.tests.mobile-download")
+    private let queue = DispatchQueue(label: "com.senpaimedia.bettercrest.tests.mobile-download")
     private let responseData: Data
     private let unauthorizedResponseData: Data
     private let requiredAuthorizationHeader: String?
@@ -218,7 +218,7 @@ private final class MobileDownloadHTTPServer: @unchecked Sendable {
         unauthorizedResponseData = Data(
             """
             HTTP/1.1 401 Unauthorized\r
-            WWW-Authenticate: Basic realm="Crest Tests"\r
+            WWW-Authenticate: Basic realm="BetterCrest Tests"\r
             Content-Length: 0\r
             Connection: close\r
             \r

@@ -78,7 +78,7 @@ public sealed class PaletteQuery {
     }
 
     /// Whether what was typed, as one text, starts `text`, ignoring case:
-    /// "amazon" starts "amazon.de/" and "crest br" starts "Crest Browser".
+    /// "amazon" starts "amazon.de/" and "crest br" starts "BetterCrest Browser".
     public bool Prefixes(string text) {
         ArgumentNullException.ThrowIfNull(text);
         if (IsEmpty) return false;

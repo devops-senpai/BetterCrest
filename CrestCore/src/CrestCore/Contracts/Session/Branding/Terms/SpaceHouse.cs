@@ -7,28 +7,28 @@ public sealed class SpaceHouse {
     #region Variables
 
     /// A grey direwolf on a field of snow.
-    public static readonly SpaceHouse Winter = new("winter", "Winter", "CrestWinter", HouseLook(
+    public static readonly SpaceHouse Winter = new("winter", "Winter", "BetterCrestWinter", HouseLook(
         [Tincture.WinterSlate, Tincture.WinterSteel, Tincture.WinterIce], SpaceThemeMode.Banner, SpaceBannerPattern.Diagonal,
         Arms(CrestBackplate.FrenchShield, CrestSymbol.Direwolf, CrestTrim.Line, edgeWidth: 0.35,
             [Tincture.WinterArgent, Tincture.WinterIce, Tincture.WinterSteel, Tincture.WinterWolf, Tincture.WinterSteel,
                 Tincture.WinterSlate])));
 
     /// A golden lion on crimson, its double border and its sheen in gold.
-    public static readonly SpaceHouse Lion = new("lion", "Lion", "CrestLion", HouseLook(
+    public static readonly SpaceHouse Lion = new("lion", "Lion", "BetterCrestLion", HouseLook(
         [Tincture.LionOxblood, Tincture.LionCrimson, Tincture.LionGold], SpaceThemeMode.Banner, SpaceBannerPattern.Chevron,
         Arms(CrestBackplate.Shield, CrestSymbol.Lion, CrestTrim.DoubleLine, edgeWidth: 0.25,
             [Tincture.LionGules, Tincture.LionCrimson, Tincture.LionOr, Tincture.LionOr, Tincture.LionOr, Tincture.LionOxblood],
             chargeScale: 1.25, trimWeight: 0.85, finish: CrestFinish.Sheen, depth: CrestDepth.Lifted)));
 
     /// A black stag on a field of gold.
-    public static readonly SpaceHouse Storm = new("storm", "Storm", "CrestStorm", HouseLook(
+    public static readonly SpaceHouse Storm = new("storm", "Storm", "BetterCrestStorm", HouseLook(
         [Tincture.StormMidnight, Tincture.StormGunmetal, Tincture.StormBrass], SpaceThemeMode.Banner, SpaceBannerPattern.Quartered,
         Arms(CrestBackplate.Hexagon, CrestSymbol.Stag, CrestTrim.DoubleLine, edgeWidth: 0.3,
             [Tincture.StormOr, Tincture.StormBrass, Tincture.StormSable, Tincture.StormSable, Tincture.StormSable,
                 Tincture.StormSable])));
 
     /// A red dragon on black.
-    public static readonly SpaceHouse Dragon = new("dragon", "Dragon", "CrestDragon", HouseLook(
+    public static readonly SpaceHouse Dragon = new("dragon", "Dragon", "BetterCrestDragon", HouseLook(
         [Tincture.DragonChar, Tincture.DragonBlood, Tincture.DragonScarlet], SpaceThemeMode.Banner, SpaceBannerPattern.Bands,
         Arms(CrestBackplate.Shield, CrestSymbol.Dragon, CrestTrim.Line, edgeWidth: 0.25,
             [Tincture.DragonSable, Tincture.DragonChar, Tincture.DragonFire, Tincture.DragonFire, Tincture.DragonFire,
@@ -36,21 +36,21 @@ public sealed class SpaceHouse {
             chargeScale: 1.25, depth: CrestDepth.Lifted)));
 
     /// A golden rose on green, in a wreath of laurel.
-    public static readonly SpaceHouse Meadow = new("meadow", "Meadow", "CrestMeadow", HouseLook(
+    public static readonly SpaceHouse Meadow = new("meadow", "Meadow", "BetterCrestMeadow", HouseLook(
         [Tincture.MeadowForest, Tincture.MeadowMoss, Tincture.MeadowWheat], SpaceThemeMode.Banner, SpaceBannerPattern.Lozenges,
         Arms(CrestBackplate.Circle, CrestSymbol.Rose, CrestTrim.Laurel, edgeWidth: 0.25,
             [Tincture.MeadowVert, Tincture.MeadowMoss, Tincture.MeadowRose, Tincture.MeadowRose, Tincture.MeadowWheat,
                 Tincture.MeadowForest])));
 
     /// A golden kraken on iron black, riveted round in gold.
-    public static readonly SpaceHouse Iron = new("iron", "Iron", "CrestIron", HouseLook(
+    public static readonly SpaceHouse Iron = new("iron", "Iron", "BetterCrestIron", HouseLook(
         [Tincture.IronBlack, Tincture.IronPewter, Tincture.IronPatina], SpaceThemeMode.Banner, SpaceBannerPattern.Stripes,
         Arms(CrestBackplate.Octagon, CrestSymbol.Kraken, CrestTrim.Beaded, edgeWidth: 0.5,
             [Tincture.IronBlack, Tincture.IronPewter, Tincture.IronOr, Tincture.IronOr, Tincture.IronOr, Tincture.IronPatina],
             finish: CrestFinish.Embossed)));
 
     /// A silver trout leaping over waves of blue and red.
-    public static readonly SpaceHouse River = new("river", "River", "CrestRiver", HouseLook(
+    public static readonly SpaceHouse River = new("river", "River", "BetterCrestRiver", HouseLook(
         [Tincture.RiverNavy, Tincture.RiverLapis, Tincture.RiverRust], SpaceThemeMode.Banner, SpaceBannerPattern.Split,
         Arms(CrestBackplate.Banner, CrestSymbol.Fish, CrestTrim.Line, edgeWidth: 0.2,
             [Tincture.RiverAzure, Tincture.RiverGules, Tincture.RiverArgent, Tincture.RiverArgent, Tincture.RiverArgent,
@@ -58,14 +58,14 @@ public sealed class SpaceHouse {
             division: CrestFieldDivision.Barry, divisionCount: 6)));
 
     /// A red sun on orange in a burst of gold, over Dorne's sands.
-    public static readonly SpaceHouse Sun = new("sun", "Sun", "CrestSun", HouseLook(
+    public static readonly SpaceHouse Sun = new("sun", "Sun", "BetterCrestSun", HouseLook(
         [Tincture.SunUmber, Tincture.SunTerracotta, Tincture.SunDune], SpaceThemeMode.Gradient, SpaceBannerPattern.Diagonal,
         Arms(CrestBackplate.Circle, CrestSymbol.Sun, CrestTrim.Sunburst, edgeWidth: 0.25,
             [Tincture.SunTenne, Tincture.SunTerracotta, Tincture.SunOr, Tincture.SunGules, Tincture.SunOr, Tincture.SunUmber]),
         gradientAngle: 160));
 
     /// A pale raven on the black of the Watch, sealed in grey.
-    public static readonly SpaceHouse Vigil = new("vigil", "Vigil", "CrestVigil", HouseLook(
+    public static readonly SpaceHouse Vigil = new("vigil", "Vigil", "BetterCrestVigil", HouseLook(
         [Tincture.VigilOnyx, Tincture.VigilCharcoal, Tincture.VigilAsh], SpaceThemeMode.Banner, SpaceBannerPattern.Checkered,
         Arms(CrestBackplate.Seal, CrestSymbol.Raven, CrestTrim.DoubleRing, edgeWidth: 0.45,
             [Tincture.VigilOnyx, Tincture.VigilCharcoal, Tincture.VigilAsh, Tincture.VigilBone, Tincture.VigilAsh,

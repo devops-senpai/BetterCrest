@@ -107,8 +107,8 @@ final class BrowserUtilityListTests: XCTestCase {
             id: id,
             profileID: profileID,
             createdAt: Date(timeIntervalSinceReferenceDate: 807_969_600),
-            filename: "Crest.dmg",
-            destination: URL(filePath: "/crest-preview/Crest.dmg"),
+            filename: "BetterCrest.dmg",
+            destination: URL(filePath: "/crest-preview/BetterCrest.dmg"),
             progress: progress,
             phase: phase
         )

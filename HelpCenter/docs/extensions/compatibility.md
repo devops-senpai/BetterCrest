@@ -1,6 +1,6 @@
 ---
 title: Extension known limitations
-description: Where extensions run in Crest, and the limits that apply to them.
+description: Where extensions run in BetterCrest, and the limits that apply to them.
 slug: /extension-compatibility
 sidebar_label: Known limitations
 sidebar_position: 8
@@ -9,10 +9,10 @@ keywords: [extension compatibility, known limitations, Chrome extension, Chromiu
 
 # Extension known limitations
 
-Crest for Mac runs Chrome extensions from the Chrome Web Store on its Chromium engine. The [extension compatibility](./api-compatibility-matrix.md) page lists which browser features Crest connects to its interface. This page collects the limits.
+BetterCrest for Mac runs Chrome extensions from the Chrome Web Store on its Chromium engine. The [extension compatibility](./api-compatibility-matrix.md) page lists which browser features BetterCrest connects to its interface. This page collects the limits.
 
 :::info Mac, Chromium pages
-Extensions run only on Chromium pages in Crest for Mac. Pages you open in WebKit, including protected-video pages that switch there automatically, run without extensions, as does Crest on iPhone and iPad. Installations and settings stay in one Space on one device.
+Extensions run only on Chromium pages in BetterCrest for Mac. Pages you open in WebKit, including protected-video pages that switch there automatically, run without extensions, as does BetterCrest on iPhone and iPad. Installations and settings stay in one Space on one device.
 :::
 
 ## Package formats
@@ -29,16 +29,16 @@ Extensions run only on Chromium pages in Crest for Mac. Pages you open in WebKit
 
 ## Browser features
 
-- Crest does not yet match Chrome for every extension API. A feature that needs part of Chrome's window that Crest does not draw may be missing.
-- A window an extension opens appears as a Crest window in the extension's Space. A requested window state, such as maximized, is ignored.
-- Extension shortcuts work only when Crest's own shortcuts don't use the same keys.
+- BetterCrest does not yet match Chrome for every extension API. A feature that needs part of Chrome's window that BetterCrest does not draw may be missing.
+- A window an extension opens appears as a BetterCrest window in the extension's Space. A requested window state, such as maximized, is ignored.
+- Extension shortcuts work only when BetterCrest's own shortcuts don't use the same keys.
 
 ## Companion apps
 
-Extensions that talk to a Mac app, such as password managers, depend on that app trusting Crest's signature. See [Native companions](./native-companion-limits.md), [Set up 1Password in Crest](./onepassword.md) and [iCloud Passwords in Crest](./icloud-passwords.md).
+Extensions that talk to a Mac app, such as password managers, depend on that app trusting BetterCrest's signature. See [Native companions](./native-companion-limits.md), [Set up 1Password in BetterCrest](./onepassword.md) and [iCloud Passwords in BetterCrest](./icloud-passwords.md).
 
-## Extensions from older Crest versions
+## Extensions from older BetterCrest versions
 
-Earlier versions of Crest ran extensions in WebKit through their own compatibility layer. Crest no longer runs extensions in WebKit, and those installations do not carry over. Install each extension again from the Chrome Web Store in the Space you want.
+Earlier versions of BetterCrest ran extensions in WebKit through their own compatibility layer. BetterCrest no longer runs extensions in WebKit, and those installations do not carry over. Install each extension again from the Chrome Web Store in the Space you want.
 
 If an installed extension misbehaves, continue with [Troubleshoot an extension](./troubleshoot-partial-compatibility.md).

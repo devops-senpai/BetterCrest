@@ -57,7 +57,7 @@ final class BrowserFaviconFileStore: BrowserFaviconStoring, @unchecked Sendable 
         self.rootDirectory = rootDirectory
         self.maximumFaviconByteCount = maximumFaviconByteCount
         writeQueue = DispatchQueue(
-            label: "com.pauldavis.crest.favicon-store",
+            label: "com.senpaimedia.bettercrest.favicon-store",
             qos: .utility
         )
     }

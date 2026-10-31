@@ -1,6 +1,6 @@
 # CrestShared/Features/Credentials
 
-The Crest Passwords UI on every shell: the prompts a page raises (suggest a
+The BetterCrest Passwords UI on every shell: the prompts a page raises (suggest a
 saved password, generate a strong one, save or update one, warn about a
 cross-origin credential), the credential detail view that Settings opens, and
 passkey access. Which prompt shows comes from
@@ -32,10 +32,10 @@ engines and both shells.
 
 ## Rules
 
-- Credentials are matched by origin and belong to a Space, which can turn off Crest's suggestions, generation, save prompts and HTTP-auth reuse (`Documentation/ARCHITECTURE.md`, "Credentials and privacy", "Space isolation").
+- Credentials are matched by origin and belong to a Space, which can turn off BetterCrest's suggestions, generation, save prompts and HTTP-auth reuse (`Documentation/ARCHITECTURE.md`, "Credentials and privacy", "Space isolation").
 - Sensitive reveals and exports require device authentication (`Documentation/ARCHITECTURE.md`, "Credentials and privacy").
 - Page-to-app credential messages are schema-checked and origin-bound (`Documentation/ARCHITECTURE.md`, "Credentials and privacy").
-- Crest does not intercept WebAuthn: WebKit handles credential requests itself and Chromium sends them to the system passkey sheet (`Documentation/ARCHITECTURE.md`, "Credentials and privacy").
+- BetterCrest does not intercept WebAuthn: WebKit handles credential requests itself and Chromium sends them to the system passkey sheet (`Documentation/ARCHITECTURE.md`, "Credentials and privacy").
 - Privacy, authorization and Keychain contracts are where permanent tests belong (skill, "Tests").
 
 ## Read next

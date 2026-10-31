@@ -1,13 +1,13 @@
 # CrestShared/Features/DataPortability
 
 The Import & Export section of Settings. The core reads other browsers' data
-and Crest browser-data files and writes each export; this folder presents
+and BetterCrest browser-data files and writes each export; this folder presents
 the file panels, holds access to a picked file while the core reads it, and
 reports progress and results.
 
 ## Goal
 
-Move a person's browsing data in and out of Crest with the core doing every
+Move a person's browsing data in and out of BetterCrest with the core doing every
 read and write.
 
 ## Contents

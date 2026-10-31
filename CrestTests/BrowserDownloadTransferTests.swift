@@ -68,8 +68,8 @@ final class BrowserDownloadTransferTests: XCTestCase {
             quarantine: BrowserDownloadQuarantine(
                 sourceURL: sourceURL,
                 timestamp: Date(timeIntervalSince1970: 1_000),
-                agentName: "Crest Tests",
-                agentBundleIdentifier: "com.pauldavis.crest.tests"
+                agentName: "BetterCrest Tests",
+                agentBundleIdentifier: "com.senpaimedia.bettercrest.tests"
             )
         )
 

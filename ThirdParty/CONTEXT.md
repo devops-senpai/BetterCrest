@@ -1,6 +1,6 @@
 # ThirdParty
 
-Retained license notices for code and data Crest redistributes: Chromium,
+Retained license notices for code and data BetterCrest redistributes: Chromium,
 .NET, Sparkle and Unicode data. Each notice is named by an entry in
 `Config/ThirdPartyDependencies.json`.
 

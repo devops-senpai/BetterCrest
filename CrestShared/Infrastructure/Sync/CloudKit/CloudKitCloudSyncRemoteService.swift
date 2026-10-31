@@ -51,9 +51,9 @@ actor CloudKitBrowserCloudSyncRemoteService: BrowserCloudSyncRemoteService {
         if let syncError = error as? BrowserCloudSyncError {
             switch syncError {
             case .remoteChangeNotApplied:
-                return "Crest couldn’t apply the latest changes from iCloud."
+                return "BetterCrest couldn’t apply the latest changes from iCloud."
             case .accountCheckUnanswered:
-                return "iCloud didn’t respond in time. Crest will retry automatically."
+                return "iCloud didn’t respond in time. BetterCrest will retry automatically."
             }
         }
         if let rejection = error as? Rejection {
@@ -64,17 +64,17 @@ actor CloudKitBrowserCloudSyncRemoteService: BrowserCloudSyncRemoteService {
         }
         switch cloudError.code {
         case .notAuthenticated:
-            return "Sign in to iCloud to sync Crest."
+            return "Sign in to iCloud to sync BetterCrest."
         case .networkUnavailable, .networkFailure:
-            return "Crest can’t reach iCloud right now."
+            return "BetterCrest can’t reach iCloud right now."
         case .serviceUnavailable:
-            return "iCloud is temporarily unavailable. Crest will retry automatically."
+            return "iCloud is temporarily unavailable. BetterCrest will retry automatically."
         case .requestRateLimited:
-            return "iCloud is temporarily busy. Crest will retry automatically."
+            return "iCloud is temporarily busy. BetterCrest will retry automatically."
         case .quotaExceeded:
             return "Your iCloud storage is full."
         case .permissionFailure:
-            return "This build is not permitted to use Crest’s iCloud container."
+            return "This build is not permitted to use BetterCrest’s iCloud container."
         default:
             return cloudError.localizedDescription
         }

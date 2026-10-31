@@ -1,6 +1,6 @@
 # Engine abstraction
 
-Crest has one engine contract with two bindings, WebKit and Chromium, and keeps
+BetterCrest has one engine contract with two bindings, WebKit and Chromium, and keeps
 every browser rule in the portable core. This document lists who owns what,
 the rules every engine keeps, what each engine lacks, and how to place a new
 feature. Read [ControlPlane.md](ControlPlane.md) for how the design works, and
@@ -29,11 +29,11 @@ Rules every engine keeps:
   private browsing opens, shares nothing with any Space, runs no extension a
   person installed, and is destroyed with everything in it when the window
   closes.
-- Crest never opens a window the person did not ask for. New windows appear
+- BetterCrest never opens a window the person did not ask for. New windows appear
   only from a person's action or an extension's `windows.create` for a normal
   window. An extension's popup opens as a tab in the current window, and a
   window a page asks for, such as a sign-in popup, opens as a Quick Window over
-  its opener's window. DevTools and side panels dock inside the Crest window.
+  its opener's window. DevTools and side panels dock inside the BetterCrest window.
 - A page another page opens stays on its opener's engine. A site's engine
   choice and the default engine apply only to pages the person opens.
 - Capability declarations in `BrowserEngineRegistration` describe what the
@@ -59,7 +59,7 @@ runs WebKit on iPhone and iPad.
 
 Chromium's binding is portable C++ inside the engine, keeps Chromium's
 `Browser`s and reports to the core directly; its Mac shell only hosts page
-views, popups and system sign-in in the windows Crest's shell opens. WebKit's
+views, popups and system sign-in in the windows BetterCrest's shell opens. WebKit's
 binding is Swift, shared by macOS and iOS. `BrowserPage`
 (`CrestMac/Infrastructure/Pages`) holds an `any BrowserPageEngineAdapter` and
 names no engine type. `MobileBrowserPage` is typed over WebKit by design,
@@ -80,15 +80,15 @@ Engine glue, the page hosts and the tests read the core's read model.
 Both Mac products run one AppKit shell (`CrestMac/App/Shell`), which owns
 every window, the menu bar, launch and recovery, reopen, the Dock menu and
 tile, external opens, system sign-in and quit. The WebKit product owns its
-process through `CrestMain`. The dual-engine product starts Crest's native
+process through `CrestMain`. The dual-engine product starts BetterCrest's native
 application, core and shell before loading Chromium. `ChromiumRuntime`
 starts Chromium's normal browser loop on the first page or extension that
 needs it, attaches its binding to the existing core and replays pending
-commands. Crest retains its application delegate and windows throughout the
+commands. BetterCrest retains its application delegate and windows throughout the
 handoff. Chromium supplies an event adapter for its native views and
 accessibility, and receives termination notifications for its normal shutdown.
 Once loaded, Chromium remains initialized until quit. A local key monitor runs
-Crest's shortcuts before Crest's own views, and only the commands the core
+BetterCrest's shortcuts before BetterCrest's own views, and only the commands the core
 reserves from pages before a focused page, which sees the rest first and hands
 what it lets go to the menu bar. The shell's decisions are core queries
 and intents: the windows a launch reopens and the setup in front of them, the
@@ -103,7 +103,7 @@ A new engine on the Mac supplies:
 - a binding for the engine contract, with the capabilities
   `BrowserEngineRegistration` declares for it;
 - a `BrowserMacEngineHost`: the About panel's credits, releasing what it kept
-  for a closed window and the profiles named, and a key equivalent no Crest
+  for a closed window and the profiles named, and a key equivalent no BetterCrest
   command claimed;
 - an on-demand runtime integration when the engine needs its own browser
   loop, preserving the native application's delegate, windows and core.
@@ -131,7 +131,7 @@ Both engines:
   members carry the title, symbol and detail Site Controls shows. Chromium
   reports it in every snapshot; WebKit derives it from the scheme, mixed
   content, the trust result and any override.
-- On the Mac, a document's notifications reach Crest's own system delivery:
+- On the Mac, a document's notifications reach BetterCrest's own system delivery:
   the core decides whether one shows, a click brings its tab forward, and the document
   hears the click.
 - Both engines run their downloads as the engine's own and report them to the
@@ -147,7 +147,7 @@ Both engines:
 
 Chromium:
 
-- Crest's bridges run in an isolated world the page cannot reach. Link hover,
+- BetterCrest's bridges run in an isolated world the page cannot reach. Link hover,
   user activity, blocked popups, media sessions and favicons arrive as engine
   presentations. The credential bridge runs through the same content-script
   channel; capture, fill, save and recency rules are core queries that carry
@@ -158,7 +158,7 @@ Chromium:
   host has no hook for them.
 - Focus restoration relies on the engine's responder chain.
 - Certificate errors show Chromium's own interstitial, and proceeding is the
-  engine profile's decision, as its registration declares. Crest has no
+  engine profile's decision, as its registration declares. BetterCrest has no
   proceed-anyway of its own.
 - The host has no command to stop live camera, microphone or location use;
   revocation relies on Chromium ending capture once the setting blocks it.
@@ -241,7 +241,7 @@ tear-off placement geometry, drag geometry and default-browser prompt cadence.
   build directly, because its keychain item prompts.
 - Product packaging: `.github/workflows/release.yml` and
   `.github/workflows/experimental-release.yml` download
-  the prebuilt engine, packages `CrestChromiumUIProduct`, signs it with Crest's
+  the prebuilt engine, packages `CrestChromiumUIProduct`, signs it with BetterCrest's
   entitlements and embedded provisioning profile, and notarizes it.
   Never use the review entitlements file for the product: it turns on the app
   sandbox and would strand installed data.
@@ -255,9 +255,9 @@ tear-off placement geometry, drag geometry and default-browser prompt cadence.
 
 ## Not built, by decision
 
-- A Crest color picker for `<input type=color>`. Chromium's own picker is used.
-- A Crest popups UI beyond the blocked-popup relay and Site Controls.
-- A Crest presentation for JavaScript alerts beyond the shared dialog
+- A BetterCrest color picker for `<input type=color>`. Chromium's own picker is used.
+- A BetterCrest popups UI beyond the blocked-popup relay and Site Controls.
+- A BetterCrest presentation for JavaScript alerts beyond the shared dialog
   presenter.
 - System Picture in Picture on Chromium. Chromium's video PiP uses its own
   Views window; a system PiP needs a video-frame bridge from Chromium's video

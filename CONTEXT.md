@@ -1,4 +1,4 @@
-# Crest
+# BetterCrest
 
 A native SwiftUI browser for Apple silicon. A portable .NET core owns browser
 state and rules; Swift renders it; pages run in WebKit or Chromium behind
@@ -21,20 +21,18 @@ whose engines are interchangeable behind one adapter boundary.
 | `CrestEngines/` | Engine bindings outside the shared Swift tree: the maintained Chromium fork and its Swift adapter ([CONTEXT](CrestEngines/CONTEXT.md), [Chromium](CrestEngines/Chromium/CONTEXT.md)) |
 | `CrestNative/` | Entitlements for the native-core targets and CloudKit review builds ([CONTEXT](CrestNative/CONTEXT.md)) |
 | `CrestAgents/` | The agent link protocol and tool definitions shared by the Mac app and its helper ([CONTEXT](CrestAgents/CONTEXT.md)) |
-| `CrestAgentHelper/` | `crest-browser`, the MCP helper agents run to reach Crest ([CONTEXT](CrestAgentHelper/CONTEXT.md)) |
-| `CrestShareExtension/` | The iPhone and iPad share-sheet entry that hands links to Crest ([CONTEXT](CrestShareExtension/CONTEXT.md)) |
+| `CrestAgentHelper/` | `bettercrest`, the MCP helper agents run to reach BetterCrest ([CONTEXT](CrestAgentHelper/CONTEXT.md)) |
+| `CrestShareExtension/` | The iPhone and iPad share-sheet entry that hands links to BetterCrest ([CONTEXT](CrestShareExtension/CONTEXT.md)) |
 | `CrestDockTilePlugin/` | The macOS Dock tile plug-in that draws the chosen icon palette ([CONTEXT](CrestDockTilePlugin/CONTEXT.md)) |
 | `CrestTests/` | macOS Swift tests for durable contracts, with support harnesses and fixtures ([CONTEXT](CrestTests/CONTEXT.md)) |
 | `CrestMobileTests/` | iOS Swift tests for mobile-only adapter behavior ([CONTEXT](CrestMobileTests/CONTEXT.md)) |
 | `CrestTestFixtures/` | Web pages and a counting local server for validation runs ([CONTEXT](CrestTestFixtures/CONTEXT.md)) |
+| `Brand/` | Source artwork: the app icon banner SVGs in `AppIcons/` that `Scripts/generate-app-icon-palettes.py` reads |
 | `Config/` | Version, architecture exception register, dependency register, export options, debugger settings ([CONTEXT](Config/CONTEXT.md)) |
 | `Scripts/` | Bootstrap, checks, validation, versioning, release and control-plane tooling ([CONTEXT](Scripts/CONTEXT.md)) |
 | `Documentation/` | Architecture and contributor references ([CONTEXT](Documentation/CONTEXT.md), [index](Documentation/README.md)) |
-| `HelpCenter/` | Crest Help, the Docusaurus user guides ([CONTEXT](HelpCenter/CONTEXT.md)) |
-| `Website/` | The static product site; `guides/` is the built Help Center ([CONTEXT](Website/CONTEXT.md)) |
-| `Marketing/` | App Store material |
+| `HelpCenter/` | BetterCrest Help, the Docusaurus user guides ([CONTEXT](HelpCenter/CONTEXT.md)) |
 | `ThirdParty/` | Retained license notices for redistributed dependencies ([CONTEXT](ThirdParty/CONTEXT.md)) |
-| `ci_scripts/` | Xcode Cloud archive guard hooks ([CONTEXT](ci_scripts/CONTEXT.md)) |
 
 ## Depends on
 

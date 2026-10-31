@@ -24,7 +24,7 @@ The Command/Option preference for Peek still determines which modifier means
 The same decision applies on macOS, iPhone and iPad; iPhone and iPad have no
 Quick Window, so a popup window opens there as a tab. A script that does not
 preserve a link or new-window gesture cannot be classified from the appearance
-of its card. Crest does not rewrite sites or infer missing input intent.
+of its card. BetterCrest does not rewrite sites or infer missing input intent.
 
 A page another page opens stays on its opener's engine, whatever the site's
 engine choice. The engine loads the page it made for a new window, so opener

@@ -13,7 +13,7 @@ struct BrowserOnboardingWelcomeCallToAction: View {
                     if action.waitsOnCloud {
                         ProgressView().controlSize(.small)
                     }
-                    Text(action.opensCrest ? "Open Crest" : "Continue")
+                    Text(action.opensCrest ? "Open BetterCrest" : "Continue")
                     Image(systemName: "arrow.right")
                 }
                 .frame(minWidth: 120)
@@ -23,7 +23,7 @@ struct BrowserOnboardingWelcomeCallToAction: View {
             .keyboardShortcut(.defaultAction)
             .disabled(action.waitsOnCloud)
             .accessibilityLabel(
-                action.opensCrest ? Text("Open Crest") : Text("Continue")
+                action.opensCrest ? Text("Open BetterCrest") : Text("Continue")
             )
             .accessibilityIdentifier("onboarding-welcome-continue")
 

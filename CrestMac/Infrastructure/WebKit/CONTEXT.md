@@ -18,7 +18,7 @@ for them kept in this folder and `CrestShared/Infrastructure/WebKit/`.
 | --- | --- |
 | `BrowserWebKitPageAdapter.swift` | The desktop WebKit adapter for one page: web view, delegates, bridges, page controllers |
 | `BrowserPage+WebKit.swift`, `BrowserPage+WKNavigationDelegate.swift`, `BrowserPage+WKUIDelegate.swift` | The page's WebKit delegate conformances |
-| `BrowserDesktopWebView.swift`, `BrowserDesktopWebViewMenuHost.swift`, `BrowserPage+BrowserDesktopWebViewMenuHost.swift`, `NSMenu+WebKitItems.swift`, `NSUserInterfaceItemIdentifier+WebKitItems.swift` | The Mac web view and Crest's actions in its context menu |
+| `BrowserDesktopWebView.swift`, `BrowserDesktopWebViewMenuHost.swift`, `BrowserPage+BrowserDesktopWebViewMenuHost.swift`, `NSMenu+WebKitItems.swift`, `NSUserInterfaceItemIdentifier+WebKitItems.swift` | The Mac web view and BetterCrest's actions in its context menu |
 | `BrowserDesktopWebKit.swift`, `BrowserPlatformWebKit.swift`, `BrowserPlatformUserAgent.swift` | What only Mac WebKit pages need, the shared seam resolved to it, the user agent |
 | `BrowserPageRuntimeStore.swift`, `BrowserPagePool+WebKit.swift` | Which window presents each tab's page; a temporary workspace gets its own store |
 | `BrowserLinkContextCapture.swift`, `BrowserLinkContextContentBridge.swift` | The web content a right-click landed on, for that one menu |

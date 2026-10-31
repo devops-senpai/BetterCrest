@@ -1,8 +1,8 @@
-# Maintaining Crest's Chromium fork
+# Maintaining BetterCrest's Chromium fork
 
-The fork is the pinned recipe and patch set in Crest. `~/Dev/CrestChromium` is its
+The fork is the pinned recipe and patch set in BetterCrest. `~/Dev/CrestChromium` is its
 durable build workspace. A separate Git repository is unnecessary while the
-Chromium host and Crest's C ABI evolve together. No product code belongs only in
+Chromium host and BetterCrest's C ABI evolve together. No product code belongs only in
 the expanded Chromium tree: make changes in the overlay or patch set first.
 
 ## Build workspace
@@ -20,9 +20,9 @@ python Scripts/control-plane/chromium-fork.py build \
   --sdk /Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk
 ```
 
-The command verifies upstream pins, prepares missing source, applies Crest's
+The command verifies upstream pins, prepares missing source, applies BetterCrest's
 host, configures the performance build, compiles, and checks JavaScript execution
-in a headless browser with a temporary profile. It does not use installed Crest
+in a headless browser with a temporary profile. It does not use installed BetterCrest
 or personal browser state. This smoke check covers engine startup and rendering;
 native window, Space, input, extension, and persistence acceptance remains part
 of approving the Chromium product for stable distribution.
@@ -63,7 +63,7 @@ python Scripts/control-plane/chromium-fork.py update \
 ```
 
 Use a real newer tag reported by `check-upstream`; the tag above illustrates the
-syntax. Start updates from a clean Crest checkout. The updater resolves the
+syntax. Start updates from a clean BetterCrest checkout. The updater resolves the
 released macOS recipe and its ungoogled submodule, pins the source checksum and
 patch files, refreshes host hashes only after strict patch application, and pins
 the new source's PGO profile. It restores the source lock and host hashes if
@@ -153,7 +153,7 @@ The release resolves the branch to one commit. The reusable `Ensure Chromium
 engine` workflow checks for its published engine, including the full input key,
 archive, and checksum. If missing, it builds and publishes that engine on the
 Mac. An existing artifact skips the Mac entirely. The signing job then downloads
-that engine, verifies its checksum, builds Crest's native core and UI from the
+that engine, verifies its checksum, builds BetterCrest's native core and UI from the
 same commit, and signs and notarizes the installer. It publishes the
 experimental feed and its `-webkit` twin, which offers the same installer.
 

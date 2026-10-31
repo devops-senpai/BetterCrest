@@ -1,12 +1,12 @@
 # HelpCenter
 
-Crest Help, the user guides, as a Docusaurus site. CI checks it on every
+BetterCrest Help, the user guides, as a Docusaurus site. CI checks it on every
 pull request with `npm run build`; `npm run build:website` writes the
-published build into `Website/guides/`, served under `crestbrowser.com/guides/`.
+published build into `Website/guides/`. Placeholder: BetterCrest does not publish the guides anywhere yet.
 
 ## Goal
 
-Explain what a person can do in Crest, one task per page, in the product's
+Explain what a person can do in BetterCrest, one task per page, in the product's
 own words.
 
 ## Contents
@@ -26,7 +26,8 @@ own words.
 Node.js 20 or later (`CONTRIBUTING.md`, "Local setup"). Checked with
 `npm run build` by the **Website and Help Center** job in
 `.github/workflows/ci.yml`. `npm run build:website` writes `Website/guides/`,
-which `.github/workflows/pages.yml` deploys.
+which `.github/workflows/pages.yml` would deploy; the fork has Actions off and
+no site.
 
 ## Rules
 
@@ -37,5 +38,4 @@ which `.github/workflows/pages.yml` deploys.
 
 ## Read next
 
-The guide being changed, then `Website/CONTEXT.md` for how the build is
-published.
+The guide being changed.

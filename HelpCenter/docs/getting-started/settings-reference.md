@@ -1,13 +1,13 @@
 ---
 title: Settings reference
-description: Find every major Crest setting and understand whether it applies globally or to one Space.
+description: Find every major BetterCrest setting and understand whether it applies globally or to one Space.
 slug: /settings-reference
 keywords: [settings, preferences, General, Tabs, Search, default search, search providers, command palette, Appearance, page zoom, app icon, Links, Quick Window, Peek, Engines, Chromium, WebKit, Shortcuts, Sync, Privacy, system permissions, Spaces, Passwords, Extensions, Advanced, Feature Flags, About, updates]
 ---
 
 # Settings reference
 
-Open **Crest → Settings** on Mac. On iPhone and iPad, open Settings from the browser interface. Some controls appear only on the platform that supports them.
+Open **BetterCrest → Settings** on Mac. On iPhone and iPad, open Settings from the browser interface. Some controls appear only on the platform that supports them.
 
 On Mac and wider iPad windows, Settings opens as a browser tab and keeps your place when you switch away. In compact layouts, including iPhone, it opens as a dismissible sheet while your current page stays selected.
 
@@ -15,7 +15,7 @@ On Mac, the Settings sidebar lists General, Tabs, Search, Appearance, Links, Eng
 
 ## General
 
-Make Crest your default browser, choose what happens when Crest opens, and pick the default Space. General also holds automatic page translation and spell checking. On Mac, it includes **Picture in Picture when switching tabs** and **Developer toolbar on local pages**. On iPhone and iPad, **Start on new tab** opens Crest on a new tab in the default Space, and **Allow floating sidebar** lets the sidebar float over the page instead of filling the screen.
+Make BetterCrest your default browser, choose what happens when BetterCrest opens, and pick the default Space. General also holds automatic page translation and spell checking. On Mac, it includes **Picture in Picture when switching tabs** and **Developer toolbar on local pages**. On iPhone and iPad, **Start on new tab** opens BetterCrest on a new tab in the default Space, and **Allow floating sidebar** lets the sidebar float over the page instead of filling the screen.
 
 ## Tabs
 
@@ -34,7 +34,7 @@ The command palette settings come next:
 
 The search providers come last:
 
-- **Search Engines**, **AI Assistants** and **Websites**: every provider Crest offers, each with its main shortcut. Turn a provider off to stop its shortcut; the default stays on. Click a provider to open it and see its options, such as Google's **Hide AI Overviews** or ChatGPT's **Model**, and to change its shortcuts.
+- **Search Engines**, **AI Assistants** and **Websites**: every provider BetterCrest offers, each with its main shortcut. Turn a provider off to stop its shortcut; the default stays on. Click a provider to open it and see its options, such as Google's **Hide AI Overviews** or ChatGPT's **Model**, and to change its shortcuts.
 - **Add Provider…** adds your own search engine, AI assistant or website with a name, shortcuts, search URL and color. **Restore Defaults…** puts the built-in providers' shortcuts and options back; providers you added stay.
 
 Search providers and their settings stay on this device.
@@ -65,7 +65,7 @@ Enable or disable iCloud sync and review its current state. Private Spaces and t
 
 ## Privacy
 
-On Mac, Privacy covers the whole device. **System permissions** shows whether macOS lets Crest use the camera, microphone, location, notifications, passkeys, and files and folders. Below that, select a Space to open its Privacy page, where its data retention, content blocking, and site permissions live.
+On Mac, Privacy covers the whole device. **System permissions** shows whether macOS lets BetterCrest use the camera, microphone, location, notifications, passkeys, and files and folders. Below that, select a Space to open its Privacy page, where its data retention, content blocking, and site permissions live.
 
 ## Spaces
 
@@ -76,20 +76,20 @@ Each Space's page has these tabs:
 - **Appearance**: Crest Studio for the Space's crest, colors, and sidebar background.
 - **Browsing**: **Search with** and **Search suggestions**, which follow your default search until you choose for the Space, archiving old tabs with **Archive current tabs** and **Archive Now**, downloads (whether to ask where to save, and the download folder), and **Delete Space**.
 - **Privacy**: **Require Touch ID or password**, how long to keep History, Archived Tabs, and Download Records, content blocking, and saved site permissions.
-- **Passwords**: **Use Crest Passwords**, **Sync with iCloud Keychain**, and the Space's saved passwords, with **Import Passwords…** and **Export Passwords…**.
+- **Passwords**: **Use BetterCrest Passwords**, **Sync with iCloud Keychain**, and the Space's saved passwords, with **Import Passwords…** and **Export Passwords…**.
 - **Extensions**: available when Chromium is. **Open Chrome Web Store**, **Chromium Extension Manager**, **Shortcuts…**, and the extensions installed in the Space.
 
 ### Add, arrange, and remove Spaces
 
 Click **+** next to the Spaces heading to add a Space. Its Appearance page opens with the name ready to type. Click the pencil next to it to rearrange: drag Spaces by their handles, then click the checkmark when done.
 
-Right-click a Space, or use the **…** menu on its page, for **Rename**, **Edit Crest…**, **Move Up**, **Move Down**, **New Sub-Space**, **Make Sub-Space of**, **Lock Space**, and **Delete**. Crest needs at least one Space.
+Right-click a Space, or use the **…** menu on its page, for **Rename**, **Edit Crest…**, **Move Up**, **Move Down**, **New Sub-Space**, **Make Sub-Space of**, **Lock Space**, and **Delete**. BetterCrest needs at least one Space.
 
 [Sub-Spaces](../spaces/sub-spaces.md) are indented under their primary, and a group's page shows the crests of its Spaces, with **+** to add one. Drag a Space onto another, or among a group's Sub-Spaces, to add it to that group; drag it out to separate it. The Privacy and Passwords pages of a group say they are shared by its Sub-Spaces, and its Browsing page has **Separate Pinned Tabs**.
 
 ## Agents
 
-On Mac, choose whether coding agents on your Mac may use Crest, which Spaces they reach, and whether they may run scripts in pages; connect an agent, and see the agents connected now and the ones you allowed. See [Let coding agents use Crest](../browsing/coding-agents.md).
+On Mac, choose whether coding agents on your Mac may use BetterCrest, which Spaces they reach, and whether they may run scripts in pages; connect an agent, and see the agents connected now and the ones you allowed. See [Let coding agents use BetterCrest](../browsing/coding-agents.md).
 
 ## Advanced
 
@@ -101,8 +101,8 @@ Choose **Rerun onboarding** to return to Welcome and go through setup again. Com
 
 ## About
 
-**About** shows Crest’s build information and links to the community. On Mac, it also holds software updates: automatic checks and installs, the update channel, and **Check for Updates…**.
+**About** shows BetterCrest’s build information and links to the community. On Mac, it also holds software updates: automatic checks and installs, the update channel, and **Check for Updates…**.
 
 ## iPhone and iPad
 
-iPhone and iPad keep their own Settings navigation, with the same **Tabs** and **Appearance** pages for the whole device. **Spaces** is a page of its own: choose a Space from its picker to customize it and set its browsing and cleanup choices. **Privacy** also has a Space picker for data retention, content blocking, and site permissions. **Passwords** lists Crest Passwords by Space; authenticate to reveal or export them, and choose whether eligible credentials sync with iCloud Keychain.
+iPhone and iPad keep their own Settings navigation, with the same **Tabs** and **Appearance** pages for the whole device. **Spaces** is a page of its own: choose a Space from its picker to customize it and set its browsing and cleanup choices. **Privacy** also has a Space picker for data retention, content blocking, and site permissions. **Passwords** lists BetterCrest Passwords by Space; authenticate to reveal or export them, and choose whether eligible credentials sync with iCloud Keychain.

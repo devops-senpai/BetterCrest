@@ -19,7 +19,7 @@ system framework, holding no browser state the core owns.
 | `BrowserAppPreferences/` | The core's app-wide behavior preferences as settings bind them |
 | `BrowserAuthentication/` | Answering a server's sign-in challenge through the core |
 | `BrowserCloudSync/` | The iCloud sync controller: performs each step the core decides |
-| `BrowserDefaultBrowser/` | Whether Crest opens links, and asking to become the default |
+| `BrowserDefaultBrowser/` | Whether BetterCrest opens links, and asking to become the default |
 | `BrowserFavicon/` | Favicon capture sessions over a document adapter |
 | `BrowserFaviconPalette/` | Loading favicon palettes |
 | `BrowserFilterLists/` | Each Space's content-blocking choice and its updates |

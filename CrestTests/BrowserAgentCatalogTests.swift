@@ -104,7 +104,7 @@ final class BrowserAgentCatalogTests: XCTestCase {
     // MARK: - Actions - Requests
 
     func testRequestDetailHidesSignInHeadersHoweverTheSiteSpellsThem() throws {
-        let hidden = "(hidden by Crest)"
+        let hidden = "(hidden by BetterCrest)"
         let request = PageNetworkRequest(
             sequence: 1, url: "https://example.com/api", method: "GET", resourceType: "fetch", status: 200,
             mimeType: "application/json",

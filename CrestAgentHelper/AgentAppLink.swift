@@ -22,13 +22,13 @@ actor AgentAppLink {
         var message: String {
             switch self {
             case .unreachable, .refused(.agentsOff):
-                "Crest isn't running, or agents are turned off in Crest's Settings › Agents. Ask the person to open Crest and turn on agents."
+                "BetterCrest isn't running, or agents are turned off in BetterCrest's Settings › Agents. Ask the person to open BetterCrest and turn on agents."
             case .refused(.staleHelper):
-                "Crest was updated since this connection started. Ask the person to restart Crest's MCP server in your agent."
+                "BetterCrest was updated since this connection started. Ask the person to restart BetterCrest's MCP server in your agent."
             case .closed:
-                "Crest closed the connection before the tool finished."
+                "BetterCrest closed the connection before the tool finished."
             case .tooLarge:
-                "The call was too large to send to Crest. Send less at once, such as shorter text or a shorter script."
+                "The call was too large to send to BetterCrest. Send less at once, such as shorter text or a shorter script."
             }
         }
     }

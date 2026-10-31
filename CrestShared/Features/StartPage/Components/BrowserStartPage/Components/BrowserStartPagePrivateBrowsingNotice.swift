@@ -13,7 +13,7 @@ struct BrowserStartPagePrivateBrowsingNotice: View {
             .font(.headline)
             .foregroundStyle(.primary)
             Text(
-                "Crest does not save this session or use Crest Passwords. Website data stays in memory only."
+                "BetterCrest does not save this session or use BetterCrest Passwords. Website data stays in memory only."
             )
             .font(.callout)
             .foregroundStyle(.secondary)

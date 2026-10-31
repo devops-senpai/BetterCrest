@@ -1,6 +1,6 @@
 # Search provider logo sources
 
-Crest uses these marks only to identify the corresponding search-provider choices and actions.
+BetterCrest uses these marks only to identify the corresponding search-provider choices and actions.
 
 - Google: [SVGL](https://svgl.app/library/google.svg), rasterized at app display scales because Apple's asset compiler clips the SVG's filtered gradient artwork
 - DuckDuckGo: [SVGL](https://svgl.app/library/duckduckgo.svg)

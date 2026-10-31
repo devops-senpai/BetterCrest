@@ -173,7 +173,7 @@ internal sealed class SyncStager {
     #region Actions - Worker
 
     private Thread Start() {
-        var thread = new Thread(Run) { IsBackground = true, Name = "Crest sync staging" };
+        var thread = new Thread(Run) { IsBackground = true, Name = "BetterCrest sync staging" };
         thread.Start();
         return thread;
     }

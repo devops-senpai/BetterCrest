@@ -28,7 +28,7 @@ On Mac, turn on **Focus follows pointer** in **Settings → Tabs** to make point
 
 ## Resize and reorder
 
-Drag a divider to resize columns on Mac or iPad. Crest remembers widths for the window. Use **Shift-Command-Left/Right** to move the focused card, or drag when the interface exposes a reordering target.
+Drag a divider to resize columns on Mac or iPad. BetterCrest remembers widths for the window. Use **Shift-Command-Left/Right** to move the focused card, or drag when the interface exposes a reordering target.
 
 In the sidebar, drag the split's header to move the whole group. Drag an individual tab row to move just that tab out of the split, into a folder, or into another Split View. The remaining tabs stay together.
 

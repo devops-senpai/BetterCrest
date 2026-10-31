@@ -1,9 +1,9 @@
 ---
 name: crest-contribution
-description: Required before any AI-assisted change to Crest. Loads the project's C# and Swift style, the core-owns-state and engine-adapter architecture rules, the single-window and design-system UI rules, the test policy, and the pull request, verification and writing requirements. Use whenever an AI tool writes, refactors, reviews or describes Crest source, tests, documentation or pull request text.
+description: Required before any AI-assisted change to BetterCrest. Loads the project's C# and Swift style, the core-owns-state and engine-adapter architecture rules, the single-window and design-system UI rules, the test policy, and the pull request, verification and writing requirements. Use whenever an AI tool writes, refactors, reviews or describes BetterCrest source, tests, documentation or pull request text.
 ---
 
-# Contributing to Crest with an AI agent
+# Contributing to BetterCrest with an AI agent
 
 Every pull request that an AI tool helped produce must follow this skill, and
 the pull request template asks the author to confirm that it did. Read it in
@@ -82,20 +82,20 @@ type you touch. The rules that matter most:
 
 ## Windows and UI
 
-- **Crest is a single-window app.** Never create a window the person did not
+- **BetterCrest is a single-window app.** Never create a window the person did not
   ask for. Page and extension popups open as a Quick Window in the opener's
   engine and Space, where the person keeps or drops them. DevTools docks
   inside the window. An unexpected window during validation is a defect, not a
   detail.
 - **Reuse the design system.** Interactive rows and tiles use
   `crestInteractiveSurface`; small glyph buttons use `CrestChromeButtonStyle`;
-  colours come from the Crest tokens and the template house palettes. No
+  colours come from the BetterCrest tokens and the template house palettes. No
   ad-hoc opacity fills, no system rainbow colours, no bespoke buttons or
   cards. Every interactive control has hover and pressed states from the
   system. Search `CrestShared/DesignSystem` before writing any new fill or
   control.
 - **Every menu item has an icon.** Each item of a menu, context menu or
-  submenu Crest builds shows an icon: an SF Symbol for an action, and the
+  submenu BetterCrest builds shows an icon: an SF Symbol for an action, and the
   Space's crest for a Space (`BrowserSpaceIdentityLabel`), as Move to Space
   does. Apply `crestMenuActionLabelStyle()` inside each `Menu` and
   `contextMenu` builder, submenus included; applied to the control that opens
@@ -154,15 +154,15 @@ type you touch. The rules that matter most:
   the real app, Simulator or browser, never only by tests. Launch fixtures and
   validation sessions with `CREST_ISOLATED_SESSION=1` so they never touch
   real browsing data.
-- **Remove test copies when you finish.** Every copy of Crest you build,
+- **Remove test copies when you finish.** Every copy of BetterCrest you build,
   install or launch for testing registers with macOS under the same bundle
-  identifier as the person's own Crest, so macOS can hand links, passkey
+  identifier as the person's own BetterCrest, so macOS can hand links, passkey
   requests and later test launches to the wrong copy. Before handing off,
   quit those copies, unregister each with
   `/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -u <path>`,
   then delete it. Unregister first, because an app moved to the Trash
   registers again at its Trash path. Never remove or replace the person's
-  installed Crest.
+  installed BetterCrest.
 - **Show visual changes in the pull request.** A pull request that changes
   what people see includes screenshots of each change in its description, so
   a reviewer can check it without building. Add a short recording where the
@@ -180,7 +180,7 @@ type you touch. The rules that matter most:
 ## Writing
 
 - **Release notes are user outcomes.** An entry says what changed for the
-  person using Crest, never a commit subject, implementation detail, issue ID
+  person using BetterCrest, never a commit subject, implementation detail, issue ID
   or test description.
 - **Minimal native copy.** User-facing strings are short and read like the
   platform. No eyebrow labels, subtitles or explanatory text for what the UI
@@ -202,4 +202,4 @@ type you touch. The rules that matter most:
 - [ ] Release-note entry file added and `check-version.sh --fix-commit` passes.
 - [ ] Pull request lists what ran, and both AI usage boxes are ticked.
 - [ ] Visual changes are shown in screenshots attached to the pull request.
-- [ ] Test copies of Crest are quit, unregistered and deleted.
+- [ ] Test copies of BetterCrest are quit, unregistered and deleted.

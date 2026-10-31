@@ -1,13 +1,13 @@
 ---
 title: Spaces and profile isolation
-description: Understand how each Crest Space separates accounts, history, passwords, permissions, and website data.
+description: Understand how each BetterCrest Space separates accounts, history, passwords, permissions, and website data.
 slug: /spaces-and-isolation
 keywords: [Spaces, profiles, isolation, cookies, history, website data, accounts]
 ---
 
 # Spaces and profile isolation
 
-A Crest Space is not only a group of tabs. It is a separate browsing profile with its own durable organization, runtime, and privacy boundary.
+A BetterCrest Space is not only a group of tabs. It is a separate browsing profile with its own durable organization, runtime, and privacy boundary.
 
 ## What belongs to one Space
 
@@ -15,7 +15,7 @@ A Crest Space is not only a group of tabs. It is a separate browsing profile wit
 - Current, pinned, saved, grouped, and archived tabs
 - Nested folders and saved locations
 - History, Archive, download records, and their retention choices
-- Crest Passwords and optional iCloud Keychain participation
+- BetterCrest Passwords and optional iCloud Keychain participation
 - Site permissions and content-blocking choices
 - Extensions, actions, permissions, and extension settings on Mac
 - Name, symbol, gradient or crest, and sidebar appearance
@@ -32,11 +32,11 @@ Switching changes the whole browser context. The visible tabs, history search, c
 
 ## Move a tab between Spaces
 
-Open the tab’s context menu and choose a destination, or drag it to another Space when the interface presents that destination. Crest moves the durable tab record and loads it inside the destination profile; it does not transfer the source Space’s cookies or signed-in session.
+Open the tab’s context menu and choose a destination, or drag it to another Space when the interface presents that destination. BetterCrest moves the durable tab record and loads it inside the destination profile; it does not transfer the source Space’s cookies or signed-in session.
 
 ## Delete a Space carefully
 
-Deleting a Space removes its tabs, pins, folders, Archive, history, Crest Passwords, cookies, website storage, permissions, downloads records, and extension state. Read the confirmation before continuing. If you only need less clutter, archive or move tabs instead.
+Deleting a Space removes its tabs, pins, folders, Archive, history, BetterCrest Passwords, cookies, website storage, permissions, downloads records, and extension state. Read the confirmation before continuing. If you only need less clutter, archive or move tabs instead.
 
 In a group of Sub-Spaces, deleting a Sub-Space deletes only its tabs, and deleting the primary first asks which Sub-Space keeps the group. See [Delete a Space in a group](./sub-spaces.md#delete-a-space-in-a-group).
 

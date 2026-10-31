@@ -2,13 +2,14 @@ const {themes: prismThemes} = require('prism-react-renderer');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Crest Help',
-  tagline: 'Help articles for Crest.',
-  favicon: 'img/crest-logo.svg',
-  url: 'https://crestbrowser.com',
-  baseUrl: '/guides/',
-  organizationName: 'pauljoda',
-  projectName: 'Crest-Website',
+  title: 'BetterCrest Help',
+  tagline: 'Help articles for BetterCrest, a fork of Crest.',
+  favicon: 'img/bettercrest-logo.svg',
+  // Placeholder: the fork publishes its guides nowhere yet.
+  url: 'https://devops-senpai.github.io',
+  baseUrl: '/BetterCrest/guides/',
+  organizationName: 'devops-senpai',
+  projectName: 'BetterCrest',
   trailingSlash: true,
   onBrokenLinks: 'throw',
   markdown: {
@@ -44,7 +45,7 @@ const config = {
     ],
   ],
   themeConfig: {
-    image: 'https://crestbrowser.com/assets/og-card-brand.jpg',
+    image: 'img/bettercrest-logo.svg',
     metadata: [
       {
         name: 'description',
@@ -57,18 +58,16 @@ const config = {
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'Crest Help',
+      title: 'BetterCrest Help',
       logo: {
-        alt: 'Crest',
-        src: 'img/crest-logo.svg',
+        alt: 'BetterCrest',
+        src: 'img/bettercrest-logo.svg',
       },
       items: [
         {type: 'docSidebar', sidebarId: 'helpSidebar', position: 'left', label: 'Articles'},
         {to: '/keyboard-shortcuts/', label: 'Shortcuts', position: 'left'},
         {to: '/extension-api-compatibility/', label: 'Compatibility', position: 'left'},
-        {href: 'https://github.com/pauljoda/Crest/releases/latest', label: 'Download for Mac', position: 'right'},
-        {href: 'https://crestbrowser.com/support/', label: 'Support', position: 'right'},
-        {href: 'https://crestbrowser.com/', label: 'Product site', position: 'right'},
+        {href: 'https://github.com/devops-senpai/BetterCrest', label: 'GitHub', position: 'right'},
       ],
     },
     docs: {
@@ -81,11 +80,10 @@ const config = {
       style: 'dark',
       links: [
         {
-          title: 'Crest',
+          title: 'BetterCrest',
           items: [
-            {label: 'Product site', href: 'https://crestbrowser.com/'},
-            {label: 'Download for Mac', href: 'https://github.com/pauljoda/Crest/releases/latest'},
-            {label: 'iPhone & iPad TestFlight', href: 'https://testflight.apple.com/join/vV1CM49Q'},
+            {label: 'Repository', href: 'https://github.com/devops-senpai/BetterCrest'},
+            {label: 'Based on Crest (not affiliated)', href: 'https://github.com/pauljoda/Crest'},
           ],
         },
         {
@@ -95,21 +93,18 @@ const config = {
             {label: 'Keyboard shortcuts', to: '/keyboard-shortcuts/'},
             {label: 'Split View', to: '/split-view/'},
             {label: 'Extension compatibility', to: '/extension-api-compatibility/'},
-            {label: 'Support', href: 'https://crestbrowser.com/support/'},
+            {label: 'Support', href: 'https://github.com/devops-senpai/BetterCrest/blob/main/SUPPORT.md'},
           ],
         },
         {
           title: 'Community',
           items: [
-            {label: 'GitHub Issues', href: 'https://github.com/pauljoda/Crest/issues/new/choose'},
-            {label: 'r/CrestBrowser', href: 'https://www.reddit.com/r/CrestBrowser'},
-            {label: 'Discord', href: 'https://discord.gg/gjrM5qMB6x'},
-            {label: 'Support open source software', href: 'https://ko-fi.com/pauljoda/tiers'},
-            {label: 'Privacy', href: 'https://crestbrowser.com/privacy/'},
+            {label: 'GitHub Issues', href: 'https://github.com/devops-senpai/BetterCrest/issues/new/choose'},
+            // Placeholder: no forum, chat, sponsorship or privacy page yet.
           ],
         },
       ],
-      copyright: `Crest is not affiliated with Arc. © ${new Date().getFullYear()} Paul Davis.`,
+      copyright: `BetterCrest is a fork of Crest and is not affiliated with Crest, Paul Davis or Arc. Crest © Paul Davis; BetterCrest changes © ${new Date().getFullYear()} the BetterCrest contributors.`,
     },
     prism: {
       theme: prismThemes.github,

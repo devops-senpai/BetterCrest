@@ -13,7 +13,7 @@ struct BrowserPlatformAppIconSettingsSection: View {
             settings: [resettable]
         ) {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16) {
-                iconChoice(name: "", title: "Crest", preview: "CrestPreview")
+                iconChoice(name: "", title: "BetterCrest", preview: "BetterCrestPreview")
                 ForEach(SpaceHouse.all, id: \.self) { house in
                     iconChoice(name: house.appIconName, title: house.title, preview: house.appIconName + "Preview")
                 }
@@ -30,7 +30,7 @@ struct BrowserPlatformAppIconSettingsSection: View {
         .alert("Couldn’t change app icon", isPresented: $showsError) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text("Crest could not load this icon. Please try again.")
+            Text("BetterCrest could not load this icon. Please try again.")
         }
     }
 
