@@ -122,6 +122,17 @@ extension BrowserStore {
                 branding: branding))
     }
 
+    /// Gives the Space a look of its own for dark windows, or nil to wear one look in both.
+    func updateSpaceDarkBranding(
+        _ branding: SpaceBranding?,
+        in spaceID: UUID
+    ) {
+        sendSpaceSettings(
+            SetSpaceDarkBranding(
+                workspaceID: profileSettingsBrowser.family.workspaceID, spaceID: spaceID,
+                branding: branding))
+    }
+
     func setDefaultSpace(_ spaceID: UUID) {
         sendSpaceSettings(
             SetDefaultSpace(workspaceID: profileSettingsBrowser.family.workspaceID, spaceID: spaceID))

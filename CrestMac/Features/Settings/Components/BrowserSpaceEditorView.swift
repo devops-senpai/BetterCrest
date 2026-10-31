@@ -17,16 +17,61 @@ struct BrowserSpaceEditorView: View {
     let browser: BrowserStore
     let space: SpaceModel
 
+    /// Whether the controls edit the look for dark windows, while the Space
+    /// has one, rather than its light look.
+    @State private var editsDark = false
+
     var body: some View {
-        Group {
-            if usesLiveSidebar {
-                BrowserCrestForge(branding: branding, symbol: symbol, step: forgeStep)
-            } else {
-                appearanceEditor
+        VStack(spacing: 0) {
+            appearancePicker
+            Group {
+                if usesLiveSidebar {
+                    BrowserCrestForge(branding: branding, symbol: symbol, step: forgeStep)
+                } else {
+                    appearanceEditor
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environment(
+            \.browserSpaceThemeFiles,
+            BrowserSpaceThemeFiles(name: space.settings.name, branding: lightBranding, darkBranding: darkBranding)
+                .actions
+        )
         .accessibilityIdentifier("space-customization-controls")
+    }
+
+    /// Whether the Space keeps a look of its own for dark windows, and which
+    /// of the two the controls edit.
+    private var appearancePicker: some View {
+        HStack(spacing: 16) {
+            Toggle("Dark look", isOn: hasDarkLook)
+                .toggleStyle(.switch)
+                .help("Give this Space a look of its own while windows are dark")
+            if hasDarkLook.wrappedValue {
+                Picker("Editing", selection: $editsDark) {
+                    Text("Light").tag(false)
+                    Text("Dark").tag(true)
+                }
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .fixedSize()
+            }
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 8)
+    }
+
+    /// Whether the Space has a dark look: turning it on starts one from the
+    /// light look, turning it off lets it go.
+    private var hasDarkLook: Binding<Bool> {
+        Binding(
+            get: { space.settings.darkBranding != nil },
+            set: { wanted in
+                browser.updateSpaceDarkBranding(wanted ? space.settings.look : nil, in: space.id)
+                if !wanted { editsDark = false }
+            })
     }
 
     private var appearanceEditor: some View {
@@ -77,7 +122,18 @@ struct BrowserSpaceEditorView: View {
         browser.spaceSymbolBinding(in: space)
     }
 
+    /// The look the controls edit: the dark one while that is chosen and exists.
     private var branding: Binding<SpaceBranding> {
+        editsDark && space.settings.darkBranding != nil ? browser.spaceDarkBrandingBinding(in: space) : lightBranding
+    }
+
+    private var lightBranding: Binding<SpaceBranding> {
         browser.spaceBrandingBinding(in: space)
+    }
+
+    private var darkBranding: Binding<SpaceBranding?> {
+        Binding(
+            get: { space.settings.darkBranding },
+            set: { browser.updateSpaceDarkBranding($0, in: space.id) })
     }
 }

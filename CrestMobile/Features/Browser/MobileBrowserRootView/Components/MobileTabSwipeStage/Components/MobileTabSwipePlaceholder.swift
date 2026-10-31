@@ -27,6 +27,6 @@ struct MobileTabSwipePlaceholder: View {
             BrowserWindowAtmosphere(space: space)
                 .ignoresSafeArea()
         }
-        .environment(\.colorScheme, space.settings.look.colorScheme(over: colorScheme))
+        .environment(\.colorScheme, space.settings.shownLook.colorScheme(over: colorScheme))
     }
 }

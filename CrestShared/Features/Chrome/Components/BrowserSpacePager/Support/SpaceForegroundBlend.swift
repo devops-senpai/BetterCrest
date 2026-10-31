@@ -26,7 +26,7 @@ struct SpaceForegroundBlend: ViewModifier {
 
     init(spaces: [SpaceModel], selectedSpaceID: UUID?) {
         ids = spaces.map(\.id)
-        brandings = spaces.map(\.settings.look)
+        brandings = spaces.map { $0.settings.shownLook }
         accents = brandings.map { $0.primaryColor.color }
         self.selectedSpaceID = selectedSpaceID
     }

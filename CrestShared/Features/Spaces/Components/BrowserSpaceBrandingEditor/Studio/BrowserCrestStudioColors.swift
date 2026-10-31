@@ -113,6 +113,7 @@ struct BrowserCrestStudioColorRow: View {
 struct BrowserCrestStudioBackground: View {
     let context: BrowserCrestStudioContext
     let symbol: String
+    @Environment(\.colorScheme) private var colorScheme
     var body: some View {
         BrowserCrestStudioGroup(title: "Space background", systemImage: "rectangle.inset.filled") {
             if context.compact {
@@ -142,17 +143,19 @@ struct BrowserCrestStudioBackground: View {
             }
             slider("Color intensity", \.bannerStrength)
             slider("Readability fade", \.readabilityFade)
-            slider("Folder color intensity", \.folderColorIntensity)
             let texture = context.setting(\.showsTexture)
             CrestSettingRow("Texture", setting: texture.resettable("Texture")) {
                 Toggle("Texture", isOn: texture.binding).labelsHidden()
             }
             let text = context.setting(\.textColorMode)
-            CrestSettingRow("Text color", setting: text.resettable("Text color")) {
-                Picker("Text color", selection: text.binding) {
+            CrestSettingRow("Text", setting: text.resettable("Text")) {
+                Picker("Text", selection: text.binding) {
                     ForEach(SpaceTextColorMode.all, id: \.self) { Text($0.title).tag($0) }
                 }.labelsHidden()
             }
+            BrowserCrestStudioColorPickerRow(
+                title: "Text color", value: context.setting(\.sidebarTextColor, default: nil),
+                fallback: context.value.sidebarTextColor(over: colorScheme))
         }
     }
 

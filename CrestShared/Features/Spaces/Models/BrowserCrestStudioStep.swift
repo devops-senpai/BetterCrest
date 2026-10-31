@@ -16,6 +16,7 @@ struct BrowserCrestStudioStep: Hashable, Identifiable, Sendable {
         case border
         case finish
         case sidebar
+        case other
     }
 
     // MARK: - Static Variables
@@ -51,9 +52,13 @@ struct BrowserCrestStudioStep: Hashable, Identifiable, Sendable {
     static let sidebar = BrowserCrestStudioStep(
         kind: .sidebar, name: "sidebar", title: "Sidebar", symbol: "sidebar.left", isCrestOnly: false,
         summary: { $0.themeMode == .gradient ? "Gradient" : $0.bannerPattern.title })
+    /// The rest of the window the Space dresses, beyond its crest and sidebar.
+    static let other = BrowserCrestStudioStep(
+        kind: .other, name: "other", title: "Other", symbol: "slider.horizontal.3", isCrestOnly: false,
+        summary: { $0.commandPalette?.isTinted == true ? "Tinted palette" : "Default" })
 
     /// Every step, in the step bar's order.
-    static let all: [BrowserCrestStudioStep] = [start, shape, field, band, emblem, border, finish, sidebar]
+    static let all: [BrowserCrestStudioStep] = [start, shape, field, band, emblem, border, finish, sidebar, other]
 
     // MARK: - Variables
 

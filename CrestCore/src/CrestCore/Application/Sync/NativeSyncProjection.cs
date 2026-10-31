@@ -84,7 +84,8 @@ public static class NativeSyncProjection {
             // A Space's own profile, credentials choice, splits and position are
             // its record's own; the rest is copied as the session holds it.
             var spaceValue = Fields(space, StoredSessionCodec.Key.Id, StoredSessionCodec.Key.Name, StoredSessionCodec.Key.Symbol,
-                StoredSessionCodec.Key.Accent, StoredSessionCodec.Key.Branding, StoredSessionCodec.Key.BrowsingPreferences,
+                StoredSessionCodec.Key.Accent, StoredSessionCodec.Key.Branding, StoredSessionCodec.Key.DarkBranding,
+                StoredSessionCodec.Key.BrowsingPreferences,
                 StoredSessionCodec.Key.AccessPolicy, StoredSessionCodec.Key.AccessPolicyModifiedAt, StoredSessionCodec.Key.IsSavedTabsExpanded,
                 StoredSessionCodec.Key.SavedTabsExpansionModifiedAt, StoredSessionCodec.Key.PrimarySpaceId, StoredSessionCodec.Key.SharedProfileId,
                 StoredSessionCodec.Key.MembershipModifiedAt, StoredSessionCodec.Key.SeparatesPinnedTabs,
