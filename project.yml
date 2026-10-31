@@ -153,7 +153,7 @@ targetTemplates:
         PRODUCT_MODULE_NAME: CrestChromiumUI
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: Arma
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil ArmaFlight ArmaFlame ArmaScarlet ArmaRaven ArmaPorcelain ArmaSlate ArmaSignal ArmaSash ArmaHorizon ArmaCrimson ArmaBlush ArmaFrost ArmaRuby ArmaRose ArmaSilver ArmaAmethyst ArmaOrchid ArmaIris ArmaLilac ArmaViolet ArmaPlum ArmaCrane ArmaDrift ArmaOrigami ArmaSteel ArmaGarnet ArmaWisteria ArmaImperial ArmaAureate ArmaLaurel ArmaMarble ArmaTriumph ArmaMosaic ArmaVerdigris ArmaCopper ArmaPorphyry ArmaLapis ArmaPatina ArmaArgent ArmaSenate ArmaVexillum ArmaBronze ArmaTessera ArmaVictory"
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: ${hostCompilationConditions}
         SWIFT_OBJC_BRIDGING_HEADER: "$(PROJECT_DIR)/CrestEngines/Chromium/Apple/CrestChromiumHost.h"
         SWIFT_INCLUDE_PATHS: "$(PROJECT_DIR)/CrestContracts/include"
@@ -238,7 +238,7 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMac/Configuration/Crest-Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: Arma
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil ArmaFlight ArmaFlame ArmaScarlet ArmaRaven ArmaPorcelain ArmaSlate ArmaSignal ArmaSash ArmaHorizon ArmaCrimson ArmaBlush ArmaFrost ArmaRuby ArmaRose ArmaSilver ArmaAmethyst ArmaOrchid ArmaIris ArmaLilac ArmaViolet ArmaPlum ArmaCrane ArmaDrift ArmaOrigami ArmaSteel ArmaGarnet ArmaWisteria ArmaImperial ArmaAureate ArmaLaurel ArmaMarble ArmaTriumph ArmaMosaic ArmaVerdigris ArmaCopper ArmaPorphyry ArmaLapis ArmaPatina ArmaArgent ArmaSenate ArmaVexillum ArmaBronze ArmaTessera ArmaVictory"
         CREST_NATIVE_CORE_BUNDLE_IDENTIFIER: com.senpaimedia.arma.native-core
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_NATIVE_CORE_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: Crest
@@ -353,7 +353,7 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMac/Configuration/Crest-Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: Arma
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil ArmaFlight ArmaFlame ArmaScarlet ArmaRaven ArmaPorcelain ArmaSlate ArmaSignal ArmaSash ArmaHorizon ArmaCrimson ArmaBlush ArmaFrost ArmaRuby ArmaRose ArmaSilver ArmaAmethyst ArmaOrchid ArmaIris ArmaLilac ArmaViolet ArmaPlum ArmaCrane ArmaDrift ArmaOrigami ArmaSteel ArmaGarnet ArmaWisteria ArmaImperial ArmaAureate ArmaLaurel ArmaMarble ArmaTriumph ArmaMosaic ArmaVerdigris ArmaCopper ArmaPorphyry ArmaLapis ArmaPatina ArmaArgent ArmaSenate ArmaVexillum ArmaBronze ArmaTessera ArmaVictory"
         CREST_MAC_BUNDLE_IDENTIFIER: com.senpaimedia.arma
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_MAC_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: Crest
@@ -453,7 +453,7 @@ targets:
         PRODUCT_NAME: CrestNativeCore
         TARGETED_DEVICE_FAMILY: "1,2"
         ASSETCATALOG_COMPILER_APPICON_NAME: Arma
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil ArmaFlight ArmaFlame ArmaScarlet ArmaRaven ArmaPorcelain ArmaSlate ArmaSignal ArmaSash ArmaHorizon ArmaCrimson ArmaBlush ArmaFrost ArmaRuby ArmaRose ArmaSilver ArmaAmethyst ArmaOrchid ArmaIris ArmaLilac ArmaViolet ArmaPlum ArmaCrane ArmaDrift ArmaOrigami ArmaSteel ArmaGarnet ArmaWisteria ArmaImperial ArmaAureate ArmaLaurel ArmaMarble ArmaTriumph ArmaMosaic ArmaVerdigris ArmaCopper ArmaPorphyry ArmaLapis ArmaPatina ArmaArgent ArmaSenate ArmaVexillum ArmaBronze ArmaTessera ArmaVictory"
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) CREST_REVIEW_BUILD"
         SWIFT_INCLUDE_PATHS: "$(PROJECT_DIR)/CrestContracts/include"
@@ -512,7 +512,7 @@ targets:
         PRODUCT_NAME: Arma
         TARGETED_DEVICE_FAMILY: "1,2"
         ASSETCATALOG_COMPILER_APPICON_NAME: Arma
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil ArmaFlight ArmaFlame ArmaScarlet ArmaRaven ArmaPorcelain ArmaSlate ArmaSignal ArmaSash ArmaHorizon ArmaCrimson ArmaBlush ArmaFrost ArmaRuby ArmaRose ArmaSilver ArmaAmethyst ArmaOrchid ArmaIris ArmaLilac ArmaViolet ArmaPlum ArmaCrane ArmaDrift ArmaOrigami ArmaSteel ArmaGarnet ArmaWisteria ArmaImperial ArmaAureate ArmaLaurel ArmaMarble ArmaTriumph ArmaMosaic ArmaVerdigris ArmaCopper ArmaPorphyry ArmaLapis ArmaPatina ArmaArgent ArmaSenate ArmaVexillum ArmaBronze ArmaTessera ArmaVictory"
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
   # The share sheet entry hands shared links to the iOS app. It compiles the
   # hand-off it shares with the app, never the core, which an extension's

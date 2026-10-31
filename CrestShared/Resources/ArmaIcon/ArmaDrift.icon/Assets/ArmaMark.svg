@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <g transform="translate(201.50 116.46) scale(1.9777)">
+  <defs><clipPath id="banner"><path d="M0 0H314V400L157 305L0 400Z"/></clipPath></defs>
+  <path d="M0 0H314V400L157 305L0 400Z" fill="#1E1E2E"/>
+  <g clip-path="url(#banner)">
+    <path d="M130 0H184V400H130Z" fill="#FFFFFF"/>
+    <path d="M140 0H174V400H140Z" fill="#F38BA8"/>
+    <path d="M32 82L153 160L179 207L191 213L246 173L258 166L306 167L270 175L254 185L205 229L179 243L112 259L17 317L82 260L12 300L104 237L73 225L42 209L90 213L26 162L91 183L20 121L91 151Z" fill="#FFFFFF"/>
+  </g>
+</g>
+</svg>

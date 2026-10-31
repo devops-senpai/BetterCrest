@@ -7,18 +7,25 @@ struct BrowserPlatformAppIconSettingsSection: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        CrestSettingsGroup(
-            "App icon",
-            settings: [resettable]
-        ) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16) {
-                iconChoice(name: nil, title: "Arma")
-                ForEach(SpaceHouse.all, id: \.self) { house in
-                    iconChoice(name: house.appIconName, title: house.title)
+        Group {
+            CrestSettingsGroup(
+                "App icon",
+                settings: [resettable]
+            ) {
+                iconGrid {
+                    iconChoice(name: nil, title: "Arma")
+                    ForEach(SpaceHouse.all, id: \.self) { house in
+                        iconChoice(name: house.appIconName, title: house.title)
+                    }
                 }
             }
-            .padding(.vertical, 8)
-            .disabled(isChanging || !UIApplication.shared.supportsAlternateIcons)
+            CrestSettingsGroup("Additional icons") {
+                iconGrid {
+                    ForEach(BrowserAppIconEmblem.all) { emblem in
+                        iconChoice(name: emblem.id, title: emblem.title)
+                    }
+                }
+            }
         }
         .onAppear { selectedName = UIApplication.shared.alternateIconName }
         .alert(
@@ -49,6 +56,12 @@ struct BrowserPlatformAppIconSettingsSection: View {
                 errorMessage = String(localized: "Arma could not update its icon. Please try again.")
             }
         }
+    }
+
+    private func iconGrid(@ViewBuilder choices: () -> some View) -> some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16, content: choices)
+            .padding(.vertical, 8)
+            .disabled(isChanging || !UIApplication.shared.supportsAlternateIcons)
     }
 
     private func iconChoice(name: String?, title: LocalizedStringResource) -> some View {

@@ -94,16 +94,20 @@ Spaces and tabs move with the archive export and import.
 
 ## 3. Icon
 
-`Scripts/generate-app-icon-palettes.py` writes every icon from one banner SVG
-(`BANNER`, currently `Brand/AppIcons/ArmaHonor.svg`) and one color per
-palette (`BASE`, `VARIANTS`): the ten `.icon` documents under
-`CrestShared/Resources/ArmaIcon/`, the picker previews and the Dock images
-under `CrestShared/Resources/AppIconPreviews.xcassets/`. The banner is placed
-from its own `viewBox` to stand `BANNER_HEIGHT` points tall on the 1024-point
-canvas (799, about 78 percent); its field color `BANNER_FILL` is what the
-palette variants recolor. Edit the banner, the colors or those constants and
-run the script; it needs Icon Composer's `ictool` from the installed Xcode.
-`Brand/AppIcons/` holds the other banner emblems as source art.
+`Scripts/generate-app-icon-palettes.py` writes every icon: the default and
+its palette variants from one banner SVG (`BANNER`, currently
+`Brand/AppIcons/ArmaHonor.svg`) and one color per palette (`BASE`,
+`VARIANTS`), and one emblem icon per other banner in `Brand/AppIcons/`
+(`EMBLEMS`, drawn as designed on a neutral field). They become the `.icon`
+documents under `CrestShared/Resources/ArmaIcon/`, the picker previews and the
+Dock images under `CrestShared/Resources/AppIconPreviews.xcassets/`. Each
+banner is placed from its own `viewBox` to stand `BANNER_HEIGHT` points tall on
+the 1024-point canvas (799, about 78 percent); the default banner's field color
+`BANNER_FILL` is what the palette variants recolor. Edit a banner, the colors
+or those constants and run the script; it needs Icon Composer's `ictool` from
+the installed Xcode. An emblem also needs its name in `EMBLEMS`, in
+`BrowserAppIconEmblem.all` and in `project.yml`'s
+`ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES`.
 `HelpCenter/static/img/arma-logo.svg` is the earlier mark on its base color,
 written by hand, and the start page mark (`CrestStartPageMark`) shows
 `AppIconPreviews.xcassets/ArmaMark.imageset/mark.svg`, a tight crop of

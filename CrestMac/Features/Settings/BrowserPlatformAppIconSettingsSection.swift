@@ -8,17 +8,25 @@ struct BrowserPlatformAppIconSettingsSection: View {
     @State private var appearanceObserver: BrowserMacAppIconAppearanceObserver?
 
     var body: some View {
-        CrestSettingsGroup(
-            "App icon",
-            settings: [resettable]
-        ) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16) {
-                iconChoice(name: "", title: "Arma", preview: "ArmaPreview")
-                ForEach(SpaceHouse.all, id: \.self) { house in
-                    iconChoice(name: house.appIconName, title: house.title, preview: house.appIconName + "Preview")
+        Group {
+            CrestSettingsGroup(
+                "App icon",
+                settings: [resettable]
+            ) {
+                iconGrid {
+                    iconChoice(name: "", title: "Arma", preview: "ArmaPreview")
+                    ForEach(SpaceHouse.all, id: \.self) { house in
+                        iconChoice(name: house.appIconName, title: house.title, preview: house.appIconName + "Preview")
+                    }
                 }
             }
-            .padding(.vertical, 8)
+            CrestSettingsGroup("Additional icons") {
+                iconGrid {
+                    ForEach(BrowserAppIconEmblem.all) { emblem in
+                        iconChoice(name: emblem.id, title: emblem.title, preview: emblem.id + "Preview")
+                    }
+                }
+            }
         }
         .onAppear {
             appearanceObserver = BrowserMacAppIconAppearanceObserver { appearanceRevision += 1 }
@@ -38,6 +46,11 @@ struct BrowserPlatformAppIconSettingsSection: View {
         CrestResettableSetting(title: "App icon", isDefault: selectedName.isEmpty) {
             showsError = !BrowserMacDockTile.shared.select("")
         }
+    }
+
+    private func iconGrid(@ViewBuilder choices: () -> some View) -> some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16, content: choices)
+            .padding(.vertical, 8)
     }
 
     private func iconChoice(name: String, title: LocalizedStringResource, preview: String) -> some View {

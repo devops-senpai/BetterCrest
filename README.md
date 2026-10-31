@@ -24,6 +24,7 @@ change; the commit of the same name has the detail.
 - **Per-Space themes.** A Space's Appearance page chooses the color its folders wear and their back face, one exact text color for the sidebar, and a tint, opacity and text color for the command palette in light and dark. Each group has its own Reset.
 - **A dark look per Space.** A Space can keep a second complete look that it wears while windows are dark.
 - **Theme files.** Export a Space's look as JSON and load one from a file, from the Appearance page or the Space's menu. Catppuccin Latte, Frappé, Macchiato and Mocha ship as examples.
+- **Emblem app icons.** Settings offers 44 more app icons, one per emblem banner in `Brand/AppIcons`, beside the default icon and its palette variants.
 - **Themes from the terminal.** `arma theme --space <name>` sets any part of a look, applies or exports theme files, pairs a light and a dark file, and resets sections, over a socket only this app's own helper can use.
 
 ### Performance
@@ -73,7 +74,7 @@ change; the commit of the same name has the detail.
 - `Scripts/sync-upstream-engine.sh` mirrors upstream's prebuilt Chromium engine for the current engine key, so the fork never builds Chromium.
 - `ROUTING.md` and a `CONTEXT.md` in every folder that groups work tell a contributor or an agent what to read for each kind of change.
 - `Documentation/Renaming.md` lists every place a product name lives.
-- `Brand/` holds the banner artwork; `Scripts/generate-app-icon-palettes.py` turns one banner into the app icon, its palette variants, picker previews and Dock images.
+- `Brand/` holds the banner artwork; `Scripts/generate-app-icon-palettes.py` turns one banner into the app icon and its palette variants, draws every other banner as an emblem icon, and writes the picker previews and Dock images.
 - The version bump check runs statically, the CI whitespace gate works, and stray files no longer change the engine key.
 
 ## A browser with boundaries

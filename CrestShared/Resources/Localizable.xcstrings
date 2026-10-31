@@ -1849,6 +1849,9 @@
     "Adding extension" : {
 
     },
+    "Additional icons" : {
+
+    },
     "Additional Spaces: %lld" : {
 
     },
@@ -2100,6 +2103,9 @@
     "Always Translate %@" : {
 
     },
+    "Amethyst" : {
+
+    },
     "An export is already in progress for this page." : {
 
     },
@@ -2304,6 +2310,9 @@
 
     },
     "Audio visualizer" : {
+
+    },
+    "Aureate" : {
 
     },
     "Authenticate to commit the password import into %@." : {
@@ -2773,6 +2782,9 @@
     "Blood" : {
 
     },
+    "Blush" : {
+
+    },
     "Boar" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2882,6 +2894,9 @@
 
     },
     "Bring All to Front" : {
+
+    },
+    "Bronze" : {
 
     },
     "Browse all emblems (%lld)" : {
@@ -3981,6 +3996,9 @@
         }
       }
     },
+    "Copper" : {
+
+    },
     "Copy" : {
 
     },
@@ -4113,6 +4131,9 @@
 
     },
     "Country" : {
+
+    },
+    "Crane" : {
 
     },
     "Create folders and nested folders" : {
@@ -4744,6 +4765,9 @@
           }
         }
       }
+    },
+    "Drift" : {
+
     },
     "example.com" : {
 
@@ -6272,6 +6296,9 @@
         }
       }
     },
+    "Flight" : {
+
+    },
     "Flight tickets" : {
 
     },
@@ -6500,6 +6527,9 @@
         }
       }
     },
+    "Frost" : {
+
+    },
     "Full" : {
 
     },
@@ -6515,6 +6545,9 @@
           }
         }
       }
+    },
+    "Garnet" : {
+
     },
     "General" : {
       "localizations" : {
@@ -6811,6 +6844,9 @@
         }
       }
     },
+    "Horizon" : {
+
+    },
     "Horizontal" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -6998,6 +7034,9 @@
           }
         }
       }
+    },
+    "Imperial" : {
+
     },
     "Import" : {
 
@@ -7632,6 +7671,9 @@
     "Into Arma" : {
 
     },
+    "Iris" : {
+
+    },
     "Iron" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -7945,6 +7987,9 @@
         }
       }
     },
+    "Lilac" : {
+
+    },
     "Line" : {
       "extractionState" : "manual"
     },
@@ -8166,6 +8211,9 @@
     "Map" : {
 
     },
+    "Marble" : {
+
+    },
     "Mark" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -8267,6 +8315,9 @@
 
     },
     "More Languages" : {
+
+    },
+    "Mosaic" : {
 
     },
     "Moss" : {
@@ -9458,6 +9509,9 @@
     "Or" : {
 
     },
+    "Orchid" : {
+
+    },
     "Order" : {
 
     },
@@ -9476,6 +9530,9 @@
 
     },
     "Organize your browsing into Spaces, each with its own tabs and appearance." : {
+
+    },
+    "Origami" : {
 
     },
     "Original page" : {
@@ -10026,6 +10083,9 @@
     "Playlists" : {
 
     },
+    "Plum" : {
+
+    },
     "Podcasts & Shows" : {
 
     },
@@ -10036,6 +10096,12 @@
 
     },
     "Popular" : {
+
+    },
+    "Porcelain" : {
+
+    },
+    "Porphyry" : {
 
     },
     "Practice" : {
@@ -11405,6 +11471,9 @@
     "Row %lld" : {
 
     },
+    "Ruby" : {
+
+    },
     "Runs in Chromium" : {
       "comment" : "Said of a tab whose page runs in this browser engine rather than the default one. Keep the product name as it is."
     },
@@ -11472,6 +11541,9 @@
     },
     "Sans" : {
       "extractionState" : "manual"
+    },
+    "Sash" : {
+
     },
     "Satellite" : {
 
@@ -12061,6 +12133,9 @@
         }
       }
     },
+    "Senate" : {
+
+    },
     "Separate" : {
 
     },
@@ -12528,6 +12603,9 @@
 
     },
     "Sign in to websites using passkeys saved with your system providers." : {
+
+    },
+    "Signal" : {
 
     },
     "Signed by %@." : {
@@ -13665,6 +13743,9 @@
     "Terracotta" : {
 
     },
+    "Tessera" : {
+
+    },
     "TEST" : {
 
     },
@@ -14569,6 +14650,9 @@
         }
       }
     },
+    "Triumph" : {
+
+    },
     "Trusts this exact site certificate for the current browsing session" : {
       "localizations" : {
         "ar" : {
@@ -15249,6 +15333,9 @@
     "Users" : {
 
     },
+    "Verdigris" : {
+
+    },
     "Verified Chrome Web Store package" : {
 
     },
@@ -15282,6 +15369,12 @@
       }
     },
     "Vertical offset" : {
+
+    },
+    "Vexillum" : {
+
+    },
+    "Victory" : {
 
     },
     "Videos" : {
@@ -15350,6 +15443,9 @@
           }
         }
       }
+    },
+    "Violet" : {
+
     },
     "visited pages history" : {
       "localizations" : {
@@ -15566,6 +15662,9 @@
           }
         }
       }
+    },
+    "Wisteria" : {
+
     },
     "Wolf Grey" : {
 
