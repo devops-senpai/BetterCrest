@@ -1,7 +1,7 @@
 # CrestEngines
 
-Engine bindings that live outside the shared Swift tree. Today it holds one
-engine, Chromium: the maintained fork's inputs and its Swift adapter. WebKit's
+Engine bindings that live outside the shared Swift tree. It holds Chromium, the
+maintained fork's inputs and its Swift adapter, and Arma's Servo library. WebKit's
 binding is Swift shared by both platforms and lives in
 `CrestShared/Infrastructure/WebKit/` (`WebKitEngineBinding`), not here.
 
@@ -15,6 +15,7 @@ shared UI never depend on which engine draws a page.
 | Folder | What it is |
 | --- | --- |
 | `Chromium/` | The maintained Chromium fork (recipe, patches, overlay, host header) and its Swift adapter ([CONTEXT](Chromium/CONTEXT.md)) |
+| `Servo/` | Arma's Servo engine: the Rust library with its C API (`ArmaServo.h`) and the patches its crates take; the Swift binding is `CrestMac/Infrastructure/Servo/` |
 
 ## Depends on
 

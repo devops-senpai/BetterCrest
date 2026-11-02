@@ -4,6 +4,42 @@
     "" : {
 
     },
+    "%@ has no content scripts Servo can run." : {
+
+    },
+    "%@ · Page scripts only" : {
+
+    },
+    "Choose a Firefox add-on (.xpi) or an unpacked extension’s folder." : {
+
+    },
+    "Firefox add-on page scripts" : {
+
+    },
+    "Independent Rust engine" : {
+
+    },
+    "Install Extension…" : {
+
+    },
+    "No extensions" : {
+
+    },
+    "Remove this extension" : {
+
+    },
+    "Servo extensions" : {
+
+    },
+    "Servo runs an extension’s page scripts and styles. Removing one takes effect when Arma restarts." : {
+
+    },
+    "Servo, the independent engine written in Rust. Experimental." : {
+
+    },
+    "The extension has no readable manifest." : {
+
+    },
     "Apply Theme" : {
 
     },

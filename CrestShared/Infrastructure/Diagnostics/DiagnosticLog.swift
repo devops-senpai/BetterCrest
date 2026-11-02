@@ -14,6 +14,9 @@ struct DiagnosticLog: Sendable {
     /// by their identities, never their addresses.
     static let pages = DiagnosticLog(category: "Pages")
     static let popups = DiagnosticLog(category: "Popups")
+    /// Arma's Servo engine: the library it loaded, and the pages it built,
+    /// loaded and closed, named by their identities.
+    static let servo = DiagnosticLog(category: "Servo")
     static let shortcuts = DiagnosticLog(category: "Shortcuts")
     static let sitePermissions = DiagnosticLog(category: "SitePermissions")
     /// How the cards of a split tile the content area, the drops and carries

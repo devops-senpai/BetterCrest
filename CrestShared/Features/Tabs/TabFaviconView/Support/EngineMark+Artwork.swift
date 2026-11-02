@@ -11,6 +11,11 @@ extension EngineMark {
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(.blue)
+        case .gears:
+            Image(systemName: "gearshape.2.fill")
+                .resizable()
+                .scaledToFit()
+                .foregroundStyle(.orange)
         }
     }
 }

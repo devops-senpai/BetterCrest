@@ -1,0 +1,25 @@
+[package]
+name = "arma-servo"
+version = "0.1.0"
+edition = "2024"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+servo = { version = "=0.7.0" }
+euclid = "0.22"
+url = "2.5"
+dpi = "0.1"
+raw-window-handle = "0.6"
+rustls = { version = "0.23", default-features = false, features = ["aws_lc_rs", "std"] }
+
+[profile.release]
+debug = false
+
+# Servo's network crate with Arma's patches applied, which
+# Scripts/build-servo-engine.sh prepares from the published crate.
+[patch.crates-io]
+servo-net = { path = ".build/servo-net" }

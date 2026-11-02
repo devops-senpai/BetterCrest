@@ -78,6 +78,9 @@ struct BrowserEngineSettingsPane: View {
             } footer: {
                 CrestFormFootnote("A rule for a site doesn’t include its subdomains.")
             }
+            if availableEngines.contains(.servo) {
+                BrowserServoExtensionsSection(store: ServoExtensionStore.shared)
+            }
             if let failure { Text(failure).foregroundStyle(.red) }
         }
         .sheet(item: $editing) { draft in

@@ -6,6 +6,7 @@ enum BrowserEngineImplementation: String, Codable, Sendable {
     case webKitMacOS = "crest.webkit.macos"
     case webKitIOS = "crest.webkit.ios"
     case chromiumMacOS = "crest.chromium.macos"
+    case servoMacOS = "arma.servo.macos"
 
     // MARK: - Types
 
@@ -18,9 +19,12 @@ enum BrowserEngineImplementation: String, Codable, Sendable {
             restoresHistoryFromOtherVersions: false)
         static let chromium = Family(
             name: "chromium", appcastSuffix: "", mainAppcastName: nil, restoresHistoryFromOtherVersions: true)
+        /// Servo keeps no history it can hand back, so it never restores one.
+        static let servo = Family(
+            name: "servo", appcastSuffix: "", mainAppcastName: nil, restoresHistoryFromOtherVersions: false)
 
         /// Every engine family.
-        static let all: [Family] = [webKit, chromium]
+        static let all: [Family] = [webKit, chromium, servo]
 
         // MARK: - Variables
 
@@ -87,6 +91,7 @@ enum BrowserEngineImplementation: String, Codable, Sendable {
         switch self {
         case .webKitMacOS, .webKitIOS: .webKit
         case .chromiumMacOS: .chromium
+        case .servoMacOS: .servo
         }
     }
 }

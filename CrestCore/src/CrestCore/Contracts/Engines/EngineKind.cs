@@ -10,6 +10,8 @@ public enum EngineMark {
     StackedTile,
     /// A blue globe for an engine using Chromium.
     Globe,
+    /// Two meshed gears for an engine using Servo.
+    Gears,
 }
 
 #endregion
@@ -25,7 +27,10 @@ public sealed class EngineKind {
     public static readonly EngineKind WebKit = new(name: "webkit", title: "WebKit", mark: EngineMark.StackedTile,
         pageDescription: "Runs in WebKit");
 
-    public static IReadOnlyList<EngineKind> All { get; } = [Chromium, WebKit];
+    public static readonly EngineKind Servo = new(name: "servo", title: "Servo", mark: EngineMark.Gears,
+        pageDescription: "Runs in Servo");
+
+    public static IReadOnlyList<EngineKind> All { get; } = [Chromium, WebKit, Servo];
 
     #endregion
 
