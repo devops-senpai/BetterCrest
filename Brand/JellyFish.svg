@@ -1,8 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200" width="800" height="1200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1200" width="600" height="1200">
   <defs>
     <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2d8fd5"/><stop offset="0.35" stop-color="#0f62b4"/>
-      <stop offset="0.75" stop-color="#03408f"/><stop offset="1" stop-color="#012a63"/>
+      <stop offset="0" stop-color="#1f78c8"/><stop offset="0.3" stop-color="#0a58a8"/>
+      <stop offset="0.6" stop-color="#014799"/><stop offset="1" stop-color="#013a80"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#014799" stop-opacity="0"/><stop offset="0.55" stop-color="#014799" stop-opacity="0"/>
+      <stop offset="1" stop-color="#014799" stop-opacity="1"/>
     </linearGradient>
     <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#bfe8ff" stop-opacity="0.35"/><stop offset="1" stop-color="#bfe8ff" stop-opacity="0"/>
@@ -12,7 +16,7 @@
       <stop offset="1" stop-color="#9b3fd6" stop-opacity="0.75"/>
     </radialGradient>
     <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#ff9be0" stop-opacity="0.45"/><stop offset="1" stop-color="#ff9be0" stop-opacity="0"/>
+      <stop offset="0" stop-color="#ff9be0" stop-opacity="0.3"/><stop offset="0.7" stop-color="#ff9be0" stop-opacity="0.08"/><stop offset="1" stop-color="#ff9be0" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="arm" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#f27ad0" stop-opacity="0.95"/><stop offset="1" stop-color="#7d3bd1" stop-opacity="0.35"/>
@@ -21,19 +25,19 @@
       <stop offset="0" stop-color="#ffc4ef" stop-opacity="0.8"/><stop offset="1" stop-color="#ffc4ef" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="800" height="1200" fill="url(#sea)"/>
+  <rect width="600" height="1200" fill="url(#sea)"/>
   <polygon points="120,0 220,0 420,1200 260,1200" fill="url(#ray)"/>
-  <polygon points="330,0 390,0 610,1200 520,1200" fill="url(#ray)" opacity="0.7"/>
-  <polygon points="540,0 640,0 800,820 800,1000" fill="url(#ray)" opacity="0.6"/>
+  <polygon points="300,0 350,0 520,1200 440,1200" fill="url(#ray)" opacity="0.7"/>
+  
   <polygon points="0,40 40,0 140,1200 0,1200" fill="url(#ray)" opacity="0.5"/>
   <g fill="#e6f6ff">
-    <circle cx="90" cy="180" r="3" opacity="0.6"/><circle cx="660" cy="140" r="2.5" opacity="0.5"/>
-    <circle cx="720" cy="420" r="3.5" opacity="0.4"/><circle cx="60" cy="560" r="2" opacity="0.5"/>
-    <circle cx="610" cy="760" r="2.5" opacity="0.45"/><circle cx="150" cy="900" r="3" opacity="0.35"/>
-    <circle cx="700" cy="1020" r="2" opacity="0.4"/><circle cx="420" cy="80" r="2" opacity="0.5"/>
-    <circle cx="250" cy="1110" r="2.5" opacity="0.3"/><circle cx="560" cy="300" r="1.8" opacity="0.5"/>
+    <circle cx="90" cy="180" r="3" opacity="0.6"/><circle cx="470" cy="140" r="2.5" opacity="0.5"/>
+    <circle cx="520" cy="420" r="3.5" opacity="0.4"/><circle cx="60" cy="560" r="2" opacity="0.5"/>
+    <circle cx="430" cy="760" r="2.5" opacity="0.45"/><circle cx="150" cy="900" r="3" opacity="0.35"/>
+    <circle cx="500" cy="1020" r="2" opacity="0.4"/><circle cx="420" cy="80" r="2" opacity="0.5"/>
+    <circle cx="250" cy="1110" r="2.5" opacity="0.3"/><circle cx="380" cy="300" r="1.8" opacity="0.5"/>
   </g>
-  <g transform="translate(400 420) rotate(-12)">
+  <g transform="translate(190 380) rotate(-6) scale(0.74)">
     <ellipse cx="0" cy="10" rx="300" ry="240" fill="url(#glow)"/>
     <g fill="none" stroke="url(#thread)" stroke-width="3" stroke-linecap="round">
       <path d="M-150 60 C-170 260 -110 420 -170 640 S-120 900 -160 1000"/>
@@ -66,4 +70,5 @@
     </g>
     <path d="M-120 -70 C-100 -130 -40 -165 20 -165" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="10" stroke-linecap="round"/>
   </g>
+  <rect width="600" height="1200" fill="url(#fade)"/>
 </svg>
