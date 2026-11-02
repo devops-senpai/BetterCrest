@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "Saving device records such as site permissions, site engines and link routes writes each list through one prepared statement instead of preparing one for every row."
+}
