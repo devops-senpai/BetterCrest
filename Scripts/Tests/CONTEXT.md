@@ -16,8 +16,8 @@ a script fails here before it fails in a release.
 | `test_chromium_fork.py`, `test_chromium_profile_adoption.py` | Upstream selection, build ownership and publication gates; profile migration that resumes after an interrupted launch |
 | `test_release_workflow.py`, `test_release_build_ordering.py`, `test_release_publication_recovery.py` | Release preflight, Sparkle feed ordering, interrupted GitHub Release recovery |
 | `test_release_notes.py`, `test_release_note_catalog.py`, `test_release_note_publication.py` | The release-note catalog and its per-channel publication |
-| `test_version_contract.py` | The semantic-version contract |
-| `test_direct_distribution_contract.py`, `test_xcode_cloud_configuration.py`, `test_cloudkit_environment_configuration.py` | Direct macOS signing, the Xcode Cloud workflow, the CloudKit environment |
+| `test_version_contract.py`, `test_derive_version.py`, `test_merge_release_notes.py` | The semantic-version contract, the version derived from history, the three-way release-note merge |
+| `test_direct_distribution_contract.py`, `test_cloudkit_environment_configuration.py` | Direct macOS signing, the CloudKit environment |
 | `test_contribution_checks.py`, `test_public_source_contract.py`, `test_repository_guardrails.py` | The pull request checks, the public-source gate, the repository guardrails |
 
 ## Depends on
