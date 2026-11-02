@@ -27,7 +27,7 @@ whose engines are interchangeable behind one adapter boundary.
 | `CrestTests/` | macOS Swift tests for durable contracts, with support harnesses and fixtures ([CONTEXT](CrestTests/CONTEXT.md)) |
 | `CrestMobileTests/` | iOS Swift tests for mobile-only adapter behavior ([CONTEXT](CrestMobileTests/CONTEXT.md)) |
 | `CrestTestFixtures/` | Web pages and a counting local server for validation runs ([CONTEXT](CrestTestFixtures/CONTEXT.md)) |
-| `Brand/` | Source artwork: the logo (`Arma.svg`, `Arma.png`), the app icon banner SVGs in `AppIcons/` that `Scripts/generate-app-icon-palettes.py` reads, the JellyFish theme's drawing (`JellyFish.svg`), and the README's screenshots and collage in `Readme/` |
+| `Brand/` | Source artwork: the logo (`Arma.svg`, `Arma.png`), the app icon banner SVGs in `AppIcons/` that `Scripts/generate-app-icon-palettes.py` reads, the JellyFish theme's drawing (`JellyFish.svg`), the README's screenshots and collage in `Readme/`, and the installer window's background and its generator in `Installer/` |
 | `Config/` | Version, architecture exception register, dependency register, export options, debugger settings ([CONTEXT](Config/CONTEXT.md)) |
 | `Scripts/` | Bootstrap, checks, validation, versioning, release and control-plane tooling ([CONTEXT](Scripts/CONTEXT.md)) |
 | `Documentation/` | Architecture and contributor references ([CONTEXT](Documentation/CONTEXT.md), [index](Documentation/README.md)) |
