@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "The Now Playing sidebar widget decodes its artwork and tab icon once per image instead of on every redraw, so flipping the widget deck no longer re-decodes them each frame."
+}
