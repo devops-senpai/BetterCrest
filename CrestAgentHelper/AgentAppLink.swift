@@ -133,7 +133,7 @@ actor AgentAppLink {
     }
 
     /// A socket connected to `path`, or nil when nothing listens there.
-    private static func connect(_ path: String) -> Int32? {
+    static func connect(_ path: String) -> Int32? {
         let descriptor = socket(AF_UNIX, SOCK_STREAM, 0)
         guard descriptor >= 0 else { return nil }
         var noSignal: Int32 = 1
