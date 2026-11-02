@@ -172,16 +172,18 @@ public sealed class PaletteSource {
         section: PaletteSection.SearchSuggestions, isSection: true, isEnabledByDefault: true, restingSection: null, finders: []);
     public static readonly PaletteSource SettingsPages = new(name: "settingsPages", title: "Settings Pages", detail: "Finds Settings pages by name.",
         section: PaletteSection.Actions, isSection: false, isEnabledByDefault: true, restingSection: null, finders: [new SettingsPageFinder()]);
-    public static readonly PaletteSource Scopes = new(name: "scopes", title: "@ Filters", detail: "Type @tabs, @saved, @history, @actions or @spaces, then a space or Tab, to show only that kind.", section: PaletteSection.Intent,
+    public static readonly PaletteSource Scopes = new(name: "scopes", title: "@ Filters", detail: "Type @tabs, @saved, @history, @actions, @spaces or @themes, then a space or Tab, to show only that kind.", section: PaletteSection.Intent,
         isSection: false, isEnabledByDefault: true, restingSection: null, finders: [new ScopeFinder()]);
     public static readonly PaletteSource Calculator = new(name: "calculator", title: "Calculator", detail: "Answers arithmetic such as 24 * 7. Return copies the answer.", section: PaletteSection.TopHit,
         isSection: false, isEnabledByDefault: true, restingSection: null, finders: []);
     public static readonly PaletteSource PasteAndGo = new(name: "pasteAndGo", title: "Paste and Go", detail: "Offers the address you copied when the palette opens.", section: PaletteSection.Intent,
         isSection: false, isEnabledByDefault: false, restingSection: null, finders: [new PasteFinder()]);
+    public static readonly PaletteSource Themes = new(name: "themes", title: "Themes", detail: null, section: PaletteSection.Themes,
+        isSection: true, isEnabledByDefault: true, restingSection: null, finders: [new ThemeFinder()]);
 
     /// The kinds, sections first in their default order.
     public static IReadOnlyList<PaletteSource> All { get; } =
-        [RecentTabs, OpenTabs, Saved, History, Actions, Spaces, ArchivedTabs, Suggestions, SettingsPages, Scopes, Calculator, PasteAndGo];
+        [RecentTabs, OpenTabs, Saved, History, Actions, Spaces, ArchivedTabs, Suggestions, SettingsPages, Scopes, Calculator, PasteAndGo, Themes];
 
     #endregion
 

@@ -27,7 +27,8 @@ macOS, with Mac-only panes added beside them rather than forked.
 | `Components/` | Pane container, column layout, settings sidebar and pages, Space editor and Space page, build header, developer toolbar, Picture in Picture and software update sections |
 | `Forge/` | The Forge's step bar as a native segmented control |
 | `Models/` | Settings navigation and tab state, destination and Space requests, system permissions and their controller |
-| `Support/` | `BrowserPlatformSettingsDestinationCatalog`, sidebar tints, and `BrowserSpaceThemeFiles` (importing and exporting a Space's theme file) |
+| `Models/BrowserSpaceSettingsTab.swift` | A Space's pages: Appearance, Browsing, Privacy, Passwords, Extensions (Settings › Themes lives in `CrestMac/Features/Themes/`) |
+| `Support/` | `BrowserPlatformSettingsDestinationCatalog` and sidebar tints |
 
 ## Depends on
 

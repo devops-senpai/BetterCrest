@@ -23,23 +23,25 @@ Crest Studio is on the Space’s Appearance page. The crest sits on the Space’
 - **Arma:** Field, Second field, Band, Emblem, Border and Edge. A color for a part the crest doesn’t draw is dimmed.
 - **Sidebar:** Background, Accent (selected tabs, pins, the address field and the Space picker) and Pattern.
 
-Click or tap a color to choose one of the templates’ tinctures or a custom color. Below the crest, work through **Start from**, **Shape**, **Field**, **Band**, **Emblem**, **Border**, **Finish**, **Sidebar** and **Other**; each step shows your crest with each choice applied. On iPhone, the steps are a list showing what each has chosen; tap one to open it. Choose **Icon** at the top of **Emblem** to use an SF Symbol or emoji instead of a crest. **Shuffle** suggests a new crest in the templates’ colors, and **Undo** steps back through your changes. **Reset Appearance** and **Artwork Credits** are in the **…** menu on the Space’s page.
+Click or tap a color to choose one of the templates’ tinctures or a custom color. Below the crest, work through **Start from**, **Shape**, **Field**, **Band**, **Emblem**, **Border**, **Finish**, **Sidebar** and **Other**; each step shows your crest with each choice applied. On iPhone, the steps are a list showing what each has chosen; tap one to open it. Choose **Icon** at the top of **Emblem** to use an SF Symbol or emoji instead of a crest. **Shuffle** suggests a new crest in the templates’ colors, and **Undo** steps back through your changes. **Artwork Credits** is in the **…** menu on the Space’s page.
+
+On Mac, a Space picks its colors from a theme: choose one from **Theme** at the top of its Appearance page, and the page keeps only the crest’s own steps, **Shape** through **Finish**. Start from, Sidebar, Other, the dark look and the background picture are edited under **Settings → Themes**, and every Space using that theme follows. A Space that had a look of its own gets it saved as a theme named for the Space. On iPhone and iPad, **Reset Appearance** is in the **…** menu.
 
 ## Customize folders
 
-The **Folders** group in the **Sidebar** step of the Space’s Appearance page sets the color every folder in the Space wears until you give it one of its own, the color of the folder’s back face, and how strongly folders tint their rows. The Sidebar step also chooses the text tone, or one exact text color for the sidebar. Individual folder menus let you set colors, search the full SF Symbols catalog, or choose emoji. You can show a custom icon on its own instead of the animated folder artwork. In **Settings → Appearance**, enable **Tint Folder Title** to use semibold titles in the folder’s color, adjusted for stronger contrast against light or dark sidebars.
+The **Folders** group in the **Sidebar** step (of the theme under **Settings → Themes** on Mac, of the Space’s Appearance page elsewhere) sets the color every folder in the Space wears until you give it one of its own, the color of the folder’s back face, and how strongly folders tint their rows. The Sidebar step also chooses the text tone, or one exact text color for the sidebar. Individual folder menus let you set colors, search the full SF Symbols catalog, or choose emoji. You can show a custom icon on its own instead of the animated folder artwork. In **Settings → Appearance**, enable **Tint Folder Title** to use semibold titles in the folder’s color, adjusted for stronger contrast against light or dark sidebars.
 
 ## Tint the command palette
 
-The **Command Palette** group in the **Other** step of the Space’s Appearance page lays a color over the palette’s glass in this Space, with its own tint, opacity and text color for the light and the dark appearance. Opacity runs from the glass alone to the solid color. Each group has a **Reset** that puts its choices back to the Space’s starting look, and each row keeps its own reset.
+The **Command Palette** group in the **Other** step (of the theme on Mac, of the Space’s Appearance page elsewhere) lays a color over the palette’s glass in this Space, with its own tint, opacity and text color for the light and the dark appearance. Opacity runs from the glass alone to the solid color. Each group has a **Reset** that puts its choices back to the Space’s starting look, and each row keeps its own reset.
 
 ## A look for dark windows
 
-Turn on **Dark look** at the top of a Space’s Appearance page to give the Space a second look that it wears while Arma’s windows are dark, starting from its light look. Choose **Light** or **Dark** beside the switch to edit either one; the sidebar switches between them with the system appearance or your Appearance mode. Turn the switch off to wear one look in both again.
+Turn on **Dark look** at the top of a theme under **Settings → Themes** on Mac, or of a Space’s Appearance page elsewhere, to give the Space a second look that it wears while Arma’s windows are dark, starting from its light look. Choose **Light** or **Dark** beside the switch to edit either one; the sidebar switches between them with the system appearance or your Appearance mode. Turn the switch off to wear one look in both again.
 
 ## Share a theme
 
-On Mac, choose **Export Theme…** at the bottom of the **Other** step, or in the **…** menu on a Space’s page, to save its look as a theme file, and **Load Theme from File…** to dress the Space in one someone shared. The `arma` tool inside Arma does the same from the terminal while Arma is open. It needs only Arma running; agents can stay off.
+On Mac, use the export and import buttons under the theme list in **Settings → Themes** to save a theme as a file or add one someone shared. The `arma` tool inside Arma does the same from the terminal while Arma is open. It needs only Arma running; agents can stay off.
 
 ```sh
 /Applications/Arma.app/Contents/Helpers/arma theme --space Personal --export ~/Desktop/dusk.json

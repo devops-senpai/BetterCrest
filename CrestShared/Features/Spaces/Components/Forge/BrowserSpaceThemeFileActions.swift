@@ -10,6 +10,16 @@ struct BrowserSpaceThemeFileActions {
     let load: @MainActor () async -> String?
 }
 
+/// What a shell adds to the Forge's Sidebar step, such as the picture behind
+/// the sidebar and the backing under its tabs. A shell with nothing to add
+/// offers none.
+struct BrowserSpaceSidebarSections {
+    // MARK: - Variables
+
+    let content: @MainActor () -> AnyView
+}
+
 extension EnvironmentValues {
     @Entry var browserSpaceThemeFiles: BrowserSpaceThemeFileActions? = nil
+    @Entry var browserSpaceSidebarSections: BrowserSpaceSidebarSections? = nil
 }

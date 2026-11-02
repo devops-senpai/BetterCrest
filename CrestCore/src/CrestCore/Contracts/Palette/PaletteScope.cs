@@ -18,7 +18,10 @@ public sealed class PaletteScope {
     public static readonly PaletteScope Spaces = new(name: "spaces", keyword: "@spaces", title: "Spaces", symbol: "square.stack",
         source: PaletteSource.Spaces);
 
-    public static IReadOnlyList<PaletteScope> All { get; } = [Tabs, Saved, History, Actions, Spaces];
+    public static readonly PaletteScope Themes = new(name: "themes", keyword: "@themes", title: "Themes", symbol: "paintpalette",
+        source: PaletteSource.Themes);
+
+    public static IReadOnlyList<PaletteScope> All { get; } = [Tabs, Saved, History, Actions, Spaces, Themes];
 
     #endregion
 

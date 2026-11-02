@@ -16,7 +16,8 @@ on every shell.
 | --- | --- |
 | `Components/BrowserSpaceBranding/` | Banner background and the banner, crest, identity and shape views |
 | `Components/BrowserSpaceBrandingEditor/` | The branding editor: field, pattern and preview sections, and the Crest Studio pickers (`Studio/`) |
-| `Components/Forge/` | `BrowserCrestForge`, the Crest Studio stage beside the live sidebar, and `BrowserSpaceThemeFileActions` (a theme file in and out of the studio) |
+| `Components/Forge/` | `BrowserCrestForge`, the Crest Studio stage beside the live sidebar, `BrowserSpaceThemeFileActions` (a theme file in and out of the studio) and `BrowserSpaceSidebarSections` (what a shell adds to the Sidebar step) |
+| `Components/BrowserSpaceBackdrop/` | A Space's background image on this device: `BrowserSpaceBackdropStore` (the picture, its corner, size, opacity, Space-color tint, blur and tab backing, decoded and blurred once) and `BrowserSpaceBackdropLayer`, which the window atmosphere and floating sidebar draw |
 | `Components/CrestSpaceSelector/` | Space menu picker, chip rail and icon picker |
 | `Components/` (files) | Inline Space name, the customization picker, the touch appearance workspace for setup |
 | `Models/` | Studio steps and branding values such as gradient-angle direction |

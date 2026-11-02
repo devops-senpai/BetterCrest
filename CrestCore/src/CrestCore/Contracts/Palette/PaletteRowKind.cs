@@ -60,9 +60,13 @@ public sealed class PaletteRowKind {
         symbol: "line.3.horizontal.decrease", action: "Search", label: "Scope", isPrimary: false, forgetsFromHistory: false,
         destination: (row, _) => row.Scope is { } scope ? PaletteDestination.Named(PaletteDestinationKind.Scope, scope.Name) : null);
 
+    public static readonly PaletteRowKind Theme = new(name: "theme", PaletteActivation.AppliesTheme,
+        symbol: "paintpalette", action: "Apply Theme", label: "Theme", isPrimary: false, forgetsFromHistory: false,
+        destination: (_, _) => null);
+
     public static IReadOnlyList<PaletteRowKind> All { get; } =
         [OpenAddress, Search, SearchSuggestion, Tab, PinnedTab, SavedTab, Folder, Command, History, Space, ArchivedTab,
-            SettingsPage, Calculation, PasteAndGo, Scope];
+            SettingsPage, Calculation, PasteAndGo, Scope, Theme];
 
     #endregion
 

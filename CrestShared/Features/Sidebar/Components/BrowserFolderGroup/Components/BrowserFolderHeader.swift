@@ -37,6 +37,13 @@ struct BrowserFolderHeader: View {
             BrowserSidebarDensity(tabScale).rowSeparation(
                 hasBorders: BrowserDeviceAppearanceStore.shared.tabs.borders == .all) / 2
         )
+        // The Space's tab backing, in the shape a tab row's plate takes.
+        .background {
+            BrowserSidebarTabBackingPlate(
+                cornerRadius: BrowserSidebarMetrics.layerCornerRadius(depth: configuration.depth)
+            )
+            .padding(.horizontal, BrowserSidebarMetrics.layerInset)
+        }
         .modifier(
             BrowserTabSelectionTarget(
                 tabID: nil, browser: configuration.browser,

@@ -149,8 +149,7 @@ final class BrowserMacCommands {
         if removeDark { dark = nil }
         if let changes {
             do {
-                look = try look.dressed(in: changes)
-                if let darkSections = changes.dark { dark = try (dark ?? look).dressed(in: darkSections) }
+                (look, dark) = try look.dressed(in: changes, dark: dark)
             } catch {
                 return .refused(message: error.message)
             }
@@ -161,6 +160,8 @@ final class BrowserMacCommands {
         if dark != currentDark {
             browser.updateSpaceDarkBranding(dark?.normalized(), in: space.id)
         }
+        // A dressed Space counts as edited, as one edited in Settings does.
+        BrowserThemeLibrary.shared.spaceEdited(space.id, in: browser)
         if export {
             let settings = browser.spaceModel(space.id)?.settings
             return .theme(CrestTheme(look: settings?.look ?? look, dark: settings?.darkBranding ?? dark))
@@ -168,15 +169,7 @@ final class BrowserMacCommands {
         var did: [String] = []
         if !resets.isEmpty { did.append("reset \(resets.map(\.rawValue).joined(separator: ", "))") }
         if removeDark { did.append("unpaired the dark look") }
-        if let changes {
-            var sections: [String] = []
-            if changes.background != nil { sections.append("background") }
-            if changes.icon != nil { sections.append("icon") }
-            if changes.folders != nil { sections.append("folders") }
-            if changes.commandPalette != nil { sections.append("command palette") }
-            if changes.dark != nil { sections.append("dark look") }
-            did.append("applied \(sections.joined(separator: ", "))")
-        }
+        if let changes { did.append("applied \(changes.sectionTitles.joined(separator: ", "))") }
         return .applied(summary: "\(space.settings.name): \(did.joined(separator: "; ")).")
     }
 

@@ -124,6 +124,10 @@ struct BrowserSettingsDestinationRouter: View {
             #if os(macOS)
                 BrowserAutomationSettingsPane(browser: browser)
             #endif
+        case .themes:
+            #if os(macOS)
+                BrowserThemesSettingsPane(browser: browser)
+            #endif
         }
     }
 }

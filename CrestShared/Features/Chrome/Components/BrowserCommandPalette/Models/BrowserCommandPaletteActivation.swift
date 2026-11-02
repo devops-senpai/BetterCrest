@@ -48,9 +48,15 @@ struct BrowserCommandPaletteActivation {
         return true
     }
 
+    static let appliesTheme = BrowserCommandPaletteActivation(.appliesTheme) { row, palette in
+        guard let themeID = row.subjectID, let commands = palette.commands else { return false }
+        commands.applyTheme(themeID)
+        return true
+    }
+
     static let all = [
         switchesToTab, opensAddress, searches, runsCommand, opensSettingsPage, showsSpace, reopensArchivedTab,
-        copiesAnswer, entersScope,
+        copiesAnswer, entersScope, appliesTheme,
     ]
 
     // MARK: - Variables

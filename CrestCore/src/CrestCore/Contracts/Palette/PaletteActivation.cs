@@ -21,9 +21,10 @@ public sealed class PaletteActivation {
         opensWhereKeysChoose: false);
     public static readonly PaletteActivation CopiesAnswer = new(name: "copiesAnswer", closesPalette: true, opensWhereKeysChoose: false);
     public static readonly PaletteActivation EntersScope = new(name: "entersScope", closesPalette: false, opensWhereKeysChoose: false);
+    public static readonly PaletteActivation AppliesTheme = new(name: "appliesTheme", closesPalette: true, opensWhereKeysChoose: false);
 
     public static IReadOnlyList<PaletteActivation> All { get; } = [SwitchesToTab, OpensAddress, Searches, RunsCommand, OpensSettingsPage,
-        ShowsSpace, ReopensArchivedTab, CopiesAnswer, EntersScope];
+        ShowsSpace, ReopensArchivedTab, CopiesAnswer, EntersScope, AppliesTheme];
 
     #endregion
 

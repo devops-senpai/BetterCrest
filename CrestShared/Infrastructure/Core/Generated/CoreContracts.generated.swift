@@ -1096,7 +1096,8 @@ struct AppPreferences: Equatable, Sendable {
                 PaletteSourceChoice(source: PaletteSource.settingsPages, isEnabled: true, limit: nil),
                 PaletteSourceChoice(source: PaletteSource.scopes, isEnabled: true, limit: nil),
                 PaletteSourceChoice(source: PaletteSource.calculator, isEnabled: true, limit: nil),
-                PaletteSourceChoice(source: PaletteSource.pasteAndGo, isEnabled: false, limit: nil)
+                PaletteSourceChoice(source: PaletteSource.pasteAndGo, isEnabled: false, limit: nil),
+                PaletteSourceChoice(source: PaletteSource.themes, isEnabled: true, limit: nil)
             ],
             showsTopHit: true,
             prefersOpenTabs: true,
@@ -4596,7 +4597,8 @@ struct PalettePreferences: Equatable, Sendable {
             PaletteSourceChoice(source: PaletteSource.settingsPages, isEnabled: true, limit: nil),
             PaletteSourceChoice(source: PaletteSource.scopes, isEnabled: true, limit: nil),
             PaletteSourceChoice(source: PaletteSource.calculator, isEnabled: true, limit: nil),
-            PaletteSourceChoice(source: PaletteSource.pasteAndGo, isEnabled: false, limit: nil)
+            PaletteSourceChoice(source: PaletteSource.pasteAndGo, isEnabled: false, limit: nil),
+            PaletteSourceChoice(source: PaletteSource.themes, isEnabled: true, limit: nil)
         ],
         showsTopHit: true,
         prefersOpenTabs: true,
@@ -4692,6 +4694,13 @@ struct PaletteSuggestions: Query, Equatable, Sendable {
     let scope: PaletteScope?
     let allowsCompletion: Bool
     let pasteboard: String?
+    let themes: [PaletteTheme]
+}
+
+struct PaletteTheme: Equatable, Sendable, Identifiable {
+    var id: UUID
+    var name: String
+    var detail: String
 }
 
 struct PasskeyAccess: Query, Equatable, Sendable {
@@ -15022,6 +15031,12 @@ struct PaletteActivation: Hashable, Sendable {
         closesPalette: false,
         opensWhereKeysChoose: false
     )
+    static let appliesTheme = PaletteActivation(
+        tag: 9,
+        name: "appliesTheme",
+        closesPalette: true,
+        opensWhereKeysChoose: false
+    )
 
     static let all: [PaletteActivation] = [
         switchesToTab,
@@ -15032,7 +15047,8 @@ struct PaletteActivation: Hashable, Sendable {
         showsSpace,
         reopensArchivedTab,
         copiesAnswer,
-        entersScope
+        entersScope,
+        appliesTheme
     ]
 
     static func named(_ name: String?) -> PaletteActivation? {
@@ -15373,6 +15389,16 @@ struct PaletteRowKind: Hashable, Sendable {
         activation: PaletteActivation.entersScope,
         forgetsFromHistory: false
     )
+    static let theme = PaletteRowKind(
+        tag: 15,
+        name: "theme",
+        symbol: "paintpalette",
+        action: LocalizedStringResource("Apply Theme"),
+        label: LocalizedStringResource("Theme"),
+        isPrimary: false,
+        activation: PaletteActivation.appliesTheme,
+        forgetsFromHistory: false
+    )
 
     static let all: [PaletteRowKind] = [
         openAddress,
@@ -15389,7 +15415,8 @@ struct PaletteRowKind: Hashable, Sendable {
         settingsPage,
         calculation,
         pasteAndGo,
-        scope
+        scope,
+        theme
     ]
 
     static func named(_ name: String?) -> PaletteRowKind? {
@@ -15495,8 +15522,16 @@ struct PaletteScope: Hashable, Sendable {
         symbol: "square.stack",
         source: PaletteSource.spaces
     )
+    static let themes = PaletteScope(
+        tag: 5,
+        name: "themes",
+        keyword: "@themes",
+        title: LocalizedStringResource("Themes"),
+        symbol: "paintpalette",
+        source: PaletteSource.themes
+    )
 
-    static let all: [PaletteScope] = [tabs, saved, history, actions, spaces]
+    static let all: [PaletteScope] = [tabs, saved, history, actions, spaces, themes]
 
     static func named(_ name: String?) -> PaletteScope? {
         all.first { $0.name == name }
@@ -15623,6 +15658,14 @@ struct PaletteSection: Hashable, Sendable {
         restingLimit: 0,
         scopedLimit: 0
     )
+    static let themes = PaletteSection(
+        tag: 11,
+        name: "themes",
+        title: LocalizedStringResource("Themes"),
+        limit: 3,
+        restingLimit: 0,
+        scopedLimit: 30
+    )
 
     static let all: [PaletteSection] = [
         intent,
@@ -15635,7 +15678,8 @@ struct PaletteSection: Hashable, Sendable {
         topHit,
         spaces,
         archived,
-        results
+        results,
+        themes
     ]
 
     static func named(_ name: String?) -> PaletteSection? {
@@ -15807,7 +15851,7 @@ struct PaletteSource: Hashable, Sendable {
         tag: 9,
         name: "scopes",
         title: LocalizedStringResource("@ Filters"),
-        detail: LocalizedStringResource("Type @tabs, @saved, @history, @actions or @spaces, then a space or Tab, to show only that kind."),
+        detail: LocalizedStringResource("Type @tabs, @saved, @history, @actions, @spaces or @themes, then a space or Tab, to show only that kind."),
         section: PaletteSection.intent,
         isSection: false,
         isEnabledByDefault: true,
@@ -15836,6 +15880,17 @@ struct PaletteSource: Hashable, Sendable {
         restingSection: nil,
         defaultLimit: 2
     )
+    static let themes = PaletteSource(
+        tag: 12,
+        name: "themes",
+        title: LocalizedStringResource("Themes"),
+        detail: nil,
+        section: PaletteSection.themes,
+        isSection: true,
+        isEnabledByDefault: true,
+        restingSection: nil,
+        defaultLimit: 3
+    )
 
     static let all: [PaletteSource] = [
         recentTabs,
@@ -15849,7 +15904,8 @@ struct PaletteSource: Hashable, Sendable {
         settingsPages,
         scopes,
         calculator,
-        pasteAndGo
+        pasteAndGo,
+        themes
     ]
 
     static func named(_ name: String?) -> PaletteSource? {
@@ -17852,6 +17908,9 @@ struct ShortcutCommand: Hashable, Sendable {
         case mostRecentTabBackward
         case clearSiteCookies
         case clearSiteCache
+        case saveSpaceTheme
+        case importTheme
+        case exportTheme
     }
 
     let tag: Int
@@ -19827,6 +19886,57 @@ struct ShortcutCommand: Hashable, Sendable {
         offersInPalette: true,
         isReservedFromPages: false
     )
+    static let saveSpaceTheme = ShortcutCommand(
+        tag: 74,
+        kind: .saveSpaceTheme,
+        name: "saveSpaceTheme",
+        section: ShortcutSection.spaces,
+        title: LocalizedStringResource("Save Look as Theme"),
+        searchTerms: LocalizedStringResource("theme save colors look appearance"),
+        menuTitle: nil,
+        symbol: "paintpalette",
+        requiredCapability: nil,
+        selects: nil,
+        number: nil,
+        defaultShortcuts: [],
+        paletteRest: nil,
+        offersInPalette: true,
+        isReservedFromPages: false
+    )
+    static let importTheme = ShortcutCommand(
+        tag: 75,
+        kind: .importTheme,
+        name: "importTheme",
+        section: ShortcutSection.spaces,
+        title: LocalizedStringResource("Import Theme"),
+        searchTerms: LocalizedStringResource("theme load file colors look appearance"),
+        menuTitle: LocalizedStringResource("Import Theme…"),
+        symbol: "square.and.arrow.down",
+        requiredCapability: nil,
+        selects: nil,
+        number: nil,
+        defaultShortcuts: [],
+        paletteRest: nil,
+        offersInPalette: true,
+        isReservedFromPages: false
+    )
+    static let exportTheme = ShortcutCommand(
+        tag: 76,
+        kind: .exportTheme,
+        name: "exportTheme",
+        section: ShortcutSection.spaces,
+        title: LocalizedStringResource("Export Theme"),
+        searchTerms: LocalizedStringResource("theme save file share colors look appearance"),
+        menuTitle: LocalizedStringResource("Export Theme…"),
+        symbol: "square.and.arrow.up",
+        requiredCapability: nil,
+        selects: nil,
+        number: nil,
+        defaultShortcuts: [],
+        paletteRest: nil,
+        offersInPalette: true,
+        isReservedFromPages: false
+    )
 
     static let all: [ShortcutCommand] = [
         newWindow,
@@ -19902,7 +20012,10 @@ struct ShortcutCommand: Hashable, Sendable {
         capturePage,
         mostRecentTabBackward,
         clearSiteCookies,
-        clearSiteCache
+        clearSiteCache,
+        saveSpaceTheme,
+        importTheme,
+        exportTheme
     ]
 
     static func named(_ name: String?) -> ShortcutCommand? {
@@ -20077,7 +20190,8 @@ struct ShortcutMenu: Hashable, Sendable {
                 ShortcutCommand.selectSpace7,
                 ShortcutCommand.selectSpace8,
                 ShortcutCommand.selectSpace9
-            ]
+            ],
+            [ShortcutCommand.saveSpaceTheme, ShortcutCommand.importTheme, ShortcutCommand.exportTheme]
         ]
     )
     static let page = ShortcutMenu(

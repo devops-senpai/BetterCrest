@@ -7,11 +7,13 @@ import UIKit
 struct BrowserPlatformCrestForgeStepBar: UIViewRepresentable {
     @Binding var step: BrowserCrestStudioStep
     let disabledSteps: Set<BrowserCrestStudioStep>
+    /// The steps the bar offers, every one unless a page edits only part of a look.
+    var steps: [BrowserCrestStudioStep] = BrowserCrestStudioStep.all
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     func makeUIView(context: Context) -> UISegmentedControl {
-        let control = UISegmentedControl(items: BrowserCrestStudioStep.all.map { String(localized: $0.title) })
+        let control = UISegmentedControl(items: steps.map { String(localized: $0.title) })
         control.apportionsSegmentWidthsByContent = true
         control.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .valueChanged)
         control.accessibilityIdentifier = "space-forge-steps"
@@ -21,10 +23,10 @@ struct BrowserPlatformCrestForgeStepBar: UIViewRepresentable {
 
     func updateUIView(_ control: UISegmentedControl, context: Context) {
         context.coordinator.parent = self
-        for (index, candidate) in BrowserCrestStudioStep.all.enumerated() {
+        for (index, candidate) in steps.enumerated() {
             control.setEnabled(!disabledSteps.contains(candidate), forSegmentAt: index)
         }
-        control.selectedSegmentIndex = BrowserCrestStudioStep.all.firstIndex(of: step) ?? 0
+        control.selectedSegmentIndex = steps.firstIndex(of: step) ?? 0
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UISegmentedControl, context: Context) -> CGSize? {
@@ -38,7 +40,7 @@ struct BrowserPlatformCrestForgeStepBar: UIViewRepresentable {
         init(_ parent: BrowserPlatformCrestForgeStepBar) { self.parent = parent }
 
         @MainActor @objc func changed(_ sender: UISegmentedControl) {
-            let steps = BrowserCrestStudioStep.all
+            let steps = parent.steps
             guard steps.indices.contains(sender.selectedSegmentIndex) else { return }
             parent.step = steps[sender.selectedSegmentIndex]
         }

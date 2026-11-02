@@ -72,6 +72,10 @@ public sealed record PaletteRow(PaletteRowKind Kind, string Title, string Subtit
 /// platform shows for it, which ranking matches what a person types against.
 public sealed record PaletteCommand(ShortcutCommand Command, string Title, string SectionTitle);
 
+/// A saved theme the palette may put on the Space it speaks for, named as
+/// the platform keeps it, with what it shows beneath the name.
+public sealed record PaletteTheme(Guid Id, string Name, string Detail);
+
 /// A settings page the palette may open, named as the platform's settings name
 /// it, with its title and the words a person might type to find it.
 public sealed record PaletteSettingsPage(string Name, string Title, string Terms);

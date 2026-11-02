@@ -24,10 +24,11 @@ public sealed class PaletteSection {
     public static readonly PaletteSection Archived = new(name: "archived", title: "Archived Tabs", limit: 3, restingLimit: 0,
         scopedLimit: 30);
     public static readonly PaletteSection Results = new(name: "results", title: null, limit: 12, restingLimit: 0, scopedLimit: 0);
+    public static readonly PaletteSection Themes = new(name: "themes", title: "Themes", limit: 3, restingLimit: 0, scopedLimit: 30);
 
     /// Every section, in the order sections were added.
     public static IReadOnlyList<PaletteSection> All { get; } =
-        [Intent, SearchSuggestions, RecentTabs, Tabs, Actions, Saved, History, TopHit, Spaces, Archived, Results];
+        [Intent, SearchSuggestions, RecentTabs, Tabs, Actions, Saved, History, TopHit, Spaces, Archived, Results, Themes];
 
     #endregion
 

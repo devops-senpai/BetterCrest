@@ -31,6 +31,7 @@ never a second copy of its behavior.
 | `SoftwareUpdates/` | Update channel, check, user driver and the release notes view |
 | `Spaces/` | Space name dismissal, palette color well and symbol artwork |
 | `SplitView/` | Split cards: hover, pointer, lift and focus |
+| `Themes/` | `BrowserThemeLibrary` (the themes saved on this Mac as theme files, which theme each Space wears, giving a Space without one a theme of its look), Settings › Themes (`BrowserThemesSettingsPane`), the Theme picker heading a Space's Appearance page, and the Background Image and Tab Backing sections of the Forge's Sidebar step |
 | `Tabs/` | Tab equalizer, pinned-tab middle click, Getting Started icon |
 | `TransientBrowsing/` | The Peek overlay, its keyboard monitor and model |
 | `Utilities/` | The utility filter's menu style |

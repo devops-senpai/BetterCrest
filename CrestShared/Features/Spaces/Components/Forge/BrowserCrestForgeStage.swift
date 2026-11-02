@@ -9,6 +9,10 @@ struct BrowserCrestForgeStage: View {
     /// else on the page does.
     var name: Binding<String>? = nil
     let canUndo: Bool
+    /// Whether the stage offers the crest's colors, where the page edits the crest.
+    var showsCrest = true
+    /// Whether the stage offers the sidebar's colors, where the page edits them.
+    var showsSidebar = true
     let shuffle: () -> Void
     let undo: () -> Void
     /// Shows a step of the Forge, for a color whose part the crest doesn't draw.
@@ -88,14 +92,18 @@ struct BrowserCrestForgeStage: View {
     /// where that keeps their names whole.
     private func swatches(columnWidth: CGFloat, sidebarColumnWidth: CGFloat? = nil) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            swatchGroup(branding.iconStyle.title) {
-                ForEach(BrowserCrestForgeLayer.shown(by: branding)) { layer in
-                    layerSwatch(layer, columnWidth: columnWidth)
+            if showsCrest {
+                swatchGroup(branding.iconStyle.title) {
+                    ForEach(BrowserCrestForgeLayer.shown(by: branding)) { layer in
+                        layerSwatch(layer, columnWidth: columnWidth)
+                    }
                 }
             }
-            swatchGroup("Sidebar") {
-                ForEach(BrowserSpaceBrandColorRole.all) { role in
-                    sidebarSwatch(role, columnWidth: sidebarColumnWidth ?? columnWidth)
+            if showsSidebar {
+                swatchGroup("Sidebar") {
+                    ForEach(BrowserSpaceBrandColorRole.all) { role in
+                        sidebarSwatch(role, columnWidth: sidebarColumnWidth ?? columnWidth)
+                    }
                 }
             }
         }

@@ -23,6 +23,9 @@ struct DiagnosticLog: Sendable {
     /// that change it, and the frames the cards settle on. Cards are named by
     /// their tab identities, never their addresses.
     static let splits = DiagnosticLog(category: "Splits")
+    /// The saved theme library: themes saved, imported, renamed, removed and
+    /// put on a Space, named by their identities.
+    static let themes = DiagnosticLog(category: "Themes")
     static let windows = DiagnosticLog(category: "Windows")
 
     // MARK: - Variables

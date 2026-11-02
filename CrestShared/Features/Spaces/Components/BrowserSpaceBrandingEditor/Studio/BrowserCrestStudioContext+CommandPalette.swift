@@ -14,11 +14,7 @@ extension BrowserCrestStudioContext {
             Binding(
                 get: { value.commandPalette?.surface(dark: dark).tint },
                 set: { tint in
-                    branding.editorUpdate {
-                        let surface = ($0.commandPalette ?? .neutral).surface(dark: dark)
-                        $0.setPaletteSurface(surface.tinted(tint), dark: dark)
-                        $0.hasCustomAppearance = true
-                    }
+                    editSurface(dark: dark) { $0 = $0.tinted(tint) }
                 }), default: nil)
     }
 
@@ -29,12 +25,7 @@ extension BrowserCrestStudioContext {
             Binding(
                 get: { value.commandPalette?.surface(dark: dark).textColor },
                 set: { color in
-                    branding.editorUpdate {
-                        var surface = ($0.commandPalette ?? .neutral).surface(dark: dark)
-                        surface.textColor = color
-                        $0.setPaletteSurface(surface, dark: dark)
-                        $0.hasCustomAppearance = true
-                    }
+                    editSurface(dark: dark) { $0.textColor = color }
                 }), default: nil)
     }
 
@@ -44,12 +35,14 @@ extension BrowserCrestStudioContext {
             Binding(
                 get: { value.commandPalette?.surface(dark: dark).opacity ?? 0 },
                 set: { opacity in
-                    branding.editorUpdate {
-                        var surface = ($0.commandPalette ?? .neutral).surface(dark: dark)
-                        surface.opacity = opacity
-                        $0.setPaletteSurface(surface, dark: dark)
-                        $0.hasCustomAppearance = true
-                    }
+                    editSurface(dark: dark) { $0.opacity = opacity }
                 }), default: 0)
+    }
+
+    private func editSurface(dark: Bool, _ edit: @escaping (inout SpacePaletteSurface) -> Void) {
+        branding.editorUpdate {
+            $0.editPaletteSurface(dark: dark, edit)
+            $0.hasCustomAppearance = true
+        }
     }
 }
