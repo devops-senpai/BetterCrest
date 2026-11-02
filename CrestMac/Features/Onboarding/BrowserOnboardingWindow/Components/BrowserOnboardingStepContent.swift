@@ -13,6 +13,8 @@ struct BrowserOnboardingStepContent: View, BrowserOnboardingPages {
     @Binding var customizationSpaceID: UUID?
     let close: () -> Void
     let openCrest: () -> Void
+    /// The look the welcome shows now, which its window wears too.
+    let welcomeBranding: SpaceBranding
 
     var body: some View {
         flow.step.page(in: self)
@@ -32,7 +34,8 @@ struct BrowserOnboardingStepContent: View, BrowserOnboardingPages {
                 cloudWait.setUpWithoutCloud()
                 continueSetup()
             },
-            openCrest: openCrest
+            openCrest: openCrest,
+            branding: welcomeBranding
         )
     }
 

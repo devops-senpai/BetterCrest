@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// The first page: the mark, one line, and what the welcome offers, beside a
-/// banner of a Space wearing Crest's own look.
+/// window in the welcome's look showing Arma's logo.
 struct BrowserOnboardingWelcomePage: View {
     let action: BrowserOnboardingWelcomeAction
     let hasCompletedSetup: Bool
@@ -9,6 +9,8 @@ struct BrowserOnboardingWelcomePage: View {
     let continueSetup: () -> Void
     let setUpWithoutCloud: () -> Void
     let openCrest: () -> Void
+    /// The look the welcome shows now.
+    var branding: SpaceBranding = BrowserOnboardingWelcomeLook.look(at: 0)
 
     private var cloudStatusDetail: String {
         if hasCompletedSetup {
@@ -31,10 +33,11 @@ struct BrowserOnboardingWelcomePage: View {
                     .padding(.leading, 80)
                 Spacer(minLength: 60)
                 BrowserOnboardingWindowPreview(
-                    branding: SpaceHouse.winter.look, symbol: "house.fill", name: String(localized: "Personal")
+                    branding: branding, symbol: "house.fill", name: String(localized: "Personal")
                 ) {
-                    BrowserSpaceCrestIcon(branding: SpaceHouse.winter.look, size: 160)
+                    CrestStartPageMark()
                         .frame(width: 160, height: 160)
+                        .accessibilityHidden(true)
                 }
                 .frame(width: 680, height: 460)
                 .padding(.trailing, 100)
