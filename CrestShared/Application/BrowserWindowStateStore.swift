@@ -27,12 +27,12 @@ final class BrowserWindowStateStore {
         layouts.save(state)
     }
 
-    func splitColumnFractions(for groupID: UUID) -> [Double]? {
+    func splitColumnFractions(for groupID: UUID) -> [UUID: [Double]] {
         browser.window.splitColumnFractions(for: groupID)
     }
 
-    func captureSplitLayout(fractions: [Double], for groupID: UUID) {
-        browser.resizeSplitColumns(fractions, for: groupID)
+    func captureSplitLayout(fractions: [Double], branchID: UUID, for groupID: UUID) {
+        browser.resizeSplitColumns(fractions, branchID: branchID, for: groupID)
     }
 
     func removePersistedState() {

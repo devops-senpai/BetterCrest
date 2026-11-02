@@ -9,6 +9,7 @@ struct BrowserTabOrganizationMenuContent: View {
     var changeIcon: (() -> Void)? = nil
 
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(BrowserSidebarInteractionState.self) private var sidebarInteraction: BrowserSidebarInteractionState?
 
     init(menu: BrowserTabOrganizationMenu) {
         tab = menu.tab
@@ -230,6 +231,14 @@ struct BrowserTabOrganizationMenuContent: View {
         if isRenderableSplitMember {
             moveButton(.left, title: "Move Left", systemImage: "arrow.left")
             moveButton(.right, title: "Move Right", systemImage: "arrow.right")
+            if context.capabilities.supportsHover, let sidebarInteraction {
+                Button("Move Card (⇧⌘ Drag)", systemImage: "arrow.up.and.down.and.arrow.left.and.right") {
+                    performIfCurrent {
+                        sidebarInteraction.requestCardCarry(tab.id)
+                    }
+                }
+                .disabled(!context.isCurrent(sourceAssignment) || !browser.shownCards.contains { $0.id == tab.id })
+            }
 
             Button("Remove from Split", systemImage: "rectangle.badge.minus") {
                 performIfCurrent {

@@ -179,9 +179,11 @@ final class BrowserStore {
         windowRevision &+= 1
     }
 
-    /// The column shares this window keeps for a split group it resized.
-    func resizeSplitColumns(_ fractions: [Double], for groupID: UUID) {
-        sendWindowIntent(ResizeSplitColumns(windowID: windowID, groupID: groupID, shares: fractions))
+    /// The shares this window keeps for one branch of a split group's layout
+    /// it resized.
+    func resizeSplitColumns(_ fractions: [Double], branchID: UUID, for groupID: UUID) {
+        sendWindowIntent(
+            ResizeSplitColumns(windowID: windowID, groupID: groupID, branchID: branchID, shares: fractions))
     }
 
     /// Runs one intent about this window. What it changed, including a tab

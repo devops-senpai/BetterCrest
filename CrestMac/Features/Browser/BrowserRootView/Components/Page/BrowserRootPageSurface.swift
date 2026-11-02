@@ -104,14 +104,15 @@ struct BrowserRootPageSurface: View, @MainActor Equatable {
     private func surface(
         _ presentation: BrowserPageSurfacePresentation
     ) -> some View {
-        if case .columns(let space, let members, let placeholderIndex) =
+        if case .columns(let space, let members, let placeholder, let mover) =
             presentation
         {
             BrowserSplitPageSurface(
                 model: model,
                 space: space,
                 members: members,
-                placeholderIndex: placeholderIndex,
+                placeholder: placeholder,
+                placeholderMover: mover,
                 tabPromotionNamespace: tabPromotionNamespace,
                 shortcuts: shortcuts
             )

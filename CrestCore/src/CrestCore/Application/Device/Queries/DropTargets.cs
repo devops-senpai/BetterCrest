@@ -30,7 +30,7 @@ public sealed record DropTargets(Guid WorkspaceId, Guid WindowId, Guid SpaceId, 
         lock (app.Device.Gate) shown = window.Tab(spaceId);
         var split = shown is { } target
             ? new SplitDropTarget(target, Device.Refusal(authority,
-                new DropIntoSplit(workspaceId, windowId, spaceId, selection, target, Index: null), app.Clock.Now, app.Pages))
+                new DropIntoSplit(workspaceId, windowId, spaceId, selection, target, Index: null, Landing: null), app.Clock.Now, app.Pages))
             : null;
         // Every candidate passes the rule a drop checks of its tab, so the first
         // answers for all of them what the lift allows.

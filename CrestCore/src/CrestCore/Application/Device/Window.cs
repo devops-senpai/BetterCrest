@@ -19,7 +19,8 @@ internal sealed class Window {
 
     /// The tab shown in each Space; null when the window shows none there.
     private readonly Dictionary<Guid, Guid?> tabs;
-    private readonly Dictionary<Guid, IReadOnlyList<double>> shares;
+    /// The shares each window keeps, by split group and branch of its layout.
+    private readonly Dictionary<(Guid GroupId, Guid BranchId), IReadOnlyList<double>> shares;
     /// Each Space's shown tabs, most recent last. Kept in memory only.
     private readonly Dictionary<Guid, List<Guid>> recent;
     /// The tabs in `recent`, by Space, that no person saw on screen.
@@ -41,7 +42,7 @@ internal sealed class Window {
     #region Constructors
 
     private Window(Guid id, Guid workspaceId, bool saved, Guid shownSpaceId, Dictionary<Guid, Guid?> tabs,
-        Dictionary<Guid, IReadOnlyList<double>> shares, Dictionary<Guid, List<Guid>> recent,
+        Dictionary<(Guid GroupId, Guid BranchId), IReadOnlyList<double>> shares, Dictionary<Guid, List<Guid>> recent,
         HashSet<(Guid SpaceId, Guid TabId)> unseen, HashSet<(Guid SpaceId, Guid TabId)> departed) {
         Id = id;
         WorkspaceId = workspaceId;
@@ -57,7 +58,7 @@ internal sealed class Window {
     /// A window that shows what `record` kept.
     public static Window Restoring(SavedWindow record, Guid workspaceId) => new(record.Id, workspaceId, saved: true,
         record.ShownSpaceId, record.Tabs.ToDictionary(tab => tab.SpaceId, tab => tab.TabId),
-        record.Shares.ToDictionary(group => group.GroupId, group => group.Shares), [], [], []);
+        record.Shares.ToDictionary(group => (group.GroupId, group.BranchId), group => group.Shares), [], [], []);
 
     /// A window that starts as `other` shows, without its split columns.
     public static Window Copying(Window other, Guid id, bool saved) =>
@@ -100,7 +101,8 @@ internal sealed class Window {
             space is not null && shown is not null && space.SplitCandidate(shown.Id) is not null, shownCards);
         return new(Id, WorkspaceId, ShownSpaceId,
             [.. tabs.OrderBy(entry => entry.Key).Select(entry => new ShownTab(entry.Key, entry.Value))],
-            [.. shares.OrderBy(entry => entry.Key).Select(entry => new SplitColumnShares(entry.Key, entry.Value))],
+            [.. shares.OrderBy(entry => entry.Key.GroupId).ThenBy(entry => entry.Key.BranchId)
+                .Select(entry => new SplitColumnShares(entry.Key.GroupId, entry.Key.BranchId, entry.Value))],
             cards, [.. ShortcutCommand.All.Where(command => !command.IsAvailable(facts))]);
     }
 
@@ -266,8 +268,8 @@ internal sealed class Window {
         }
         if (!Showable(session).Any(space => space.Id == ShownSpaceId) && Showable(session).FirstOrDefault() is { } fallback)
             ShowSpace(fallback);
-        foreach (var groupId in shares.Keys.ToArray())
-            if (!session.Spaces.Any(space => RenderedColumns(space, groupId) == shares[groupId].Count)) shares.Remove(groupId);
+        foreach (var key in shares.Keys.ToArray())
+            if (!session.Spaces.Any(space => RenderedChildren(space, key.GroupId, key.BranchId) == shares[key].Count)) shares.Remove(key);
         foreach (var (spaceId, history) in recent.ToArray()) {
             if (!spaces.TryGetValue(spaceId, out var space)) {
                 recent.Remove(spaceId);
@@ -281,18 +283,18 @@ internal sealed class Window {
         foreach (var spaceId in tabs.Keys) Remember(spaceId);
     }
 
-    /// Records one split group's column shares, normalized. Answers false for
-    /// shares that cannot describe columns.
-    public bool Resize(Guid groupId, IReadOnlyList<double> requested) {
+    /// Records the shares of one branch of a split group's layout,
+    /// normalized. Answers false for shares that cannot describe columns.
+    public bool Resize(Guid groupId, Guid branchId, IReadOnlyList<double> requested) {
         if (SplitShares(requested) is not { } normalized) return false;
-        shares[groupId] = normalized;
+        shares[(groupId, branchId)] = normalized;
         return true;
     }
 
     /// The record the device store keeps for this window.
     public SavedWindow Record(long used) => new(Id, ShownSpaceId,
         [.. tabs.Select(entry => new ShownTab(entry.Key, entry.Value))],
-        [.. shares.Select(entry => new SplitColumnShares(entry.Key, entry.Value))], used);
+        [.. shares.Select(entry => new SplitColumnShares(entry.Key.GroupId, entry.Key.BranchId, entry.Value))], used);
 
     private void Remember(Guid spaceId) {
         if (tabs.GetValueOrDefault(spaceId) is not { } tabId) return;
@@ -330,14 +332,18 @@ internal sealed class Window {
 
     private static bool Contains(SpaceState space, Guid? tabId) => tabId is { } id && space.Tabs.Any(tab => tab.Id == id);
 
-    /// How many columns a split group renders with in `space`: the length of
-    /// its first contiguous run of tabs, when that run can render.
-    private static int RenderedColumns(SpaceState space, Guid groupId) {
+    /// How many children the branch `branchId` of a split group's layout
+    /// renders with in `space`: as the layout resolves over the group's first
+    /// contiguous run of tabs, when that run can render; zero for no such
+    /// branch.
+    private static int RenderedChildren(SpaceState space, Guid groupId, Guid branchId) {
         int start = 0;
         while (start < space.Tabs.Count && space.Tabs[start].SplitGroupId != groupId) start++;
         if (start == space.Tabs.Count) return 0;
-        int length = space.Tabs.Skip(start).TakeWhile(tab => tab.SplitGroupId == groupId).Count();
-        return length >= MinimumSplitMembers ? length : 0;
+        var run = space.Tabs.Skip(start).TakeWhile(tab => tab.SplitGroupId == groupId).Select(tab => tab.Id).ToArray();
+        if (run.Length < MinimumSplitMembers) return 0;
+        var layout = space.SplitGroups.FirstOrDefault(group => group.Id == groupId)?.Layout;
+        return SplitLayoutNode.Resolved(groupId, run, layout).Branches.FirstOrDefault(branch => branch.Id == branchId)?.Children.Count ?? 0;
     }
 
     #endregion

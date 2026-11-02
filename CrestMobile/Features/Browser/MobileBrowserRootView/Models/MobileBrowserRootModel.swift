@@ -23,10 +23,8 @@ final class MobileBrowserRootModel {
         set { if !newValue { settings.dismissSheet() } }
     }
     var sidebarWidthTransaction: BrowserSidebarWidthTransaction
-    /// Live widths stay local until the divider drag commits.
-    var splitWidthTransaction = BrowserSplitWidthTransaction(
-        persistedFractions: []
-    )
+    /// Live shares stay local until the divider drag commits.
+    var splitWidthTransaction = BrowserSplitLayoutTransaction()
 
     init(
         browser: BrowserStore,
@@ -436,7 +434,7 @@ extension MobileBrowserRootModel {
         browser.shownSpace.flatMap(browser.shownSplitGroupID(in:))
     }
 
-    var splitWidthTransactionBinding: Binding<BrowserSplitWidthTransaction> {
+    var splitWidthTransactionBinding: Binding<BrowserSplitLayoutTransaction> {
         Binding(
             get: { self.splitWidthTransaction },
             set: { self.splitWidthTransaction = $0 }
@@ -444,14 +442,11 @@ extension MobileBrowserRootModel {
     }
 
     func seedSplitColumnFractions() {
-        layoutPersistence.seedSplitLayout(
-            groupID: presentedSplitGroupID, memberCount: presentedSplitMembers.count,
-            transaction: &splitWidthTransaction
-        )
+        layoutPersistence.seedSplitLayout(groupID: presentedSplitGroupID, transaction: &splitWidthTransaction)
     }
 
-    func commitSplitColumnFractions(_ fractions: [Double]) {
-        layoutPersistence.commitSplitLayout(fractions, groupID: presentedSplitGroupID)
+    func commitSplitColumnFractions(_ fractions: [Double], branchID: UUID) {
+        layoutPersistence.commitSplitLayout(fractions, branchID: branchID, groupID: presentedSplitGroupID)
     }
 
     func focusSplitCard(_ tabID: UUID) {

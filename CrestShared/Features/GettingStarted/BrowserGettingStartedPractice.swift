@@ -16,7 +16,7 @@ final class BrowserGettingStartedPractice {
     let downloads = BrowserDownloadCenter(
         permissionCenter: BrowserSitePermissionCenter())
     let sidebarScroll = BrowserNativeScrollState()
-    var splitWidths = BrowserSplitWidthTransaction(persistedFractions: [1])
+    var splitWidths = BrowserSplitLayoutTransaction()
     private var splitWidthMembers: [UUID] = []
     /// Each practice tab's identity in the practice the store holds.
     private var practiceTabIDs: [PracticeTab: UUID]
@@ -94,7 +94,7 @@ final class BrowserGettingStartedPractice {
         let ids = members.map(\.id)
         guard ids != splitWidthMembers else { return }
         splitWidthMembers = ids
-        splitWidths.begin(fractions: Array(repeating: 1, count: max(1, ids.count)))
+        splitWidths.begin(fractions: [:])
     }
 
     func addFolder(nested: Bool) {

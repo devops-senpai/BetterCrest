@@ -1,10 +1,10 @@
 import Foundation
 
-/// One column of the split-view row.
+/// One tile of the split view.
 ///
-/// A drag in flight adds a column rather than decorating the row with one. The
+/// A drag in flight adds a tile rather than decorating the view with one. The
 /// slot the dragged tab would land in is laid out, wrapped, and measured exactly
-/// as a member's card is: same surface, same gap, same share of the container.
+/// as a member's card is: same surface, same gap, same share of its branch.
 /// Only its interior differs, and only until the drop replaces it with the card
 /// it was standing in for.
 ///
@@ -36,23 +36,15 @@ enum BrowserSplitColumnSlot<Member: Identifiable>: Identifiable where Member.ID 
         }
     }
 
-    /// The slots a row of `members` lays out, with the drop column opened at
-    /// `placeholderIndex` when a drag has resolved one.
-    ///
-    /// An index outside `0...members.count` is not a slot, so the row lays out
-    /// as though no drag were in flight.
+    /// The slots the tiles of `members` lay out, with the drop tile when a
+    /// drag has resolved a landing. Where each one sits is the tile's answer.
     static func slots(
         members: [Member],
-        placeholderIndex: Int?,
+        includesPlaceholder: Bool,
         includesPanel: Bool = false
     ) -> [BrowserSplitColumnSlot] {
         var slots = members.map(BrowserSplitColumnSlot.member)
-        if let placeholderIndex,
-            placeholderIndex >= 0,
-            placeholderIndex <= members.count
-        {
-            slots.insert(.placeholder, at: placeholderIndex)
-        }
+        if includesPlaceholder { slots.append(.placeholder) }
         if includesPanel { slots.append(.panel) }
         return slots
     }

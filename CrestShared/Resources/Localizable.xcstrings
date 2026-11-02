@@ -834,6 +834,9 @@
         }
       }
     },
+    "%lld percent and %lld percent" : {
+
+    },
     "%lld points" : {
       "localizations" : {
         "ar" : {
@@ -11140,6 +11143,9 @@
           }
         }
       }
+    },
+    "Resize Split View Rows" : {
+
     },
     "Restart" : {
 

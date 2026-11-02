@@ -19,9 +19,10 @@ enum BrowserPageSurfacePresentation {
     /// of it the pointer is on is which side the new card lands.
     case single(space: SpaceModel, cardTabID: UUID?)
 
-    /// A row of cards. `placeholderIndex` is the slot a drag in flight would
-    /// drop into, or `nil` when no drop is resolved against this row.
-    case columns(space: SpaceModel, members: [TabStateModel], placeholderIndex: Int?)
+    /// The tiled cards. `placeholder` is where a drag in flight would land a
+    /// card, or `nil` when no drop is resolved against these cards, and
+    /// `mover` the card of the split that drag is, which leaves its own tile.
+    case columns(space: SpaceModel, members: [TabStateModel], placeholder: BrowserSplitDropLanding?, mover: UUID?)
 
     // MARK: - Static Variables
 
@@ -66,9 +67,8 @@ enum BrowserPageSurfacePresentation {
             self = .single(space: space, cardTabID: cards.first?.id)
             return
         }
-        self = .columns(
-            space: space, members: cards,
-            placeholderIndex: Self.placeholderIndex(resolvedTarget: resolvedTarget, spaceID: space.id))
+        let drop = Self.placeholder(resolvedTarget: resolvedTarget, spaceID: space.id)
+        self = .columns(space: space, members: cards, placeholder: drop?.landing, mover: drop?.mover)
     }
 
     // MARK: - Variables
@@ -79,7 +79,7 @@ enum BrowserPageSurfacePresentation {
         switch self {
         case .unavailable: nil
         case .single(let space, _): space
-        case .columns(let space, _, _): space
+        case .columns(let space, _, _, _): space
         }
     }
 
@@ -134,10 +134,13 @@ enum BrowserPageSurfacePresentation {
         return CGFloat(min(max(estimatedProgress, 0.04), 1))
     }
 
-    /// The slot a drag in flight would drop a card into, for this Space.
-    private static func placeholderIndex(resolvedTarget: BrowserSidebarReorderTarget?, spaceID: UUID) -> Int? {
-        guard case .splitInsert(let assignment, let index) = resolvedTarget?.kind, assignment.spaceID == spaceID
+    /// Where a drag in flight would land a card, for this Space.
+    private static func placeholder(resolvedTarget: BrowserSidebarReorderTarget?, spaceID: UUID)
+        -> (landing: BrowserSplitDropLanding, mover: UUID?)?
+    {
+        guard case .splitInsert(let assignment, let landing, let mover) = resolvedTarget?.kind,
+            assignment.spaceID == spaceID
         else { return nil }
-        return index
+        return (landing, mover)
     }
 }

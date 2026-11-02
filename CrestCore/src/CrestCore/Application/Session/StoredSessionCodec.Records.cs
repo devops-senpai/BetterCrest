@@ -125,7 +125,8 @@ internal static partial class StoredSessionCodec {
         var value = Object(node);
         return new(Identity(value[Key.Id]), Text(value[Key.CustomTitle]), OptionalDate(value[Key.TitleModifiedAt]),
             Text(value[Key.CustomIconSymbol]), OptionalDate(value[Key.IconModifiedAt]),
-            value[Key.Tint] is JsonObject tint ? DecodeColor(tint) : null, OptionalDate(value[Key.TintModifiedAt]));
+            value[Key.Tint] is JsonObject tint ? DecodeColor(tint) : null, OptionalDate(value[Key.TintModifiedAt]),
+            value[Key.SplitLayout] is JsonObject layout ? DecodeSplitLayout(layout) : null, OptionalDate(value[Key.SplitLayoutModifiedAt]));
     }
 
     internal static JsonObject Encode(SplitGroupState group) {
@@ -136,6 +137,28 @@ internal static partial class StoredSessionCodec {
         PutEdit(value, Key.IconModifiedAt, group.IconModifiedAt);
         if (group.Tint is { } tint) value[Key.Tint] = Encode(tint);
         PutEdit(value, Key.TintModifiedAt, group.TintModifiedAt);
+        if (group.Layout is { } layout) value[Key.SplitLayout] = Encode(layout);
+        PutEdit(value, Key.SplitLayoutModifiedAt, group.LayoutModifiedAt);
+        return value;
+    }
+
+    /// A node of a split's layout: a card, which names its tab, or a branch,
+    /// which names its axis and its children. A branch without an axis this
+    /// build names, or with fewer than two children, is unreadable.
+    internal static SplitLayoutNode DecodeSplitLayout(JsonObject value) {
+        var id = Identity(value[Key.Id]);
+        if (value[Key.SplitAxis] is null && value[Key.SplitChildren] is null) return SplitLayoutNode.Card(id);
+        var axis = SplitAxis.Named(Text(value[Key.SplitAxis])) ?? throw new BrowserRuleException(BrowserRule.InvalidSavedState);
+        var children = Items(value[Key.SplitChildren]).Select(child => DecodeSplitLayout(Object(child))).ToArray();
+        if (children.Length < 2) throw new BrowserRuleException(BrowserRule.InvalidSavedState);
+        return SplitLayoutNode.Branch(id, axis, children);
+    }
+
+    internal static JsonObject Encode(SplitLayoutNode node) {
+        var value = new JsonObject { [Key.Id] = WrappedIdentity(node.Id) };
+        if (node.Axis is not { } axis) return value;
+        value[Key.SplitAxis] = axis.Name;
+        value[Key.SplitChildren] = new JsonArray([.. node.Children.Select(child => (JsonNode)Encode(child))]);
         return value;
     }
 

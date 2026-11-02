@@ -1,15 +1,17 @@
 import SwiftUI
 
-/// The affordance that moves one boundary between two split cards.
+/// The affordance that moves one boundary between two split cards: a bar up
+/// the gap between two columns, or along the gap between two rows.
 ///
 /// It lives in the gap between the cards and overhangs each of them slightly,
 /// so the pointer target is comfortable without the control ever covering
-/// content. The drag reports its total travel rather than each frame's step —
-/// which is what `BrowserSplitWidthTransaction.resize(dividerIndex:delta:containerWidth:)`
-/// expects — and the durable per-window record advances once, on release.
+/// content. The drag reports its total travel along the branch's axis rather
+/// than each frame's step — which is what
+/// `BrowserSplitLayoutTransaction.resize` expects — and the durable per-window
+/// record advances once, on release.
 ///
-/// That travel is measured in `BrowserSplitResizeSpace`, the columns row, and
-/// never in the handle's own space. The row positions this handle from the
+/// That travel is measured in `BrowserSplitResizeSpace`, the tiles, and never
+/// in the handle's own space. The tiles position this handle from the
 /// fractions the drag writes, so the handle's frame moves with the boundary and
 /// a translation measured against it reports the pointer's travel minus its own
 /// — a feedback loop that halves tracking and turns a point of pointer noise
@@ -20,10 +22,12 @@ import SwiftUI
 /// `BrowserPlatformColumnResizePointerModifier` gives each platform its own
 /// answer to "this boundary moves" rather than leaving it to be discovered.
 struct BrowserSplitCardResizeHandle: View {
-    /// The gap this handle sits in: the one after the card at this index.
+    /// The gap this handle sits in: the one after the child at this index.
     let dividerIndex: Int
+    /// The axis the branch runs along: the handle stands across it.
+    let axis: SplitAxis
     /// The drag's travel since it began, measured toward the trailing edge in
-    /// the reading direction.
+    /// the reading direction, or downward.
     let resize: (CGFloat) -> Void
     let commit: () -> Void
     var accessibilityTitle: LocalizedStringKey = "Resize Split View Columns"
@@ -35,9 +39,8 @@ struct BrowserSplitCardResizeHandle: View {
 
     var body: some View {
         Color.clear
-            .frame(width: BrowserSplitLayoutMetrics.resizeHandleHitWidth)
             .contentShape(.rect)
-            .modifier(BrowserPlatformColumnResizePointerModifier())
+            .modifier(BrowserPlatformColumnResizePointerModifier(axis: axis))
             .overlay {
                 Capsule()
                     .fill(
@@ -48,8 +51,12 @@ struct BrowserSplitCardResizeHandle: View {
                         )
                     )
                     .frame(
-                        width: BrowserSplitCardResizeHandleMetrics.indicatorWidth,
-                        height: BrowserSplitCardResizeHandleMetrics.indicatorHeight
+                        width: axis.isHorizontal
+                            ? BrowserSplitCardResizeHandleMetrics.indicatorWidth
+                            : BrowserSplitCardResizeHandleMetrics.indicatorHeight,
+                        height: axis.isHorizontal
+                            ? BrowserSplitCardResizeHandleMetrics.indicatorHeight
+                            : BrowserSplitCardResizeHandleMetrics.indicatorWidth
                     )
                     .accessibilityHidden(true)
             }
@@ -73,12 +80,12 @@ struct BrowserSplitCardResizeHandle: View {
 
     private func dragChanged(_ value: DragGesture.Value) {
         isDragging = true
-        resize(semanticTranslation(value.translation.width))
+        resize(semanticTranslation(value.translation))
     }
 
     private func dragEnded(_ value: DragGesture.Value) {
         isDragging = false
-        resize(semanticTranslation(value.translation.width))
+        resize(semanticTranslation(value.translation))
         commit()
     }
 
@@ -100,7 +107,7 @@ struct BrowserSplitCardResizeHandle: View {
         commit()
     }
 
-    private func semanticTranslation(_ translation: CGFloat) -> CGFloat {
-        layoutDirection.semanticHorizontalTranslation(translation)
+    private func semanticTranslation(_ translation: CGSize) -> CGFloat {
+        axis.isHorizontal ? layoutDirection.semanticHorizontalTranslation(translation.width) : translation.height
     }
 }

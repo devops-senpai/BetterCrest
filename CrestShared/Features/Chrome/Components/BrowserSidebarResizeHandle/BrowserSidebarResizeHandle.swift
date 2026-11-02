@@ -13,7 +13,7 @@ struct BrowserSidebarResizeHandle: View {
         Color.clear
             .frame(width: BrowserSidebarResizeHandleMetrics.hitWidth)
             .contentShape(.rect)
-            .modifier(BrowserPlatformColumnResizePointerModifier())
+            .modifier(BrowserPlatformColumnResizePointerModifier(axis: .horizontal))
             .overlay {
                 Capsule()
                     .fill(

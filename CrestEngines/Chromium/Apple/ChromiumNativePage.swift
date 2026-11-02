@@ -423,6 +423,11 @@
         private var engineView: NSView? {
             subviews.first { $0 !== devToolsView }
         }
+        /// The viewport last written to the log, and the write waiting for the
+        /// size to settle, so a resize animation logs where it ended rather
+        /// than every frame on the way.
+        private var loggedViewport = CGSize.zero
+        private var viewportLog: DispatchWorkItem?
         override func layout() {
             super.layout()
             layoutEngineView()
@@ -431,6 +436,7 @@
             layoutEngineView()
         }
         func layoutEngineView() {
+            logViewportWhenSettled()
             guard !bounds.isEmpty, let view = engineView else { return }
             guard let devToolsView, let layout = page?.layoutInspector(in: bounds.size),
                 let frontendFrame = layout.inspector.map({ frame(of: $0) }),
@@ -452,6 +458,23 @@
             guard !pageFrame.isEmpty else { return }
             view.frame = pageFrame
             view.setFrameSize(pageFrame.size)
+        }
+
+        /// Writes the page's viewport to the log a quarter second after it last
+        /// changed: its size, whether the engine's view is there and hidden,
+        /// and whether the view is in a window.
+        private func logViewportWhenSettled() {
+            viewportLog?.cancel()
+            let work = DispatchWorkItem { [weak self] in
+                guard let self, let page, bounds.size != loggedViewport else { return }
+                loggedViewport = bounds.size
+                let view = engineView
+                DiagnosticLog.splits.notice(
+                    "Chromium page \(page.pageID) viewport \(Int(bounds.width))x\(Int(bounds.height)), engine view: "
+                        + "\(view == nil ? "none" : view!.isHidden ? "hidden" : "shown"), window: \(window != nil)")
+            }
+            viewportLog = work
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: work)
         }
 
         /// An area the binding measured from the card's top left, as AppKit

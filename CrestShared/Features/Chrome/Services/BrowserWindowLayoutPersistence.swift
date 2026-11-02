@@ -19,18 +19,14 @@ struct BrowserWindowLayoutPersistence {
         return nil
     }
 
-    func seedSplitLayout(
-        groupID: UUID?, memberCount: Int, transaction: inout BrowserSplitWidthTransaction
-    ) {
-        guard memberCount > 0 else { return }
-        let persisted = groupID.flatMap { windowState?.splitColumnFractions(for: $0) }
-        transaction.begin(
-            fractions: BrowserSplitColumnLayout.seedFractions(persisted: persisted, memberCount: memberCount)
-        )
+    /// Starts the split on show from the shares the window kept for its
+    /// branches; a branch without any spreads its children equally.
+    func seedSplitLayout(groupID: UUID?, transaction: inout BrowserSplitLayoutTransaction) {
+        transaction.begin(fractions: groupID.flatMap { windowState?.splitColumnFractions(for: $0) } ?? [:])
     }
 
-    func commitSplitLayout(_ fractions: [Double], groupID: UUID?) {
+    func commitSplitLayout(_ fractions: [Double], branchID: UUID, groupID: UUID?) {
         guard let windowState, let groupID else { return }
-        windowState.captureSplitLayout(fractions: fractions, for: groupID)
+        windowState.captureSplitLayout(fractions: fractions, branchID: branchID, for: groupID)
     }
 }

@@ -10,8 +10,8 @@ import Observation
 /// neither can see the other's gap.
 ///
 /// The state answers *what* is being carried and never *where it may go*: the
-/// slot arrives already resolved, from `BrowserSplitCardLift` measuring
-/// the pointer against the frames the row registered. Keeping resolution out
+/// landing arrives already resolved, from `BrowserSplitCardLift` measuring
+/// the pointer against the frames the tiles registered. Keeping resolution out
 /// here is what lets the whole geometry be exercised without a carry, and the
 /// whole carry be exercised without a window.
 ///
@@ -72,6 +72,12 @@ final class BrowserSplitCardLiftState {
         carriedTabID != nil
     }
 
+    /// Whether the carry on the pointer was asked for from a menu, so it rides
+    /// the pointer with no button held and a click puts it down.
+    var isPlaced: Bool {
+        carriedTabID != nil && lift?.isPlaced == true
+    }
+
     /// Stage a pickup: mint the identity its snapshot request will be matched
     /// against, before a single thing changes on screen.
     ///
@@ -96,10 +102,12 @@ final class BrowserSplitCardLiftState {
     func begin(
         token: BrowserSplitCardLiftToken,
         tabID: UUID,
-        originIndex: Int,
+        origin: BrowserSplitDropLanding,
         cardFrame: CGRect,
+        aimFrames: [UUID: CGRect],
         pointer: CGPoint,
-        surfaceOrigin: CGPoint
+        surfaceOrigin: CGPoint,
+        placed: Bool = false
     ) -> Bool {
         guard stagedToken == token else { return false }
         stagedToken = nil
@@ -108,7 +116,8 @@ final class BrowserSplitCardLiftState {
         lift = BrowserSplitCardLift(
             token: token,
             tabID: tabID,
-            originIndex: originIndex,
+            origin: origin,
+            aimFrames: aimFrames,
             cardSize: cardFrame.size,
             grabFraction: BrowserSplitCardLift.grabFraction(
                 pointer: pointer,
@@ -116,8 +125,9 @@ final class BrowserSplitCardLiftState {
             ),
             surfaceOrigin: surfaceOrigin,
             pointer: pointer,
-            gapIndex: originIndex,
-            snapshot: nil
+            landing: origin,
+            snapshot: nil,
+            isPlaced: placed
         )
         return true
     }
@@ -129,18 +139,18 @@ final class BrowserSplitCardLiftState {
         stagedToken = nil
     }
 
-    /// One pointer sample, with the slot it resolved to and where the space it
-    /// was measured in currently begins.
+    /// One pointer sample, with the landing it resolved to, or nil to keep the
+    /// one the gap already stands at, and where the space it was measured in
+    /// currently begins.
     ///
-    /// A carry that has left the row is not a carry that has ended: the slot is
-    /// whatever the pointer's horizontal position says about the neighbours,
-    /// wherever on screen the pointer happens to be, and a release far away
-    /// commits that same slot. There is no "outside" and nothing to explain
-    /// about where a drop stops counting.
-    func update(pointer: CGPoint, gapIndex: Int, surfaceOrigin: CGPoint) {
+    /// A carry that has left the tiles is not a carry that has ended: the
+    /// landing is whatever the pointer says about the neighbours, wherever on
+    /// screen the pointer happens to be, and a release far away commits that
+    /// same landing.
+    func update(pointer: CGPoint, landing: BrowserSplitDropLanding?, surfaceOrigin: CGPoint) {
         guard var lift, !lift.isSettling else { return }
         lift.pointer = pointer
-        lift.gapIndex = gapIndex
+        if let landing { lift.landing = landing }
         lift.surfaceOrigin = surfaceOrigin
         self.lift = lift
     }
@@ -161,15 +171,15 @@ final class BrowserSplitCardLiftState {
         self.lift = lift
     }
 
-    /// Puts the card down, and says which slot to commit.
+    /// Puts the card down, and says where to commit it.
     ///
-    /// The move is the caller's to make. This only stops the carry — the row
-    /// puts the card back on show in the slot the gap was already holding, and
-    /// the preview fades off it.
-    func drop() -> (tabID: UUID, memberIndex: Int)? {
+    /// The move is the caller's to make. This only stops the carry — the tiles
+    /// put the card back on show where the gap was already standing, and the
+    /// preview fades off it.
+    func drop() -> (tabID: UUID, landing: BrowserSplitDropLanding)? {
         guard let lift, !lift.isSettling else { return nil }
         beginSettling()
-        return (lift.tabID, lift.gapIndex)
+        return (lift.tabID, lift.landing)
     }
 
     /// Escape, a right-click, a window that stopped being key, or anything else

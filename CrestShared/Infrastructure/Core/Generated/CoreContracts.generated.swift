@@ -198,6 +198,7 @@ enum Rejection: Equatable, Error, Sendable {
     case alreadyInSplit(AlreadyInSplit)
     case archiveInvalid(ArchiveInvalid)
     case archiveTooLarge(ArchiveTooLarge)
+    case arrangementNeedsMembers(ArrangementNeedsMembers)
     case authenticationBusy(AuthenticationBusy)
     case bookmarksHaveNoLinks(BookmarksHaveNoLinks)
     case bookmarksOverLimits(BookmarksOverLimits)
@@ -281,6 +282,7 @@ enum Rejection: Equatable, Error, Sendable {
     case noStoredSession(NoStoredSession)
     case notAnArchive(NotAnArchive)
     case notPrivateWorkspace(NotPrivateWorkspace)
+    case notSplitMembers(NotSplitMembers)
     case pageNotLoadable(PageNotLoadable)
     case pageProfileMismatch(PageProfileMismatch)
     case persistentWorkspaceRequired(PersistentWorkspaceRequired)
@@ -1194,6 +1196,18 @@ struct ArchivedTabState: Equatable, Sendable {
     var seed: Seed {
         Seed(tab: tab.seed, archivedAt: archivedAt, reason: reason)
     }
+}
+
+struct ArrangeSplit: Intent, SessionIntent, Equatable, Sendable {
+    let workspaceID: UUID
+    let spaceID: UUID
+    let groupID: UUID
+    let arrangement: SplitArrangement
+}
+
+struct ArrangementNeedsMembers: Equatable, Sendable {
+    let groupID: UUID
+    let memberCount: Int
 }
 
 struct AssessDownloadRisk: Intent, DownloadIntent, Equatable, Sendable {
@@ -2366,6 +2380,7 @@ struct DropIntoSplit: Intent, SessionIntent, SidebarDrop, Equatable, Sendable {
     let selection: TabSelection
     let targetTabID: UUID
     let index: Int?
+    let landing: SplitLanding?
 }
 
 struct DropOnSpace: Intent, SessionIntent, SidebarDrop, Equatable, Sendable {
@@ -3428,6 +3443,7 @@ struct JoinSplit: Intent, SessionIntent, Equatable, Sendable {
     let tabID: UUID
     let targetTabID: UUID
     let index: Int?
+    let landing: SplitLanding?
 }
 
 struct KeepPageLoaded: Intent, SessionIntent, Equatable, Sendable {
@@ -3994,6 +4010,11 @@ struct NotAnArchive: Equatable, Sendable {
 
 struct NotPrivateWorkspace: Equatable, Sendable {
     let workspaceID: UUID
+}
+
+struct NotSplitMembers: Equatable, Sendable {
+    let tabID: UUID
+    let nodeID: UUID
 }
 
 struct NoteAgentActivity: Intent, AgentIntent, Equatable, Sendable {
@@ -5186,6 +5207,7 @@ struct ResetSpacePermissions: Intent, SitePermissionIntent, Equatable, Sendable 
 struct ResizeSplitColumns: Intent, WindowIntent, Equatable, Sendable {
     let windowID: UUID
     let groupID: UUID
+    let branchID: UUID
     let shares: [Double]
 }
 
@@ -6475,6 +6497,7 @@ struct SplitBoundary: Equatable, Sendable {
 
 struct SplitColumnShares: Equatable, Sendable {
     let groupID: UUID
+    let branchID: UUID
     let shares: [Double]
 }
 
@@ -6493,6 +6516,8 @@ struct SplitGroupState: Equatable, Sendable, Identifiable {
     let iconModifiedAt: Date?
     let tint: BrandColor?
     let tintModifiedAt: Date?
+    let layout: SplitLayoutNode?
+    let layoutModifiedAt: Date?
     let displayTitle: String?
     let displayEmojiIcon: String?
 
@@ -6510,6 +6535,8 @@ struct SplitGroupState: Equatable, Sendable, Identifiable {
         var iconModifiedAt: Date?
         var tint: BrandColor?
         var tintModifiedAt: Date?
+        var layout: SplitLayoutNode?
+        var layoutModifiedAt: Date?
     }
 
     /// The record's fields alone, as a platform sends it back.
@@ -6521,7 +6548,9 @@ struct SplitGroupState: Equatable, Sendable, Identifiable {
             customIconSymbol: customIconSymbol,
             iconModifiedAt: iconModifiedAt,
             tint: tint,
-            tintModifiedAt: tintModifiedAt
+            tintModifiedAt: tintModifiedAt,
+            layout: layout,
+            layoutModifiedAt: layoutModifiedAt
         )
     }
 }
@@ -6540,6 +6569,19 @@ struct SplitJoinCandidate: Query, Equatable, Sendable {
 
 struct SplitJoinCandidateTab: Equatable, Sendable {
     let tabID: UUID?
+}
+
+struct SplitLanding: Equatable, Sendable {
+    var nodeID: UUID
+    var side: SplitSide?
+}
+
+struct SplitLayoutNode: Equatable, Sendable, Identifiable {
+    static let maximumNodes: Int = 8
+
+    var id: UUID
+    var axis: SplitAxis?
+    var children: [SplitLayoutNode]
 }
 
 struct SplitLimitReached: Equatable, Sendable {
@@ -6565,6 +6607,7 @@ struct SplitTabs: Intent, SessionIntent, Equatable, Sendable {
     let selection: TabSelection
     let targetTabID: UUID?
     let index: Int?
+    let landing: SplitLanding?
 }
 
 struct StageLink: Intent, PageIntent, Equatable, Sendable {
@@ -6924,6 +6967,13 @@ struct TabsImported: CoreChange, Equatable, Sendable {
 struct TearOffPermission: Equatable, Sendable {
     let allowed: Bool
     let reason: TearOffRefusal?
+}
+
+struct TileSplitMember: Intent, SessionIntent, Equatable, Sendable {
+    let workspaceID: UUID
+    let spaceID: UUID
+    let tabID: UUID
+    let landing: SplitLanding
 }
 
 struct TintSplit: Intent, SessionIntent, Equatable, Sendable {
@@ -22335,6 +22385,299 @@ struct SpaceThemeMode: Hashable, Sendable {
             self.kind = kind
             self.name = name
             self.title = title
+        }
+    }
+}
+
+/// The members of the core's `SplitArrangement`. A member's wire tag is its index in `all`.
+struct SplitArrangement: Hashable, Sendable {
+    let tag: Int
+    var name: String { facts.name }
+    var title: LocalizedStringResource { facts.title }
+    var axis: SplitAxis { facts.axis }
+    var groups: [Int] { facts.groups }
+    var memberCount: Int { facts.memberCount }
+    private let facts: Facts
+
+    private init(
+        tag: Int,
+        name: String,
+        title: LocalizedStringResource,
+        axis: SplitAxis,
+        groups: [Int],
+        memberCount: Int
+    ) {
+        self.tag = tag
+        facts = Facts(name: name, title: title, axis: axis, groups: groups, memberCount: memberCount)
+    }
+
+    static let twoAcross = SplitArrangement(
+        tag: 0,
+        name: "two-across",
+        title: LocalizedStringResource("Side by Side"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 1],
+        memberCount: 2
+    )
+    static let twoStacked = SplitArrangement(
+        tag: 1,
+        name: "two-stacked",
+        title: LocalizedStringResource("Stacked"),
+        axis: SplitAxis.vertical,
+        groups: [1, 1],
+        memberCount: 2
+    )
+    static let threeAcross = SplitArrangement(
+        tag: 2,
+        name: "three-across",
+        title: LocalizedStringResource("Three Across"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 1, 1],
+        memberCount: 3
+    )
+    static let threeStacked = SplitArrangement(
+        tag: 3,
+        name: "three-stacked",
+        title: LocalizedStringResource("Three Stacked"),
+        axis: SplitAxis.vertical,
+        groups: [1, 1, 1],
+        memberCount: 3
+    )
+    static let oneThenTwoStacked = SplitArrangement(
+        tag: 4,
+        name: "one-then-two-stacked",
+        title: LocalizedStringResource("One Left, Two Stacked Right"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 2],
+        memberCount: 3
+    )
+    static let twoStackedThenOne = SplitArrangement(
+        tag: 5,
+        name: "two-stacked-then-one",
+        title: LocalizedStringResource("Two Stacked Left, One Right"),
+        axis: SplitAxis.horizontal,
+        groups: [2, 1],
+        memberCount: 3
+    )
+    static let oneThenTwoAcross = SplitArrangement(
+        tag: 6,
+        name: "one-then-two-across",
+        title: LocalizedStringResource("One Above, Two Below"),
+        axis: SplitAxis.vertical,
+        groups: [1, 2],
+        memberCount: 3
+    )
+    static let twoAcrossThenOne = SplitArrangement(
+        tag: 7,
+        name: "two-across-then-one",
+        title: LocalizedStringResource("Two Above, One Below"),
+        axis: SplitAxis.vertical,
+        groups: [2, 1],
+        memberCount: 3
+    )
+    static let fourAcross = SplitArrangement(
+        tag: 8,
+        name: "four-across",
+        title: LocalizedStringResource("Four Across"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 1, 1, 1],
+        memberCount: 4
+    )
+    static let fourStacked = SplitArrangement(
+        tag: 9,
+        name: "four-stacked",
+        title: LocalizedStringResource("Four Stacked"),
+        axis: SplitAxis.vertical,
+        groups: [1, 1, 1, 1],
+        memberCount: 4
+    )
+    static let grid = SplitArrangement(
+        tag: 10,
+        name: "grid",
+        title: LocalizedStringResource("Grid"),
+        axis: SplitAxis.vertical,
+        groups: [2, 2],
+        memberCount: 4
+    )
+    static let oneThenThreeStacked = SplitArrangement(
+        tag: 11,
+        name: "one-then-three-stacked",
+        title: LocalizedStringResource("One Left, Three Stacked Right"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 3],
+        memberCount: 4
+    )
+    static let threeStackedThenOne = SplitArrangement(
+        tag: 12,
+        name: "three-stacked-then-one",
+        title: LocalizedStringResource("Three Stacked Left, One Right"),
+        axis: SplitAxis.horizontal,
+        groups: [3, 1],
+        memberCount: 4
+    )
+    static let oneThenThreeAcross = SplitArrangement(
+        tag: 13,
+        name: "one-then-three-across",
+        title: LocalizedStringResource("One Above, Three Below"),
+        axis: SplitAxis.vertical,
+        groups: [1, 3],
+        memberCount: 4
+    )
+    static let threeAcrossThenOne = SplitArrangement(
+        tag: 14,
+        name: "three-across-then-one",
+        title: LocalizedStringResource("Three Above, One Below"),
+        axis: SplitAxis.vertical,
+        groups: [3, 1],
+        memberCount: 4
+    )
+    static let twoStackedThenTwo = SplitArrangement(
+        tag: 15,
+        name: "two-stacked-then-two",
+        title: LocalizedStringResource("Two Stacked Left, Two Across Right"),
+        axis: SplitAxis.horizontal,
+        groups: [2, 1, 1],
+        memberCount: 4
+    )
+    static let twoThenTwoStacked = SplitArrangement(
+        tag: 16,
+        name: "two-then-two-stacked",
+        title: LocalizedStringResource("Two Across Left, Two Stacked Right"),
+        axis: SplitAxis.horizontal,
+        groups: [1, 1, 2],
+        memberCount: 4
+    )
+
+    static let all: [SplitArrangement] = [
+        twoAcross,
+        twoStacked,
+        threeAcross,
+        threeStacked,
+        oneThenTwoStacked,
+        twoStackedThenOne,
+        oneThenTwoAcross,
+        twoAcrossThenOne,
+        fourAcross,
+        fourStacked,
+        grid,
+        oneThenThreeStacked,
+        threeStackedThenOne,
+        oneThenThreeAcross,
+        threeAcrossThenOne,
+        twoStackedThenTwo,
+        twoThenTwoStacked
+    ]
+
+    static func named(_ name: String?) -> SplitArrangement? {
+        all.first { $0.name == name }
+    }
+
+    static func == (lhs: SplitArrangement, rhs: SplitArrangement) -> Bool {
+        lhs.tag == rhs.tag
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tag)
+    }
+
+    private final class Facts: Sendable {
+        let name: String
+        let title: LocalizedStringResource
+        let axis: SplitAxis
+        let groups: [Int]
+        let memberCount: Int
+
+        init(name: String, title: LocalizedStringResource, axis: SplitAxis, groups: [Int], memberCount: Int) {
+            self.name = name
+            self.title = title
+            self.axis = axis
+            self.groups = groups
+            self.memberCount = memberCount
+        }
+    }
+}
+
+/// The members of the core's `SplitAxis`. A member's wire tag is its index in `all`.
+struct SplitAxis: Hashable, Sendable {
+    let tag: Int
+    var name: String { facts.name }
+    var isHorizontal: Bool { facts.isHorizontal }
+    private let facts: Facts
+
+    private init(tag: Int, name: String, isHorizontal: Bool) {
+        self.tag = tag
+        facts = Facts(name: name, isHorizontal: isHorizontal)
+    }
+
+    static let horizontal = SplitAxis(tag: 0, name: "horizontal", isHorizontal: true)
+    static let vertical = SplitAxis(tag: 1, name: "vertical", isHorizontal: false)
+
+    static let all: [SplitAxis] = [horizontal, vertical]
+
+    static func named(_ name: String?) -> SplitAxis? {
+        all.first { $0.name == name }
+    }
+
+    static func == (lhs: SplitAxis, rhs: SplitAxis) -> Bool {
+        lhs.tag == rhs.tag
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tag)
+    }
+
+    private final class Facts: Sendable {
+        let name: String
+        let isHorizontal: Bool
+
+        init(name: String, isHorizontal: Bool) {
+            self.name = name
+            self.isHorizontal = isHorizontal
+        }
+    }
+}
+
+/// The members of the core's `SplitSide`. A member's wire tag is its index in `all`.
+struct SplitSide: Hashable, Sendable {
+    let tag: Int
+    var name: String { facts.name }
+    var axis: SplitAxis { facts.axis }
+    var isAfter: Bool { facts.isAfter }
+    private let facts: Facts
+
+    private init(tag: Int, name: String, axis: SplitAxis, isAfter: Bool) {
+        self.tag = tag
+        facts = Facts(name: name, axis: axis, isAfter: isAfter)
+    }
+
+    static let leading = SplitSide(tag: 0, name: "leading", axis: SplitAxis.horizontal, isAfter: false)
+    static let trailing = SplitSide(tag: 1, name: "trailing", axis: SplitAxis.horizontal, isAfter: true)
+    static let above = SplitSide(tag: 2, name: "above", axis: SplitAxis.vertical, isAfter: false)
+    static let below = SplitSide(tag: 3, name: "below", axis: SplitAxis.vertical, isAfter: true)
+
+    static let all: [SplitSide] = [leading, trailing, above, below]
+
+    static func named(_ name: String?) -> SplitSide? {
+        all.first { $0.name == name }
+    }
+
+    static func == (lhs: SplitSide, rhs: SplitSide) -> Bool {
+        lhs.tag == rhs.tag
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(tag)
+    }
+
+    private final class Facts: Sendable {
+        let name: String
+        let axis: SplitAxis
+        let isAfter: Bool
+
+        init(name: String, axis: SplitAxis, isAfter: Bool) {
+            self.name = name
+            self.axis = axis
+            self.isAfter = isAfter
         }
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 /// a missing one. There is no pointer there to inform, and the handle's own
 /// hit width already makes it reachable by finger.
 struct BrowserPlatformColumnResizePointerModifier: ViewModifier {
+    let axis: SplitAxis
+
     func body(content: Content) -> some View {
         content.hoverEffect(.highlight)
     }

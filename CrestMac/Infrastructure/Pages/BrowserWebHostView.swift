@@ -436,6 +436,9 @@ final class BrowserWebHostView: NSView {
         claim = Self.claimCount
         hostedWebView = webView
         Self.claimants.add(self)
+        DiagnosticLog.pages.notice(
+            "Host \(ObjectIdentifier(self).hashValue) claims page view \(ObjectIdentifier(webView).hashValue)"
+                + " (claim \(claim), replacing: \(replaced != nil), window: \(window != nil))")
         show(webView, focusRestoration: focusRestoration, below: replaced)
         if let replaced { holdUntilReplacementDraws(replaced) }
     }
@@ -448,6 +451,9 @@ final class BrowserWebHostView: NSView {
         guard let hostedWebView else { return }
         Self.claimants.remove(self)
         let showsHostedWebView = hostedWebView.superview === self
+        DiagnosticLog.pages.notice(
+            "Host \(ObjectIdentifier(self).hashValue) lets go of page view \(ObjectIdentifier(hostedWebView).hashValue)"
+                + " (showing: \(showsHostedWebView))")
         if showsHostedWebView {
             (hostedWebView as? any BrowserNativePageSurfaceLifecycle)?.willDetach(from: self)
             hostedWebView.removeFromSuperview()

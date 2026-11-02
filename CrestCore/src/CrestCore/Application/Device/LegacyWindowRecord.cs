@@ -85,7 +85,7 @@ internal sealed record LegacyWindowRecord(Guid Id, Guid SelectedSpaceId, IReadOn
                 shown[spaceId] = legacyTabs[spaceId];
         foreach (var spaceId in seen.Where(spaceId => !shown.ContainsKey(spaceId))) shown[spaceId] = null;
         return new(Id, SelectedSpaceId, [.. shown.Select(entry => new ShownTab(entry.Key, entry.Value))],
-            [.. Shares.Select(entry => new SplitColumnShares(entry.Key, entry.Value))], used);
+            [.. Shares.Select(entry => new SplitColumnShares(entry.Key, entry.Key, entry.Value))], used);
     }
 
     #endregion

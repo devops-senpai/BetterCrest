@@ -23,6 +23,7 @@ change; the commit of the same name has the detail.
 
 - **Extended theming.** Each Space's Appearance page goes further than upstream: pick the colors of folders and their backs, the sidebar text color, and the command palette's tint, opacity and text color, with a separate look for dark windows. Export a Space's theme as a JSON file and load one back from the page or the Space's menu; four Catppuccin themes ship as examples.
 - **Theme CLI tools.** `arma theme` sets any part of a Space's look, applies or exports theme files, and pairs a light file with a dark one from the terminal. Changes show in the running app right away, so a theme can be tuned without reopening Settings.
+- **Tiled Split View.** Drop a tab on the top or bottom edge of a page to stack it there, on the outer edge of the split to give it the full height or width, or on the middle of a page to swap the two; make quadrants from any of these. The split's menu has ready-made arrangements for two, three and four pages, a tab's menu can pick its card up to move with the pointer (⇧⌘-drag does the same), and the bars between pages drag either way; each window keeps the sizes.
 
 ### Performance
 

@@ -86,6 +86,17 @@ final class BrowserSplitCardPointerObserverView: NSView {
         removeEventMonitor()
     }
 
+    /// Picks the card a menu asked for up where the pointer is now, once per
+    /// request across every content area of the window: `claim` says whether
+    /// this request is still waiting. A request the pointer cannot be read
+    /// for, or that names a card the tiles cannot spare, is answered with
+    /// nothing.
+    func answer(_ request: BrowserSplitCardCarryRequest?, claim: (BrowserSplitCardCarryRequest) -> Bool) {
+        guard let request, claim(request) else { return }
+        guard let location = pointerLocation() else { return }
+        _ = lift.place(request.tabID, location)
+    }
+
     private func removeEventMonitor() {
         guard let eventMonitor else { return }
         NSEvent.removeMonitor(eventMonitor)
@@ -102,6 +113,7 @@ final class BrowserSplitCardPointerObserverView: NSView {
                 .rightMouseDown,
                 .otherMouseDown,
                 .leftMouseDragged,
+                .mouseMoved,
                 .leftMouseUp,
                 .keyDown,
             ]
@@ -145,18 +157,23 @@ final class BrowserSplitCardPointerObserverView: NSView {
     ///
     /// A key-down is the exception that proves it: Escape ends the carry and is
     /// swallowed, and everything else passes so that a menu key equivalent still
-    /// reaches the menu rather than disappearing into a drag.
+    /// reaches the menu rather than disappearing into a drag. A carry a menu
+    /// placed on the pointer follows plain pointer movement, and the click that
+    /// would have cancelled a pressed carry is the one that puts it down.
     private func handleCarried(_ event: NSEvent) -> NSEvent? {
         switch event.type {
-        case .leftMouseDragged:
+        case .leftMouseDragged, .mouseMoved:
             if let location = pointerLocation() {
                 lift.update(location)
             }
             return nil
         case .leftMouseUp:
-            endCarry(cancelled: false)
+            if !lift.isPlaced() { endCarry(cancelled: false) }
             return nil
-        case .rightMouseDown, .otherMouseDown, .leftMouseDown:
+        case .leftMouseDown:
+            endCarry(cancelled: !lift.isPlaced())
+            return nil
+        case .rightMouseDown, .otherMouseDown:
             endCarry(cancelled: true)
             return nil
         case .keyDown where event.keyCode == Self.escapeKeyCode:

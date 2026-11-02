@@ -61,9 +61,19 @@ public sealed partial class BrowserTabCollection {
         return true;
     }
 
+    /// Moves a tab to member `memberIndex` of its split: in a split with a
+    /// layout, the tab and the member there exchange places; in one row, the
+    /// tab slides there.
     public bool MoveSplitMember(Guid id, int memberIndex, DateTimeOffset now) {
         var tab = Tab(id); var run = SplitMembers(id);
         if (run.Count < 2) return false;
+        if (tab.SplitGroupId is { } group && LayoutOf(group) is { } layout) {
+            var cards = SplitLayoutNode.Resolved(group, [.. run.Select(member => member.Id)], layout).Cards;
+            var other = cards[Math.Clamp(memberIndex, 0, cards.Count - 1)];
+            if (other == id) return false;
+            SetLayout(group, layout.Swapping(id, other), now);
+            return true;
+        }
         int first = tabs.IndexOf(run[0]); int insertion = first + Math.Clamp(memberIndex, 0, run.Count - 1);
         if (tabs.IndexOf(tab) == insertion) return false;
         var originalPositions = run.ToDictionary(t => t.Id, tabs.IndexOf);

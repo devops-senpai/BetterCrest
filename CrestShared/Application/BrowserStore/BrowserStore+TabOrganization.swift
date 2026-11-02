@@ -282,7 +282,8 @@ extension BrowserStore {
     func addTabToSplit(
         _ item: BrowserTabDragItem,
         joining targetTabID: UUID,
-        at memberIndex: Int?
+        at memberIndex: Int?,
+        landing: SplitLanding? = nil
     ) -> Bool {
         guard item.spaceID == selectedSpaceID, let space = spaceModel(matching: item.spaceAssignment) else {
             return false
@@ -290,8 +291,45 @@ extension BrowserStore {
         return sendCopying(
             JoinSplit(
                 workspaceID: family.workspaceID, windowID: windowID, spaceID: space.id,
-                tabID: item.tabID, targetTabID: targetTabID, index: memberIndex),
+                tabID: item.tabID, targetTabID: targetTabID, index: memberIndex, landing: landing),
             in: space.id) != nil
+    }
+
+    /// Lays the split `groupID` out as `arrangement` says, its members in
+    /// their order.
+    @discardableResult
+    func arrangeSplit(
+        _ groupID: UUID,
+        as arrangement: SplitArrangement,
+        matching assignment: BrowserSpaceRuntimeAssignment
+    ) -> Bool {
+        guard spaceModel(matching: assignment) != nil else { return false }
+        DiagnosticLog.splits.notice("Arrange split \(groupID.uuidString.prefix(8)) as \(arrangement.name)")
+        return family.send(
+            ArrangeSplit(
+                workspaceID: family.workspaceID, spaceID: assignment.spaceID, groupID: groupID,
+                arrangement: arrangement),
+            from: self)
+    }
+
+    /// Moves a card to where `drop` names in its split's layout: beside another
+    /// card, beside the whole split, or into another card's place.
+    @discardableResult
+    func tileSplitMember(
+        _ tabID: UUID,
+        at drop: BrowserSplitDropLanding,
+        matching assignment: BrowserSpaceRuntimeAssignment
+    ) -> Bool {
+        guard let space = spaceModel(matching: assignment), selectedSpaceID == assignment.spaceID,
+            let landing = splitLanding(for: drop, in: space)
+        else { return false }
+        DiagnosticLog.splits.notice(
+            "Tile \(tabID.uuidString.prefix(8)) beside \(landing.nodeID.uuidString.prefix(8)) "
+                + "side \(landing.side?.name ?? "swap")")
+        return family.send(
+            TileSplitMember(
+                workspaceID: family.workspaceID, spaceID: assignment.spaceID, tabID: tabID, landing: landing),
+            from: self)
     }
 
     /// Removal relocates the departing tab past its run, so it goes through the
@@ -413,7 +451,7 @@ extension BrowserStore {
         family.canSend(
             JoinSplit(
                 workspaceID: family.workspaceID, windowID: windowID, spaceID: spaceID,
-                tabID: tabID, targetTabID: targetTabID, index: nil),
+                tabID: tabID, targetTabID: targetTabID, index: nil, landing: nil),
             from: self)
     }
 

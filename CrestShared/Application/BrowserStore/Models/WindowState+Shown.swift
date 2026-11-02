@@ -10,9 +10,11 @@ extension WindowState {
         shownTabs.first { $0.spaceID == spaceID }?.tabID
     }
 
-    /// The column shares the window keeps for a split group it resized.
-    func splitColumnFractions(for groupID: UUID) -> [Double]? {
-        splitColumnShares.first { $0.groupID == groupID }?.shares
+    /// The shares the window keeps for each branch of a split group's layout
+    /// it resized, by branch.
+    func splitColumnFractions(for groupID: UUID) -> [UUID: [Double]] {
+        splitColumnShares.filter { $0.groupID == groupID }
+            .reduce(into: [:]) { result, shares in result[shares.branchID] = shares.shares }
     }
 
     /// A window that shows `spaceID`, on `tabs` in the Spaces they name, for a

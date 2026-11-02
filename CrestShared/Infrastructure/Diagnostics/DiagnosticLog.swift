@@ -16,6 +16,10 @@ struct DiagnosticLog: Sendable {
     static let popups = DiagnosticLog(category: "Popups")
     static let shortcuts = DiagnosticLog(category: "Shortcuts")
     static let sitePermissions = DiagnosticLog(category: "SitePermissions")
+    /// How the cards of a split tile the content area, the drops and carries
+    /// that change it, and the frames the cards settle on. Cards are named by
+    /// their tab identities, never their addresses.
+    static let splits = DiagnosticLog(category: "Splits")
     static let windows = DiagnosticLog(category: "Windows")
 
     // MARK: - Variables
