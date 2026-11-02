@@ -72,20 +72,20 @@
    }
   },
   "folders": {
-   "backColor": "#f5c2e7",
-   "color": "#cba6f7",
+   "backColor": "#ffb3ea",
+   "color": "#ffd2f2",
    "intensity": 0.25,
-   "outlineColor": "#0e7195"
+   "outlineColor": "#9b3fd6"
   },
   "icon": {
    "color": "#cba6f7"
   }
  },
  "folders": {
-  "backColor": "#f5c2e7",
-  "color": "#cba6f7",
+  "backColor": "#ffb3ea",
+  "color": "#ffd2f2",
   "intensity": 0.24905133928571419,
-  "outlineColor": "#0e7195"
+  "outlineColor": "#9b3fd6"
  },
  "icon": {
   "color": "#cba6f7"
