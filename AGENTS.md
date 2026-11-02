@@ -74,14 +74,18 @@ regularly and never rebases its own `main`.
   "What Arma adds" list in the same commit, under its kind.
 - Resolve a code conflict by reading both sides' commits. When upstream fixed
   what a fork commit fixed, keep upstream's version and drop the fork's.
-- No engine input ever differs from upstream: the patches, overlay, host
-  header, source lock, host inputs and control-plane build scripts under
-  `CrestEngines/Chromium` and `Scripts/control-plane`, and
-  `CrestContracts/include/crest_engine_contract.h`. Prose there may change;
-  the inputs may not. keeping them identical keeps the engine key equal
-  to upstream's, and `Scripts/sync-upstream-engine.sh` mirrors upstream's
-  prebuilt engine for that key into this fork's releases. Run it after a sync
-  whenever `Scripts/control-plane/chromium_engine.py tag` changed.
+- Arma builds its own Chromium engine. Its engine inputs differ from
+  upstream's: the patches, overlay, host header, source lock, host inputs
+  and control-plane build scripts under `CrestEngines/Chromium` and
+  `Scripts/control-plane`, and `CrestContracts/include/crest_engine_contract.h`
+  (which carries Arma's third engine kind, Servo). Upstream's prebuilt engine
+  therefore no longer matches; `Scripts/sync-upstream-engine.sh` is retired
+  for this fork. After any change to those inputs, or a sync that changes
+  `Scripts/control-plane/chromium_engine.py tag`, build with
+  `Scripts/control-plane/chromium-fork.py --workspace ~/Dev/CrestChromium build`
+  on the build Mac and publish with `publish-chromium-engine.py` to this
+  repository. Resolve conflicts in those inputs by keeping upstream's change
+  and re-applying Arma's on top.
 
 ## Generated localization catalog
 

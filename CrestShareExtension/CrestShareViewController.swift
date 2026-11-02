@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 /// The share sheet's Crest entry. It hosts the share view and hands the shared
-/// link to Crest by opening a `crest://open` URL.
+/// link to Crest by opening a `arma://open` URL.
 final class CrestShareViewController: UIViewController {
     // MARK: - Variables
 

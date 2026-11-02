@@ -62,7 +62,7 @@
                 native?.profileID = space.profileID
                 native?.isPrivateBrowsing = browser.isPrivateBrowsing
                 guard let page else { return }
-                _ = try? core.send(Navigate(pageID: page.id, input: "crest://flags/"))
+                _ = try? core.send(Navigate(pageID: page.id, input: "arma://flags/"))
             }
 
             func close() {

@@ -38,6 +38,7 @@
 			<string>Crest Shared Links</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>arma</string>
 				<string>crest</string>
 			</array>
 		</dict>

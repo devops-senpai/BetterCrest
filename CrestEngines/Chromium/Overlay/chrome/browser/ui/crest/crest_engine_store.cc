@@ -53,8 +53,8 @@ std::string WebStoreExtensionID(const GURL& url) {
 const char* CrestStoreScript() {
   return R"JS((function() {
   if (window.__crestStore) { window.__crestStore.render(); return; }
-  var labels = { install: 'Add to Crest', installed: 'Added to Crest',
-                 remove: 'Remove from Crest', busy: 'Installing…' };
+  var labels = { install: 'Add to Arma', installed: 'Added to Arma',
+                 remove: 'Remove from Arma', busy: 'Installing…' };
   var state = { id: '', installed: false, busy: false };
   var adopted = null, hovering = false, pending = false;
   // The host's listing rule: /detail/<id> or /detail/<name>/<id>, optionally

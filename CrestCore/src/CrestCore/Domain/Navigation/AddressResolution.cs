@@ -10,9 +10,14 @@ public sealed record AddressResolution(string Url, string? SearchQuery) {
     // Browser-owned URL spellings that are shared by address and tab rules.
     public const string AboutBlank = "about:blank";
     public const string ChromeScheme = "chrome";
+    /// Arma's own pages, where an engine's `chrome://` pages appear.
+    public const string ArmaScheme = "arma";
+    /// The spelling earlier releases gave Arma's pages, still accepted for
+    /// tabs and history they saved.
     public const string CrestScheme = "crest";
     public const string ChromeExtensionScheme = "chrome-extension";
     public const string ChromePrefix = ChromeScheme + "://";
+    public const string ArmaPrefix = ArmaScheme + "://";
     public const string CrestPrefix = CrestScheme + "://";
     public const string ChromeExtensionPrefix = ChromeExtensionScheme + "://";
 
@@ -101,6 +106,7 @@ public sealed record AddressResolution(string Url, string? SearchQuery) {
     /// Whether `value` names one of the browser's own pages.
     private static bool IsInternalPage(string value) =>
         value.StartsWith(ChromePrefix, StringComparison.OrdinalIgnoreCase)
+        || value.StartsWith(ArmaPrefix, StringComparison.OrdinalIgnoreCase)
         || value.StartsWith(CrestPrefix, StringComparison.OrdinalIgnoreCase)
         || value.StartsWith(ChromeExtensionPrefix, StringComparison.OrdinalIgnoreCase);
 
@@ -140,7 +146,7 @@ public sealed record AddressResolution(string Url, string? SearchQuery) {
                 // out of sync, which the sync projection decides by scheme, not here.
                 && !(parsed.Scheme == Uri.UriSchemeFile && parsed.Host.Length == 0 && parsed.AbsolutePath.Length > 0)
                 && !(allowsInternalPages && (parsed.Scheme == ChromeScheme
-                    || parsed.Scheme == CrestScheme) && parsed.Host.Length > 0)
+                    || parsed.Scheme == ArmaScheme || parsed.Scheme == CrestScheme) && parsed.Host.Length > 0)
                 && !(allowsInternalPages && parsed.Scheme == ChromeExtensionScheme && parsed.Host.Length == 32
                     && parsed.Host.All(c => c is >= 'a' and <= 'p')))
             || !string.IsNullOrEmpty(parsed.UserInfo))

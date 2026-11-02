@@ -1,12 +1,12 @@
 import Foundation
 
 /// Crest's address namespace is separate from Chromium's privileged origins:
-/// an engine page's address reaches Crest in its own `crest://` spelling,
+/// an engine page's address reaches Crest in its own `arma://` spelling,
 /// leaving web and extension URLs intact. The binding translates the other
 /// way itself.
 enum ChromiumInternalURL {
     static func presented(_ value: String) -> String {
-        replacingScheme(in: value, from: "chrome", to: "crest")
+        replacingScheme(in: value, from: "chrome", to: "arma")
     }
 
     private static func replacingScheme(in value: String, from: String, to: String) -> String {
