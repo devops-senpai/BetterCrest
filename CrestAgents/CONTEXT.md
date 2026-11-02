@@ -18,7 +18,10 @@ Arma is closed and served by the app when it runs.
 | `AgentToolDefinition+Browser.swift` | The browser's tool catalog |
 | `AgentLink.swift` | What the helper and the app say over the socket, one JSON object per line |
 | `AgentJSON.swift` | JSON values for arguments, results and schemas |
-| `AgentSocketLocation.swift` | The per-bundle-identifier Unix socket in the person's Arma data |
+| `AgentSocketLocation.swift` | The per-bundle-identifier Unix sockets in the person's Arma data, one lane for agents and one for commands |
+| `CommandLink.swift` | What `arma theme` and the app say over the commands socket |
+| `CrestTheme.swift` | A Space theme as a file: its sections, colors and dark look |
+| `CrestThemeHex.swift` | How a theme spells a color, `#RRGGBB` or `#RRGGBBAA` |
 | `MCPProtocolVersion.swift` | Model Context Protocol revisions the helper speaks |
 
 ## Depends on
