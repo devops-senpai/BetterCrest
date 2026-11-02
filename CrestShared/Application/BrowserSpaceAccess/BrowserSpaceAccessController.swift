@@ -148,7 +148,7 @@ final class BrowserSpaceAccessController {
         do {
             let authenticated = try await authenticator.authenticate(
                 reason: String(
-                    localized: "Authenticate to unlock the \(name) Space in Crest."
+                    localized: "Authenticate to unlock the \(name) Space in Arma."
                 )
             )
             guard finish(request, for: space, authenticated: authenticated) else {

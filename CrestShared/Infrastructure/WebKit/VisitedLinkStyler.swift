@@ -5,7 +5,7 @@ import WebKit
 enum BrowserVisitedLinkStyler {
     nonisolated private static let maximumVisitedURLCount = 5_000
     private static let contentWorld = WKContentWorld.world(
-        name: "com.pauldavis.crest.visited-links"
+        name: "com.senpaimedia.arma.visited-links"
     )
     /// The address history keeps for each address of the history styled
     /// last, or nil for one it keeps none of. The core's answer reads only

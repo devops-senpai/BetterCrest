@@ -1,8 +1,8 @@
-# Crest architecture
+# Arma architecture
 
-Crest is a native SwiftUI browser for Apple silicon. It treats a **Space** as the primary privacy and organization boundary.
+Arma is a native SwiftUI browser for Apple silicon. It treats a **Space** as the primary privacy and organization boundary.
 
-From Crest 0.7, browser rules live in a portable .NET core and pages render through engine adapters. On Mac, one app hosts both engines: Chromium is the default, and a person or website rule can choose WebKit. Protected-video requests trigger an automatic switch to WebKit unless the person has chosen an engine for the site. The core validates the document and completes before-unload checks before moving it or remembering a website rule. Cancellation leaves both unchanged. Chromium loads the first time a page or extension needs it. Extensions run only in Chromium. iPhone and iPad use WebKit. Both engines share the same core, UI and sync records. See [Portable browser control plane](Architecture/ControlPlane.md) and [Engine abstraction](Architecture/EngineAbstractionCompletion.md).
+From Arma 0.7, browser rules live in a portable .NET core and pages render through engine adapters. On Mac, one app hosts both engines: Chromium is the default, and a person or website rule can choose WebKit. Protected-video requests trigger an automatic switch to WebKit unless the person has chosen an engine for the site. The core validates the document and completes before-unload checks before moving it or remembering a website rule. Cancellation leaves both unchanged. Chromium loads the first time a page or extension needs it. Extensions run only in Chromium. iPhone and iPad use WebKit. Both engines share the same core, UI and sync records. See [Portable browser control plane](Architecture/ControlPlane.md) and [Engine abstraction](Architecture/EngineAbstractionCompletion.md).
 
 ## Source map
 
@@ -29,7 +29,7 @@ Every persistent Space owns its own browsing state. A Space boundary includes:
 
 - the engine profile: a WebKit website data store or a Chromium profile, with its cookies, cache, and sessions
 - tabs, pinned sites, folders, history, archive, and appearance
-- Crest Passwords and credential matching
+- Arma Passwords and credential matching
 - content-blocking and permission state
 - synchronization records and deletion tombstones
 
@@ -41,7 +41,7 @@ Space deletion is coordinated across browser state, website data, credentials, s
 
 Local state is durable first. CloudKit synchronizes portable Space, tab, history, and preference records while secrets remain in the Keychain. Ordered collections use fractional positions so independent devices can insert and reorder without renumbering every record. Merge behavior is deterministic, and deletion wins through tombstones.
 
-Crest can import browser bookmarks and sessions, and its portable archive format keeps migration separate from live CloudKit records. Archive readers validate identifiers and relationships before applying imported state.
+Arma can import browser bookmarks and sessions, and its portable archive format keeps migration separate from live CloudKit records. Archive readers validate identifiers and relationships before applying imported state.
 
 The core reads other browsers' data. Its import readers share URL and whitespace sanitation while retaining their own title limits, fallback rules, and errors. An import is one core intent, saved with its sync journal before it returns.
 
@@ -59,7 +59,7 @@ The torn-off window appears with the grabbed point on its measured sidebar row a
 
 A window a page asks for, such as a sign-in popup, opens as a Quick Window over the window that shows its opener, in the opener's Space and on the opener's engine. It never becomes a window of its own.
 
-Crest's windows stay movable, so Move & Resize, the green button's tiling, the Globe-Control tiling keys and a display change all move them. The window's content extends under the title bar, where the window server would otherwise drag the window by a press at the very top of a page. While the pointer is on a page under the title bar, or 32 points below it, or on a control there such as a Quick Window's address field, a `BrowserTitleBarPointerTracker` claims the window's `BrowserWindowTitleBarGuard`, which makes the window unmovable until the pointer leaves; holding Globe and Control hands the window back for the tiling keys. Crest's own chrome, the navigation strip and the backdrop, acts as the title bar (`BrowserWindowTitleBarSurface`): it moves the window and runs the double-click action the person chose in System Settings.
+Arma's windows stay movable, so Move & Resize, the green button's tiling, the Globe-Control tiling keys and a display change all move them. The window's content extends under the title bar, where the window server would otherwise drag the window by a press at the very top of a page. While the pointer is on a page under the title bar, or 32 points below it, or on a control there such as a Quick Window's address field, a `BrowserTitleBarPointerTracker` claims the window's `BrowserWindowTitleBarGuard`, which makes the window unmovable until the pointer leaves; holding Globe and Control hands the window back for the tiling keys. Arma's own chrome, the navigation strip and the backdrop, acts as the title bar (`BrowserWindowTitleBarSurface`): it moves the window and runs the double-click action the person chose in System Settings.
 
 ## Scenes on iPhone and iPad
 
@@ -69,11 +69,11 @@ The macOS window coordinator, live-page handoff and mirrored preview, Blank Wind
 
 ## Credentials and privacy
 
-Crest Passwords are stored in the Keychain and matched by origin. Each Space can disable Crest-owned suggestions, generation, save prompts, and HTTP-auth reuse without deleting its stored credentials. Sensitive reveals and exports require device authentication. Page-to-app credential messages are schema-checked and origin-bound.
+Arma Passwords are stored in the Keychain and matched by origin. Each Space can disable Arma-owned suggestions, generation, save prompts, and HTTP-auth reuse without deleting its stored credentials. Sensitive reveals and exports require device authentication. Page-to-app credential messages are schema-checked and origin-bound.
 
 The privacy manifest is shipped from `CrestShared/Resources/PrivacyInfo.xcprivacy`. The macOS app declares Apple's approved Web Browser Public Key Credential entitlement for system passkey access and the iCloud Passwords helper. Its signing profiles must include that capability; system passkey access also requires the user's authorization. Other managed capabilities remain gated on platform-specific Apple approval.
 
-On macOS, Crest requests browser-wide passkey consent through AuthenticationServices when the first foreground HTTPS page opens, only if the system decision is undetermined. WebKit handles website credential requests directly, and Chromium sends them to the system passkey sheet; Crest does not intercept WebAuthn calls or insert permission checks into sign-in. Settings shares the same consent controller. On WebKit, file uploads validate reads in the host app before handing paths to the engine, retain picker security scopes until the page is removed, and surface denied access with a route to system settings. Chromium uses its own file chooser.
+On macOS, Arma requests browser-wide passkey consent through AuthenticationServices when the first foreground HTTPS page opens, only if the system decision is undetermined. WebKit handles website credential requests directly, and Chromium sends them to the system passkey sheet; Arma does not intercept WebAuthn calls or insert permission checks into sign-in. Settings shares the same consent controller. On WebKit, file uploads validate reads in the host app before handing paths to the engine, retain picker security scopes until the page is removed, and surface denied access with a route to system settings. Chromium uses its own file chooser.
 
 ## Engine boundary
 
@@ -81,9 +81,9 @@ The core decides navigation, download, content-blocking, authentication, permiss
 
 `BrowserFaviconSession` owns capture, fallback, and retry lifetime through a document adapter on WebKit; Chromium reports favicons itself. Authenticated icon discovery stays inside the live WebKit context; public fallback remains credential-free and profile-scoped. Native pages invalidate requests on navigation and icon changes and stop them on removal.
 
-`BrowserReaderModeSession` owns request cancellation and document changes through a document adapter; Reader is WebKit-only. `BrowserCredentialSession` shares origin validation and filling on both engines: WebKit pages deliver its content bridge through their own user content controller, and Chromium pages through the engine port's `BrowserPageContentScripting`, which runs Crest's bridges in an isolated world the page cannot reach. Each page's live state, its address and the one it is heading to, title, loading, back and forward availability, security, failure and media activity, lives in the core's `Pages`: the engine reports a `PageSnapshot` at most once per turn through `EnginePageReporter`, and views read the page's `PageStateModel` from `CoreState.pages`. Progress, find, hovered links, fullscreen and zoom stay on the page as presentation. An address the person types or chooses, and a page's first load, go through the core's `Navigate`, which resolves it by the Space's search rules and asks the page's engine to load it.
+`BrowserReaderModeSession` owns request cancellation and document changes through a document adapter; Reader is WebKit-only. `BrowserCredentialSession` shares origin validation and filling on both engines: WebKit pages deliver its content bridge through their own user content controller, and Chromium pages through the engine port's `BrowserPageContentScripting`, which runs Arma's bridges in an isolated world the page cannot reach. Each page's live state, its address and the one it is heading to, title, loading, back and forward availability, security, failure and media activity, lives in the core's `Pages`: the engine reports a `PageSnapshot` at most once per turn through `EnginePageReporter`, and views read the page's `PageStateModel` from `CoreState.pages`. Progress, find, hovered links, fullscreen and zoom stay on the page as presentation. An address the person types or chooses, and a page's first load, go through the core's `Navigate`, which resolves it by the Space's search rules and asks the page's engine to load it.
 
-Shared page operations own common navigation and media behavior. `BrowserPageContentRuleSession` tracks only Crest's WebKit content rules, and `BrowserTabStateCoordinator` owns archive eligibility and pending copies without retaining pages. Platform stores apply a shared reconciliation plan and retain their own presentation and memory-pressure policies. On macOS, each `BrowserTabRuntime` owns one live page. Releasing the tab releases that page and its native history.
+Shared page operations own common navigation and media behavior. `BrowserPageContentRuleSession` tracks only Arma's WebKit content rules, and `BrowserTabStateCoordinator` owns archive eligibility and pending copies without retaining pages. Platform stores apply a shared reconciliation plan and retain their own presentation and memory-pressure policies. On macOS, each `BrowserTabRuntime` owns one live page. Releasing the tab releases that page and its native history.
 
 ## Platform shape
 

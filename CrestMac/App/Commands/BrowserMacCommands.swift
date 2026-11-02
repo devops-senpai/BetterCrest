@@ -2,7 +2,7 @@ import AppKit
 import os
 
 /// Runs the commands a person gives Crest from their own terminal through the
-/// `crest-browser` helper, such as `crest-browser theme`. They reach Crest
+/// `arma` helper, such as `arma theme`. They reach Crest
 /// over a Unix domain socket of their own that exists while Crest runs and
 /// admits only this Crest's helper running as this user, so a person's own
 /// command never needs agents turned on or an agent's approval. Each
@@ -13,7 +13,7 @@ final class BrowserMacCommands {
 
     static let maximumConnections = 8
 
-    private static let logger = Logger(subsystem: "com.pauldavis.crest", category: "Commands")
+    private static let logger = Logger(subsystem: "com.senpaimedia.arma", category: "Commands")
 
     // MARK: - Variables
 
@@ -93,7 +93,7 @@ final class BrowserMacCommands {
                 ? theme(space, changes: changes, resets: resets, removeDark: removeDark, export: export)
                 : .refused(
                     message:
-                        "This crest-browser is from another build of Crest. Run the one inside the Crest that is open.")
+                        "This helper is from another build. Run the one inside the Arma that is open.")
         }
         if let answer = try? JSONEncoder().encode(response) { connection.send(answer) }
         connection.close()
@@ -113,7 +113,7 @@ final class BrowserMacCommands {
             return .refused(message: "There is no Space named '\(name)'. The Spaces are \(names).")
         }
         guard !application.spaceAccess.isLocked(space) else {
-            return .refused(message: "Unlock the '\(space.settings.name)' Space in Crest first.")
+            return .refused(message: "Unlock the '\(space.settings.name)' Space in Arma first.")
         }
         let current = space.settings.look
         let currentDark = space.settings.darkBranding

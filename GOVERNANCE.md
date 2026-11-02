@@ -1,50 +1,42 @@
 # Governance
 
-Crest is an open source project maintained by Paul Davis. This document explains
-who makes decisions now and how the maintainer group can grow.
+Arma is a fork of Crest maintained by
+[devops-senpai](https://github.com/devops-senpai). This document explains who
+makes decisions now and how that can grow.
 
 ## Maintainer
 
-[Paul Davis](https://github.com/pauljoda) is the current lead maintainer and
-release owner. The maintainer is responsible for product direction, review and
-merge decisions, security coordination, Apple-platform signing, and official
-Crest releases.
+devops-senpai is the current maintainer and release owner. The maintainer is
+responsible for product direction, review and merge decisions, security
+coordination, Apple-platform signing, and Arma releases.
 
-Official signing identities, bundle identifiers, hosted services, trademarks,
-and distribution credentials remain under the project owner's control. Source
-code contributions are accepted under the repository's MPL-2.0 license; the
-Crest name and visual identity remain governed by [TRADEMARKS.md](TRADEMARKS.md).
+Source code contributions are accepted under the repository's MPL-2.0 license.
+The Crest name and visual identity belong to Paul Davis and are governed by
+[TRADEMARKS.md](TRADEMARKS.md); Arma is not affiliated with or endorsed
+by Crest or Paul Davis.
 
 ## How decisions are made
 
-- User problems, alternatives, and early feedback are discussed publicly in
-  [r/CrestBrowser](https://www.reddit.com/r/CrestBrowser).
 - Reproducible work is tracked in
-  [GitHub Issues](https://github.com/pauljoda/Crest/issues).
-- Planned release outcomes are summarized in the public GitHub Project and
-  milestones. Only the maintainer adds items to them; an issue or pull request
-  is not a commitment.
-- Anyone can have one pull request open at a time, and vetted contributors
-  can have more. The maintainer reviews every pull request before it merges.
-  See [Who can contribute code](CONTRIBUTING.md#who-can-contribute-code).
+  [GitHub Issues](https://github.com/devops-senpai/Arma/issues).
+- _Placeholder: Arma has no public discussion forum, project board or
+  release milestones yet._
+- Upstream Crest's `main` is merged regularly (`Scripts/sync-upstream.sh`).
+  When upstream and Arma solve the same problem differently, upstream's
+  solution is preferred unless there is a stated reason to diverge.
 - Architecture decisions preserve Space isolation, live page identity,
   native Apple-platform behavior, security boundaries, and sustainable
   maintenance.
 - The maintainer makes the final call when platform constraints, security,
   project coherence, or release responsibility require one accountable owner.
 
-Sponsorship never determines issue priority or acceptance. Security fixes,
-correctness, user impact, platform viability, and available maintenance time
-drive planning.
+Sponsorship never determines issue priority or acceptance.
 
 ## Becoming a maintainer
 
-Regular code contribution starts with becoming a vetted contributor. Vetting
-is at the maintainer's discretion and can be revoked at any time.
-
 Maintainer access is earned through sustained, trustworthy participation:
 high-quality contributions, useful review, respectful community work, and
-demonstrated care for Crest's architecture and release boundaries. Access grows
+demonstrated care for the architecture and release boundaries. Access grows
 gradually from contribution and triage to review and, when appropriate, merge
 or release responsibilities.
 

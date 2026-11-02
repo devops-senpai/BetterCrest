@@ -17,7 +17,7 @@ code compiles unchanged on both platforms.
 | --- | --- |
 | `WebKit/` | `MobileBrowserPage` and its WebKit delegates, `MobileBrowserPageStore` and its registry, `MobileWebKit` (`BrowserPlatformWebKit`), user agent, dialogs, file and export pickers, link previews, link activation bridge, download risk confirmation, transient page leases |
 | `Engines/` | `BrowserEngineView`, the engine view seam resolved to `UIView` |
-| `BrowserDefaultBrowser/` | `BrowserPlatformDefaultBrowserSystem`: whether Crest is the default browser |
+| `BrowserDefaultBrowser/` | `BrowserPlatformDefaultBrowserSystem`: whether Arma is the default browser |
 | `BrowserLinkSharing/` | `BrowserSharedLink`: the `crest://open` hand-off from the share extension |
 | `BrowserPasskeyAccess/` | Passkey access and the system Passwords write-through |
 | `CloudSync/` | The CloudKit container entitlement check for device and Simulator |

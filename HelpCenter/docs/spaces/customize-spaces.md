@@ -11,7 +11,7 @@ Open a Space’s context menu to edit it, or open its page in Settings. On Mac, 
 
 ## Choose an identity
 
-Crest offers two presentation styles:
+Arma offers two presentation styles:
 
 - **Banner** uses Crest Studio: begin with a template, then choose a shape, field division, pattern, trim, and heraldic artwork. Use independent colors for the parts of your design, or make an identity with an emoji, monogram, or searchable SF Symbol.
 - **Traditional Gradient** blends one to three colors with direction, intensity, and optional texture.
@@ -20,7 +20,7 @@ The result appears in the Space picker and browser chrome on Mac, iPad, and iPho
 
 Crest Studio is on the Space’s Appearance page. The crest sits on the Space’s own sidebar background, with its colors named by what they paint:
 
-- **Crest:** Field, Second field, Band, Emblem, Border and Edge. A color for a part the crest doesn’t draw is dimmed.
+- **Arma:** Field, Second field, Band, Emblem, Border and Edge. A color for a part the crest doesn’t draw is dimmed.
 - **Sidebar:** Background, Accent (selected tabs, pins, the address field and the Space picker) and Pattern.
 
 Click or tap a color to choose one of the templates’ tinctures or a custom color. Below the crest, work through **Start from**, **Shape**, **Field**, **Band**, **Emblem**, **Border**, **Finish**, **Sidebar** and **Other**; each step shows your crest with each choice applied. On iPhone, the steps are a list showing what each has chosen; tap one to open it. Choose **Icon** at the top of **Emblem** to use an SF Symbol or emoji instead of a crest. **Shuffle** suggests a new crest in the templates’ colors, and **Undo** steps back through your changes. **Reset Appearance** and **Artwork Credits** are in the **…** menu on the Space’s page.
@@ -35,17 +35,17 @@ The **Command Palette** group in the **Other** step of the Space’s Appearance 
 
 ## A look for dark windows
 
-Turn on **Dark look** at the top of a Space’s Appearance page to give the Space a second look that it wears while Crest’s windows are dark, starting from its light look. Choose **Light** or **Dark** beside the switch to edit either one; the sidebar switches between them with the system appearance or your Appearance mode. Turn the switch off to wear one look in both again.
+Turn on **Dark look** at the top of a Space’s Appearance page to give the Space a second look that it wears while Arma’s windows are dark, starting from its light look. Choose **Light** or **Dark** beside the switch to edit either one; the sidebar switches between them with the system appearance or your Appearance mode. Turn the switch off to wear one look in both again.
 
 ## Share a theme
 
-On Mac, choose **Export Theme…** at the bottom of the **Other** step, or in the **…** menu on a Space’s page, to save its look as a theme file, and **Load Theme from File…** to dress the Space in one someone shared. The `crest-browser` tool inside Crest does the same from the terminal while Crest is open. It needs only Crest running; agents can stay off.
+On Mac, choose **Export Theme…** at the bottom of the **Other** step, or in the **…** menu on a Space’s page, to save its look as a theme file, and **Load Theme from File…** to dress the Space in one someone shared. The `arma` tool inside Arma does the same from the terminal while Arma is open. It needs only Arma running; agents can stay off.
 
 ```sh
-/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Personal --export ~/Desktop/dusk.json
-/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --from-file ~/Desktop/dusk.json
-/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --folder-color "#7a8bb0" --palette-dark "#101218" --palette-dark-opacity 0.7
-/Applications/Crest.app/Contents/Helpers/crest-browser theme --space Work --reset command-palette
+/Applications/Arma.app/Contents/Helpers/arma theme --space Personal --export ~/Desktop/dusk.json
+/Applications/Arma.app/Contents/Helpers/arma theme --space Work --from-file ~/Desktop/dusk.json
+/Applications/Arma.app/Contents/Helpers/arma theme --space Work --folder-color "#7a8bb0" --palette-dark "#101218" --palette-dark-opacity 0.7
+/Applications/Arma.app/Contents/Helpers/arma theme --space Work --reset command-palette
 ```
 
 A theme file is JSON with a section for each part of the look, and a theme can name only the parts it changes:
@@ -60,7 +60,7 @@ A theme file is JSON with a section for each part of the look, and a theme can n
 }
 ```
 
-Colors are `#RRGGBB` or `#RRGGBBAA`; the word `default` lets a chosen color go. A `"dark"` object with the same sections gives the Space its look for dark windows, and `--dark-from-file` applies a second theme file as that look. Run `crest-browser theme` with no options to see every flag.
+Colors are `#RRGGBB` or `#RRGGBBAA`; the word `default` lets a chosen color go. A `"dark"` object with the same sections gives the Space its look for dark windows, and `--dark-from-file` applies a second theme file as that look. Run `arma theme` with no options to see every flag.
 
 ## Customize the browser around your Spaces
 
@@ -70,7 +70,7 @@ Choose an app icon palette here too. These controls change the browser on this d
 
 ## Add and arrange Spaces
 
-On Mac, click **+** next to the Spaces heading in the Settings sidebar to add a Space. Its Appearance page opens with the name ready to type. Right-click a Space there, or use the **…** menu on its page, to rename it, edit its crest, lock it, or delete it. Crest needs at least one Space. Choose **New Sub-Space** from the same menu for a Space that shares this one's sign-ins; see [Sub-Spaces](./sub-spaces.md).
+On Mac, click **+** next to the Spaces heading in the Settings sidebar to add a Space. Its Appearance page opens with the name ready to type. Right-click a Space there, or use the **…** menu on its page, to rename it, edit its crest, lock it, or delete it. Arma needs at least one Space. Choose **New Sub-Space** from the same menu for a Space that shares this one's sign-ins; see [Sub-Spaces](./sub-spaces.md).
 
 Drag a Space in the picker to reorder it. In the Mac Settings sidebar, click the pencil next to the Spaces heading, drag Spaces by their handles, then click the checkmark; or right-click a Space and choose **Move Up** or **Move Down**. On iPhone and iPad, use the order controls in **Settings → Spaces**. Position matters for **Control-1** through **Control-9**, so put frequently used Spaces first. A group's Sub-Spaces stay together after their primary, and dragging the primary moves the whole group.
 

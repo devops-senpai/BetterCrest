@@ -17,6 +17,7 @@ CI runs.
 | `bootstrap.sh` | First-run setup: generates the project, links the Claude Code skill, runs the version and identity checks |
 | `check-architecture.py`, `check-swift-format.sh`, `check-public-source.py`, `check-contribution.py` | Layer and SwiftUI contracts, changed-file formatting, public-source contents, the pull request AI declaration and sign-offs |
 | `set-version.sh`, `check-version.sh` | Patch and release-line bumps; the staged version and release-note check |
+| `sync-upstream-engine.sh` | Mirrors upstream Crest's prebuilt Chromium engine for the current engine key into this fork's releases |
 | `sync-upstream.sh`, `merge-release-notes.py` | Merges upstream Crest's main into this fork, taking the files upstream owns and regenerating outputs; the three-way release-note catalog merge it uses |
 | `release_note_catalog.py`, `release_note_publication.py`, `generate-release-notes.py` | Validate `Documentation/ReleaseNotes.json`, advance per-channel cursors, render release copy |
 | `validate.sh`, `validate-identity.sh`, `validate-cache-hygiene.sh` | Script tests plus macOS and iOS unit gates; required paths and identifiers; leftover build products |
@@ -32,7 +33,7 @@ CI runs.
 
 zsh, Python 3, Git and ripgrep; Xcode, XcodeGen and the .NET SDK for the
 build scripts (`CONTRIBUTING.md`, "Local setup"). Called by `.github/workflows/`
-and `ci_scripts/` (`check-version.sh`).
+(`check-version.sh`).
 
 ## Rules
 

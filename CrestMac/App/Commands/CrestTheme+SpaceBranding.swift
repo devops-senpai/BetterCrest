@@ -13,7 +13,7 @@ enum CrestThemeProblem: Error {
         case .unknownStyle(let style):
             "The style '\(style)' is not banner or gradient."
         case .unknownPattern(let pattern):
-            "The pattern '\(pattern)' is not one Crest draws. Try \(SpaceBannerPattern.all.map(\.name).joined(separator: ", "))."
+            "The pattern '\(pattern)' is not one Arma draws. Try \(SpaceBannerPattern.all.map(\.name).joined(separator: ", "))."
         case .unknownTextColor(let mode):
             "The text color '\(mode)' is not automatic, light, dark or system."
         case .badColor(let text):

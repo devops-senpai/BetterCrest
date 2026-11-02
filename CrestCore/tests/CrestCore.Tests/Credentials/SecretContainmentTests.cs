@@ -55,7 +55,7 @@ public sealed class SecretContainmentTests {
             new PasswordImportPreview([new(2, null, origin, Secret, Secret)], []),
             new ExportedCredential(Guid.NewGuid(), origin, Secret, Secret, Secret, Secret),
             new CredentialExport([new(Guid.NewGuid(), origin, Secret, null, Secret, "")], "Work", "Space"),
-            new CredentialExportFile("Crest Passwords - Work.csv", Encoding.UTF8.GetBytes(Secret)),
+            new CredentialExportFile("Arma Passwords - Work.csv", Encoding.UTF8.GetBytes(Secret)),
             CredentialFile.Read(Encoding.UTF8.GetBytes($"url,username,password\nhttps://accounts.example,{Secret},{Secret}"))
         ];
         Assert.Equal(SecretTypes.ToHashSet(), records.Select(record => record.GetType()).ToHashSet());

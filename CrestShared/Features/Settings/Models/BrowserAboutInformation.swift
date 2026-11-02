@@ -26,21 +26,25 @@ struct BrowserAboutBuildInformation: Equatable, Sendable {
 }
 
 enum BrowserAboutLinks {
+    /// Placeholder until Arma has a forum: feedback goes to GitHub Issues.
     static var feedback: URL {
-        url("https://www.reddit.com/r/CrestBrowser")
+        url("https://github.com/devops-senpai/Arma/issues")
     }
 
     static var issues: URL {
-        url("https://github.com/pauljoda/Crest/issues/new/choose")
+        url("https://github.com/devops-senpai/Arma/issues/new/choose")
     }
 
-    /// Where to ask Crest to import from a browser it does not list.
+    /// Where to ask Arma to import from a browser it does not list.
     static var browserRequest: URL {
-        url("https://github.com/pauljoda/Crest/issues/new?template=feature_request.yml&title=Import%20from%20")
+        url(
+            "https://github.com/devops-senpai/Arma/issues/new"
+                + "?template=feature_request.yml&title=Import%20from%20")
     }
 
+    /// Placeholder until Arma has a roadmap: the open issues stand in.
     static var roadmap: URL {
-        url("https://github.com/users/pauljoda/projects/3")
+        url("https://github.com/devops-senpai/Arma/issues")
     }
 
     private static func url(_ value: String) -> URL {

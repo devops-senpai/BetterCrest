@@ -1,6 +1,6 @@
 ---
 title: Manage permissions and website access per Space
-description: Review and change an extension's permissions and site access without changing another Crest Space.
+description: Review and change an extension's permissions and site access without changing another Arma Space.
 slug: /manage-extension-permissions
 sidebar_label: Permissions & site access
 sidebar_position: 4
@@ -17,7 +17,7 @@ The install review lists the permission warnings Chromium reports for the extens
 
 ## Review access later
 
-1. Open **Crest Settings** and select the Space in the sidebar.
+1. Open **Arma Settings** and select the Space in the sidebar.
 2. Select **Extensions**.
 3. Expand the extension's row to see its **Permissions and Website Access**.
 
@@ -31,6 +31,6 @@ Use the **Enabled** switch on the extension's row. The installation and its data
 
 ## Remove it and its data
 
-Expand the row, select **Remove Extension**, and confirm **Remove from _Space_**. Crest removes the extension and its data from that Space. Other Spaces are unchanged.
+Expand the row, select **Remove Extension**, and confirm **Remove from _Space_**. Arma removes the extension and its data from that Space. Other Spaces are unchanged.
 
-Private Spaces must be unlocked before Crest shows or changes their installed extensions.
+Private Spaces must be unlocked before Arma shows or changes their installed extensions.

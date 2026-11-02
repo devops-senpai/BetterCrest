@@ -38,7 +38,7 @@ struct BrowserPasskeyAccessView: View {
             }
 
             if access.canRequestAccess {
-                Button("Allow Crest to Use Passkeys…") {
+                Button("Allow Arma to Use Passkeys…") {
                     Task { await access.requestAccess() }
                 }
                 .accessibilityIdentifier("request-passkey-access")

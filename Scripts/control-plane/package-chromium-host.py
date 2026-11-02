@@ -204,9 +204,9 @@ def main():
         if not args.product and is_product_framework:
             parser.error("Build CrestChromiumUI for a review package; this framework is the normal product composition")
     identity = (
-        "com.pauldavis.crest" if args.product
-        else "com.pauldavis.crest.chromium-baseline" if args.baseline
-        else "com.pauldavis.crest.control-plane.chromium")
+        "com.senpaimedia.arma" if args.product
+        else "com.senpaimedia.arma.chromium-baseline" if args.baseline
+        else "com.senpaimedia.arma.control-plane.chromium")
     product_entitlements = None
     if args.entitlements:
         with args.entitlements.open("rb") as stream:
@@ -279,20 +279,20 @@ def main():
         if not sparkle.is_dir():
             parser.error("The native UI build must supply Sparkle.framework beside the host framework")
         subprocess.run(["ditto", str(sparkle), str(frameworks / "Sparkle.framework")], check=True)
-        icon = resources / "Crest.icns"
+        icon = resources / "Arma.icns"
         dock_plugin = ui.parent / "CrestDockTilePlugin.docktileplugin"
         if not icon.is_file() or not dock_plugin.is_dir():
-            parser.error("The native UI build must supply Crest.icns and CrestDockTilePlugin.docktileplugin")
+            parser.error("The native UI build must supply Arma.icns and CrestDockTilePlugin.docktileplugin")
         plugins = output / "Contents/PlugIns"
         plugins.mkdir(exist_ok=True)
         subprocess.run(["ditto", str(dock_plugin), str(plugins / dock_plugin.name)], check=True)
-        # The helper agents run, crest-browser, which reaches Crest over its
+        # The helper agents run, arma, which reaches Crest over its
         # agent socket. It lives in Contents/Helpers, where signing treats it
         # as loose code with the hardened runtime; its embedded Info.plist
         # names its signing identifier.
-        agent_helper = ui.parent / "crest-browser"
+        agent_helper = ui.parent / "arma"
         if not agent_helper.is_file():
-            parser.error("The native UI build must supply crest-browser beside the host framework")
+            parser.error("The native UI build must supply arma beside the host framework")
         helpers = output / "Contents/Helpers"
         helpers.mkdir(exist_ok=True)
         shutil.copy2(agent_helper, helpers / agent_helper.name)
@@ -313,7 +313,7 @@ def main():
         info = plistlib.load(stream)
     info["CFBundleIdentifier"] = identity
     info["CFBundleDisplayName"] = (
-        "Crest" if args.product
+        "Arma" if args.product
         else "Crest Chromium Baseline" if args.baseline
         else "Crest Chromium Experiment")
     info["CFBundleName"] = info["CFBundleDisplayName"]
@@ -324,8 +324,8 @@ def main():
         info["CFBundleShortVersionString"] = ui_info["CFBundleShortVersionString"]
         info["CFBundleVersion"] = ui_info["CFBundleVersion"]
         info["LSMinimumSystemVersion"] = minimum_system_version(info, ui_info)
-        info["CFBundleIconFile"] = "Crest"
-        info["CFBundleIconName"] = "Crest"
+        info["CFBundleIconFile"] = "Arma"
+        info["CFBundleIconName"] = "Arma"
         info["NSDockTilePlugIn"] = "CrestDockTilePlugin.docktileplugin"
         info["CrestAppIconPreferenceDomain"] = info["CFBundleIdentifier"]
         # Chromium's scripting dictionary names Chromium's application class,
@@ -367,7 +367,7 @@ def main():
         name_product_in_localized_info(resources, info["CFBundleDisplayName"])
     targets = [] if args.baseline else [frameworks / "CrestCore.Native.dylib", frameworks / ui.name,
                                       output / "Contents/PlugIns/CrestDockTilePlugin.docktileplugin",
-                                      output / "Contents/Helpers/crest-browser"]
+                                      output / "Contents/Helpers/arma"]
     targets += sorted((p for p in frameworks.rglob("*.app") if not p.is_symlink()), key=lambda p: len(p.parts), reverse=True)
     targets += sorted((p for p in frameworks.glob("*.framework") if p.name != ui.name), key=lambda p: len(p.parts), reverse=True)
     if cloud_entitlements:

@@ -24,7 +24,7 @@ def main():
     subprocess.run(["xcrun", "install_name_tool", "-id", "@rpath/CrestCoreABI.framework/CrestCoreABI", str(binary)], check=True)
     info = {
         "CFBundleExecutable": "CrestCoreABI", "CFBundleName": "CrestCoreABI",
-        "CFBundleIdentifier": "com.pauldavis.crest.control-plane.core",
+        "CFBundleIdentifier": "com.senpaimedia.arma.control-plane.core",
         "CFBundlePackageType": "FMWK", "CFBundleVersion": "1",
         "CFBundleShortVersionString": "1.0", "MinimumOSVersion": "26.1",
         "CFBundleSupportedPlatforms": ["iPhoneOS" if args.platform == "iphoneos" else "iPhoneSimulator"],

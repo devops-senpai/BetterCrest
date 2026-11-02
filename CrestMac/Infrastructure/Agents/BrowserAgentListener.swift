@@ -2,7 +2,7 @@ import Darwin
 import Foundation
 
 /// The Unix domain socket agents reach this Crest through, by way of its
-/// bundled `crest-browser` helper. The socket file lets its owner alone
+/// bundled `arma` helper. The socket file lets its owner alone
 /// connect, and any connection that is not from this Crest's own helper,
 /// running as this user, is closed before anything is read from it.
 /// Connections are accepted on a queue of the listener's own and handed to
@@ -26,11 +26,11 @@ final class BrowserAgentListener: @unchecked Sendable {
         var message: LocalizedStringResource {
             switch self {
             case .inUse:
-                "Another copy of Crest is already open to agents. Quit it, then turn agents off and on again."
+                "Another copy of Arma is already open to agents. Quit it, then turn agents off and on again."
             case .occupied, .system:
-                "Crest couldn’t open itself to agents. Turn agents off and on again to try again."
+                "Arma couldn’t open itself to agents. Turn agents off and on again to try again."
             case .unavailable:
-                "Agents can’t reach this copy of Crest."
+                "Agents can’t reach this copy of Arma."
             }
         }
     }
@@ -53,7 +53,7 @@ final class BrowserAgentListener: @unchecked Sendable {
 
     let path: String
     private let helper: BrowserAgentHelperRequirement
-    private let queue = DispatchQueue(label: "com.pauldavis.crest.agents.listener")
+    private let queue = DispatchQueue(label: "com.senpaimedia.arma.agents.listener")
     private let connected: @Sendable (BrowserAgentConnection) -> Void
     /// What watches the listening socket while the listener runs, and what
     /// its cancellation signals once the socket is closed and removed. Its

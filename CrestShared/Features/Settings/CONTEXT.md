@@ -19,7 +19,7 @@ through intents and appearance preferences locally.
 | `BrowserSpaceAccessView.swift`, `BrowserSyncSettingsView.swift` | The locked-Space access screen and the sync view |
 | `BrowserAdvancedSettingsPane/` | Advanced settings and setup actions; hosts `DataPortability/` |
 | `BrowserLinkSettingsPane/` | Link routing, external-link destination, Peek and Quick Window preferences |
-| `BrowserPasswordSettingsPane/` | Crest Passwords list, detail and passkey access |
+| `BrowserPasswordSettingsPane/` | Arma Passwords list, detail and passkey access |
 | `BrowserPrivacySettingsPane/` | Privacy sections: content blocking, data retention, website data, saved site permissions, clearing data |
 | `BrowserSearchSettingsPane/` | Search providers and rules |
 | `BrowserPlatformLinkRouteEditor/` | A link route editor whose content each platform supplies |

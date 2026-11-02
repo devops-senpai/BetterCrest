@@ -8,13 +8,13 @@ set -euo pipefail
 # instead.
 
 repository_root="${0:A:h:h}"
-application_path="/Applications/Crest.app"
-repository="pauljoda/Crest"
-team_id="3U2R97HLXF"
+application_path="/Applications/Arma.app"
+repository="devops-senpai/Arma"
+team_id="U5WBZPZ4X7"
 signing_identity="Developer ID Application"
 provisioning_profile="Crest Developer ID"
-development_appcast_url="https://raw.githubusercontent.com/pauljoda/Crest/updates/appcast-development.xml"
-derived_data_path="${CREST_LOCAL_RELEASE_DERIVED_DATA:-$HOME/Library/Developer/Xcode/DerivedData/Crest-LocalRelease}"
+development_appcast_url="https://raw.githubusercontent.com/devops-senpai/Arma/updates/appcast-development.xml"
+derived_data_path="${CREST_LOCAL_RELEASE_DERIVED_DATA:-$HOME/Library/Developer/Xcode/DerivedData/BetterArma-LocalRelease}"
 engine_cache_root="${CREST_ENGINE_CACHE:-$HOME/Library/Caches/Crest-local-release}"
 lsregister="/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister"
 
@@ -93,7 +93,7 @@ fi
 release_root="$(mktemp -d "${TMPDIR%/}/crest-local-release.XXXXXX")"
 archive_path="$release_root/Crest.xcarchive"
 export_path="$release_root/export"
-built_application_path="$release_root/product/Crest.app"
+built_application_path="$release_root/product/Arma.app"
 previous_application_path="$release_root/Crest.previous.app"
 installation_staging_path="/Applications/.Crest-local-install-${$}.app"
 installation_complete=false
@@ -110,9 +110,9 @@ cleanup() {
   # Unregister the intermediate apps, including the WebKit copy the archive
   # leaves in Derived Data, so LaunchServices only resolves Crest to the
   # installed app.
-  for intermediate in "$export_path/Crest.app" "$built_application_path" "$previous_application_path" \
-    "$archive_path/Products/Applications/Crest.app" \
-    "$derived_data_path/Build/Intermediates.noindex/ArchiveIntermediates/Crest/InstallationBuildProductsLocation/Applications/Crest.app"; do
+  for intermediate in "$export_path/Arma.app" "$built_application_path" "$previous_application_path" \
+    "$archive_path/Products/Applications/Arma.app" \
+    "$derived_data_path/Build/Intermediates.noindex/ArchiveIntermediates/Crest/InstallationBuildProductsLocation/Applications/Arma.app"; do
     [[ -e "$intermediate" ]] && "$lsregister" -u "$intermediate" >/dev/null 2>&1 || true
   done
   find "$release_root" -depth -delete 2>/dev/null || true
@@ -186,9 +186,9 @@ xcodebuild -exportArchive \
   -exportPath "$export_path" \
   -exportOptionsPlist Config/DeveloperIDExportOptions.plist
 
-[[ -d "$export_path/Crest.app" ]]
+[[ -d "$export_path/Arma.app" ]]
 exported_entitlements="$release_root/exported-entitlements.plist"
-codesign -d --entitlements :- "$export_path/Crest.app" \
+codesign -d --entitlements :- "$export_path/Arma.app" \
   > "$exported_entitlements" 2>/dev/null
 [[ "$(/usr/libexec/PlistBuddy -c \
   'Print :com.apple.developer.icloud-container-environment' \
@@ -238,7 +238,7 @@ CREST_DEFAULT_UPDATE_CHANNEL=development python3 Scripts/control-plane/package-c
 
 codesign --verify --deep --strict --verbose=2 "$built_application_path"
 [[ "$(defaults read "$built_application_path/Contents/Info" CFBundleIdentifier)" \
-  == "com.pauldavis.crest" ]]
+  == "com.senpaimedia.arma" ]]
 [[ "$(defaults read "$built_application_path/Contents/Info" CFBundleVersion)" == "$build_number" ]]
 
 # Match only the installed app's own main executable, whatever it is named:

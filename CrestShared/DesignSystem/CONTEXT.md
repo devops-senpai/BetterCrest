@@ -1,6 +1,6 @@
 # DesignSystem
 
-Crest's shared SwiftUI vocabulary: tokens for colour, type, spacing, radius,
+Arma's shared SwiftUI vocabulary: tokens for colour, type, spacing, radius,
 motion and materials; the canonical controls (buttons, fields, form and
 setting rows, selectable cards, interactive surfaces); accessibility
 identifiers and reduced-motion helpers; and collection animation. Features on
@@ -17,7 +17,7 @@ pressed states supplied by the system rather than reinvented per feature.
 | --- | --- |
 | `Tokens/` | `CrestColor` (with brand palette and Space colour schemes), `CrestTypography`, `CrestSpacing`, `CrestRadius`, `CrestLayout`, `CrestMotion`, `CrestOpacity`, `CrestSurfaceMaterial`, `CrestBrandTheme` |
 | `Components/CrestInteractiveSurface/` | `crestInteractiveSurface`, `CrestChromeButtonStyle` and the surface layer for rows, tiles and glyph buttons |
-| `Components/CrestButtonStyle/` | The one `ButtonStyle` Crest draws: roles, metrics, press feedback, surface |
+| `Components/CrestButtonStyle/` | The one `ButtonStyle` Arma draws: roles, metrics, press feedback, surface |
 | `Components/CrestTextField/` | The single text-field treatment and focus ring |
 | `Components/CrestFormRow/` | Native form rows: labels, control and action rows, footnotes, disclosure chevron |
 | `Components/CrestSettingRow/` | A setting's row, group, slider, section heading and stored value |

@@ -1,6 +1,6 @@
 # Content blocking
 
-Crest's Balanced protection is one bundled ruleset that WebKit applies through
+Arma's Balanced protection is one bundled ruleset that WebKit applies through
 its native content-rule-list API. Each Space turns it on or off independently.
 
 ## Built-in protection
@@ -8,7 +8,7 @@ its native content-rule-list API. Each Space turns it on or off independently.
 The bundled rules block a deliberately small set of well-known third-party ad
 and analytics hosts. They give a privacy baseline without downloading remote
 rule sources, parsing third-party filter syntax, or placing another project's
-converter inside Crest's trusted update path.
+converter inside Arma's trusted update path.
 
 The portable core owns the rules. `ContentBlockingPolicy.Balanced` in
 `CrestCore` carries the blocked host suffixes and a versioned identifier, and
@@ -21,24 +21,24 @@ change takes effect without touching another Space.
 
 ## Extensions provide broader blocking
 
-Crest does not ship a downloadable filter-list catalog or accept custom
+Arma does not ship a downloadable filter-list catalog or accept custom
 Adblock-style list URLs. People who want broader coverage, cosmetic filtering,
 regional lists or project-specific rules can install a content-blocking
 extension. Extensions keep their own source, update and licensing decisions,
-so Crest never redistributes or converts those lists.
+so Arma never redistributes or converts those lists.
 
 The split is intentional:
 
-- Crest owns a small first-party baseline that can be reviewed.
+- Arma owns a small first-party baseline that can be reviewed.
 - Extensions own advanced blocking and the list ecosystems people choose.
-- A failed extension cannot change Crest's bundled rules or another Space's
+- A failed extension cannot change Arma's bundled rules or another Space's
   extension state.
 
 ## Chromium
 
-Crest's built-in protection is a WebKit content-rule list, so it has no effect
+Arma's built-in protection is a WebKit content-rule list, so it has no effect
 on Chromium. Chromium's own subresource filter depends on Safe Browsing list
-distribution that Crest does not run, and Crest does not convert its rules into
+distribution that Arma does not run, and Arma does not convert its rules into
 a second format for one engine. The Chromium registration therefore declares
 `content-blocking` unavailable. The Privacy settings section shows no Balanced
 control and says instead that blocking comes from the extensions the person

@@ -17,7 +17,7 @@ generator.
 | --- | --- |
 | `Localizable.xcstrings` | The string catalog; Xcode regenerates it from `String(localized:)` |
 | `PrivacyInfo.xcprivacy` | The app's privacy manifest |
-| `CrestIcon/` | Icon Composer icons (`Crest.icon` and palette variants); `Sources/` SVG layers and `Validation/` renders are excluded from targets in `project.yml` |
+| `ArmaIcon/` | Icon Composer icons (`Arma.icon` and the palette variants), all written by `Scripts/generate-app-icon-palettes.py` from one mark and a color per palette |
 | `AppIconPreviews.xcassets` | Dock and picker previews of each app icon variant |
 | `CrestHeraldry.xcassets` | Heraldic charges for Space crests; credits in `HeraldicArtworkCredits.txt` |
 | `GettingStartedLogos.xcassets` | Website logos for the Getting Started practice pages |
@@ -31,7 +31,7 @@ generator.
 
 Nothing at runtime. Generators: `Scripts/generate-emoji-catalog.py`,
 `Scripts/update-sf-symbol-catalog.py`, `Scripts/generate-app-icon-palettes.py`.
-`Scripts/validate-identity.sh` requires `CrestIcon/Crest.icon`. Consumed by
+`Scripts/validate-identity.sh` requires `ArmaIcon/Arma.icon`. Consumed by
 every target that includes `CrestShared`; `CrestShareExtension` takes only
 `Localizable.xcstrings` (`project.yml`).
 

@@ -14,7 +14,7 @@ enum BrowserPeekVocabulary {
             loadingTitle: "Opening Peek…",
             releasedTitle: "Peek Released",
             releasedDescription:
-                "Crest released this temporary page to reduce memory use.",
+                "Arma released this temporary page to reduce memory use.",
             restoreTitle: "Reload Peek"
         )
     }

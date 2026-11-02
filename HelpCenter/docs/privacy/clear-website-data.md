@@ -14,9 +14,9 @@ Website data belongs to the Space that stored it, and it stays on this device. C
 Open Site Controls beside the address and choose:
 
 - **Clear Cookies** removes the site's cookies and everything else it stored in the Space: local storage, IndexedDB, Cache Storage and service workers, including what sites embedded in it stored there. It signs you out of the site.
-- **Clear Cache** removes only the responses Crest kept to load the site faster.
+- **Clear Cache** removes only the responses Arma kept to load the site faster.
 
-Crest clears the whole site, such as `example.com` and its subdomains, in both engines, reloads the page, and shows the result at the top of the window. The same actions are in the command palette as **Clear Cookies for This Site** and **Clear Cache for This Site**, and on iPhone and iPad in the page menu. In a private window, they clear only what that window holds in memory.
+Arma clears the whole site, such as `example.com` and its subdomains, in both engines, reloads the page, and shows the result at the top of the window. The same actions are in the command palette as **Clear Cookies for This Site** and **Clear Cache for This Site**, and on iPhone and iPad in the page menu. In a private window, they clear only what that window holds in memory.
 
 ## Manage a Space's website data
 

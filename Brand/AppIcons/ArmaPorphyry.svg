@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 318 404">
+  <defs><clipPath id="banner"><path d="M0 0H314V400L157 305L0 400Z"/></clipPath></defs>
+  <path d="M0 0H314V400L157 305L0 400Z" fill="#472C57"/>
+  <g clip-path="url(#banner)">
+    <path d="M130 0H184V400H130Z" fill="#E1E0DE"/>
+    <path d="M140 0H174V400H140Z" fill="#282C32"/>
+    <g fill="#E1E0DE"><path d="M26 270L17 289L25 304L34 288Z M10 303L15 320L32 324L26 309Z M40 305L32 322L42 335L48 319Z M28 331L40 345L60 346L48 335Z"/><path d="M25 298L35 322L65 342L85 345" fill="none" stroke="#E1E0DE" stroke-width="2"/><g transform="translate(314 0) scale(-1 1)"><path d="M26 270L17 289L25 304L34 288Z M10 303L15 320L32 324L26 309Z M40 305L32 322L42 335L48 319Z M28 331L40 345L60 346L48 335Z"/><path d="M25 298L35 322L65 342L85 345" fill="none" stroke="#E1E0DE" stroke-width="2"/></g></g>
+    <path d="M60 56L174 159L189 207L240 158L253 153L306 155L267 164L248 176L205 227L177 243L112 262L48 294L85 271L36 286L110 243L74 231L22 135L151 203L97 162Z" fill="#E1E0DE"/>
+  </g>
+</svg>

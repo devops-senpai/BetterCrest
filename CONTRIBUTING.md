@@ -1,28 +1,19 @@
-# Contributing to Crest
+# Contributing to Arma
 
-Crest is licensed under the Mozilla Public License 2.0. Contributions are
-accepted under the same license. The Crest name and visual identity remain
-covered by [`TRADEMARKS.md`](TRADEMARKS.md).
+Arma is a fork of Crest, licensed under the Mozilla Public License 2.0.
+Contributions are accepted under the same license. The Crest name and visual
+identity belong to Paul Davis and remain covered by
+[`TRADEMARKS.md`](TRADEMARKS.md).
 
 ## Who can contribute code
 
-Anyone can have one pull request open at a time. Vetted contributors can have
-more open at once. To become one, message Paul on
-[Discord](https://discord.gg/gjrM5qMB6x) so you can talk it through first.
-The basic requirements:
+Anyone. Open a pull request against `main`; the maintainer reviews every pull
+request before it merges.
 
-- You are a developer with some background building software.
-- You understand C# and SwiftUI.
-- You may use AI tools, but not to cover for experience you don't have. You
-  must be able to explain every line you submit.
+- You may use AI tools, but you must be able to explain every line you submit.
+- Keep each pull request to one outcome.
 
-Approval is at the maintainer's discretion and can be revoked at any time.
-The maintainer reviews every pull request, including one from a vetted
-contributor, before it merges. Pull requests from contributors who aren't
-vetted are reviewed as time allows.
-
-Everyone is welcome to report bugs in GitHub Issues and to discuss ideas on
-r/CrestBrowser and Discord.
+Everyone is welcome to report bugs in GitHub Issues.
 
 ## Local setup
 
@@ -73,16 +64,11 @@ The project supports Apple silicon only. Keep new targets, destinations, and scr
 
 ## Community and planning
 
-Use [r/CrestBrowser](https://www.reddit.com/r/CrestBrowser) to discuss early
-ideas, user questions, and compatibility experiences before they become
-actionable engineering work. Use GitHub Issues for reproducible bugs and
-concrete outcomes. The public
-[Crest Roadmap project](https://github.com/users/pauljoda/projects/3) and
-release milestones summarize planned work. Only the maintainer adds items to
-them: opening an issue or a pull request doesn't put it on the roadmap or
-commit to building it. [The roadmap](Documentation/ROADMAP.md)
-is generated from public GitHub issues with `Scripts/render-roadmap.py --write`.
-The renderer updates only its marked section, preserving the platform notes.
+_Placeholder: Arma has no community forum, project board or release
+milestones yet._ Use
+[GitHub Issues](https://github.com/devops-senpai/Arma/issues) for
+reproducible bugs and concrete outcomes. Opening an issue or a pull request
+doesn't commit the maintainer to building it.
 
 See [SUPPORT.md](SUPPORT.md) for reporting routes and
 [GOVERNANCE.md](GOVERNANCE.md) for the current ownership and decision model.

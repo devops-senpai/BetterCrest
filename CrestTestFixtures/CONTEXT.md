@@ -1,6 +1,6 @@
 # CrestTestFixtures
 
-Web pages and a local server for validating Crest in a running app:
+Web pages and a local server for validating Arma in a running app:
 compatibility, performance, offline, popup, download, frame, worker and media
 fixtures. They are served to the browser, not compiled into a target.
 

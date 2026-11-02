@@ -6,7 +6,7 @@ configFiles:
   Debug: Config/Version.xcconfig
   Release: Config/Version.xcconfig
 options:
-  bundleIdPrefix: com.pauldavis
+  bundleIdPrefix: com.senpaimedia
   deploymentTarget:
     iOS: "26.1"
     macOS: "26.1"
@@ -15,7 +15,7 @@ settings:
   base:
     ARCHS: arm64
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_TEAM: 3U2R97HLXF
+    DEVELOPMENT_TEAM: U5WBZPZ4X7
     DEVELOPMENT_LANGUAGE: en
     ENABLE_HARDENED_RUNTIME: YES
     MACOSX_DEPLOYMENT_TARGET: "26.1"
@@ -114,8 +114,6 @@ targetTemplates:
       - path: CrestShared
         excludes:
           - "**/CONTEXT.md"
-          - Resources/CrestIcon/Sources
-          - Resources/CrestIcon/Validation
           - Infrastructure/Engines/BrowserEngineRegistration+Composition.swift
           - Features/Settings/Components/BrowserEngineExtensionSettingsPane.swift
           - Features/Settings/Components/BrowserEngineRegistration+FeatureFlags.swift
@@ -151,11 +149,11 @@ targetTemplates:
       - sdk: Security.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.chromium-ui
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.chromium-ui
         PRODUCT_MODULE_NAME: CrestChromiumUI
         GENERATE_INFOPLIST_FILE: YES
-        ASSETCATALOG_COMPILER_APPICON_NAME: Crest
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "CrestWinter CrestLion CrestStorm CrestDragon CrestMeadow CrestIron CrestRiver CrestSun CrestVigil"
+        ASSETCATALOG_COMPILER_APPICON_NAME: Arma
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: ${hostCompilationConditions}
         SWIFT_OBJC_BRIDGING_HEADER: "$(PROJECT_DIR)/CrestEngines/Chromium/Apple/CrestChromiumHost.h"
         SWIFT_INCLUDE_PATHS: "$(PROJECT_DIR)/CrestContracts/include"
@@ -201,8 +199,6 @@ targets:
       - path: CrestShared
         excludes:
           - "**/CONTEXT.md"
-          - Resources/CrestIcon/Sources
-          - Resources/CrestIcon/Validation
       - path: CrestMac
         excludes:
           - "**/CONTEXT.md"
@@ -241,9 +237,9 @@ targets:
         PROVISIONING_PROFILE_SPECIFIER: "$(CREST_PROVISIONING_PROFILE_SPECIFIER)"
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMac/Configuration/Crest-Info.plist
-        ASSETCATALOG_COMPILER_APPICON_NAME: Crest
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "CrestWinter CrestLion CrestStorm CrestDragon CrestMeadow CrestIron CrestRiver CrestSun CrestVigil"
-        CREST_NATIVE_CORE_BUNDLE_IDENTIFIER: com.pauldavis.crest.native-core
+        ASSETCATALOG_COMPILER_APPICON_NAME: Arma
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        CREST_NATIVE_CORE_BUNDLE_IDENTIFIER: com.senpaimedia.arma.native-core
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_NATIVE_CORE_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: Crest
         PRODUCT_NAME: CrestNativeCore
@@ -301,7 +297,7 @@ targets:
       - target: CrestNativeCore
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.native-core.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.native-core.tests
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited)"
         SWIFT_INCLUDE_PATHS: "$(PROJECT_DIR)/CrestContracts/include"
         GENERATE_INFOPLIST_FILE: YES
@@ -318,8 +314,6 @@ targets:
       - path: CrestShared
         excludes:
           - "**/CONTEXT.md"
-          - Resources/CrestIcon/Sources
-          - Resources/CrestIcon/Validation
       - path: CrestMac
         excludes:
           - "**/CONTEXT.md"
@@ -358,14 +352,14 @@ targets:
         PROVISIONING_PROFILE_SPECIFIER: "$(CREST_PROVISIONING_PROFILE_SPECIFIER)"
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMac/Configuration/Crest-Info.plist
-        ASSETCATALOG_COMPILER_APPICON_NAME: Crest
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "CrestWinter CrestLion CrestStorm CrestDragon CrestMeadow CrestIron CrestRiver CrestSun CrestVigil"
-        CREST_MAC_BUNDLE_IDENTIFIER: com.pauldavis.crest
+        ASSETCATALOG_COMPILER_APPICON_NAME: Arma
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
+        CREST_MAC_BUNDLE_IDENTIFIER: com.senpaimedia.arma
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_MAC_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: Crest
-        PRODUCT_NAME: Crest
+        PRODUCT_NAME: Arma
         CREST_DEFAULT_UPDATE_CHANNEL: development
-  # crest-browser, the helper agents run over stdio to reach the Crest app it
+  # arma, the helper agents run over stdio to reach the Crest app it
   # ships inside (Contents/Helpers). Mac only.
   CrestBrowserHelper:
     type: tool
@@ -379,9 +373,9 @@ targets:
           - "**/CONTEXT.md"
     settings:
       base:
-        PRODUCT_NAME: crest-browser
+        PRODUCT_NAME: Arma
         PRODUCT_MODULE_NAME: CrestBrowserHelper
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.browser-helper
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.browser-helper
         GENERATE_INFOPLIST_FILE: YES
         CREATE_INFOPLIST_SECTION_IN_BINARY: YES
         SKIP_INSTALL: YES
@@ -397,7 +391,7 @@ targets:
       - path: CrestMac/Features/AppIcon/BrowserMacDockTileView.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.docktileplugin
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.docktileplugin
         PRODUCT_NAME: CrestDockTilePlugin
         PRODUCT_MODULE_NAME: CrestDockTilePlugin
         WRAPPER_EXTENSION: docktileplugin
@@ -422,8 +416,8 @@ targets:
         SWIFT_INCLUDE_PATHS: "$(inherited) $(PROJECT_DIR)/CrestContracts/include"
         BUNDLE_LOADER: "$(TEST_HOST)"
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.tests
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Crest.app/Contents/MacOS/Crest"
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Arma.app/Contents/MacOS/Arma"
   CrestMobileNativeCore:
     type: application
     platform: iOS
@@ -437,8 +431,6 @@ targets:
       - path: CrestShared
         excludes:
           - "**/CONTEXT.md"
-          - Resources/CrestIcon/Sources
-          - Resources/CrestIcon/Validation
       - path: CrestMobile
         excludes:
           - "**/CONTEXT.md"
@@ -455,13 +447,13 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMobile/Configuration/CrestMobile-Info.plist
         IPHONEOS_DEPLOYMENT_TARGET: "26.1"
-        CREST_MOBILE_BUNDLE_IDENTIFIER: com.pauldavis.crest.mobile-native-core
+        CREST_MOBILE_BUNDLE_IDENTIFIER: com.senpaimedia.arma.mobile-native-core
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_MOBILE_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: CrestMobile
         PRODUCT_NAME: CrestNativeCore
         TARGETED_DEVICE_FAMILY: "1,2"
-        ASSETCATALOG_COMPILER_APPICON_NAME: Crest
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "CrestWinter CrestLion CrestStorm CrestDragon CrestMeadow CrestIron CrestRiver CrestSun CrestVigil"
+        ASSETCATALOG_COMPILER_APPICON_NAME: Arma
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) CREST_REVIEW_BUILD"
         SWIFT_INCLUDE_PATHS: "$(PROJECT_DIR)/CrestContracts/include"
@@ -497,8 +489,6 @@ targets:
       - path: CrestShared
         excludes:
           - "**/CONTEXT.md"
-          - Resources/CrestIcon/Sources
-          - Resources/CrestIcon/Validation
       - path: CrestMobile
         excludes:
           - "**/CONTEXT.md"
@@ -516,13 +506,13 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestMobile/Configuration/CrestMobile-Info.plist
         IPHONEOS_DEPLOYMENT_TARGET: "26.1"
-        CREST_MOBILE_BUNDLE_IDENTIFIER: com.pauldavis.crest
+        CREST_MOBILE_BUNDLE_IDENTIFIER: com.senpaimedia.arma
         PRODUCT_BUNDLE_IDENTIFIER: "$(CREST_MOBILE_BUNDLE_IDENTIFIER)"
         PRODUCT_MODULE_NAME: CrestMobile
-        PRODUCT_NAME: Crest
+        PRODUCT_NAME: Arma
         TARGETED_DEVICE_FAMILY: "1,2"
-        ASSETCATALOG_COMPILER_APPICON_NAME: Crest
-        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "CrestWinter CrestLion CrestStorm CrestDragon CrestMeadow CrestIron CrestRiver CrestSun CrestVigil"
+        ASSETCATALOG_COMPILER_APPICON_NAME: Arma
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "ArmaWinter ArmaLion ArmaStorm ArmaDragon ArmaMeadow ArmaIron ArmaRiver ArmaSun ArmaVigil"
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
   # The share sheet entry hands shared links to the iOS app. It compiles the
   # hand-off it shares with the app, never the core, which an extension's
@@ -543,7 +533,7 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: CrestShareExtension/Info.plist
         IPHONEOS_DEPLOYMENT_TARGET: "26.1"
-        CREST_MOBILE_BUNDLE_IDENTIFIER: com.pauldavis.crest
+        CREST_MOBILE_BUNDLE_IDENTIFIER: com.senpaimedia.arma
         PRODUCT_BUNDLE_IDENTIFIER: $(CREST_MOBILE_BUNDLE_IDENTIFIER).share
         PRODUCT_MODULE_NAME: CrestShareExtension
         PRODUCT_NAME: CrestShareExtension
@@ -563,9 +553,9 @@ targets:
         SWIFT_INCLUDE_PATHS: "$(inherited) $(PROJECT_DIR)/CrestContracts/include"
         BUNDLE_LOADER: "$(TEST_HOST)"
         GENERATE_INFOPLIST_FILE: YES
-        PRODUCT_BUNDLE_IDENTIFIER: com.pauldavis.crest.mobile.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.senpaimedia.arma.mobile.tests
         TARGETED_DEVICE_FAMILY: "1,2"
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Crest.app/Crest"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Arma.app/Arma"
 schemes:
   # The app schemes source Config/Crest.lldbinit, so the debugger never
   # stops on the core runtime's own signals.
