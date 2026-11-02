@@ -67,6 +67,22 @@ enum BrowserEngineRegistration {
         unavailable: [.reader, .contentBlocking, .protectedMedia],
         archiveFormat: .mhtml)
 
+    /// Arma's Servo engine, which the Mac offers when the app carries its
+    /// library. It loads pages and walks their history; the rest of what the
+    /// other engines do it lacks for now.
+    ///
+    /// - Servo's options are global to the process, so pages of every profile
+    ///   open in one engine that keeps one store of site data: profiles are
+    ///   accepted but not kept apart.
+    /// - Deleting a profile's data clears Servo's cookies for every profile;
+    ///   clearing one site's data is refused.
+    static let servo = BrowserAdapterRegistration(
+        kind: .servo,
+        implementation: .servoMacOS,
+        supported: [.pages, .navigation, .workspaceProfiles, .profileDeletion],
+        unavailable: [.reader, .contentBlocking, .protectedMedia, .extensions, .downloads, .popups],
+        archiveFormat: .webArchive)
+
     private static var desktopWebKit: [EngineCapability] {
         #if os(macOS)
             [.viewportCapture, .fullPageCapture, .pdf, .webArchive, .print, .inspector, .featureFlags, .beforeUnload]

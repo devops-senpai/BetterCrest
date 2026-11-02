@@ -7442,6 +7442,7 @@ enum EngineDownloadWarning: Int, CaseIterable, Sendable {
 enum EngineMark: Int, CaseIterable, Sendable {
     case stackedTile = 0
     case globe = 1
+    case gears = 2
 }
 
 enum ExtensionChange: Int, CaseIterable, Sendable {
@@ -13138,8 +13139,15 @@ struct EngineKind: Hashable, Sendable {
         mark: .stackedTile,
         pageDescription: LocalizedStringResource("Runs in WebKit", comment: "Said of a tab whose page runs in this browser engine rather than the default one. Keep the product name as it is.")
     )
+    static let servo = EngineKind(
+        tag: 2,
+        name: "servo",
+        title: LocalizedStringResource("Servo", comment: "The name of a browser engine. Keep the product name as it is."),
+        mark: .gears,
+        pageDescription: LocalizedStringResource("Runs in Servo", comment: "Said of a tab whose page runs in this browser engine rather than the default one. Keep the product name as it is.")
+    )
 
-    static let all: [EngineKind] = [chromium, webKit]
+    static let all: [EngineKind] = [chromium, webKit, servo]
 
     static func named(_ name: String?) -> EngineKind? {
         all.first { $0.name == name }

@@ -16,9 +16,7 @@ struct BrowserEngineOptionCard: View {
     var body: some View {
         Button(action: choose) {
             HStack(spacing: 12) {
-                Image(option.logo)
-                    .resizable()
-                    .scaledToFit()
+                logo
                     .frame(width: 28, height: 28)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
@@ -49,6 +47,19 @@ struct BrowserEngineOptionCard: View {
         .disabled(!isAvailable)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
         .accessibilityIdentifier("default-engine-\(option.engine.name)")
+    }
+
+    @ViewBuilder private var logo: some View {
+        switch option.logo {
+        case .asset(let name):
+            Image(name).resizable().scaledToFit()
+        case .symbol(let name):
+            Image(systemName: name)
+                .resizable()
+                .scaledToFit()
+                .padding(3)
+                .foregroundStyle(.orange)
+        }
     }
 
     private var strengths: String {

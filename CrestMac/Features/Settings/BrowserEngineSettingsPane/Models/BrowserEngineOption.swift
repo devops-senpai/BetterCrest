@@ -7,13 +7,19 @@ struct BrowserEngineBenefit {
     let symbol: String
 }
 
+/// An engine's mark: its own artwork, or a symbol for one without any.
+enum BrowserEngineArtwork {
+    case asset(String)
+    case symbol(String)
+}
+
 /// Describes a selectable engine with its own artwork and capabilities.
 struct BrowserEngineOption: Identifiable {
     // MARK: - Static Variables
 
     static let all: [BrowserEngineOption] = [
         BrowserEngineOption(
-            engine: .chromium, logo: "EngineChromium",
+            engine: .chromium, logo: .asset("EngineChromium"),
             summary: "Chromium without Google’s data collection. Smooth browsing and extensions.",
             benefits: [
                 BrowserEngineBenefit(title: "Smooth webpage performance", symbol: "speedometer"),
@@ -21,19 +27,26 @@ struct BrowserEngineOption: Identifiable {
                 BrowserEngineBenefit(title: "Protected video, with WebKit fallback", symbol: "play.rectangle"),
             ]),
         BrowserEngineOption(
-            engine: .webKit, logo: "EngineWebKit",
+            engine: .webKit, logo: .asset("EngineWebKit"),
             summary: "Apple’s native web engine, with system integration and protected media playback.",
             benefits: [
                 BrowserEngineBenefit(title: "Native macOS handling", symbol: "macwindow"),
                 BrowserEngineBenefit(title: "FairPlay protected video", symbol: "play.rectangle"),
                 BrowserEngineBenefit(title: "Reader Mode", symbol: "doc.text"),
             ]),
+        BrowserEngineOption(
+            engine: .servo, logo: .symbol("gearshape.2.fill"),
+            summary: "Servo, the independent engine written in Rust. Experimental.",
+            benefits: [
+                BrowserEngineBenefit(title: "Independent Rust engine", symbol: "gearshape.2"),
+                BrowserEngineBenefit(title: "Firefox add-on page scripts", symbol: "puzzlepiece.extension"),
+            ]),
     ]
 
     // MARK: - Variables
 
     let engine: EngineKind
-    let logo: String
+    let logo: BrowserEngineArtwork
     let summary: LocalizedStringResource
     let benefits: [BrowserEngineBenefit]
     var id: EngineKind { engine }

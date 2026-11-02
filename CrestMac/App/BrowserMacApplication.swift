@@ -114,6 +114,11 @@ final class BrowserMacApplication {
         core.engines.register(
             WebKitEngineBinding(keepsProfilesInMemory: usesEphemeralProfileStorage), isDefault: defaultEngine == nil)
         if let defaultEngine { core.engines.register(defaultEngine, isDefault: true) }
+        // Servo joins when the app carries its library; it never opens new
+        // pages by default.
+        if let servo = ServoEngineBinding.forLaunch(launchEnvironment) {
+            core.engines.register(servo, isDefault: false)
+        }
         // The core's device store keeps what an older release kept in its
         // defaults, carried once; the link preferences come first, since every
         // window's store reads them.

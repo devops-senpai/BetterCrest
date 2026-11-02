@@ -17,6 +17,7 @@ never reaches the system directly; Mac features keep their own AppKit seams
 | Path | What it is |
 | --- | --- |
 | `Pages/` | `BrowserPage`, `BrowserPagePool`, the engine adapter seam, web host view, title-bar guard and engine events ([CONTEXT](Pages/CONTEXT.md)) |
+| `Servo/` | Arma's optional Servo engine: library loader, binding, page adapter and Servo extensions ([CONTEXT](Servo/CONTEXT.md)) |
 | `WebKit/` | The Mac WebKit page adapter, desktop web view, delegates, runtime store and content bridges ([CONTEXT](WebKit/CONTEXT.md)) |
 | `Agents/` | The agent socket: listener, connection, peer code-signature check, approval questions |
 | `BrowserShortcuts/` | `NSEvent` and hardware key code translation for keyboard shortcuts |

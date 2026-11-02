@@ -1,0 +1,4 @@
+{
+  "category": "new",
+  "message": "Pages can run on Servo, an independent engine written in Rust: choose it as the default engine, set it for a website, or use Open Page in Servo. Firefox add-ons that only change pages can be installed for Servo in Settings › Engines."
+}

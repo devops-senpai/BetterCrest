@@ -1,0 +1,12 @@
+--- a/connector.rs
++++ b/connector.rs
+@@ -659,5 +659,9 @@
+ 
+     Client::builder(TokioExecutor {})
+         .http1_title_case_headers(true)
++        // Some sites, such as YouTube, send response headers larger than the
++        // HTTP/2 client's 16 KiB default, which it then resets as too large.
++        // Browsers accept far more; match Chromium's 256 KiB.
++        .http2_max_header_list_size(256 * 1024)
+         .build(InstrumentedConnector::from(connector))
+ }

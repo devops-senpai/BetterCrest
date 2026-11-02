@@ -50,6 +50,7 @@ column.
 | A window action or a new `BrowserStore` intent call | `CrestShared/Application/BrowserStore/CONTEXT.md` | `Documentation/Architecture/ControlPlane.md` ("The read model") | feature presentation |
 | Applying a new core change to the Swift read model | `CrestShared/Infrastructure/Core/CONTEXT.md` | `CrestShared/Infrastructure/Core/Changes/`, `Documentation/Architecture/ControlPlane.md` ("The typed contract", "The read model") | hand edits to `CrestShared/Infrastructure/Core/Generated/` |
 | A WebKit engine command or page request | `CrestShared/Infrastructure/WebKit/CONTEXT.md` | `CrestShared/Infrastructure/WebKit/Commands/`, `CrestShared/Infrastructure/WebKit/Requests/`, `Documentation/Architecture/ControlPlane.md` ("WebKit's binding") | `CrestEngines/Chromium/` |
+| The Servo engine, its commands or Servo extensions | `CrestMac/Infrastructure/Servo/CONTEXT.md` | `CrestEngines/Servo/ArmaServo.h`, `Scripts/build-servo-engine.sh` | `CrestEngines/Chromium/` |
 | A new engine capability or registration | `CrestShared/Infrastructure/Engines/CONTEXT.md` | `Documentation/Architecture/EngineAbstractionCompletion.md` ("Ownership decision guide") | `CrestEngines/Chromium/Overlay/`, `CrestEngines/Chromium/Patches/` |
 | Strings, app icon variants, emoji or SF Symbol catalogs | `CrestShared/Resources/CONTEXT.md` | `Scripts/generate-emoji-catalog.py`, `Scripts/update-sf-symbol-catalog.py`, `Scripts/generate-app-icon-palettes.py` | app source |
 
