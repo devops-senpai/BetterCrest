@@ -21,16 +21,14 @@ change; the commit of the same name has the detail.
 
 ### Features
 
-- **Per-Space themes.** A Space's Appearance page chooses the color its folders wear and their back face, one exact text color for the sidebar, and a tint, opacity and text color for the command palette in light and dark. Each group has its own Reset.
-- **A dark look per Space.** A Space can keep a second complete look that it wears while windows are dark.
-- **Theme files.** Export a Space's look as JSON and load one from a file, from the Appearance page or the Space's menu. Catppuccin Latte, Frappé, Macchiato and Mocha ship as examples.
-- **Themes from the terminal.** `arma theme --space <name>` sets any part of a look, applies or exports theme files, pairs a light and a dark file, and resets sections, over a socket only this app's own helper can use.
+- **Extended theming.** Each Space's Appearance page goes further than upstream: pick the colors of folders and their backs, the sidebar text color, and the command palette's tint, opacity and text color, with a separate look for dark windows. Export a Space's theme as a JSON file and load one back from the page or the Space's menu; four Catppuccin themes ship as examples.
+- **Theme CLI tools.** `arma theme` sets any part of a Space's look, applies or exports theme files, and pairs a light file with a dark one from the terminal. Changes show in the running app right away, so a theme can be tuned without reopening Settings.
 
 ### Performance
 
-- Closing, deleting or moving a large selection of tabs finishes without a pause in Spaces with thousands of tabs.
-- The command palette keeps up as you type in Spaces with thousands of tabs.
-- Switching to the most recent tab answers right away in Spaces with thousands of tabs.
+- Closing, deleting or moving a large selection of tabs finishes without a pause in Spaces with lots of tabs.
+- The command palette keeps up as you type in Spaces with lots of tabs.
+- Switching to the most recent tab answers right away in Spaces with lots of tabs.
 - Keeping a window's recent tabs current checks them against the Space once instead of searching every tab for each.
 - Closing and moving tabs stays quick in Spaces with many folders.
 - The sidebar stays responsive with many pages loaded: a tab's row looks up only its own page.
