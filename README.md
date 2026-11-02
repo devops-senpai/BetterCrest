@@ -1,11 +1,13 @@
 <div align="center">
+  <img src="Brand/Arma.png" width="160" alt="Arma's logo: a white bird on a navy guidon with a red stripe and a gold laurel">
   <h1>Arma</h1>
   <p><strong>An open source browser for Mac, iPhone, and iPad.</strong></p>
-  <p>Built with SwiftUI, running Chromium and WebKit on Mac, with separate Spaces for different parts of your life.</p>
+  <p>Built with SwiftUI, running Chromium, WebKit and Servo on Mac, with separate Spaces for different parts of your life.</p>
   <p>
     <a href="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml"><img alt="Build Arma" src="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml/badge.svg"></a>
     <a href="LICENSE"><img alt="MPL-2.0 license" src="https://img.shields.io/badge/license-MPL--2.0-315f93"></a>
   </p>
+  <img src="Brand/Readme/collage.jpg" alt="Arma windows fanned out: Arc Sky, Catppuccin Latte, a four-page Split View, Catppuccin Macchiato and JellyFish">
 </div>
 
 Arma is a fork of [Crest](https://github.com/pauljoda/Crest) by Paul Davis.
@@ -13,6 +15,124 @@ It carries Crest's main branch plus fixes, speedups and features that are
 not upstream. Arma is not affiliated with or endorsed by Crest or Paul
 Davis. The repository keeps the name BetterCrest; the browser is Arma. The
 user guides live in this repository under `HelpCenter/docs/`.
+
+## A quick tour
+
+### Themes
+
+Arma ships with themes for every kind of person: **Arc Sky** for anyone
+coming from Arc, **Catppuccin Latte / Mocha** and **Catppuccin Macchiato** for
+coders, and **JellyFish**, with its own underwater picture behind the tabs,
+for anyone who wants a browser that looks like theirs. Setup offers them
+beside the **Heraldic** and **Modern** looks, and Settings › Themes edits every
+color, the dark look and the background picture, with a live preview of the
+window and its command palette.
+
+| | |
+|---|---|
+| ![JellyFish](Brand/Readme/theme-jellyfish.jpg) | ![Arc Sky](Brand/Readme/theme-arc-sky.jpg) |
+| **JellyFish** | **Arc Sky** |
+| ![Catppuccin Latte / Mocha](Brand/Readme/theme-catppuccin-latte.jpg) | ![Catppuccin Macchiato](Brand/Readme/theme-catppuccin-macchiato.jpg) |
+| **Catppuccin Latte / Mocha** | **Catppuccin Macchiato** |
+
+![Settings › Themes: the theme list, a live preview of the window and its command palette, and the sidebar's colors](Brand/Readme/settings-themes.jpg)
+
+A Space picks its theme; its crest stays its own. The Crest Studio shapes it,
+starting from Arma's own **Guidon**, its bird and the Crane.
+
+### Split View, tiled
+
+Keep up to four live pages in one view: side by side, stacked, or in a grid.
+Drop a tab on an edge of a page to tile it there, or pick an arrangement from
+the split's menu, and drag the bars between pages either way.
+
+| | |
+|---|---|
+| ![Three pages side by side](Brand/Readme/split-three.jpg) | ![Four pages in a grid](Brand/Readme/split-grid.jpg) |
+| **Three across** | **Four in a grid** |
+
+### Three engines: Chromium, WebKit and Servo
+
+Every page runs in the engine you choose: **Chromium** (the default, with
+Chrome Web Store extensions), **WebKit** (Reader, translation, FairPlay video)
+or **Servo**, the independent engine written in Rust. Set a default in
+Settings › Engines, give a website its own engine, or move one page:
+
+```sh
+arma site engine youtube.com webkit          # YouTube always opens in WebKit
+arma site engine servo.org servo             # servo.org opens in Servo
+arma tab open https://example.com --engine servo
+arma tab engine 3f2a chromium                # move one tab's page to Chromium
+arma site list                               # every site with its own engine
+```
+
+### The `arma` command line
+
+`arma` lives inside the app (`/Applications/Arma.app/Contents/Helpers/arma`)
+and drives the running browser. Every command takes `--json` for scripts.
+
+![arma in a terminal: listing Spaces and themes, picking a theme, listing a Split View, setting site engines and shaping a crest](Brand/Readme/terminal.jpg)
+
+```sh
+arma space list                              # Spaces; * marks the one shown
+arma space switch Work
+arma tab open https://news.ycombinator.com --space Work
+arma tab list --space Work                   # ids, placement, folder, engine
+arma split create 3f2a 9b1c 77d0             # three tabs in one Split View
+arma split arrange 3f2a grid                 # two-across, three-across, grid …
+arma theme list                              # saved themes; * the shown Space's
+arma theme use JellyFish --space Personal
+arma theme edit "Catppuccin Macchiato" --folder-color "#a581ff"
+arma crest set --shape guidon --band pale --emblem sparrow --border laurel
+arma window tile left
+arma settings set appearance.mode dark      
+arma page text 3f2a                          # read a page (Settings › Agents)
+```
+
+Run `arma help`, or `arma <section> help`, for every section: space, tab,
+window, folder, split, command, page, extension, history, download,
+settings, site, automation, theme and crest.
+
+### Testing frameworks
+
+Settings › Automation (or `arma automation`) lets Playwright, Puppeteer,
+Selenium, WebdriverIO, Katalon and TestCafe drive Arma's Chromium tabs over a
+local DevTools port, limited to one Space's profile or an empty Ephemeral one,
+and to the tabs they open or existing tabs too. The page shows the setup for
+each tool.
+
+![Settings › Automation: allow testing frameworks, the profile and tabs they reach, the port, and setup for Playwright, Puppeteer, Selenium, WebdriverIO, Katalon and TestCafe](Brand/Readme/settings-automation.jpg)
+
+```sh
+arma automation on --profile Work --tabs opened --port 9222
+arma automation restart
+```
+
+```js
+// Playwright
+import { chromium } from "playwright-core";
+const browser = await chromium.connectOverCDP("http://127.0.0.1:9222");
+const page = await browser.contexts()[0].newPage();
+await page.goto("https://example.com");
+```
+
+```js
+// Puppeteer
+import puppeteer from "puppeteer-core";
+const browser = await puppeteer.connect({ browserURL: "http://127.0.0.1:9222", defaultViewport: null });
+const page = await browser.newPage();
+await page.goto("https://example.com");
+await browser.disconnect(); // browser.close() would quit Arma
+```
+
+```python
+# Selenium, with ChromeDriver matching Arma's Chromium
+from selenium import webdriver
+options = webdriver.ChromeOptions()
+options.debugger_address = "127.0.0.1:9222"
+driver = webdriver.Chrome(options=options)
+driver.get("https://example.com")
+```
 
 ## What Arma adds
 
@@ -91,7 +211,7 @@ Switching Spaces changes more than the color of the window. It changes the brows
 
 When several Spaces should share one set of sign-ins, make them **Sub-Spaces**: each keeps its own tabs and look while the group shares cookies, history, passwords, and extensions. [Read the Sub-Spaces guide.](HelpCenter/docs/spaces/sub-spaces.md)
 
-## Two engines on Mac
+## Three engines on Mac
 
 Arma for Mac opens pages in **Chromium** by default. Its engine is Chromium
 with Arma's privacy changes, which keep your browsing, form and account data
@@ -100,8 +220,9 @@ open in **WebKit** instead, which adds Reader, whole-page translation, built-in
 content blocking, and FairPlay video. Chromium plays Widevine video; Netflix,
 Disney+, Max and Prime Video open in WebKit, and a page that needs protected
 video Chromium can't play switches to WebKit automatically, respecting any
-unsaved-changes prompt before moving it. Choose the default engine and
-per-website rules in **Settings → Engines**. iPhone and iPad use WebKit. The
+unsaved-changes prompt before moving it. A page can also run in **Servo**, the
+independent engine written in Rust. Choose the default engine and
+per-website rules in **Settings → Engines**, or with `arma site engine`. iPhone and iPad use WebKit. The
 [engine guide](HelpCenter/docs/browsing/engines.md) lists what each engine
 supports.
 
