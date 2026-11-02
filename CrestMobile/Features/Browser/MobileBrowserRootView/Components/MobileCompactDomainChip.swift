@@ -30,6 +30,6 @@ struct MobileCompactDomainChip: View {
 
 #if DEBUG
     #Preview("Component") {
-        MobileCompactDomainChip(url: URL(string: "https://crestbrowser.com"), showToolbar: {}).padding()
+        MobileCompactDomainChip(url: URL(string: "https://example.com"), showToolbar: {}).padding()
     }
 #endif

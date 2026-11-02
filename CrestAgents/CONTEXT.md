@@ -1,14 +1,14 @@
 # CrestAgents
 
-The agent link protocol shared by the Mac app and its `crest-browser` helper:
+The agent link protocol shared by the Mac app and its `arma` helper:
 the tool definitions agents discover, the JSON values that cross, the
 line-delimited messages over the agent socket, and where that socket lives.
 Foundation only; it is compiled into both sides rather than linked.
 
 ## Goal
 
-One definition of what agents can ask Crest, readable by the helper while
-Crest is closed and served by the app when it runs.
+One definition of what agents can ask Arma, readable by the helper while
+Arma is closed and served by the app when it runs.
 
 ## Contents
 
@@ -18,7 +18,7 @@ Crest is closed and served by the app when it runs.
 | `AgentToolDefinition+Browser.swift` | The browser's tool catalog |
 | `AgentLink.swift` | What the helper and the app say over the socket, one JSON object per line |
 | `AgentJSON.swift` | JSON values for arguments, results and schemas |
-| `AgentSocketLocation.swift` | The per-bundle-identifier Unix socket in the person's Crest data |
+| `AgentSocketLocation.swift` | The per-bundle-identifier Unix socket in the person's Arma data |
 | `MCPProtocolVersion.swift` | Model Context Protocol revisions the helper speaks |
 
 ## Depends on

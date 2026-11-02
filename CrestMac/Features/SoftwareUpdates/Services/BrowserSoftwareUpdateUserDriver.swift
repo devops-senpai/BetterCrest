@@ -25,7 +25,7 @@ struct BrowserSoftwareUpdateMetadata: Equatable, Sendable {
     init(appcastItem: SUAppcastItem) {
         title =
             appcastItem.title
-            ?? "Crest \(appcastItem.displayVersionString)"
+            ?? "Arma \(appcastItem.displayVersionString)"
         version = appcastItem.displayVersionString
         build = appcastItem.versionString
         releaseNotes = appcastItem.itemDescription
@@ -165,7 +165,7 @@ final class BrowserSoftwareUpdateUserDriver: NSObject, SPUUserDriver,
         }
         model.presentUpdate(
             title: appcastItem.title
-                ?? "Crest \(appcastItem.displayVersionString)",
+                ?? "Arma \(appcastItem.displayVersionString)",
             version: appcastItem.displayVersionString,
             build: appcastItem.versionString,
             releaseNotes: appcastItem.itemDescription,
@@ -343,11 +343,11 @@ final class BrowserSoftwareUpdateUserDriver: NSObject, SPUUserDriver,
     ) throws {
         guard isNewerThanRunning(updateItem) else {
             throw NSError(
-                domain: "com.pauldavis.crest.software-update",
+                domain: "com.senpaimedia.arma.software-update",
                 code: 1,
                 userInfo: [
                     NSLocalizedDescriptionKey:
-                        "Crest \(updateItem.displayVersionString) is older than the running \(runningVersion ?? "build") and was discarded."
+                        "Arma \(updateItem.displayVersionString) is older than the running \(runningVersion ?? "build") and was discarded."
                 ]
             )
         }

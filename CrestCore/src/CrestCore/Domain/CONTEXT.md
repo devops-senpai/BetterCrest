@@ -18,7 +18,7 @@ intent that needs it applies the same rule.
 | `Tabs/` | `BrowserTabCollection`, a Space's organization while one edit applies, split into partial files by purpose; `Batch/`, `Lifecycle/`, `Organization/` for selections, dismissal and recovery, folder trees and split members |
 | `Spaces/` | `SpaceTemplate` (what a new Space starts as) and `SpaceAccessAuthority`, the process-local unlock grants |
 | `Navigation/` | Typed addresses and the `AddressIndex` a Space's history keeps by address |
-| `ExternalNavigation/` | `UrlScheme`: which schemes Crest keeps, refuses or hands to another app |
+| `ExternalNavigation/` | `UrlScheme`: which schemes Arma keeps, refuses or hands to another app |
 | `Palette/` | The command palette's query, ranking and memory; `Finders/` holds one finder per kind of result |
 | `Search/` | Search templates, slots, locales and edits |
 | `Shortcuts/` | Shortcut chords and the person's overrides |

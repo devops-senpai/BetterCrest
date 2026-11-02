@@ -17,14 +17,14 @@ final class BrowserPageNavigationMarkerTests: XCTestCase {
         page.load(fileURL)
         XCTAssertTrue(
             page.isAppInitiated(replay),
-            "The load Crest just asked for is app-initiated until WebKit honors it."
+            "The load Arma just asked for is app-initiated until WebKit honors it."
         )
 
         page.webView(page.webView, didStartProvisionalNavigation: nil)
 
         XCTAssertFalse(
             page.isAppInitiated(replay),
-            "Web content must not be able to replay a file URL Crest once loaded."
+            "Web content must not be able to replay a file URL Arma once loaded."
         )
         XCTAssertEqual(
             SchemeHandling.disposition(

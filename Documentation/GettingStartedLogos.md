@@ -12,4 +12,4 @@ The vector assets in `CrestShared/Resources/GettingStartedLogos.xcassets` were o
 | GuideAllTrails | alltrails.svg | Trail guide practice tab |
 | GuideTodoist | todoist.svg | Packing list practice tab |
 
-Source files are unchanged. The practice model rasterizes a small PNG once per asset to exercise Crest's actual favicon pipeline. Brand names and marks belong to their respective owners and identify example websites. Their inclusion does not imply affiliation or endorsement. The collection's software license does not transfer ownership of the marks.
+Source files are unchanged. The practice model rasterizes a small PNG once per asset to exercise Arma's actual favicon pipeline. Brand names and marks belong to their respective owners and identify example websites. Their inclusion does not imply affiliation or endorsement. The collection's software license does not transfer ownership of the marks.

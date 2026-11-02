@@ -3,7 +3,7 @@ import WebKit
 @MainActor
 enum BrowserLinkHoverContentBridge {
     static let name = "crestLinkHover"
-    static let world = WKContentWorld.world(name: "com.pauldavis.crest.link-hover")
+    static let world = WKContentWorld.world(name: "com.senpaimedia.arma.link-hover")
 
     static func install(in controller: WKUserContentController) {
         // A popup shares this controller. Route by the sending web view rather

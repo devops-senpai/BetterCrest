@@ -57,7 +57,7 @@ struct AgentToolDefinition: Sendable {
     static let identify = Self(
         name: "identify", title: "Identify yourself",
         description:
-            "Tells Crest who you are, so the person sees which agent uses each tab. Call it once, before other Crest tools, with your product name and your brand colour.",
+            "Tells Arma who you are, so the person sees which agent uses each tab. Call it once, before other Arma tools, with your product name and your brand colour.",
         arguments: [
             .string("name", "Your product name, such as Claude or Codex.", required: false),
             .string("color", "Your brand colour as #RRGGBB, such as #D97757.", required: false),
@@ -76,7 +76,7 @@ struct AgentToolDefinition: Sendable {
     static let openTab = Self(
         name: "open_tab", title: "Open a tab",
         description:
-            "Opens an http or https address in a new tab of a Space, behind the person's work, or in front when show is true and a Crest window is open.",
+            "Opens an http or https address in a new tab of a Space, behind the person's work, or in front when show is true and a Arma window is open.",
         arguments: [
             .string("space", "The Space's id, from list_spaces."), .string("url", "The http or https address to open."),
             .boolean("show", "Whether the tab comes forward in the window. Defaults to false."),
@@ -91,7 +91,7 @@ struct AgentToolDefinition: Sendable {
     static let showTab = Self(
         name: "show_tab", title: "Show a tab",
         description:
-            "Brings the original tab and Crest forward. At the person’s request, opens a normal window over its Space when none is open.",
+            "Brings the original tab and Arma forward. At the person’s request, opens a normal window over its Space when none is open.",
         arguments: [tab], readOnly: false, destructive: false, idempotent: true, openWorld: false)
     static let closeTab = Self(
         name: "close_tab", title: "Close a tab",
@@ -180,7 +180,7 @@ struct AgentToolDefinition: Sendable {
     static let evaluateScript = Self(
         name: "evaluate_script", title: "Run a script",
         description:
-            "Runs JavaScript in the page's own world of a tab and answers what it returns as JSON. The body may use await and must return a JSON value. Available only when the person lets agents run scripts in Crest's settings.",
+            "Runs JavaScript in the page's own world of a tab and answers what it returns as JSON. The body may use await and must return a JSON value. Available only when the person lets agents run scripts in Arma's settings.",
         arguments: [tab, .string("function", "The body of an async function, such as: return document.title;")],
         readOnly: false, destructive: true, idempotent: false, openWorld: true)
 

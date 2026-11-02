@@ -102,7 +102,7 @@ final class BrowserSoftwareUpdateService {
     func checkForUpdates() {
         guard isEnabled else {
             model.presentError(
-                message: "Update checks are disabled in this isolated Crest session.",
+                message: "Update checks are disabled in this isolated Arma session.",
                 acknowledgement: {}
             )
             return
@@ -138,7 +138,7 @@ final class BrowserSoftwareUpdateService {
             - Release notes open only when you ask to review them.
             """
         model.presentUpdate(
-            title: "Crest \(version)",
+            title: "Arma \(version)",
             version: version,
             build: build,
             releaseNotes: releaseNotes,
@@ -161,7 +161,7 @@ final class BrowserSoftwareUpdateService {
             isEnabled = false
             startErrorDescription = error.localizedDescription
             model.presentError(
-                message: "Crest could not start software updates: \(error.localizedDescription)",
+                message: "Arma could not start software updates: \(error.localizedDescription)",
                 acknowledgement: {}
             )
         }

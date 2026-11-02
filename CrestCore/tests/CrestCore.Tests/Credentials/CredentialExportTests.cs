@@ -19,15 +19,15 @@ public sealed class CredentialExportTests {
     [Fact]
     public void EveryFieldIsQuotedAndARowWithoutANameTakesItsHost() {
         var file = Area.Query(new CredentialExport([
-            Credential("accounts.crest.test", "work,person@example.com", "line one\n\"line two\"", name: "Crest, Account"),
+            Credential("accounts.crest.test", "work,person@example.com", "line one\n\"line two\"", name: "Arma, Account"),
             Credential("realm.crest.test", "ada", "secret", port: 8443, note: "HTTP Basic authentication")
         ], "Work", "Space"));
 
         Assert.Equal("\"name\",\"url\",\"username\",\"password\",\"note\"\r\n"
-            + "\"Crest, Account\",\"https://accounts.crest.test\",\"work,person@example.com\",\"line one\n\"\"line two\"\"\",\"\"\r\n"
+            + "\"Arma, Account\",\"https://accounts.crest.test\",\"work,person@example.com\",\"line one\n\"\"line two\"\"\",\"\"\r\n"
             + "\"realm.crest.test\",\"https://realm.crest.test:8443\",\"ada\",\"secret\",\"HTTP Basic authentication\"\r\n",
             Encoding.UTF8.GetString(file.Contents));
-        Assert.Equal("Crest Passwords - Work.csv", file.FileName);
+        Assert.Equal("Arma Passwords - Work.csv", file.FileName);
     }
 
 }

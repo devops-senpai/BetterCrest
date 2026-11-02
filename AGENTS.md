@@ -56,7 +56,7 @@ the same commit.
 
 ## Keeping up with upstream
 
-BetterCrest is a fork of pauljoda/Crest. It merges upstream's `main`
+Arma is a fork of pauljoda/Crest. It merges upstream's `main`
 regularly and never rebases its own `main`.
 
 - Sync with `Scripts/sync-upstream.sh`. It fetches upstream, merges without
@@ -70,11 +70,18 @@ regularly and never rebases its own `main`.
   wrote them, through a merge; a fork change adds its note as
   `Documentation/ReleaseNotes/<id>.json`. This keeps both files out of every
   merge conflict.
+- A change that adds something over upstream adds one line to the README's
+  "What Arma adds" list in the same commit, under its kind.
 - Resolve a code conflict by reading both sides' commits. When upstream fixed
   what a fork commit fixed, keep upstream's version and drop the fork's.
-- A merge resolution never changes anything under `CrestEngines/Chromium` or
-  `CrestContracts/include/crest_engine_contract.h` beyond what upstream
-  shipped, because those are engine inputs (see "Published Chromium engine").
+- No engine input ever differs from upstream: the patches, overlay, host
+  header, source lock, host inputs and control-plane build scripts under
+  `CrestEngines/Chromium` and `Scripts/control-plane`, and
+  `CrestContracts/include/crest_engine_contract.h`. Prose there may change;
+  the inputs may not. keeping them identical keeps the engine key equal
+  to upstream's, and `Scripts/sync-upstream-engine.sh` mirrors upstream's
+  prebuilt engine for that key into this fork's releases. Run it after a sync
+  whenever `Scripts/control-plane/chromium_engine.py tag` changed.
 
 ## Generated localization catalog
 

@@ -7,7 +7,7 @@ final class BrowserSoftwareUpdateTests: XCTestCase {
     func testApplicationRequiresSignedSparkleUpdatesFromTheOfficialFeed() throws {
         XCTAssertEqual(
             Bundle.main.object(forInfoDictionaryKey: "SUFeedURL") as? String,
-            "https://raw.githubusercontent.com/pauljoda/Crest/updates/appcast.xml"
+            "https://raw.githubusercontent.com/devops-senpai/BetterCrest/updates/appcast.xml"
         )
         XCTAssertEqual(
             Bundle.main.object(forInfoDictionaryKey: "SUPublicEDKey") as? String,
@@ -52,7 +52,7 @@ final class BrowserSoftwareUpdateTests: XCTestCase {
         // Each product keeps its own feeds whichever engine this test host
         // runs: the dual-engine product reads the main feed from its
         // Info.plist, and WebKit-only installs follow the -webkit feeds.
-        let feeds = "https://raw.githubusercontent.com/pauljoda/Crest/updates/"
+        let feeds = "https://raw.githubusercontent.com/devops-senpai/BetterCrest/updates/"
         let expected: [(channel: BrowserSoftwareUpdateChannel, chromium: String?, webKit: String)] = [
             (.stable, nil, "appcast-webkit.xml"),
             (.nightly, nil, "appcast-webkit.xml"),

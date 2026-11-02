@@ -1,13 +1,13 @@
 ---
 title: Localhost and developer tools
-description: Preview phone, desktop, and custom viewport sizes, capture pages, and inspect websites with Crest’s Mac developer tools.
+description: Preview phone, desktop, and custom viewport sizes, capture pages, and inspect websites with Arma’s Mac developer tools.
 slug: /localhost-developer-tools
 keywords: [localhost, developer mode, viewport, responsive, Web Inspector, DevTools, Chromium, console, network, capture]
 ---
 
 # Localhost and developer tools
 
-On Mac, Crest automatically shows its developer toolbar for local development addresses. This includes `localhost`, loopback and private-network addresses, single-label hosts, common local suffixes such as `.local` and `.test`, and file URLs.
+On Mac, Arma automatically shows its developer toolbar for local development addresses. This includes `localhost`, loopback and private-network addresses, single-label hosts, common local suffixes such as `.local` and `.test`, and file URLs.
 
 Use **Shift-Command-I** to show or hide the toolbar on any website. To stop the toolbar opening by itself on local addresses, turn off **Developer toolbar on local pages** in **Settings > General**. The shortcut still shows it whenever you want it.
 
@@ -33,4 +33,4 @@ Use **Option-Command-I**, the menu, or the command palette; the same shortcut cl
 
 ## Security boundary
 
-Developer tools make page internals visible and can change runtime state. Use them only for sites and code you trust. A certificate warning, external-app request, or protected permission remains subject to Crest’s normal navigation and site-permission policies; localhost mode does not bypass those checks.
+Developer tools make page internals visible and can change runtime state. Use them only for sites and code you trust. A certificate warning, external-app request, or protected permission remains subject to Arma’s normal navigation and site-permission policies; localhost mode does not bypass those checks.

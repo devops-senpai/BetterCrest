@@ -36,7 +36,7 @@ struct BrowserSystemPermission: Hashable, Identifiable, Sendable {
         name: "notifications", title: "Notifications",
         explanation: "Show notifications from websites you allow.", symbol: "bell.badge.fill", tint: .red,
         settingsPane:
-            "com.apple.Notifications-Settings.extension?id=\(Bundle.main.bundleIdentifier ?? "com.pauldavis.crest")",
+            "com.apple.Notifications-Settings.extension?id=\(Bundle.main.bundleIdentifier ?? "com.senpaimedia.arma")",
         status: { service, _ in await service.notificationStatus() },
         request: { _, _ in
             _ = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])

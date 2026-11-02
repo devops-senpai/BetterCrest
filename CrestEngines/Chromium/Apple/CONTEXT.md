@@ -9,7 +9,7 @@ mobile apps.
 
 ## Goal
 
-Host Chromium's pages, popups and system sign-in in the windows Crest's shell
+Host Chromium's pages, popups and system sign-in in the windows Arma's shell
 opens, and turn engine events into engine-neutral page events, without any
 shared code naming a Chromium type.
 
@@ -20,7 +20,7 @@ shared code naming a Chromium type.
 | `ChromiumEngine.swift`, `ChromiumRuntime.swift`, `ChromiumRuntimeShell.swift` | The default engine, its runtime that loads Chromium on first use, and the shell that forwards only engine work |
 | `ChromiumPageAdapter.swift`, `ChromiumNativePage.swift` | One page's adapter and the view that hosts it |
 | `ChromiumComposition.swift`, `ChromiumApplication.swift`, `ChromiumApplicationDelegate.swift` | The native application with a deferred Chromium runtime, and its AppKit launch hooks |
-| `ChromiumMacUI.swift`, `ChromiumShellHost.swift` | What Chromium's Mac shell asks of Crest's UI, and what Crest's shell asks of Chromium |
+| `ChromiumMacUI.swift`, `ChromiumShellHost.swift` | What Chromium's Mac shell asks of Arma's UI, and what Arma's shell asks of Chromium |
 | `BrowserEngineRegistration+Chromium.swift` | Chromium's registration and declared capabilities |
 | `ChromiumInternalURL.swift`, `ChromiumSelectionTranslation.swift`, `ChromiumProfileNotifications.swift` | `crest://` addresses for engine pages, selection translation, per-profile web notifications |
 | `CrestChromiumHost.h` | The Objective-C bridging header the host frameworks build with |

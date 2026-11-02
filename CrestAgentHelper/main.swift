@@ -1,20 +1,20 @@
 import Darwin
 import Foundation
 
-// crest-browser, the helper that reaches the Crest it ships inside:
+// arma, the helper that reaches the Crest it ships inside:
 //
-//   crest-browser mcp
-//   crest-browser theme --space <name> [options]
+//   arma mcp
+//   arma theme --space <name> [options]
 //
 // `mcp` speaks the Model Context Protocol over its standard streams for an
 // agent, and needs Crest running with agents turned on. `theme` dresses one
 // Space from the terminal, and needs only Crest running.
 
-let usage = "usage: crest-browser mcp\n       crest-browser theme --space <name> [options]\n"
+let usage = "usage: arma mcp\n       arma theme --space <name> [options]\n"
 let arguments = Array(CommandLine.arguments.dropFirst())
 
 /// The `lane` socket of the Crest this helper ships inside, at
-/// Crest.app/Contents/Helpers/crest-browser, unless a review run names one.
+/// Arma.app/Contents/Helpers/arma, unless a review run names one.
 @MainActor func socketPath(lane: AgentSocketLocation.Lane) -> String? {
     if let index = arguments.firstIndex(of: "--socket"), arguments.indices.contains(index + 1) {
         return arguments[index + 1]

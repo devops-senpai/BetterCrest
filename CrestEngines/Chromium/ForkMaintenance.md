@@ -1,8 +1,13 @@
-# Maintaining Crest's Chromium fork
+# Maintaining Arma's Chromium fork
 
-The fork is the pinned recipe and patch set in Crest. `~/Dev/CrestChromium` is its
+> Arma does not build Chromium. Its engine inputs stay byte-identical to
+> upstream Crest's, so the engine key matches and `Scripts/sync-upstream-engine.sh`
+> mirrors upstream's prebuilt engine into this repository's releases. The
+> workspace and runner below are only for building an engine of your own.
+
+The fork is the pinned recipe and patch set in Arma. `~/Dev/CrestChromium` is its
 durable build workspace. A separate Git repository is unnecessary while the
-Chromium host and Crest's C ABI evolve together. No product code belongs only in
+Chromium host and Arma's C ABI evolve together. No product code belongs only in
 the expanded Chromium tree: make changes in the overlay or patch set first.
 
 ## Build workspace
@@ -20,9 +25,9 @@ python Scripts/control-plane/chromium-fork.py build \
   --sdk /Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk
 ```
 
-The command verifies upstream pins, prepares missing source, applies Crest's
+The command verifies upstream pins, prepares missing source, applies Arma's
 host, configures the performance build, compiles, and checks JavaScript execution
-in a headless browser with a temporary profile. It does not use installed Crest
+in a headless browser with a temporary profile. It does not use installed Arma
 or personal browser state. This smoke check covers engine startup and rendering;
 native window, Space, input, extension, and persistence acceptance remains part
 of approving the Chromium product for stable distribution.
@@ -86,9 +91,9 @@ Use a real newer version reported by `check-upstream`; the version above
 illustrates the syntax. Updates follow Chrome's own releases: `fork.json` names
 the chromiumdash channel and platform, Stable on Mac. The source archive appears
 a few hours after a release; until then an update reports that it isn't
-published yet. Start updates from a clean Crest checkout. The updater pins the
+published yet. Start updates from a clean Arma checkout. The updater pins the
 archive checksum, resolves the CIPD tools and the PGO profile the new source
-names, refreshes host hashes only after every Crest patch applies without fuzz,
+names, refreshes host hashes only after every Arma patch applies without fuzz,
 and restores the source lock and host hashes if preparation fails. Build
 failures leave the candidate available for inspection. New milestones need
 `--allow-major` here, and each needs the request review below. The schedule
@@ -261,7 +266,7 @@ The release resolves the branch to one commit. The reusable `Ensure Chromium
 engine` workflow checks for its published engine, including the full input key,
 archive, and checksum. If missing, it builds and publishes that engine on the
 Mac. An existing artifact skips the Mac entirely. The signing job then downloads
-that engine, verifies its checksum, builds Crest's native core and UI from the
+that engine, verifies its checksum, builds Arma's native core and UI from the
 same commit, and signs and notarizes the installer. It publishes the
 experimental feed and its `-webkit` twin, which offers the same installer.
 

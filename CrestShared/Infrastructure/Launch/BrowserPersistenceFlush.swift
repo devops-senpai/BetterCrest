@@ -47,7 +47,7 @@ struct BrowserPersistenceFlush: Sendable {
         answer.finish()
         deadline.cancel()
         if !finished {
-            Logger(subsystem: "com.pauldavis.crest", category: "SessionStorage")
+            Logger(subsystem: "com.senpaimedia.arma", category: "SessionStorage")
                 .error("Pending saves and sync stages were still running after \(limit, privacy: .public)")
         }
         return finished

@@ -267,17 +267,17 @@
         }
       }
     },
-    "%@ is reserved by Crest for %@." : {
+    "%@ is reserved by Arma for %@." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ is reserved by Crest for %2$@."
+            "value" : "%1$@ is reserved by Arma for %2$@."
           }
         }
       }
     },
-    "%@ is using Crest" : {
+    "%@ is using Arma" : {
 
     },
     "%@ is using this tab" : {
@@ -322,17 +322,17 @@
     "%@ remaining" : {
 
     },
-    "%@ returned a response Crest couldn’t load." : {
+    "%@ returned a response Arma couldn’t load." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أعاد %@ استجابة تعذّر على Crest تحميلها."
+            "value" : "أعاد %@ استجابة تعذّر على Arma تحميلها."
           }
         }
       }
     },
-    "%@ runs other programs. Allowing it lets any program it runs that calls itself “%@” use Crest." : {
+    "%@ runs other programs. Allowing it lets any program it runs that calls itself “%@” use Arma." : {
 
     },
     "%@ saved tabs" : {
@@ -345,12 +345,12 @@
         }
       }
     },
-    "%@ sent Crest through too many redirects." : {
+    "%@ sent Arma through too many redirects." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أعاد %@ توجيه Crest مرات كثيرة جدًا."
+            "value" : "أعاد %@ توجيه Arma مرات كثيرة جدًا."
           }
         }
       }
@@ -375,7 +375,7 @@
         }
       }
     },
-    "%@ stopped using Crest" : {
+    "%@ stopped using Arma" : {
 
     },
     "%@ will use %@’s sign-ins, history and extensions. Its own sign-ins and website data stay on this device and come back if you separate it." : {
@@ -1661,7 +1661,7 @@
     "About" : {
 
     },
-    "About Crest" : {
+    "About Arma" : {
 
     },
     "About Page Translation" : {
@@ -1957,16 +1957,16 @@
     "agents AI MCP model context protocol coding agents scripts automation Claude Codex Cursor command line terminal" : {
 
     },
-    "Agents are turned off in Crest’s settings." : {
+    "Agents are turned off in Arma’s settings." : {
 
     },
     "Agents can open a private window but never reach into one, and see only the name of a locked Space." : {
 
     },
-    "Agents can’t reach this copy of Crest." : {
+    "Agents can’t reach this copy of Arma." : {
 
     },
-    "Agents can’t use Crest on this device." : {
+    "Agents can’t use Arma on this device." : {
 
     },
     "Agents never reach into a private window." : {
@@ -2013,7 +2013,7 @@
         }
       }
     },
-    "Allow “%@” to use Crest?" : {
+    "Allow “%@” to use Arma?" : {
 
     },
     "Allow 120 FPS" : {
@@ -2022,7 +2022,7 @@
     "Allow Access to a Download Folder" : {
 
     },
-    "Allow agents to use Crest" : {
+    "Allow agents to use Arma" : {
 
     },
     "Allow Automatic Pop-ups" : {
@@ -2031,25 +2031,25 @@
     "Allow automatic pop-ups for %@" : {
 
     },
-    "Allow Crest in Screen & System Audio Recording to capture your screen" : {
+    "Allow Arma in Screen & System Audio Recording to capture your screen" : {
 
     },
-    "Allow Crest to Use Passkeys…" : {
+    "Allow Arma to Use Passkeys…" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "السماح لـ Crest باستخدام مفاتيح المرور…"
+            "value" : "السماح لـ Arma باستخدام مفاتيح المرور…"
           }
         }
       }
     },
-    "Allow Crest to use the system’s passkey providers for the website in the active page." : {
+    "Allow Arma to use the system’s passkey providers for the website in the active page." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "السماح لـ Crest باستخدام مزوّدي مفاتيح المرور في النظام للموقع المفتوح في الصفحة النشطة."
+            "value" : "السماح لـ Arma باستخدام مزوّدي مفاتيح المرور في النظام للموقع المفتوح في الصفحة النشطة."
           }
         }
       }
@@ -2126,7 +2126,7 @@
     "Another browser" : {
 
     },
-    "Another copy of Crest is already open to agents. Quit it, then turn agents off and on again." : {
+    "Another copy of Arma is already open to agents. Quit it, then turn agents off and on again." : {
 
     },
     "Another search provider already uses this name." : {
@@ -2309,23 +2309,23 @@
     "Authenticate to commit the password import into %@." : {
 
     },
-    "Authenticate to copy the Crest password for %@." : {
+    "Authenticate to copy the Arma password for %@." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لنسخ كلمة مرور Crest لـ %@."
+            "value" : "قم بالمصادقة لنسخ كلمة مرور Arma لـ %@."
           }
         }
       }
     },
-    "Authenticate to copy the Crest password for %arg." : {
+    "Authenticate to copy the Arma password for %arg." : {
       "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لنسخ كلمة مرور Crest لـ %arg."
+            "value" : "قم بالمصادقة لنسخ كلمة مرور Arma لـ %arg."
           }
         }
       }
@@ -2357,43 +2357,43 @@
     "Authenticate to import passwords into %@." : {
 
     },
-    "Authenticate to reveal the Crest password for %@." : {
+    "Authenticate to reveal the Arma password for %@." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لإظهار كلمة مرور Crest لـ %@."
+            "value" : "قم بالمصادقة لإظهار كلمة مرور Arma لـ %@."
           }
         }
       }
     },
-    "Authenticate to reveal the Crest password for %arg." : {
+    "Authenticate to reveal the Arma password for %arg." : {
       "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لإظهار كلمة مرور Crest لـ %arg."
+            "value" : "قم بالمصادقة لإظهار كلمة مرور Arma لـ %arg."
           }
         }
       }
     },
-    "Authenticate to unlock the %@ Space in Crest." : {
+    "Authenticate to unlock the %@ Space in Arma." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لفتح مساحة %@ في Crest."
+            "value" : "قم بالمصادقة لفتح مساحة %@ في Arma."
           }
         }
       }
     },
-    "Authenticate to view this Crest password." : {
+    "Authenticate to view this Arma password." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "قم بالمصادقة لعرض كلمة مرور Crest هذه."
+            "value" : "قم بالمصادقة لعرض كلمة مرور Arma هذه."
           }
         }
       }
@@ -3058,7 +3058,7 @@
     "Changes couldn’t be saved for sync." : {
 
     },
-    "Changes made after this checkpoint may be missing. Crest will keep a separate copy of the current files and fetch current iCloud records before uploading again." : {
+    "Changes made after this checkpoint may be missing. Arma will keep a separate copy of the current files and fetch current iCloud records before uploading again." : {
 
     },
     "Channels" : {
@@ -3722,7 +3722,7 @@
     "Coding agents and scripts" : {
 
     },
-    "Coding agents on this Mac can read and act on tabs and history in the Spaces you choose, and open windows. Crest asks before each new agent connects." : {
+    "Coding agents on this Mac can read and act on tabs and history in the Spaces you choose, and open windows. Arma asks before each new agent connects." : {
 
     },
     "Collapsed" : {
@@ -3875,17 +3875,17 @@
     "Completes what you typed" : {
 
     },
-    "Configure passkeys in system settings, then reopen Crest." : {
+    "Configure passkeys in system settings, then reopen Arma." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "أعدّ مفاتيح المرور في إعدادات النظام، ثم أعد فتح Crest."
+            "value" : "أعدّ مفاتيح المرور في إعدادات النظام، ثم أعد فتح Arma."
           }
         }
       }
     },
-    "Confirm what Crest will change before anything is saved." : {
+    "Confirm what Arma will change before anything is saved." : {
 
     },
     "Connect an Agent" : {
@@ -4106,7 +4106,7 @@
     "Couldn’t Delete Space" : {
 
     },
-    "Couldn’t Open Crest" : {
+    "Couldn’t Open Arma" : {
 
     },
     "Couldn’t open language downloads." : {
@@ -4328,310 +4328,310 @@
         }
       }
     },
-    "Crest" : {
+    "Arma" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Crest"
+            "value" : "Arma"
           }
         }
       }
     },
-    "Crest %@ sidebar after import" : {
+    "Arma %@ sidebar after import" : {
 
     },
-    "Crest Browser" : {
+    "Arma Browser" : {
 
     },
-    "Crest can keep up to %lld saved site permissions. Reset some to save more." : {
+    "Arma can keep up to %lld saved site permissions. Reset some to save more." : {
 
     },
-    "Crest can save files in %@." : {
+    "Arma can save files in %@." : {
 
     },
-    "Crest can’t open this address" : {
+    "Arma can’t open this address" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتعذّر على Crest فتح هذا العنوان"
+            "value" : "يتعذّر على Arma فتح هذا العنوان"
           }
         }
       }
     },
-    "Crest can’t reach %@ without a network connection." : {
+    "Arma can’t reach %@ without a network connection." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يستطيع Crest الوصول إلى %@ من دون اتصال بالشبكة."
+            "value" : "لا يستطيع Arma الوصول إلى %@ من دون اتصال بالشبكة."
           }
         }
       }
     },
-    "Crest can’t show or fill them. This cannot be undone." : {
+    "Arma can’t show or fill them. This cannot be undone." : {
 
     },
     "Crest colors" : {
 
     },
-    "Crest could not build this %@ Space preview." : {
+    "Arma could not build this %@ Space preview." : {
 
     },
-    "Crest could not load this icon. Please try again." : {
+    "Arma could not load this icon. Please try again." : {
 
     },
-    "Crest could not read %@ data there. Try Allow Access again, or choose the %@ data folder if it moved." : {
+    "Arma could not read %@ data there. Try Allow Access again, or choose the %@ data folder if it moved." : {
       "comment" : "Browser-import error. Both variables are the source browser name.",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest قراءة بيانات %1$@ هناك. جرّب «السماح بالوصول» مرة أخرى، أو اختر مجلد بيانات %2$@ إذا تم نقله."
+            "value" : "تعذّر على Arma قراءة بيانات %1$@ هناك. جرّب «السماح بالوصول» مرة أخرى، أو اختر مجلد بيانات %2$@ إذا تم نقله."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Crest could not read %1$@ data there. Try Allow Access again, or choose the %2$@ data folder if it moved."
+            "value" : "Arma could not read %1$@ data there. Try Allow Access again, or choose the %2$@ data folder if it moved."
           }
         }
       }
     },
-    "Crest could not read this file." : {
+    "Arma could not read this file." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest قراءة هذا الملف."
+            "value" : "تعذّر على Arma قراءة هذا الملف."
           }
         }
       }
     },
-    "Crest could not recognize this browser’s bookmark data." : {
+    "Arma could not recognize this browser’s bookmark data." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest التعرّف على بيانات الإشارات المرجعية لهذا المتصفح."
+            "value" : "تعذّر على Arma التعرّف على بيانات الإشارات المرجعية لهذا المتصفح."
           }
         }
       }
     },
-    "Crest could not recognize this browser’s tab-session data." : {
+    "Arma could not recognize this browser’s tab-session data." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest التعرّف على بيانات جلسة علامات التبويب لهذا المتصفح."
+            "value" : "تعذّر على Arma التعرّف على بيانات جلسة علامات التبويب لهذا المتصفح."
           }
         }
       }
     },
-    "Crest could not save to %@. Choose the folder again or review Files & Folders in System Settings." : {
+    "Arma could not save to %@. Choose the folder again or review Files & Folders in System Settings." : {
 
     },
-    "Crest could not update its icon. Please try again." : {
+    "Arma could not update its icon. Please try again." : {
 
     },
-    "Crest couldn’t apply the latest changes from iCloud." : {
+    "Arma couldn’t apply the latest changes from iCloud." : {
 
     },
-    "Crest couldn’t authenticate and read that password from this Space." : {
+    "Arma couldn’t authenticate and read that password from this Space." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest المصادقة وقراءة كلمة المرور هذه من هذه المساحة."
+            "value" : "تعذّر على Arma المصادقة وقراءة كلمة المرور هذه من هذه المساحة."
           }
         }
       }
     },
-    "Crest couldn’t check this Space’s saved passwords." : {
+    "Arma couldn’t check this Space’s saved passwords." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest التحقق من كلمات المرور المحفوظة في هذه المساحة."
+            "value" : "تعذّر على Arma التحقق من كلمات المرور المحفوظة في هذه المساحة."
           }
         }
       }
     },
-    "Crest couldn’t complete that. Try again." : {
+    "Arma couldn’t complete that. Try again." : {
 
     },
-    "Crest couldn’t copy that password." : {
+    "Arma couldn’t copy that password." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest نسخ كلمة المرور هذه."
+            "value" : "تعذّر على Arma نسخ كلمة المرور هذه."
           }
         }
       }
     },
-    "Crest couldn’t find another browser. Not every browser can be found." : {
+    "Arma couldn’t find another browser. Not every browser can be found." : {
 
     },
-    "Crest couldn’t find the server for %@." : {
+    "Arma couldn’t find the server for %@." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest العثور على خادم %@."
+            "value" : "تعذّر على Arma العثور على خادم %@."
           }
         }
       }
     },
-    "Crest couldn’t open itself to agents. Turn agents off and on again to try again." : {
+    "Arma couldn’t open itself to agents. Turn agents off and on again to try again." : {
 
     },
-    "Crest couldn't open your session" : {
+    "Arma couldn't open your session" : {
 
     },
-    "Crest couldn’t read the iCloud sync state an earlier version saved." : {
+    "Arma couldn’t read the iCloud sync state an earlier version saved." : {
 
     },
-    "Crest couldn’t read the Spaces to import." : {
+    "Arma couldn’t read the Spaces to import." : {
 
     },
-    "Crest couldn’t read this Space’s passwords." : {
+    "Arma couldn’t read this Space’s passwords." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لم يتمكن Crest من قراءة كلمات مرور هذه المساحة."
+            "value" : "لم يتمكن Arma من قراءة كلمات مرور هذه المساحة."
           }
         }
       }
     },
-    "Crest couldn’t remove the passwords it can’t read." : {
+    "Arma couldn’t remove the passwords it can’t read." : {
 
     },
-    "Crest couldn’t save a strong password. Nothing was filled." : {
+    "Arma couldn’t save a strong password. Nothing was filled." : {
 
     },
-    "Crest couldn’t save this change. Try again." : {
+    "Arma couldn’t save this change. Try again." : {
 
     },
-    "Crest couldn’t save this password to the %@ Space." : {
+    "Arma couldn’t save this password to the %@ Space." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest حفظ كلمة المرور هذه في مساحة %@."
+            "value" : "تعذّر على Arma حفظ كلمة المرور هذه في مساحة %@."
           }
         }
       }
     },
-    "Crest couldn’t save this password to this Space." : {
+    "Arma couldn’t save this password to this Space." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest حفظ كلمة المرور هذه في هذه المساحة."
+            "value" : "تعذّر على Arma حفظ كلمة المرور هذه في هذه المساحة."
           }
         }
       }
     },
-    "Crest couldn’t tell which program this agent is." : {
+    "Arma couldn’t tell which program this agent is." : {
 
     },
-    "Crest couldn’t verify a private, secure connection to %@." : {
+    "Arma couldn’t verify a private, secure connection to %@." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تعذّر على Crest التحقق من اتصال خاص وآمن بـ %@."
+            "value" : "تعذّر على Arma التحقق من اتصال خاص وآمن بـ %@."
           }
         }
       }
     },
-    "Crest does not save this session or use Crest Passwords. Website data stays in memory only." : {
+    "Arma does not save this session or use Arma Passwords. Website data stays in memory only." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يحفظ Crest هذه الجلسة ولا يستخدم كلمات مرور Crest. تبقى بيانات مواقع الويب في الذاكرة فقط."
+            "value" : "لا يحفظ Arma هذه الجلسة ولا يستخدم كلمات مرور Arma. تبقى بيانات مواقع الويب في الذاكرة فقط."
           }
         }
       }
     },
-    "Crest encountered an unexpected problem while opening %@." : {
+    "Arma encountered an unexpected problem while opening %@." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "واجه Crest مشكلة غير متوقعة أثناء فتح %@."
+            "value" : "واجه Arma مشكلة غير متوقعة أثناء فتح %@."
           }
         }
       }
     },
-    "Crest found these browsers on your Mac. You’ll review every Space and tab next." : {
+    "Arma found these browsers on your Mac. You’ll review every Space and tab next." : {
 
     },
-    "Crest hit a problem applying these records." : {
+    "Arma hit a problem applying these records." : {
 
     },
-    "Crest iCloud Sync Diagnostics" : {
+    "Arma iCloud Sync Diagnostics" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تشخيصات مزامنة Crest مع iCloud"
+            "value" : "تشخيصات مزامنة Arma مع iCloud"
           }
         }
       }
     },
-    "Crest iCloud sync on" : {
+    "Arma iCloud sync on" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "مزامنة Crest عبر iCloud مفعّلة"
+            "value" : "مزامنة Arma عبر iCloud مفعّلة"
           }
         }
       }
     },
-    "Crest is checking this build and the system’s browser-passkey setting." : {
+    "Arma is checking this build and the system’s browser-passkey setting." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتحقق Crest من هذه النسخة ومن إعداد مفاتيح مرور المتصفح في النظام."
+            "value" : "يتحقق Arma من هذه النسخة ومن إعداد مفاتيح مرور المتصفح في النظام."
           }
         }
       }
     },
-    "Crest Is Up to Date" : {
+    "Arma Is Up to Date" : {
 
     },
-    "Crest locates the browser data folder and asks for one-time read access" : {
+    "Arma locates the browser data folder and asks for one-time read access" : {
 
     },
-    "Crest lost track of an iCloud download it was applying." : {
+    "Arma lost track of an iCloud download it was applying." : {
 
     },
-    "Crest needs at least one Space." : {
+    "Arma needs at least one Space." : {
 
     },
-    "Crest password suggestions" : {
+    "Arma password suggestions" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "اقتراحات كلمات مرور Crest"
+            "value" : "اقتراحات كلمات مرور Arma"
           }
         }
       }
     },
-    "Crest Passwords" : {
+    "Arma Passwords" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "كلمات مرور Crest"
+            "value" : "كلمات مرور Arma"
           }
         }
       }
@@ -4639,59 +4639,59 @@
     "Crest preview" : {
       "extractionState" : "manual"
     },
-    "Crest reads its data when you continue, which may ask for access" : {
+    "Arma reads its data when you continue, which may ask for access" : {
 
     },
-    "Crest Recovery" : {
+    "Arma Recovery" : {
 
     },
-    "Crest released this temporary page to reduce memory use." : {
+    "Arma released this temporary page to reduce memory use." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "حرر Crest هذه الصفحة المؤقتة لتقليل استخدام الذاكرة."
+            "value" : "حرر Arma هذه الصفحة المؤقتة لتقليل استخدام الذاكرة."
           }
         }
       }
     },
-    "Crest requires Touch ID, Face ID, or the device password before every reveal or copy. A revealed password hides after 30 seconds; a copied password expires after 60 seconds." : {
+    "Arma requires Touch ID, Face ID, or the device password before every reveal or copy. A revealed password hides after 30 seconds; a copied password expires after 60 seconds." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتطلب Crest استخدام بصمة الإصبع أو بصمة الوجه أو رمز دخول الجهاز قبل كل إظهار أو نسخ. تُخفى كلمة المرور الظاهرة بعد 30 ثانية، وتنتهي صلاحية النسخة بعد 60 ثانية."
+            "value" : "يتطلب Arma استخدام بصمة الإصبع أو بصمة الوجه أو رمز دخول الجهاز قبل كل إظهار أو نسخ. تُخفى كلمة المرور الظاهرة بعد 30 ثانية، وتنتهي صلاحية النسخة بعد 60 ثانية."
           }
         }
       }
     },
-    "Crest saves a unique 20-character password in %@ first, then fills it here and in the confirmation field." : {
+    "Arma saves a unique 20-character password in %@ first, then fills it here and in the confirmation field." : {
 
     },
-    "Crest saves in %@ first; Passwords asks separately" : {
+    "Arma saves in %@ first; Passwords asks separately" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يحفظ Crest في %@ أولاً؛ ثم تطلب «كلمات السر» تأكيدًا منفصلاً"
+            "value" : "يحفظ Arma في %@ أولاً؛ ثم تطلب «كلمات السر» تأكيدًا منفصلاً"
           }
         }
       }
     },
-    "Crest saves in this Space first; Passwords asks separately" : {
+    "Arma saves in this Space first; Passwords asks separately" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يحفظ Crest في هذه المساحة أولاً؛ ثم تطلب «كلمات السر» تأكيدًا منفصلاً"
+            "value" : "يحفظ Arma في هذه المساحة أولاً؛ ثم تطلب «كلمات السر» تأكيدًا منفصلاً"
           }
         }
       }
     },
-    "Crest Setup" : {
+    "Arma Setup" : {
 
     },
-    "Crest software update" : {
+    "Arma software update" : {
 
     },
     "Crest Studio" : {
@@ -4710,42 +4710,42 @@
     "Crest Studio step" : {
 
     },
-    "Crest supports up to %lld Spaces." : {
+    "Arma supports up to %lld Spaces." : {
 
     },
-    "Crest translates page text in place, including headings, links, labels, and buttons. Editable fields, code, embedded pages, and text in images are left unchanged. Translated text may take more space." : {
+    "Arma translates page text in place, including headings, links, labels, and buttons. Editable fields, code, embedded pages, and text in images are left unchanged. Translated text may take more space." : {
 
     },
-    "Crest will download all synced Spaces and browser content and merge them with this device. Newer changes and synced deletions will be applied. Content found only on this device will be kept unless it was explicitly deleted on another device." : {
+    "Arma will download all synced Spaces and browser content and merge them with this device. Newer changes and synced deletions will be applied. Content found only on this device will be kept unless it was explicitly deleted on another device." : {
 
     },
-    "Crest will quit once the Space is deleted." : {
+    "Arma will quit once the Space is deleted." : {
 
     },
-    "Crest will replace the synced Spaces and browser content on this device with the current iCloud copy." : {
+    "Arma will replace the synced Spaces and browser content on this device with the current iCloud copy." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيستبدل Crest المساحات ومحتوى المتصفح المتزامن على هذا الجهاز بنسخة iCloud الحالية."
+            "value" : "سيستبدل Arma المساحات ومحتوى المتصفح المتزامن على هذا الجهاز بنسخة iCloud الحالية."
           }
         }
       }
     },
-    "Crest will restore its performance defaults and stop overriding every other WebKit feature." : {
+    "Arma will restore its performance defaults and stop overriding every other WebKit feature." : {
 
     },
-    "Crest will upload this device’s Spaces and browser content over the current iCloud copy. Other devices will receive this version on their next sync." : {
+    "Arma will upload this device’s Spaces and browser content over the current iCloud copy. Other devices will receive this version on their next sync." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيحمّل Crest مساحات هذا الجهاز ومحتوى المتصفح لاستبدال نسخة iCloud الحالية. ستتلقى الأجهزة الأخرى هذا الإصدار عند المزامنة التالية."
+            "value" : "سيحمّل Arma مساحات هذا الجهاز ومحتوى المتصفح لاستبدال نسخة iCloud الحالية. ستتلقى الأجهزة الأخرى هذا الإصدار عند المزامنة التالية."
           }
         }
       }
     },
-    "crestbrowser.com" : {
+    "example.com" : {
 
     },
     "Crimson" : {
@@ -5398,7 +5398,7 @@
     "Download folder for %@" : {
 
     },
-    "Download folder: %@. Check Access verifies that Crest can save a file there." : {
+    "Download folder: %@. Check Access verifies that Arma can save a file there." : {
 
     },
     "Download Languages" : {
@@ -5815,10 +5815,10 @@
     "Every accepted credential will be stored only in this Space’s Keychain inventory." : {
 
     },
-    "Every change appears in the Crest branding preview." : {
+    "Every change appears in the Arma branding preview." : {
 
     },
-    "Every Crest command will return to its default shortcut." : {
+    "Every Arma command will return to its default shortcut." : {
 
     },
     "Every Space of %@’s group shows %@’s pinned tabs." : {
@@ -6416,7 +6416,7 @@
     "Forget" : {
 
     },
-    "Forgetting an agent disconnects it. Crest asks again the next time it connects." : {
+    "Forgetting an agent disconnects it. Arma asks again the next time it connects." : {
 
     },
     "Forward" : {
@@ -6535,12 +6535,12 @@
     "Getting Started opens next with practice for tabs, folders, and Split View." : {
 
     },
-    "Getting Started with Crest" : {
+    "Getting Started with Arma" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "بدء استخدام Crest"
+            "value" : "بدء استخدام Arma"
           }
         }
       }
@@ -6685,7 +6685,7 @@
     "Hide AI Overviews" : {
 
     },
-    "Hide Crest" : {
+    "Hide Arma" : {
 
     },
     "Hide Details" : {
@@ -7083,13 +7083,13 @@
     "Import this Space" : {
 
     },
-    "Import with Crest on macOS" : {
+    "Import with Arma on macOS" : {
       "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "الاستيراد باستخدام Crest على macOS"
+            "value" : "الاستيراد باستخدام Arma على macOS"
           }
         }
       }
@@ -7502,7 +7502,7 @@
         }
       }
     },
-    "Imported from an insecure HTTP site. Crest keeps it available for manual access but does not autofill it on insecure connections." : {
+    "Imported from an insecure HTTP site. Arma keeps it available for manual access but does not autofill it on insecure connections." : {
 
     },
     "Imported password" : {
@@ -7528,7 +7528,7 @@
         }
       }
     },
-    "Importing from another browser needs Crest for Mac. Imported Spaces sync here with iCloud." : {
+    "Importing from another browser needs Arma for Mac. Imported Spaces sync here with iCloud." : {
 
     },
     "Importing into" : {
@@ -7540,7 +7540,7 @@
     "Importing…" : {
 
     },
-    "In Crest" : {
+    "In Arma" : {
 
     },
     "In Progress" : {
@@ -7629,7 +7629,7 @@
     "Interactive sidebar preview" : {
 
     },
-    "Into Crest" : {
+    "Into Arma" : {
 
     },
     "Iron" : {
@@ -7678,7 +7678,7 @@
         }
       }
     },
-    "Its content is still saved. Update Crest to open it." : {
+    "Its content is still saved. Update Arma to open it." : {
 
     },
     "Its tabs stay in this section, and any nested folders move up one level." : {
@@ -7693,7 +7693,7 @@
     "Keep Browsing" : {
 
     },
-    "Keep Crest Up to Date" : {
+    "Keep Arma Up to Date" : {
 
     },
     "Keep current password" : {
@@ -7853,7 +7853,7 @@
         }
       }
     },
-    "Layered Crest" : {
+    "Layered Arma" : {
       "extractionState" : "stale",
       "localizations" : {
         "ar" : {
@@ -8059,7 +8059,7 @@
     "Locked" : {
 
     },
-    "Locks again when Crest goes to the background." : {
+    "Locks again when Arma goes to the background." : {
 
     },
     "Long press or open the context menu for skin tone variations." : {
@@ -8088,7 +8088,7 @@
     "Lozenges" : {
       "extractionState" : "manual"
     },
-    "macOS has not returned a location decision. Respond to its prompt, or open System Settings > Privacy & Security > Location Services to allow Crest." : {
+    "macOS has not returned a location decision. Respond to its prompt, or open System Settings > Privacy & Security > Location Services to allow Arma." : {
 
     },
     "Make “%@” a Sub-Space of “%@”?" : {
@@ -8308,7 +8308,7 @@
     "Move Back" : {
 
     },
-    "Move Crest to your Applications folder to connect agents." : {
+    "Move Arma to your Applications folder to connect agents." : {
 
     },
     "Move Down" : {
@@ -8711,12 +8711,12 @@
         }
       }
     },
-    "No Crest passwords are saved for this site in this Space." : {
+    "No Arma passwords are saved for this site in this Space." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا توجد كلمات مرور Crest محفوظة لهذا الموقع في هذه المساحة."
+            "value" : "لا توجد كلمات مرور Arma محفوظة لهذا الموقع في هذه المساحة."
           }
         }
       }
@@ -9093,12 +9093,12 @@
     "Open a regular window to do this." : {
 
     },
-    "Open Crest" : {
+    "Open Arma" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "فتح Crest"
+            "value" : "فتح Arma"
           }
         }
       }
@@ -9732,7 +9732,7 @@
     "Paste and Match Style" : {
 
     },
-    "Paste the setup in your agent’s terminal or settings. Crest must be open while the agent works." : {
+    "Paste the setup in your agent’s terminal or settings. Arma must be open while the agent works." : {
 
     },
     "Patina" : {
@@ -10423,7 +10423,7 @@
     "Quit and cancel the download in progress?" : {
 
     },
-    "Quit Crest" : {
+    "Quit Arma" : {
 
     },
     "Ran a script" : {
@@ -10809,7 +10809,7 @@
     "Remove last color" : {
 
     },
-    "Remove Passwords Crest Can’t Read?" : {
+    "Remove Passwords Arma Can’t Read?" : {
 
     },
     "Remove Pattern Color" : {
@@ -10982,22 +10982,22 @@
         }
       }
     },
-    "Replaces the Crest content in iCloud with this device’s content" : {
+    "Replaces the Arma content in iCloud with this device’s content" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يستبدل محتوى Crest في iCloud بمحتوى هذا الجهاز"
+            "value" : "يستبدل محتوى Arma في iCloud بمحتوى هذا الجهاز"
           }
         }
       }
     },
-    "Replaces this device’s Crest content with the iCloud copy" : {
+    "Replaces this device’s Arma content with the iCloud copy" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يستبدل محتوى Crest على هذا الجهاز بنسخة iCloud"
+            "value" : "يستبدل محتوى Arma على هذا الجهاز بنسخة iCloud"
           }
         }
       }
@@ -11072,7 +11072,7 @@
         }
       }
     },
-    "Reset all Crest shortcuts?" : {
+    "Reset all Arma shortcuts?" : {
 
     },
     "Reset All Feature Flags" : {
@@ -11090,7 +11090,7 @@
     "Reset appearance to starting point" : {
 
     },
-    "Reset Crest Shortcuts" : {
+    "Reset Arma Shortcuts" : {
 
     },
     "Reset every WebKit feature flag?" : {
@@ -11147,7 +11147,7 @@
     "Restart and Update" : {
 
     },
-    "Restart Crest to apply these changes." : {
+    "Restart Arma to apply these changes." : {
 
     },
     "Restart setup from the welcome screen" : {
@@ -11223,7 +11223,7 @@
     "Retry" : {
 
     },
-    "Retry the action on the page. Crest did not reopen the blocked pop-up." : {
+    "Retry the action on the page. Arma did not reopen the blocked pop-up." : {
 
     },
     "return" : {
@@ -11318,7 +11318,7 @@
     "Review update details" : {
 
     },
-    "Review your Spaces or add another before opening Crest." : {
+    "Review your Spaces or add another before opening Arma." : {
 
     },
     "right arrow" : {
@@ -12207,7 +12207,7 @@
         }
       }
     },
-    "Share Feedback on r/CrestBrowser" : {
+    "Share Feedback on GitHub" : {
 
     },
     "Share Page" : {
@@ -12666,7 +12666,7 @@
         }
       }
     },
-    "Some changes couldn’t be read. Update Crest on every device, then pull from iCloud." : {
+    "Some changes couldn’t be read. Update Arma on every device, then pull from iCloud." : {
 
     },
     "Some content on this page was not delivered securely." : {
@@ -12675,7 +12675,7 @@
     "Some data couldn’t be removed" : {
 
     },
-    "Some iCloud records can’t be read. Update Crest on all your devices and try again." : {
+    "Some iCloud records can’t be read. Update Arma on all your devices and try again." : {
 
     },
     "Some of this browsing session can’t be synced." : {
@@ -12845,7 +12845,7 @@
     "Spelling and Grammar" : {
 
     },
-    "Spelling changes apply after Crest restarts." : {
+    "Spelling changes apply after Arma restarts." : {
 
     },
     "Split" : {
@@ -13098,12 +13098,12 @@
         }
       }
     },
-    "Startup choices take effect the next time Crest opens a window." : {
+    "Startup choices take effect the next time Arma opens a window." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تسري خيارات بدء التشغيل في المرة التالية التي يفتح فيها Crest نافذة."
+            "value" : "تسري خيارات بدء التشغيل في المرة التالية التي يفتح فيها Arma نافذة."
           }
         }
       }
@@ -13175,7 +13175,7 @@
     "Stop Speaking" : {
 
     },
-    "Stopping every agent disconnects it and keeps it out of the tabs it used until Crest quits." : {
+    "Stopping every agent disconnects it and keeps it out of the tabs it used until Arma quits." : {
 
     },
     "Storage" : {
@@ -13184,12 +13184,12 @@
     "Store" : {
 
     },
-    "Stored only in %@, with Crest iCloud sync" : {
+    "Stored only in %@, with Arma iCloud sync" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "مخزّنة في %@ فقط، مع مزامنة Crest عبر iCloud"
+            "value" : "مخزّنة في %@ فقط، مع مزامنة Arma عبر iCloud"
           }
         }
       }
@@ -13225,12 +13225,12 @@
         }
       }
     },
-    "Stored only in this Space, with Crest iCloud sync" : {
+    "Stored only in this Space, with Arma iCloud sync" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "مخزّنة في هذه المساحة فقط، مع مزامنة Crest عبر iCloud"
+            "value" : "مخزّنة في هذه المساحة فقط، مع مزامنة Arma عبر iCloud"
           }
         }
       }
@@ -13496,12 +13496,12 @@
         }
       }
     },
-    "Synchronized through Crest’s iCloud Keychain item" : {
+    "Synchronized through Arma’s iCloud Keychain item" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "تتم المزامنة عبر عنصر سلسلة مفاتيح iCloud الخاص بـ Crest"
+            "value" : "تتم المزامنة عبر عنصر سلسلة مفاتيح iCloud الخاص بـ Arma"
           }
         }
       }
@@ -13728,17 +13728,17 @@
     "That tab isn’t one agents may use." : {
 
     },
-    "The address uses a format or protocol Crest doesn’t support." : {
+    "The address uses a format or protocol Arma doesn’t support." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يستخدم العنوان تنسيقًا أو بروتوكولاً لا يدعمه Crest."
+            "value" : "يستخدم العنوان تنسيقًا أو بروتوكولاً لا يدعمه Arma."
           }
         }
       }
     },
-    "The app is missing access to Crest’s CloudKit container." : {
+    "The app is missing access to Arma’s CloudKit container." : {
 
     },
     "The connection to %@ ended before the page finished loading." : {
@@ -13797,7 +13797,7 @@
         }
       }
     },
-    "The CSV file will contain readable usernames and passwords from only the selected Space. Anyone with the file can read them. Crest will authenticate you before opening the %@." : {
+    "The CSV file will contain readable usernames and passwords from only the selected Space. Anyone with the file can read them. Arma will authenticate you before opening the %@." : {
 
     },
     "The destination Space changed. Choose the file again." : {
@@ -13867,13 +13867,13 @@
     "The password is empty." : {
 
     },
-    "The password is saved in this Space, but the form changed before Crest could fill it." : {
+    "The password is saved in this Space, but the form changed before Arma could fill it." : {
 
     },
     "The pattern’s last band and the gradient’s end" : {
 
     },
-    "The person hasn’t allowed this agent to use Crest." : {
+    "The person hasn’t allowed this agent to use Arma." : {
 
     },
     "The person stopped agents from using this tab." : {
@@ -13963,25 +13963,25 @@
     "This action requires webpage tabs. Deselect built-in pages first." : {
 
     },
-    "This agent is no longer connected to Crest." : {
+    "This agent is no longer connected to Arma." : {
 
     },
-    "This bookmark file exceeds Crest’s folder, depth, tab, or Space limits." : {
+    "This bookmark file exceeds Arma’s folder, depth, tab, or Space limits." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يتجاوز ملف الإشارات المرجعية هذا حدود المجلدات أو العمق أو علامات التبويب أو المساحات في Crest."
+            "value" : "يتجاوز ملف الإشارات المرجعية هذا حدود المجلدات أو العمق أو علامات التبويب أو المساحات في Arma."
           }
         }
       }
     },
-    "This bookmark file is larger than Crest’s 50 MB import limit." : {
+    "This bookmark file is larger than Arma’s 50 MB import limit." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ملف الإشارات المرجعية هذا أكبر من حد الاستيراد البالغ 50 ميغابايت في Crest."
+            "value" : "ملف الإشارات المرجعية هذا أكبر من حد الاستيراد البالغ 50 ميغابايت في Arma."
           }
         }
       }
@@ -13989,17 +13989,17 @@
     "This browsing session is too large to sync." : {
 
     },
-    "This build cannot request browser-wide passkey access until Apple approves Crest’s managed capability." : {
+    "This build cannot request browser-wide passkey access until Apple approves Arma’s managed capability." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا تستطيع هذه النسخة طلب وصول مفاتيح المرور على مستوى المتصفح حتى تعتمد Apple القدرة المُدارة لـ Crest."
+            "value" : "لا تستطيع هذه النسخة طلب وصول مفاتيح المرور على مستوى المتصفح حتى تعتمد Apple القدرة المُدارة لـ Arma."
           }
         }
       }
     },
-    "This build of Crest does not include permission to request browser passkey access." : {
+    "This build of Arma does not include permission to request browser passkey access." : {
 
     },
     "This Chromium session is profile-encrypted and cannot be safely imported outside its source browser." : {
@@ -14031,12 +14031,12 @@
         }
       }
     },
-    "This Crest browser-data version (%lld) is not supported." : {
+    "This Arma browser-data version (%lld) is not supported." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إصدار بيانات متصفح Crest هذا (%lld) غير مدعوم."
+            "value" : "إصدار بيانات متصفح Arma هذا (%lld) غير مدعوم."
           }
         }
       }
@@ -14066,32 +14066,32 @@
     "This extension will be installed in %@. Select any additional Spaces below." : {
 
     },
-    "This file does not contain any HTTP or HTTPS bookmarks Crest can import." : {
+    "This file does not contain any HTTP or HTTPS bookmarks Arma can import." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يحتوي هذا الملف على أي إشارات مرجعية HTTP أو HTTPS يمكن لـ Crest استيرادها."
+            "value" : "لا يحتوي هذا الملف على أي إشارات مرجعية HTTP أو HTTPS يمكن لـ Arma استيرادها."
           }
         }
       }
     },
-    "This file does not contain valid Crest browser data." : {
+    "This file does not contain valid Arma browser data." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا يحتوي هذا الملف على بيانات متصفح Crest صالحة."
+            "value" : "لا يحتوي هذا الملف على بيانات متصفح Arma صالحة."
           }
         }
       }
     },
-    "This file is larger than Crest’s 50 MB import limit." : {
+    "This file is larger than Arma’s 50 MB import limit." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "هذا الملف أكبر من حد الاستيراد البالغ 50 ميغابايت في Crest."
+            "value" : "هذا الملف أكبر من حد الاستيراد البالغ 50 ميغابايت في Arma."
           }
         }
       }
@@ -14118,7 +14118,7 @@
     "This guide stays in your Saved tabs." : {
 
     },
-    "This HTTP site is not encrypted. Crest will import the password for manual access but will not autofill it on an insecure connection." : {
+    "This HTTP site is not encrypted. Arma will import the password for manual access but will not autofill it on an insecure connection." : {
 
     },
     "This immediately and permanently deletes %@ older than %@ in this Space, including synced copies. Downloaded files stay on disk." : {
@@ -14137,12 +14137,12 @@
         }
       }
     },
-    "This is not a Crest browser-data file." : {
+    "This is not a Arma browser-data file." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "هذا ليس ملف بيانات متصفح Crest."
+            "value" : "هذا ليس ملف بيانات متصفح Arma."
           }
         }
       }
@@ -14243,19 +14243,19 @@
     "This password file is empty." : {
 
     },
-    "This password file is larger than Crest’s 16 MB import limit." : {
+    "This password file is larger than Arma’s 16 MB import limit." : {
 
     },
     "This password file is not valid UTF-8 text." : {
 
     },
-    "This password was imported from an insecure HTTP site. Crest keeps it available to view or copy but will not autofill it on an insecure connection." : {
+    "This password was imported from an insecure HTTP site. Arma keeps it available to view or copy but will not autofill it on an insecure connection." : {
 
     },
-    "This permanently removes their tabs and browser data from Crest. Downloaded files you already saved are kept." : {
+    "This permanently removes their tabs and browser data from Arma. Downloaded files you already saved are kept." : {
 
     },
-    "This permanently removes this Space’s browser data from Crest. Downloaded files you already saved are kept." : {
+    "This permanently removes this Space’s browser data from Arma. Downloaded files you already saved are kept." : {
 
     },
     "This policy applies only to %arg. Eligible tabs remain recoverable from Archive." : {
@@ -14278,30 +14278,30 @@
     "This removes %@ from this Space." : {
 
     },
-    "This session exceeds Crest’s Space, tab, folder, or text limits." : {
+    "This session exceeds Arma’s Space, tab, folder, or text limits." : {
 
     },
-    "This session file is larger than Crest’s 512 MB import limit." : {
+    "This session file is larger than Arma’s 512 MB import limit." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ملف الجلسة هذا أكبر من حد الاستيراد البالغ 512 ميغابايت في Crest."
+            "value" : "ملف الجلسة هذا أكبر من حد الاستيراد البالغ 512 ميغابايت في Arma."
           }
         }
       }
     },
-    "This session has no HTTP or HTTPS tabs Crest can import." : {
+    "This session has no HTTP or HTTPS tabs Arma can import." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا تحتوي هذه الجلسة على علامات تبويب HTTP أو HTTPS يمكن لـ Crest استيرادها."
+            "value" : "لا تحتوي هذه الجلسة على علامات تبويب HTTP أو HTTPS يمكن لـ Arma استيرادها."
           }
         }
       }
     },
-    "This session was saved by a newer version of Crest. Update Crest before opening it." : {
+    "This session was saved by a newer version of Arma. Update Arma before opening it." : {
 
     },
     "This sign-in form belongs to a different website." : {
@@ -14336,7 +14336,7 @@
     "This Tab" : {
       "comment" : "Screen sharing picker note on the tab of the page that asks."
     },
-    "This tab needs a newer Crest" : {
+    "This tab needs a newer Arma" : {
 
     },
     "This type of file can change your computer. Keep it only if you trust its source." : {
@@ -14423,7 +14423,7 @@
     "Too many agents are allowed. Forget one in Settings first." : {
 
     },
-    "Too many agents are using Crest right now." : {
+    "Too many agents are using Arma right now." : {
 
     },
     "Top Hit" : {
@@ -14684,12 +14684,12 @@
         }
       }
     },
-    "Turn on Crest under Privacy & Security > Passkeys Access for Web Browsers in system settings." : {
+    "Turn on Arma under Privacy & Security > Passkeys Access for Web Browsers in system settings." : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "شغّل Crest من إعدادات النظام في الخصوصية والأمان > وصول مفاتيح المرور لمتصفحات الويب."
+            "value" : "شغّل Arma من إعدادات النظام في الخصوصية والأمان > وصول مفاتيح المرور لمتصفحات الويب."
           }
         }
       }
@@ -14697,7 +14697,7 @@
     "Turn on Import Space to include it." : {
 
     },
-    "Turn on Location Services for this Mac, then allow Crest." : {
+    "Turn on Location Services for this Mac, then allow Arma." : {
 
     },
     "Turn on Move Space to include it in this import." : {
@@ -14944,7 +14944,7 @@
     "Update Check Failed" : {
 
     },
-    "Update Crest on your other devices to share sign-ins there." : {
+    "Update Arma on your other devices to share sign-ins there." : {
 
     },
     "Update error" : {
@@ -15145,7 +15145,7 @@
     "Use Clear on the line in the practice sidebar." : {
 
     },
-    "Use Crest Passwords" : {
+    "Use Arma Passwords" : {
 
     },
     "Use Default Color" : {
@@ -15221,7 +15221,7 @@
         }
       }
     },
-    "Use Translate Page Again after a page loads new content. Show Original restores text changed by Crest while preserving later website changes and your edits." : {
+    "Use Translate Page Again after a page loads new content. Show Original restores text changed by Arma while preserving later website changes and your edits." : {
 
     },
     "Use Website Icon" : {
@@ -15477,12 +15477,12 @@
     "Weight" : {
 
     },
-    "Welcome to Crest" : {
+    "Welcome to Arma" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "مرحبًا بك في Crest"
+            "value" : "مرحبًا بك في Arma"
           }
         }
       }
@@ -15493,21 +15493,21 @@
     "What's New" : {
 
     },
-    "What's New in Crest" : {
+    "What's New in Arma" : {
 
     },
-    "What's New in Crest %@" : {
+    "What's New in Arma %@" : {
 
     },
     "Wheat" : {
 
     },
-    "When Crest opens" : {
+    "When Arma opens" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "عند فتح Crest"
+            "value" : "عند فتح Arma"
           }
         }
       }

@@ -20,6 +20,7 @@ rule written once.
 | `Architecture/` | Core architecture, the control plane, engine abstraction, content blocking, desktop Picture in Picture |
 | `RepositoryGuardrails.md` | What the checks enforce: formatting, versions, release notes, architecture, feature organization, isolated sessions |
 | `Distribution.md` | Release channels, signing, notarization, appcasts, release verification |
+| `Renaming.md` | Every place the product name, bundle identifier, icon, helper name and repository live, with the keep-lists and the order to change them |
 | `LinkOpeningPolicy.md`, `NativeTabs.md` | Where links and opened windows go; tabs with native content |
 | `ReleaseNotes.json` | The release-note catalog, bundled into the apps and read by the release tools |
 | `ROADMAP.md` | Public release outcomes; its managed section is rendered by `Scripts/render-roadmap.py` |

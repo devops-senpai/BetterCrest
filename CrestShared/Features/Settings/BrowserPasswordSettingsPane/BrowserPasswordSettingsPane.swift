@@ -101,7 +101,7 @@ struct BrowserPasswordSettingsPane: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text(
-                "The CSV file will contain readable usernames and passwords from only the selected Space. Anyone with the file can read them. Crest will authenticate you before opening the \(layout.exportDestinationName)."
+                "The CSV file will contain readable usernames and passwords from only the selected Space. Anyone with the file can read them. Arma will authenticate you before opening the \(layout.exportDestinationName)."
             )
         }
         .confirmationDialog(
@@ -117,7 +117,7 @@ struct BrowserPasswordSettingsPane: View {
             Text(selectionDeletionMessage)
         }
         .alert(
-            "Remove Passwords Crest Can’t Read?",
+            "Remove Passwords Arma Can’t Read?",
             isPresented: $confirmsUnreadableRemoval
         ) {
             Button("Remove", role: .destructive) {
@@ -126,7 +126,7 @@ struct BrowserPasswordSettingsPane: View {
             }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Crest can’t show or fill them. This cannot be undone.")
+            Text("Arma can’t show or fill them. This cannot be undone.")
         }
         .sheet(item: $credentialDetailRequest) { request in
             BrowserCredentialDetailView(
@@ -197,7 +197,7 @@ struct BrowserPasswordSettingsPane: View {
             if canRevealSelectedSpaceData {
                 Section {
                     Toggle(
-                        "Use Crest Passwords",
+                        "Use Arma Passwords",
                         isOn: browser.credentialPreferenceBinding(
                             \.isEnabled,
                             in: space
@@ -233,7 +233,7 @@ struct BrowserPasswordSettingsPane: View {
                     }
                     .disabled(!space.settings.credentialPreferences.isEnabled)
                 } header: {
-                    Text("Crest Passwords")
+                    Text("Arma Passwords")
                 } footer: {
                     if !space.settings.credentialPreferences.isEnabled {
                         Text(Self.disabledDescription).crestFormFootnote()
@@ -467,7 +467,7 @@ struct BrowserPasswordSettingsPane: View {
         let count = selectedCredentialIDs.count
         let passwordLabel = count == 1 ? "password" : "passwords"
         return
-            "Delete \(count) selected \(passwordLabel) from \(spaceName)? Crest will authenticate you and apply the deletion as one Keychain change. This cannot be undone."
+            "Delete \(count) selected \(passwordLabel) from \(spaceName)? Arma will authenticate you and apply the deletion as one Keychain change. This cannot be undone."
     }
 
     private var unreadablePasswordsLabel: String {
@@ -516,7 +516,7 @@ struct BrowserPasswordSettingsPane: View {
             let selectedSpaceID
         else {
             if case .failure = result {
-                credentials.errorMessage = "Crest couldn’t open that password file."
+                credentials.errorMessage = "Arma couldn’t open that password file."
             }
             return
         }

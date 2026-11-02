@@ -7,7 +7,7 @@ keywords: [Peek, Quick Window, Tiny Arc, preview, external links, transient brow
 
 # Use Peek and Quick Window
 
-Peek and Quick Window are transient browsing surfaces. Both use a real Crest Space profile so the page can access the right signed-in session and Crest Passwords, but neither has to become a durable tab.
+Peek and Quick Window are transient browsing surfaces. Both use a real Arma Space profile so the page can access the right signed-in session and Arma Passwords, but neither has to become a durable tab.
 
 ## Peek
 
@@ -35,7 +35,7 @@ Open a blank Quick Window with **Option-Shift-Command-N** on Mac. In **Settings 
 
 ### Sign-in and other popup windows
 
-When a page opens a popup window, like a **Sign in with Google** or **Sign in with Apple** window, Crest for Mac shows it in a Quick Window in the same Space. The popup stays connected to the page that opened it, uses the same engine as that page, and closes itself when the sign-in finishes. Choose **Open in** and the Space to keep it as a tab instead, or close the Quick Window to drop it. A page that opens a new tab, rather than a popup window, still opens a tab beside it. On iPhone and iPad, a popup opens as a tab.
+When a page opens a popup window, like a **Sign in with Google** or **Sign in with Apple** window, Arma for Mac shows it in a Quick Window in the same Space. The popup stays connected to the page that opened it, uses the same engine as that page, and closes itself when the sign-in finishes. Choose **Open in** and the Space to keep it as a tab instead, or close the Quick Window to drop it. A page that opens a new tab, rather than a popup window, still opens a tab beside it. On iPhone and iPad, a popup opens as a tab.
 
 ## Shared windows and Blank Window on Mac
 

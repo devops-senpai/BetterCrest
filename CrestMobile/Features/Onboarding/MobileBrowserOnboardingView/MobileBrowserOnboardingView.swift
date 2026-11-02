@@ -112,7 +112,7 @@ struct MobileBrowserOnboardingView: View {
 
     private var welcomePrimaryTitle: String {
         if welcomeAction.waitsOnCloud { return "Checking iCloud" }
-        return welcomeAction.opensCrest ? "Open Crest" : "Get Started"
+        return welcomeAction.opensCrest ? "Open Arma" : "Get Started"
     }
 
     private var featureCloseTitle: String? {
@@ -173,7 +173,7 @@ struct MobileBrowserOnboardingView: View {
 
     private func welcomeStatus(_ action: BrowserOnboardingWelcomeAction) -> String {
         if action.waitsOnCloud {
-            return "Checking iCloud for an existing Crest setup…"
+            return "Checking iCloud for an existing Arma setup…"
         }
         if action.opensCrest {
             return "Your existing Spaces are ready."

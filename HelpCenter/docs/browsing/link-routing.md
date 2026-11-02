@@ -1,13 +1,13 @@
 ---
 title: Route links to the right Space
-description: Build Air Traffic Control-style URL rules that send external links to a chosen Crest Space.
+description: Build Air Traffic Control-style URL rules that send external links to a chosen Arma Space.
 slug: /link-routing
 keywords: [link routing, Air Traffic Control, URL rules, external links, Space]
 ---
 
 # Route links to the right Space
 
-Link Routing is Crest’s equivalent of Arc’s Air Traffic Control: matching links opened from other apps can go to a specific Space before the normal external-link destination is considered.
+Link Routing is Arma’s equivalent of Arc’s Air Traffic Control: matching links opened from other apps can go to a specific Space before the normal external-link destination is considered.
 
 ## Create a route
 
@@ -28,7 +28,7 @@ Start with the smallest meaningful domain or URL fragment, test a link from anot
 
 ## Relationship to Quick Window
 
-Routing runs before the default **Links from other apps** choice. If no rule matches, Crest uses Quick Window, Most Recent Space, or the Chosen Space according to that default.
+Routing runs before the default **Links from other apps** choice. If no rule matches, Arma uses Quick Window, Most Recent Space, or the Chosen Space according to that default.
 
 A route targeting a protected Private Space is hidden until that Space is unlocked. This prevents its URL patterns and destination identity from leaking through Settings.
 

@@ -4,7 +4,7 @@ import XCTest
 
 final class BrowserLaunchEnvironmentTests: XCTestCase {
     func testCloudReviewRequiresExplicitNamedIsolationAndNeverUsesTheProductionZone() throws {
-        let configuration = BrowserCloudSyncConfiguration(containerIdentifier: "iCloud.com.pauldavis.crest")
+        let configuration = BrowserCloudSyncConfiguration(containerIdentifier: "iCloud.com.senpaimedia.arma")
         let values = [
             "CREST_ISOLATED_SESSION": "1", "CREST_ISOLATED_PERSISTENCE_ID": "device-one",
             "CREST_ISOLATED_CLOUD_SYNC_ID": "shared-review",

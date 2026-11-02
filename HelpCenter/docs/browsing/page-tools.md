@@ -9,7 +9,7 @@ keywords: [translate, translation, languages, Reader, find, zoom, share, Markdow
 
 Page actions operate on the focused page. In Split View, click or tap a card first so the intended page owns the command.
 
-On Mac, each page runs in Chromium or WebKit. Crest on iPhone and iPad uses WebKit. A few page tools depend on the page's engine, and this page notes where. To switch a page, see [Chromium and WebKit on Mac](./engines.md).
+On Mac, each page runs in Chromium or WebKit. Arma on iPhone and iPad uses WebKit. A few page tools depend on the page's engine, and this page notes where. To switch a page, see [Chromium and WebKit on Mac](./engines.md).
 
 ## Translate a page
 
@@ -19,7 +19,7 @@ On Mac, open the translation toolbar with **Shift-Command-L**. On iPhone and iPa
 
 Choose **Detect Language** or a source language, pick a target language, then translate. **Show Original** restores the page’s original text. Language availability depends on Apple’s support; Apple asks before downloading a language that is needed.
 
-**Automatically Translate** is off by default. When enabled, Crest uses your preferred device language and languages already downloaded. Showing the original keeps that page untranslated until you navigate or reload.
+**Automatically Translate** is off by default. When enabled, Arma uses your preferred device language and languages already downloaded. Showing the original keeps that page untranslated until you navigate or reload.
 
 Downloaded language packs are shared with other apps and remain on the device after Private Browsing ends.
 

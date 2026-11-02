@@ -6,10 +6,10 @@ import Observation
 final class BrowserSoftwareUpdateModel {
     // MARK: - Static Variables
 
-    private static let readyMessage = "The update is ready. Crest will relaunch to finish installing it."
+    private static let readyMessage = "The update is ready. Arma will relaunch to finish installing it."
     private static let automaticReadyMessage =
-        "The update is ready. Restart Crest now, or quit normally to install it the next time Crest opens."
-    private static let waitingToQuitMessage = "Waiting for Crest to quit before installing…"
+        "The update is ready. Restart Arma now, or quit normally to install it the next time Arma opens."
+    private static let waitingToQuitMessage = "Waiting for Arma to quit before installing…"
 
     // MARK: - Variables
 
@@ -61,7 +61,7 @@ final class BrowserSoftwareUpdateModel {
     var snapshot: BrowserSoftwareUpdateWidgetSnapshot {
         BrowserSoftwareUpdateWidgetSnapshot(
             phase: phase,
-            title: updateTitle ?? "Crest Update",
+            title: updateTitle ?? "Arma Update",
             version: updateVersion,
             build: updateBuild,
             releaseNotes: releaseNotes,
@@ -90,7 +90,7 @@ final class BrowserSoftwareUpdateModel {
     func presentPermissionRequest(response: @escaping (Bool) -> Void) {
         resetCallbacks()
         phase = .permission
-        message = "Crest can check for updates automatically without sending a system profile."
+        message = "Arma can check for updates automatically without sending a system profile."
         permissionResponse = response
         present()
     }
@@ -107,7 +107,7 @@ final class BrowserSoftwareUpdateModel {
     func presentChecking(cancellation: @escaping () -> Void) {
         resetCallbacks()
         phase = .checking
-        message = "Checking for a newer version of Crest…"
+        message = "Checking for a newer version of Arma…"
         self.cancellation = cancellation
         present()
     }
@@ -144,7 +144,7 @@ final class BrowserSoftwareUpdateModel {
         resetCallbacks()
         self.cancellation = cancellation
         phase = .checking
-        message = "Checking whether a newer Crest update is available…"
+        message = "Checking whether a newer Arma update is available…"
         present()
         dismiss()
         return true
@@ -200,8 +200,8 @@ final class BrowserSoftwareUpdateModel {
         self.dismiss = dismiss
         message =
             isInformationOnly
-            ? "This release is available from the Crest website."
-            : "A new version of Crest is ready to download."
+            ? "This release is available from the Arma website."
+            : "A new version of Arma is ready to download."
         present()
     }
 
@@ -412,8 +412,8 @@ final class BrowserSoftwareUpdateModel {
         didRelaunch = relaunched
         message =
             relaunched
-            ? "Crest was updated and relaunched successfully."
-            : "Crest was updated successfully."
+            ? "Arma was updated and relaunched successfully."
+            : "Arma was updated successfully."
         self.acknowledgement = acknowledgement
         present()
     }

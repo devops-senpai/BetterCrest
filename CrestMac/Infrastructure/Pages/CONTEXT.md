@@ -22,7 +22,7 @@ only through its adapter, its events and the core's page state.
 | `BrowserPlatformPage.swift`, `BrowserPlatformWebView.swift`, `BrowserPlatformTransientPageLease.swift` | The shared seams resolved to the Mac's concrete types |
 | `BrowserWebHostView.swift` | The `NSView` that presents a page's view in whichever window shows it |
 | `BrowserTitleBarPointerTracker.swift`, `BrowserWindowTitleBarGuard.swift` | Keep a window from moving while the pointer is on a page under the title bar |
-| `BrowserPageContextMenuAction.swift` | Crest's actions ahead of the engine's page menu |
+| `BrowserPageContextMenuAction.swift` | Arma's actions ahead of the engine's page menu |
 | `BrowserEngineInfoBar.swift`, `BrowserDeveloperViewport.swift`, `BrowserPageSnapshotImage.swift` | Engine info bars, developer viewport presets, page snapshots |
 | `EngineEvents/` | `BrowserPageEngineEvent` and one type per event: navigation, loading, title, URL, favicon, fullscreen, media, share sources, info bars, popups blocked, notifications, process termination, closing |
 

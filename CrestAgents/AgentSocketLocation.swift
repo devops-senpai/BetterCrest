@@ -32,7 +32,7 @@ enum AgentSocketLocation {
             return nil
         }
         let directory = URL(fileURLWithPath: home, isDirectory: true)
-            .appendingPathComponent("Library/Application Support/Crest/\(lane.rawValue)", isDirectory: true)
+            .appendingPathComponent("Library/Application Support/Arma/\(lane.rawValue)", isDirectory: true)
         let named = directory.appendingPathComponent(bundleIdentifier + ".sock", isDirectory: false).path
         if named.utf8.count <= maximumPathLength { return named }
         // A long home folder or identifier still fits as a digest.

@@ -1,54 +1,100 @@
 <div align="center">
-  <img src="Website/assets/crest-logo.svg" width="128" alt="Crest app icon">
-  <h1>Crest</h1>
+  <h1>Arma</h1>
   <p><strong>An open source browser for Mac, iPhone, and iPad.</strong></p>
   <p>Built with SwiftUI, running Chromium and WebKit on Mac, with separate Spaces for different parts of your life.</p>
   <p>
-    <a href="https://github.com/pauljoda/Crest/actions/workflows/ci.yml"><img alt="Build Crest" src="https://github.com/pauljoda/Crest/actions/workflows/ci.yml/badge.svg"></a>
-    <a href="https://github.com/pauljoda/Crest/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/pauljoda/Crest?display_name=tag&sort=semver"></a>
+    <a href="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml"><img alt="Build Arma" src="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml/badge.svg"></a>
     <a href="LICENSE"><img alt="MPL-2.0 license" src="https://img.shields.io/badge/license-MPL--2.0-315f93"></a>
-  </p>
-  <p>
-    <a href="https://crestbrowser.com/"><strong>Visit the product site</strong></a>
-    ·
-    <a href="https://crestbrowser.com/guides/">Read the guides</a>
-    ·
-    <a href="https://github.com/pauljoda/Crest/releases/latest">Download for Mac</a>
-    ·
-    <a href="https://github.com/users/pauljoda/projects/3">Roadmap</a>
-    ·
-    <a href="https://www.reddit.com/r/CrestBrowser">Community</a>
   </p>
 </div>
 
-Browse Mac releases by channel: [Stable](https://github.com/pauljoda/Crest/releases?q=prerelease%3Afalse),
-[Nightly](https://github.com/pauljoda/Crest/releases?q=prerelease%3Atrue+%22Nightly+builds%22), or
-[Development](https://github.com/pauljoda/Crest/releases?q=prerelease%3Atrue+%22Development+builds%22).
+Arma is a fork of [Crest](https://github.com/pauljoda/Crest) by Paul Davis.
+It carries Crest's main branch plus fixes, speedups and features that are
+not upstream. Arma is not affiliated with or endorsed by Crest or Paul
+Davis. The repository keeps the name BetterCrest; the browser is Arma. The
+user guides live in this repository under `HelpCenter/docs/`.
 
-<p align="center">
-  <a href="Website/assets/crest-work-mac.png"><img src="Website/assets/crest-work-mac.png" width="100%" alt="Crest on Mac with Lion Work first, Winter Personal second, and Audience research open beside the Launch Atlas folder"></a>
-</p>
+## What Arma adds
+
+Everything below is in Arma and not in upstream Crest. Each line is one
+change; the commit of the same name has the detail.
+
+### Features
+
+- **Per-Space themes.** A Space's Appearance page chooses the color its folders wear and their back face, one exact text color for the sidebar, and a tint, opacity and text color for the command palette in light and dark. Each group has its own Reset.
+- **A dark look per Space.** A Space can keep a second complete look that it wears while windows are dark.
+- **Theme files.** Export a Space's look as JSON and load one from a file, from the Appearance page or the Space's menu. Catppuccin Latte, Frappé, Macchiato and Mocha ship as examples.
+- **Themes from the terminal.** `arma theme --space <name>` sets any part of a look, applies or exports theme files, pairs a light and a dark file, and resets sections, over a socket only this app's own helper can use.
+
+### Performance
+
+- Closing, deleting or moving a large selection of tabs finishes without a pause in Spaces with thousands of tabs.
+- The command palette keeps up as you type in Spaces with thousands of tabs.
+- Switching to the most recent tab answers right away in Spaces with thousands of tabs.
+- Keeping a window's recent tabs current checks them against the Space once instead of searching every tab for each.
+- Closing and moving tabs stays quick in Spaces with many folders.
+- The sidebar stays responsive with many pages loaded: a tab's row looks up only its own page.
+- Renaming or navigating a tab no longer checks every open tab's saved icon.
+- Following a link in a Space with a long history no longer rebuilds every visited link on the page.
+- Opening a tab whose page was unloaded no longer waits for other tabs' states to finish saving.
+- Saving device records writes each list through one prepared statement instead of one per row.
+- Moving the pointer over pages does less work while no link preview is waiting to appear.
+- The blurred page previews behind a locked Space appear sooner.
+- Each Mac window brings its pages up to date once per session change instead of repeating the tab icon and password passes.
+- The Now Playing widget decodes its artwork once per image instead of on every redraw.
+- A page a coding agent watches records each message and request without copying everything it already kept.
+- The Space previews on the setup pages ask the core to resolve the draft only when it changes.
+- On iPhone and iPad, each open page's state is saved once as the app leaves the foreground instead of twice.
+
+### Security and privacy
+
+- Coding agents reading a page's network requests no longer see sign-in headers a site spells its own way, such as X-CSRFToken, X-Auth-Token or an API key header.
+- Importing a password file with an oversized field is refused at once instead of stalling the app.
+- Closing a tab a coding agent was watching frees the console messages and network requests kept for it.
+
+### Bug fixes
+
+- Dragging the window by the empty sidebar strip works every time; a trackpad press there often moved nothing, and a press right after a drag counted as a double-click.
+- What's New in Settings lists the newest changes instead of the ones whose names sort last.
+- A tab an extension closes during an engine switch stays closed instead of coming back empty.
+- New tabs opened from a link, the palette, history or a local document load once instead of twice.
+- Clicking a command palette row right after typing opens it, and the arrow keys move the selection once results arrive.
+- Switching Spaces in Passwords settings while the previous list was still loading no longer blanks the new list.
+- Notifications from background websites and extensions keep appearing after many have been dismissed.
+- On iPhone, Undo in Crest Studio steps back one change at a time.
+- On iPad, a page's alerts, sign-in prompts and export sheets appear in the window that shows the page.
+- On iPad, a site's location request no longer waits forever when Settings opens beside the app.
+- On iPad, a closed window lets go of its pages, so its memory comes back and a restored window opens its tabs.
+
+### Repository and tooling
+
+- The patch version is derived from history and each release note is its own file, so branches stop conflicting on every merge.
+- `Scripts/sync-upstream.sh` merges upstream Crest in one step and leaves only real code conflicts to a person.
+- `Scripts/sync-upstream-engine.sh` mirrors upstream's prebuilt Chromium engine for the current engine key, so the fork never builds Chromium.
+- `ROUTING.md` and a `CONTEXT.md` in every folder that groups work tell a contributor or an agent what to read for each kind of change.
+- `Documentation/Renaming.md` lists every place a product name lives.
+- `Brand/` holds the banner artwork; `Scripts/generate-app-icon-palettes.py` turns one banner into the app icon, its palette variants, picker previews and Dock images.
+- The version bump check runs statically, the CI whitespace gate works, and stray files no longer change the engine key.
 
 ## A browser with boundaries
 
-Most browsers put every login, tab, and distraction into one long-lived container. Crest begins with **Spaces** instead. Give work, home, research, or a private session its own banner; Crest gives each one its own cookies, website data, history, archive, tabs, credentials, settings, and sync identity.
+Most browsers put every login, tab, and distraction into one long-lived container. Arma begins with **Spaces** instead. Give work, home, research, or a private session its own banner; Arma gives each one its own cookies, website data, history, archive, tabs, credentials, settings, and sync identity.
 
 Switching Spaces changes more than the color of the window. It changes the browsing context.
 
-When several Spaces should share one set of sign-ins, make them **Sub-Spaces**: each keeps its own tabs and look while the group shares cookies, history, passwords, and extensions. [Read the Sub-Spaces guide.](https://crestbrowser.com/guides/sub-spaces/)
+When several Spaces should share one set of sign-ins, make them **Sub-Spaces**: each keeps its own tabs and look while the group shares cookies, history, passwords, and extensions. [Read the Sub-Spaces guide.](HelpCenter/docs/spaces/sub-spaces.md)
 
 ## Two engines on Mac
 
-Crest for Mac opens pages in **Chromium** by default. Its engine is Chromium
-with Crest's privacy changes, which keep your browsing, form and account data
-away from Google, and runs Chrome Web Store extensions. Any website or page can
-open in **WebKit** instead, which adds Reader, whole-page translation, built-in
-content blocking, and FairPlay video. Chromium plays Widevine video; Netflix,
-Disney+, Max and Prime Video open in WebKit, and a page that needs protected
-video Chromium can't play switches to WebKit automatically, respecting any
+Arma for Mac opens pages in **Chromium** by default. Its engine is built on
+[ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium),
+with Google integrations removed, and runs Chrome Web Store extensions. Any
+website or page can open in **WebKit** instead, which adds Reader, whole-page
+translation, built-in content blocking, and FairPlay video. When a page needs
+protected video, Arma switches to WebKit automatically, respecting any
 unsaved-changes prompt before moving it. Choose the default engine and
 per-website rules in **Settings → Engines**. iPhone and iPad use WebKit. The
-[engine guide](https://crestbrowser.com/guides/engines/) lists what each engine
+[engine guide](HelpCenter/docs/browsing/engines.md) lists what each engine
 supports.
 
 ## Crest Studio and Appearance
@@ -56,11 +102,6 @@ supports.
 **Crest Studio** puts each Space's crest on that Space's own sidebar background. Start from a template, then step through shape, field, band, emblem, border, finish and sidebar, choosing from previews of your own crest. Every part of the crest and the sidebar has its own color, named by what it paints. Use heraldic artwork, emoji, monograms, or a searchable SF Symbols picker, and Shuffle and Undo freely.
 
 **Appearance** lets you dock the sidebar on either edge, go borderless, adjust tab shape and scale, choose a pin layout, and tune tab and address-field colors, or let them follow each Space's accent. Start with a preset, see changes live, and reset individual settings. Choose an app icon palette, folder colors and icons, and a default page zoom from 50% to 300%.
-
-<p align="center">
-  <a href="Website/assets/crest-studio-mac.png"><img src="Website/assets/crest-studio-mac.png" width="49%" alt="Crest Studio with a Winter crest on its Space’s sidebar background, its colors, the shape step, and the live sidebar"></a>
-  <a href="Website/assets/crest-look-and-feel-mac.png"><img src="Website/assets/crest-look-and-feel-mac.png" width="49%" alt="Appearance settings with window, accent, tab, and pin controls"></a>
-</p>
 
 ## Browsing features
 
@@ -72,48 +113,38 @@ supports.
 - **Search and commands.** Open a URL, search the web, find tabs and history in your Space, or run a command from one field. Choose custom search engines and optional suggestions. Mac shortcuts can be rebound.
 - **Getting Started.** Learn tabs, pins, and folders in an interactive browser tab, with Split View practice on Mac.
 
-![Two pages open side by side in a Split View group in Crest on Mac](Website/assets/crest-split-view-mac.png)
-
 ## Page tools
 
 | Capability | What it does |
 | --- | --- |
 | On-device translation | On iPhone, iPad, and WebKit pages, detect a page’s language, translate it, or show the original. On Chromium pages, translate selected text. Optional automatic translation uses downloaded languages. Apple may ask to download additional languages. |
 | Reader and page tools | Read supported articles with fewer distractions on WebKit pages, find text, adjust zoom, share links, copy Markdown links, print, and export PDF or web archives where supported. |
-| Extensions on Mac | Install Chrome Web Store extensions in each Space. They run on Chromium pages, with popups and tab-specific side panels. [Compatibility varies.](https://crestbrowser.com/guides/extension-compatibility/) |
+| Extensions on Mac | Install Chrome Web Store extensions in each Space. They run on Chromium pages, with popups and tab-specific side panels. [Compatibility varies.](HelpCenter/docs/extensions/compatibility.md) |
 | Developer tools on Mac | Preview phone, desktop, and custom viewport sizes; capture pages; open Chromium DevTools or Web Inspector for the page's engine. The toolbar appears on localhost, or on any site with **Shift-Command-I**. |
 | Media | Control eligible active media from the sidebar. On Mac, keep supported videos visible with Picture in Picture, including optional automatic PiP. |
 | Downloads and uploads | Follow download progress and revisit files in Downloads. Pause and resume Chromium transfers when the server supports recovery. On iPhone and iPad, upload through Photos, camera, or Files. |
 
 ## Privacy and sync
 
-**Private Spaces** use temporary website storage and stay out of normal history, restoration, and sync. They can require device authentication and relock when Crest leaves the foreground. **Crest Passwords** keeps origin- and Space-matched credentials in the system Keychain, with authentication for sensitive access.
+**Private Spaces** use temporary website storage and stay out of normal history, restoration, and sync. They can require device authentication and relock when Arma leaves the foreground. **Arma Passwords** keeps origin- and Space-matched credentials in the system Keychain, with authentication for sensitive access.
 
 Site permissions and content blocking are controlled per Space. Built-in ad and tracker blocking covers iPhone, iPad, and WebKit pages; on Chromium pages, install a blocking extension. Closed and cleaned-up tabs go to a recoverable Archive, subject to your retention settings. **Keep Loaded** protects a page from ordinary unloading when its live state matters.
 
-Optional **iCloud sync** carries durable Spaces, tabs, folders, Split View groups, appearance, history, and Archive between devices. Password values stay out of CloudKit; eligible passwords can use iCloud Keychain separately. Start a browser import on Mac, review each destination Space, or export a portable Crest archive.
+Optional **iCloud sync** carries durable Spaces, tabs, folders, Split View groups, appearance, history, and Archive between devices. Password values stay out of CloudKit; eligible passwords can use iCloud Keychain separately. Start a browser import on Mac, review each destination Space, or export a portable archive.
 
-Read the [privacy policy](https://crestbrowser.com/privacy/), [Space isolation guide](https://crestbrowser.com/guides/spaces-and-isolation/), and [sync guide](https://crestbrowser.com/guides/sync-across-devices/) for the boundaries and controls.
+Read the [Space isolation guide](HelpCenter/docs/spaces/spaces-and-isolation.md) and [sync guide](HelpCenter/docs/spaces/sync-across-devices.md) for the boundaries and controls. _Placeholder: Arma has no published privacy policy yet._
 
-## Get Crest
+## Get Arma
 
-The same Spaces, shaped for each screen. iPad keeps the sidebar beside your page; iPhone gives your tabs and folders their own view.
+_Placeholder: no screenshots of Arma yet._
 
-<p align="center">
-  <a href="Website/assets/crest-work-ipad.png"><img src="Website/assets/crest-work-ipad.png" width="72%" alt="Lion Work first and Winter Personal second on iPad, with Audience research open"></a>
-  <a href="Website/assets/crest-work-iphone-sidebar.png"><img src="Website/assets/crest-work-iphone-sidebar.png" width="25%" alt="The same Spaces, Launch Atlas folder, and selected Audience research tab in the iPhone sidebar"></a>
-</p>
-
-| Platform | Install |
-| --- | --- |
-| Mac · Apple silicon · macOS 26.1+ | [Signed, notarized download](https://github.com/pauljoda/Crest/releases/latest) with built-in Sparkle updates.<br><br>Or install via Homebrew:<br>`brew install --cask crest-browser` |
-| iPhone · iOS 26.1+ | [App Store](https://apps.apple.com/us/app/crest-browser/id6797335023) |
-| iPad · iPadOS 26.1+ | [App Store](https://apps.apple.com/us/app/crest-browser/id6797335023) |
-| iPhone & iPad beta | [TestFlight](https://testflight.apple.com/join/vV1CM49Q) |
+Arma has no signed releases yet. Build it from source as described
+below; the Mac app runs Chromium when a prebuilt engine is packaged in, and
+WebKit alone otherwise.
 
 ## Built as an Apple-platform app
 
-Crest's browser state and rules live in a portable core written in C# and compiled with NativeAOT. The apps are written in Swift and SwiftUI: shared features live in `CrestShared`, and each platform owns its windows, engine hosting, commands, and adaptive presentation. On Mac, pages render in Chromium by default or in WebKit; iPhone and iPad use WebKit.
+Arma's browser state and rules live in a portable core written in C# and compiled with NativeAOT. The apps are written in Swift and SwiftUI: shared features live in `CrestShared`, and each platform owns its windows, engine hosting, commands, and adaptive presentation. On Mac, pages render in Chromium by default or in WebKit; iPhone and iPad use WebKit.
 
 ```text
 CrestCore/       Portable core: session, sync, pages, and browser rules
@@ -126,7 +157,7 @@ CrestMobile/     iPhone and iPad app and platform-specific presentation
 
 Read [the architecture overview](Documentation/ARCHITECTURE.md) for Space isolation, persistence, credentials, synchronization, and the engine boundary.
 
-## Build Crest
+## Build Arma
 
 Requirements:
 
@@ -136,43 +167,15 @@ Requirements:
 - .NET SDK pinned by `CrestCore/global.json`, installable with `Scripts/control-plane/install-dotnet.sh`
 
 ```bash
-git clone https://github.com/pauljoda/Crest.git
-cd Crest
+git clone https://github.com/devops-senpai/BetterCrest.git
+cd Arma
 Scripts/bootstrap.sh
 open Crest.xcodeproj
 ```
 
-Xcode builds and embeds the self-contained .NET core for Mac, iOS, and Simulator. Its intermediate files stay in Derived Data; the installed app does not require a .NET runtime. The `Crest` scheme builds the Mac app with WebKit only; releases add a prebuilt Chromium engine, described in the [Chromium engine README](CrestEngines/Chromium/README.md). See the [control-plane build workflow](Documentation/Architecture/ControlPlane.md#build-workflow) for isolated review builds and Chromium packaging.
+Xcode builds and embeds the self-contained .NET core for Mac, iOS, and Simulator. Its intermediate files stay in Derived Data; the installed app does not require a .NET runtime. The `Crest` scheme builds the Mac app with WebKit only; a Chromium build adds a prebuilt engine, described in the [Chromium engine README](CrestEngines/Chromium/README.md). See the [control-plane build workflow](Documentation/Architecture/ControlPlane.md#build-workflow) for isolated review builds and Chromium packaging.
 
 `project.yml` is the source of truth for targets and build settings. Run `xcodegen generate` after changing source roots, targets, or project configuration.
-
-## Releases and updates
-
-The [Crest 0.8 release notes](CHANGELOG.md#080---2026-10-12) describe coding
-agents on Mac, the new command palette and Settings, and more browsers to import
-from. Crest requires Apple silicon and macOS 26.1 or later on Mac; iPhone and
-iPad use WebKit.
-
-When updating from a WebKit-only release, your Spaces, tabs, history, and Crest
-Passwords carry over. Chromium has separate website storage, so sites may ask
-you to sign in again. You can keep WebKit as your default. Reinstall older
-WebKit extensions from the Chrome Web Store in each Space. The
-[upgrade guide](https://crestbrowser.com/guides/engines/#after-updating-from-a-webkit-only-crest)
-explains these changes and the engine feature limits.
-
-macOS releases are distributed directly through GitHub Releases as signed,
-notarized Apple-silicon disk images, one app with both engines. Crest uses
-Sparkle 2 with a native SwiftUI update interface. Stable and nightly builds
-share a signed appcast, and development builds have their own; choosing Nightly
-or Development is an explicit choice in Settings → About.
-
-GitHub Actions builds every public release, verifies its Developer ID signature
-and notarization, publishes provenance and checksums, then updates the signed
-`updates` branch appcast and that channel's release-note cursor together only
-after the immutable release assets exist. Public downloads live in GitHub
-Releases rather than GitHub Packages. See the [distribution
-runbook](Documentation/Distribution.md) for the channel, credential,
-publication, and verification contracts.
 
 ## Validate a change
 
@@ -184,110 +187,27 @@ Scripts/validate-cache-hygiene.sh
 
 Run the relevant behavioral tests and repository checks. Review visual, layout, and static-copy changes in the real app, Simulator, or browser.
 
-## Project status
+## Relationship to Crest
 
-Crest is under active development. The current implementation includes the core browsing, Space isolation, native platform chrome, credentials, data portability, synchronization foundations, Quick Window, Peek, and privacy features described above. The [Crest Roadmap project](https://github.com/users/pauljoda/projects/3) is the public release view; approval-gated and physical-device work remains documented in the [roadmap](Documentation/ROADMAP.md).
-
-## Community and support
-
-Use [r/CrestBrowser](https://www.reddit.com/r/CrestBrowser) for questions,
-feedback, ideas, and website or extension compatibility discussion. Use
-[GitHub Issues](https://github.com/pauljoda/Crest/issues/new/choose) for
-reproducible bugs and concrete tracked outcomes. Security concerns belong in a
-[private vulnerability report](https://github.com/pauljoda/Crest/security/advisories/new),
-never a public post. [SUPPORT.md](SUPPORT.md) explains each route in detail.
-
-Crest is one of several open source projects built by Paul Davis. You can
-support the work through [Ko-fi](https://ko-fi.com/pauljoda/tiers),
-[Patreon](https://www.patreon.com/CrestBrowser) or
-[GitHub Sponsors](https://github.com/sponsors/pauljoda). Sponsorship does not
-buy roadmap priority or private access.
-
-## Sponsors
-
-Monthly support helps pay for hosting, signing, testing, and development across
-Paul's open source projects. Sponsors can be recognized in the public
-[sponsor roll](SPONSORS.md) at one of three levels:
-
-- **Sponsor — $25/month:** top placement with an optional approved link.
-- **Sustainer — $10/month:** higher placement with an optional approved link.
-- **Supporter — $3/month:** name in the public roll.
-
-Every level can also have a sponsor flair on
-[r/CrestBrowser](https://www.reddit.com/r/CrestBrowser). Recognition is
-optional. A listing is a thank-you, not an endorsement or a way to buy roadmap
-priority, private support, or project ownership. See the membership tiers on
-[Ko-fi](https://ko-fi.com/pauljoda/tiers) or
-[Patreon](https://www.patreon.com/CrestBrowser) to become a monthly sponsor.
+Arma tracks Crest's `main` and merges it in regularly; its own
+changes stay here. Use
+[GitHub Issues](https://github.com/devops-senpai/BetterCrest/issues) for bugs.
 
 ## AI usage
 
-AI tools assist with Crest's development, audits, testing, documentation, and
-project maintenance. Maintainers direct product design and architecture, review
-generated changes, and remain responsible for everything that ships.
-
-Contributors are welcome to use AI tools. You must understand, review, and
-validate what you submit, explain your decisions, and address feedback. The
-same quality standards apply regardless of how a contribution was produced.
-
-Any change an AI tool helped produce must follow the
-[`crest-contribution` skill](.agents/skills/crest-contribution/SKILL.md). It
-carries the C# and Swift style, the architecture and UI rules, the test
-policy, and the pull request requirements that are not obvious from the code.
-Claude Code finds it through `.claude/skills` and Codex through
-`.agents/skills`; any other agent should start from [`AGENTS.md`](AGENTS.md),
-which points to it. The pull request template asks you to confirm the skill
-was followed, and a check reads that answer. Every pull request also receives
-an automated CodeRabbit review; treat its comments as a first pass, not a
-verdict.
-
-Submit only work you can stand behind. AI-generated code, test results, and
-claims need verification before they become part of a contribution.
-
-## Contributing
-
-Want to help? Please do! While I feel confident doing the actual dev work,
-there are some areas that desperately need help.
-
-- **Designer:** if you are a designer, I would love any input or help with the website, promotional material, and feedback on the app's UI itself.
-- **Security:** I have some background in cyber security, mainly red team/blue team and some as a dev, so I welcome any and all security audits and improvements. Please report findings through the built-in security reporting.
-- **Engine guru:** if you have lots of experience with Chromium and browser engines in general, I would love any input or help.
-
-Anyone can have one pull request open at a time. To open more, become a
-vetted contributor: read
-[Who can contribute code](CONTRIBUTING.md#who-can-contribute-code) and message
-me on [Discord](https://discord.gg/gjrM5qMB6x). Please follow the guidelines and make sure your
-work is well done and aligns with the product. If you have a more drastic
-change, you can always fork it to try it out, then share it to see whether it
-would be a good fit to merge in.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and change discipline,
-[GOVERNANCE.md](GOVERNANCE.md) for project ownership, and the
-[documentation index](Documentation/README.md) for engineering references.
-Architecture changes should preserve the Space boundary and the native shape
-of each platform.
-
-## Contributors
-
-<a href="https://github.com/pauljoda/Crest/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=pauljoda/Crest" alt="People who have contributed to Crest">
-</a>
+AI tools assist with Arma's development, audits, testing and
+documentation. Every generated change is reviewed and validated before it is
+committed. Any change an AI tool helps produce follows the
+[`crest-contribution` skill](.agents/skills/crest-contribution/SKILL.md), which
+carries the C# and Swift style, the architecture and UI rules, and the test
+policy.
 
 ## License and brand
 
-Crest source code is available under the [Mozilla Public License 2.0](LICENSE).
-The source is open for inspection, modification, and commercial use under that
-license. The Crest name, app icon, logos, and official distribution identity
-are reserved; modified distributions must use their own branding as described
-in [TRADEMARKS.md](TRADEMARKS.md). Third-party notices are collected in
+Arma's source code is available under the [Mozilla Public License 2.0](LICENSE),
+as Crest's is. The source is open for inspection, modification, and commercial
+use under that license. The Crest name, app icon, logos, and official
+distribution identity belong to Paul Davis and are reserved as described in
+[TRADEMARKS.md](TRADEMARKS.md). Arma is a separate, unofficial project.
+Third-party notices are collected in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=pauljoda%2Fcrest&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=pauljoda/crest&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=pauljoda/crest&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=pauljoda/crest&type=date&legend=top-left" />
- </picture>
-</a>

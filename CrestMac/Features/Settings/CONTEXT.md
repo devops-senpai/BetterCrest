@@ -21,7 +21,7 @@ macOS, with Mac-only panes added beside them rather than forked.
 | `BrowserShortcutSettingsView.swift`, `BrowserShortcutSettingsView/` | Keyboard shortcut list, recorder and controls |
 | `BrowserWebKitFeatureFlagSettingsPane/` | WebKit feature flag list and controls over `CrestMac/Infrastructure/WebKit/FeatureFlags/` |
 | `BrowserPlatformLinkRouteEditor/` | The Mac half of the shared link route editor (same-name pair) |
-| `BrowserSystemPrivacySettingsPane.swift`, `BrowserSystemPermissionSettingsSection.swift` | What macOS lets Crest reach, and each Space's privacy |
+| `BrowserSystemPrivacySettingsPane.swift`, `BrowserSystemPermissionSettingsSection.swift` | What macOS lets Arma reach, and each Space's privacy |
 | `BrowserPlatform*.swift` (top level) | Mac halves of shared sections: app icon, look-and-feel reset, palette drag, search engine presentation |
 | `Components/` | Pane container, column layout, settings sidebar and pages, Space editor and Space page, build header, developer toolbar, Picture in Picture and software update sections |
 | `Forge/` | The Forge's step bar as a native segmented control |

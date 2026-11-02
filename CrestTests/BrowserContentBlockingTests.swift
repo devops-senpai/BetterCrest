@@ -7,8 +7,8 @@ import XCTest
 @MainActor
 final class BrowserContentBlockingTests: XCTestCase {
     func testTurningOffCrestProtectionPreservesAnotherInstalledRuleList() async throws {
-        let crestIdentifier = "com.pauldavis.crest.tests.owned-rules.\(UUID().uuidString)"
-        let extensionIdentifier = "com.pauldavis.crest.tests.extension-rules.\(UUID().uuidString)"
+        let crestIdentifier = "com.senpaimedia.arma.tests.owned-rules.\(UUID().uuidString)"
+        let extensionIdentifier = "com.senpaimedia.arma.tests.extension-rules.\(UUID().uuidString)"
         let crestRuleList = try await BrowserContentRuleListCompiler.compile(
             identifier: crestIdentifier,
             source: blockingRuleSource(matching: "crest-script\\.js$")
@@ -105,12 +105,12 @@ final class BrowserContentBlockingTests: XCTestCase {
         let store = try isolatedRuleListStore()
         defer { store.remove() }
         let firstGeneration = try await BrowserContentRuleListCompiler.compile(
-            identifier: "com.pauldavis.crest.tests.first-generation.\(UUID().uuidString)",
+            identifier: "com.senpaimedia.arma.tests.first-generation.\(UUID().uuidString)",
             source: blockingRuleSource(matching: "first-tracker\\.js$"),
             store: store.store
         )
         let secondGeneration = try await BrowserContentRuleListCompiler.compile(
-            identifier: "com.pauldavis.crest.tests.second-generation.\(UUID().uuidString)",
+            identifier: "com.senpaimedia.arma.tests.second-generation.\(UUID().uuidString)",
             source: blockingRuleSource(matching: "second-tracker\\.js$"),
             store: store.store
         )

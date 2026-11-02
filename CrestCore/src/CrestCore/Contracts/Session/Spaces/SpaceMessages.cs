@@ -13,7 +13,7 @@ public sealed record CannotDeleteLastSpace() : Rejection {
 
     /// What the person is told.
     [Localized]
-    public string Message => "Crest needs at least one Space.";
+    public string Message => "Arma needs at least one Space.";
 
     #endregion
 }
@@ -80,7 +80,7 @@ public sealed record SpaceLimitReached(int Limit) : Rejection {
 
     /// What the person is told.
     [Localized(Argument = nameof(Limit))]
-    public string Message => "Crest supports up to %lld Spaces.";
+    public string Message => "Arma supports up to %lld Spaces.";
 
     #endregion
 }
