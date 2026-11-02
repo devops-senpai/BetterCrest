@@ -1,0 +1,39 @@
+{
+ "background": {
+  "colors": [
+   "#1e1e2e",
+   "#cba6f7",
+   "#45475a"
+  ],
+  "intensity": 1,
+  "pattern": "solid",
+  "readabilityFade": 0,
+  "sidebarSecondaryText": "#a6adc8",
+  "sidebarText": "#f5e0dc",
+  "style": "banner",
+  "textColor": "light",
+  "texture": false
+ },
+ "commandPalette": {
+  "dark": {
+   "opacity": 0.92,
+   "text": "#cdd6f4",
+   "tint": "#1e1e2e"
+  },
+  "light": {
+   "opacity": 0.92,
+   "text": "#cdd6f4",
+   "tint": "#1e1e2e"
+  }
+ },
+ "folders": {
+  "backColor": "#f38ba8",
+  "color": "#fab387",
+  "intensity": 0.25,
+  "outlineColor": "#eba0ac"
+ },
+ "icon": {
+  "color": "#cba6f7"
+ },
+ "name": "Catppuccin Mocha"
+}

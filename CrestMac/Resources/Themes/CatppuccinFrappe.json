@@ -1,0 +1,37 @@
+{
+ "background": {
+  "colors": [
+   "#303446",
+   "#ca9ee6",
+   "#51576d"
+  ],
+  "intensity": 1,
+  "pattern": "solid",
+  "readabilityFade": 0,
+  "sidebarText": "#c6d0f5",
+  "style": "banner",
+  "textColor": "light",
+  "texture": false
+ },
+ "commandPalette": {
+  "dark": {
+   "opacity": 0.92,
+   "text": "#c6d0f5",
+   "tint": "#303446"
+  },
+  "light": {
+   "opacity": 0.92,
+   "text": "#c6d0f5",
+   "tint": "#303446"
+  }
+ },
+ "folders": {
+  "backColor": "#85c1dc",
+  "color": "#81c8be",
+  "intensity": 0.25
+ },
+ "icon": {
+  "color": "#ca9ee6"
+ },
+ "name": "Catppuccin Frapp\u00e9"
+}

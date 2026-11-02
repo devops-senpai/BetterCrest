@@ -16,12 +16,18 @@ struct BrowserBundledTheme: Identifiable, Sendable {
     static let macchiato = BrowserBundledTheme(
         id: UUID(uuidString: "A2C0B1E5-5A11-4C3B-9F1E-0A7C5B1D2E03")!, resource: "CatppuccinMacchiato",
         pitch: "Catppuccin's soft dark flavor, for long sessions")
+    static let mocha = BrowserBundledTheme(
+        id: UUID(uuidString: "A2C0B1E5-5A11-4C3B-9F1E-0A7C5B1D2E05")!, resource: "CatppuccinMocha",
+        pitch: "Catppuccin's darkest flavor, with warm peach folders")
+    static let frappe = BrowserBundledTheme(
+        id: UUID(uuidString: "A2C0B1E5-5A11-4C3B-9F1E-0A7C5B1D2E06")!, resource: "CatppuccinFrappe",
+        pitch: "Catppuccin's muted middle flavor, with teal folders")
     static let jellyFish = BrowserBundledTheme(
         id: UUID(uuidString: "A2C0B1E5-5A11-4C3B-9F1E-0A7C5B1D2E04")!, resource: "JellyFish",
         pitch: "A picture behind your tabs, made your own")
 
     /// Every bundled theme, in the order setup offers them.
-    static let all = [arcSky, catppuccin, macchiato, jellyFish]
+    static let all = [arcSky, catppuccin, macchiato, mocha, frappe, jellyFish]
 
     // MARK: - Variables
 

@@ -14,11 +14,12 @@ struct BrowserOnboardingLookPage: View {
 
     @State private var library = BrowserThemeLibrary.shared
 
-    /// The size each window takes in a grid of three across and two down,
+    /// The size each window takes in a grid of four across and two down,
     /// with room under each for its name and a line on who it suits.
     private func cardSize(in stage: CGSize) -> CGSize {
         let spacing = BrowserOnboardingLookMetrics.spacing
-        let width = min((stage.width - spacing * 2) / 3, BrowserOnboardingLookMetrics.maximumWidth)
+        let columns = CGFloat(BrowserOnboardingLookMetrics.columns)
+        let width = min((stage.width - spacing * (columns - 1)) / columns, BrowserOnboardingLookMetrics.maximumWidth)
         let ratio = BrowserOnboardingLookMetrics.windowSize.height / BrowserOnboardingLookMetrics.windowSize.width
         let height = min(
             width * ratio,
@@ -33,7 +34,8 @@ struct BrowserOnboardingLookPage: View {
             GeometryReader { geometry in
                 let size = cardSize(in: geometry.size)
                 let columns = Array(
-                    repeating: GridItem(.fixed(size.width), spacing: BrowserOnboardingLookMetrics.spacing), count: 3)
+                    repeating: GridItem(.fixed(size.width), spacing: BrowserOnboardingLookMetrics.spacing),
+                    count: BrowserOnboardingLookMetrics.columns)
                 LazyVGrid(columns: columns, spacing: BrowserOnboardingLookMetrics.rowSpacing) {
                     ForEach(SetupLook.all, id: \.self) { offered in
                         BrowserOnboardingLookCard(
@@ -152,7 +154,8 @@ extension SetupLook {
 #endif
 
 enum BrowserOnboardingLookMetrics {
-    static let spacing: CGFloat = 36
+    static let columns = 4
+    static let spacing: CGFloat = 28
     static let rowSpacing: CGFloat = 20
     static let maximumWidth: CGFloat = 420
     /// The name and line under each window.
