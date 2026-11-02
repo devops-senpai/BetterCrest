@@ -401,17 +401,6 @@ EngineBrowsers::KeptBrowser* EngineBrowsers::WindowBrowser(const std::string& pr
   return found == kept_.end() ? nullptr : found->get();
 }
 
-// Reserves the Crest window a Browser the engine created for itself belongs
-// in, so its tabs are offered with a window the core recognizes. The window
-// opens only once a tab needs it. A profile with no Space to host it is
-// refused rather than routed into an unrelated Space; an off-the-record
-// profile belongs to the private window and is refused when that window is
-// closed.
-//
-// A normal window `chrome.windows.create` asked for gets a Crest window of its
-// own. A popup it asked for, which Chromium makes an app popup, joins the
-// window the person is using as a tab it keeps, and never holds that window's
-// other pages, which its extension could otherwise close with the popup.
 // Chromium orders its Browsers by when each last became active, and answers
 // an extension's current window from the first of them.
 void EngineBrowsers::Use(KeptBrowser& kept) {
@@ -425,12 +414,29 @@ void EngineBrowsers::Use(KeptBrowser& kept) {
   BrowserActiveStateManager::From(active_)->DidBecomeActive();
 }
 
+// Reserves the Crest window a Browser the engine created for itself belongs
+// in, so its tabs are offered with a window the core recognizes. The window
+// opens only once a tab needs it. A profile with no Space to host it is
+// refused rather than routed into an unrelated Space; an off-the-record
+// profile belongs to the private window and is refused when that window is
+// closed.
+//
+// A normal window `chrome.windows.create` asked for gets a Crest window of its
+// own. A popup it asked for, which Chromium makes an app popup, joins the
+// window the person is using as a tab it keeps, and never holds that window's
+// other pages, which its extension could otherwise close with the popup.
+//
+// A Browser of a browser context DevTools automation browses in, which is
+// lent to a Space's profile, keeps its tabs the same way: they show in that
+// Space, but their store is the context's, so they never join the Space's own
+// Browser.
 bool EngineBrowsers::Place(Browser* browser) {
   const bool requested = own_window_profile_ == browser->GetProfile();
   own_window_profile_ = nullptr;
-  const bool keeps_tabs = requested && browser->GetType() != BrowserWindowInterface::Type::TYPE_NORMAL;
-  const bool own_window = requested && !keeps_tabs;
   const EngineProfiles& profiles = binding_->Profiles();
+  const bool keeps_tabs = (requested && browser->GetType() != BrowserWindowInterface::Type::TYPE_NORMAL) ||
+                          profiles.IsLent(browser->GetProfile());
+  const bool own_window = requested && !keeps_tabs;
   const std::string profile_id = profiles.IdFor(browser->GetProfile());
   if (profile_id.empty() || profiles.IsDeleting(profile_id)) {
     return false;

@@ -123,6 +123,7 @@ after the last. Every patch states its reason in its header.
 | `safe-browsing-reports-off.patch` | Whatever the Safe Browsing setting, no download pings, extended reporting, enhanced protection, client-side phishing reports or SCT auditing. |
 | `certificate-transparency-enforced.patch` | Enforces Certificate Transparency, which Chromium does only in Google Chrome builds. |
 | `manifest-v2-extensions.patch` | Keeps Manifest V2 extensions loading, without deprecation warnings. |
+| `automation.patch` | DevTools remote debugging for browser automation, limited to the profile Settings › Automation chose: that profile is the default browser context, contexts DevTools creates show in its Space, and remote clients see only its targets (`Overlay/chrome/browser/ui/crest/crest_automation.h`). |
 
 `network-time-off`, `intranet-redirect-detector-off`, most of
 `privacy-defaults`, `certificate-transparency-enforced` and

@@ -22,6 +22,7 @@ enum TerminalCommand: Codable, Sendable {
     case page(TerminalPageCommand)
     case settings(TerminalSettingsCommand)
     case site(TerminalSiteCommand)
+    case automation(TerminalAutomationCommand)
 }
 
 /// What a terminal command answers: the lines the person reads, and the same

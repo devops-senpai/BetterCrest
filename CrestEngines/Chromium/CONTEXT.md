@@ -55,6 +55,7 @@ engine contract as WebKit.
 | `chrome/browser/ui/crest/crest_engine_*.{h,cc}` | One area of the binding each: pages, browsers, profiles, content, documents, downloads, extensions, Web Store, infobars, inspector, media, notifications, prompts, screen sharing, tab groups, agent |
 | `chrome/browser/ui/crest/crest_browser_window.*` | The `BrowserWindow` adapted from Mori, with explicit window assignments |
 | `chrome/browser/ui/crest/crest_chrome_host.mm` | The Mac host: extension popups and shortcuts |
+| `chrome/browser/ui/crest/crest_automation.{h,cc}` | Browser automation over DevTools remote debugging: reads Settings › Automation at startup, makes the chosen profile DevTools' default context, and exposes only its targets to remote clients (`Patches/automation.patch` calls it) |
 | `chrome/browser/ui/crest/crest_*_hooks.h`, `crest_*_prompt.h` | Hooks the patch calls and the permission and extension prompts |
 
 The install also copies `Apple/CrestChromiumHost.h` and the engine contract

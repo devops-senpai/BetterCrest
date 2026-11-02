@@ -1,0 +1,447 @@
+# Crest: DevTools remote debugging for browser automation (Playwright,
+# Puppeteer, ChromeDriver), limited to the one Arma profile the person chose.
+# Chromium's default browser context is whichever profile it used last, which
+# in Arma is unloaded or a Space nobody chose, so Playwright's first command
+# failed; and every profile's tabs were visible to a remote client. The
+# engine reads Arma's automation setting at startup, makes the chosen profile
+# the default context, places the contexts DevTools creates in its Space, and
+# hides every other target from remote clients only. See crest_automation.h.
+
+--- a/chrome/app/chrome_main_delegate.cc
++++ b/chrome/app/chrome_main_delegate.cc
+@@ -123,6 +123,7 @@
+ #include "base/apple/foundation_util.h"
+ #include "chrome/app/chrome_main_mac.h"
+ #include "chrome/browser/ui/crest/crest_chrome_hooks.h"
++#include "chrome/browser/ui/crest/crest_automation.h"
+ #include "chrome/app/crest_profile_adoption.h"
+ #include "chrome/browser/mac/code_sign_clone_manager.h"
+ #include "chrome/browser/mac/relauncher.h"
+@@ -1190,6 +1191,14 @@
+           "crest-control-plane")) {
+     base::CommandLine::ForCurrentProcess()->AppendSwitch("crest-control-plane");
+   }
++  // Arma's automation setting opens DevTools remote debugging, on the
++  // loopback interface and for one Arma profile, as the launch switches
++  // would. Read before the remote debugging server reads the command line.
++  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
++          switches::kProcessType) &&
++      crest::IsEnabled()) {
++    crest::automation::ApplySettings(*base::CommandLine::ForCurrentProcess());
++  }
+ #endif
+ #if BUILDFLAG(IS_CHROMEOS)
+   ash::BootTimesRecorder::Get()->SaveChromeMainStats();
+--- a/chrome/browser/devtools/chrome_devtools_manager_delegate.cc
++++ b/chrome/browser/devtools/chrome_devtools_manager_delegate.cc
+@@ -5,6 +5,7 @@
+ #include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
+ 
+ #include <memory>
++#include <optional>
+ #include <utility>
+ 
+ #include "base/command_line.h"
+@@ -64,6 +65,10 @@
+ #include "extensions/common/manifest.h"
+ #include "extensions/common/mojom/view_type.mojom.h"
+ #include "ui/base/page_transition_types.h"
++
++#if BUILDFLAG(IS_MAC)
++#include "chrome/browser/ui/crest/crest_automation.h"
++#endif
+ #include "ui/base/resource/resource_bundle.h"
+ #include "ui/base/window_open_disposition.h"
+ #include "ui/gfx/switches.h"
+@@ -421,6 +426,16 @@
+   return IsInspectionAllowed(profile, agent_host);
+ }
+ 
++bool ChromeDevToolsManagerDelegate::AllowRemoteDebuggingTarget(
++    content::DevToolsAgentHost* agent_host) {
++#if BUILDFLAG(IS_MAC)
++  // Arma limits automation to the one profile the person chose.
++  return crest::automation::Exposes(agent_host);
++#else
++  return true;
++#endif
++}
++
+ void ChromeDevToolsManagerDelegate::ClientAttached(
+     content::DevToolsAgentHostClientChannel* channel) {
+   DCHECK(sessions_.find(channel) == sessions_.end());
+@@ -436,12 +451,27 @@
+     const GURL& url,
+     DevToolsManagerDelegate::TargetType target_type,
+     bool new_window) {
+-  NavigateParams params(ProfileManager::GetLastUsedProfile(), url,
+-                        ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
++  Profile* profile = ProfileManager::GetLastUsedProfile();
++#if BUILDFLAG(IS_MAC)
++  // Arma's automation opens pages in the profile the person chose, never in
++  // whichever profile Chromium used last.
++  std::optional<crest::automation::ScopedOpening> opening;
++  if (crest::automation::IsScoped()) {
++    profile = crest::automation::DefaultProfile();
++    if (!profile) {
++      return nullptr;
++    }
++    opening.emplace();
++  }
++#endif
++  NavigateParams params(profile, url, ui::PAGE_TRANSITION_AUTO_TOPLEVEL);
+   params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+   Navigate(&params);
+   if (!params.navigated_or_inserted_contents)
+     return nullptr;
++#if BUILDFLAG(IS_MAC)
++  crest::automation::MarkOpened(params.navigated_or_inserted_contents);
++#endif
+   return target_type == DevToolsManagerDelegate::kTab
+              ? DevToolsAgentHost::GetOrCreateForTab(
+                    params.navigated_or_inserted_contents)
+--- a/chrome/browser/devtools/chrome_devtools_manager_delegate.h
++++ b/chrome/browser/devtools/chrome_devtools_manager_delegate.h
+@@ -90,6 +90,8 @@
+ 
+   bool AllowInspectingRenderFrameHost(content::RenderFrameHost* rfh) override;
+   bool AllowInspectingTarget(content::DevToolsAgentHost* agent_host) override;
++  bool AllowRemoteDebuggingTarget(
++      content::DevToolsAgentHost* agent_host) override;
+   void ClientAttached(
+       content::DevToolsAgentHostClientChannel* channel) override;
+   void ClientDetached(
+--- a/chrome/browser/devtools/devtools_browser_context_manager.cc
++++ b/chrome/browser/devtools/devtools_browser_context_manager.cc
+@@ -23,8 +23,33 @@
+ #include "chrome/browser/ui/browser_window/public/global_browser_collection.h"
+ #include "ui/base/base_window.h"
+ 
++#if BUILDFLAG(IS_MAC)
++#include "chrome/browser/ui/crest/crest_automation.h"
++#endif
++
+ namespace {
+ 
++// The profile DevTools browses in by default. Arma's automation uses the
++// profile the person chose, never whichever profile Chromium used last.
++Profile* DefaultProfile() {
++#if BUILDFLAG(IS_MAC)
++  if (crest::automation::IsScoped()) {
++    return crest::automation::DefaultProfile();
++  }
++#endif
++  return ProfileManager::GetLastUsedProfile()->GetOriginalProfile();
++}
++
++// The profile a browser context DevTools creates derives from.
++Profile* SourceProfile() {
++#if BUILDFLAG(IS_MAC)
++  if (crest::automation::IsScoped()) {
++    return crest::automation::SourceProfile();
++  }
++#endif
++  return ProfileManager::GetLastUsedProfile()->GetOriginalProfile();
++}
++
+ const int64_t kDestroyProfileTimeoutSeconds = 60;
+ 
+ void DestroyOTRProfileWhenAppropriate(base::WeakPtr<Profile> weak_profile) {
+@@ -65,9 +90,8 @@
+ 
+ Profile* DevToolsBrowserContextManager::GetProfileById(
+     const std::string& context_id) {
+-  Profile* default_profile =
+-      ProfileManager::GetLastUsedProfile()->GetOriginalProfile();
+-  if (context_id == default_profile->UniqueId()) {
++  Profile* default_profile = DefaultProfile();
++  if (default_profile && context_id == default_profile->UniqueId()) {
+     return default_profile;
+   }
+   auto it = otr_profiles_.find(context_id);
+@@ -77,13 +101,18 @@
+ }
+ 
+ content::BrowserContext* DevToolsBrowserContextManager::CreateBrowserContext() {
+-  Profile* original_profile =
+-      ProfileManager::GetLastUsedProfile()->GetOriginalProfile();
++  Profile* original_profile = SourceProfile();
++  if (!original_profile) {
++    return nullptr;
++  }
+ 
+   Profile* otr_profile = original_profile->GetOffTheRecordProfile(
+       Profile::OTRProfileID::CreateUniqueForDevTools(),
+       /*create_if_needed=*/true);
+   const std::string& context_id = otr_profile->UniqueId();
++#if BUILDFLAG(IS_MAC)
++  crest::automation::AddContext(otr_profile);
++#endif
+ 
+   // The two lines are matched in `StopObservingProfileIfAny()`.
+   profile_observation_.AddObservation(otr_profile);
+@@ -101,6 +130,13 @@
+ 
+ content::BrowserContext*
+ DevToolsBrowserContextManager::GetDefaultBrowserContext() {
++#if BUILDFLAG(IS_MAC)
++  // Arma's automation profile is loaded as Arma loads a Space's, and not
++  // once the engine is shutting down.
++  if (crest::automation::IsScoped()) {
++    return crest::automation::DefaultProfile();
++  }
++#endif
+   // Do not force profile loading (or it will blow up if called on shutdown).
+   auto* last_profile = ProfileManager::GetLastUsedProfileIfLoaded();
+   return last_profile ? last_profile->GetOriginalProfile() : nullptr;
+--- a/chrome/browser/devtools/protocol/target_handler.cc
++++ b/chrome/browser/devtools/protocol/target_handler.cc
+@@ -8,6 +8,7 @@
+ #include <string_view>
+ 
+ #include "base/notreached.h"
++#include "build/build_config.h"
+ #include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
+ #include "chrome/browser/devtools/devtools_browser_context_manager.h"
+ #include "chrome/browser/profiles/profile_manager.h"
+@@ -31,6 +32,10 @@
+ #include "ui/base/window_open_disposition.h"
+ #include "ui/gfx/geometry/rect.h"
+ 
++#if BUILDFLAG(IS_MAC)
++#include "chrome/browser/ui/crest/crest_automation.h"
++#endif
++
+ namespace {
+ NavigateParams CreateNavigateParams(Profile* profile,
+                                     const GURL& url,
+@@ -117,7 +122,19 @@
+           "Failed to find browser context with id " + profile_id);
+     }
+   } else {
++#if BUILDFLAG(IS_MAC)
++    // Arma's automation opens pages in the profile the person chose, never
++    // in whichever profile Chromium used last.
++    profile = crest::automation::IsScoped()
++                  ? crest::automation::DefaultProfile()
++                  : ProfileManager::GetLastUsedProfile();
++    if (!profile) {
++      return protocol::Response::ServerError(
++          "The automation profile is not available");
++    }
++#else
+     profile = ProfileManager::GetLastUsedProfile();
++#endif
+     DCHECK(profile);
+   }
+ 
+@@ -221,7 +238,15 @@
+       profile, gurl, ui::PAGE_TRANSITION_AUTO_TOPLEVEL, create_new_window,
+       create_in_background, target_browser_interface);
+ 
++#if BUILDFLAG(IS_MAC)
++  {
++    crest::automation::ScopedOpening opening;
++    Navigate(&params);
++  }
++  crest::automation::MarkOpened(params.navigated_or_inserted_contents);
++#else
+   Navigate(&params);
++#endif
+   if (!params.navigated_or_inserted_contents) {
+     return protocol::Response::ServerError("Failed to open a new tab");
+   }
+--- a/chrome/browser/ui/BUILD.gn
++++ b/chrome/browser/ui/BUILD.gn
+@@ -3348,6 +3348,8 @@
+       "crest/crest_chrome_hooks.h",
+       "crest/crest_chrome_host.mm",
+       "crest/crest_app.h",
++      "crest/crest_automation.cc",
++      "crest/crest_automation.h",
+       "crest/crest_core.h",
+       "crest/crest_engine.h",
+       "crest/crest_engine_agent.cc",
+--- a/content/browser/devtools/devtools_http_handler.cc
++++ b/content/browser/devtools/devtools_http_handler.cc
+@@ -659,6 +659,12 @@
+                                   for_tab ? DevToolsManagerDelegate::kTab
+                                           : DevToolsManagerDelegate::kFrame)
+             : DevToolsAgentHost::GetOrCreateAll();
++    if (manager->delegate()) {
++      std::erase_if(list, [manager](const auto& agent_host) {
++        return !manager->delegate()->AllowRemoteDebuggingTarget(
++            agent_host.get());
++      });
++    }
+ 
+     RespondToJsonList(connection_id, info.GetHeaderValue("host"),
+                       std::move(list), for_tab);
+@@ -710,7 +716,8 @@
+ 
+     DevToolsManager* manager = DevToolsManager::GetInstance();
+     if (manager->delegate() &&
+-        !manager->delegate()->AllowInspectingTarget(agent_host.get())) {
++        (!manager->delegate()->AllowInspectingTarget(agent_host.get()) ||
++         !manager->delegate()->AllowRemoteDebuggingTarget(agent_host.get()))) {
+       SendJson(connection_id, net::HTTP_FORBIDDEN, std::nullopt,
+                "Target is not inspectable");
+       return;
+@@ -901,7 +908,8 @@
+ 
+   DevToolsManager* manager = DevToolsManager::GetInstance();
+   if (manager->delegate() &&
+-      !manager->delegate()->AllowInspectingTarget(agent.get())) {
++      (!manager->delegate()->AllowInspectingTarget(agent.get()) ||
++       !manager->delegate()->AllowRemoteDebuggingTarget(agent.get()))) {
+     Send403(connection_id, "Target is not inspectable");
+     return;
+   }
+--- a/content/browser/devtools/protocol/target_handler.cc
++++ b/content/browser/devtools/protocol/target_handler.cc
+@@ -43,6 +43,20 @@
+ namespace content::protocol {
+ 
+ namespace {
++
++// The type a remote debugging client, the HTTP or pipe handler, reports.
++constexpr char kRemoteDebuggerClientType[] = "RemoteDebugger";
++
++// Whether the client whose session a handler serves may see and attach to
++// `host`. A remote debugging client, and every session it opens, sees only
++// the targets the embedder exposes to remote debugging.
++bool ExposesTarget(DevToolsAgentHostClient* client, DevToolsAgentHost* host) {
++  DevToolsManagerDelegate* delegate =
++      DevToolsManager::GetInstance()->delegate();
++  return !delegate ||
++         client->GetTypeForMetrics() != kRemoteDebuggerClientType ||
++         delegate->AllowRemoteDebuggingTarget(host);
++}
+ 
+ constexpr net::NetworkTrafficAnnotationTag
+     kSettingsProxyConfigTrafficAnnotation =
+@@ -520,7 +534,13 @@
+     agent_host_->DetachClient(this);
+   }
+ 
+-  std::string GetTypeForMetrics() override { return "DevTools"; }
++  // A session a remote debugging client opens is that client's, so the
++  // targets it sees are limited as the client's are.
++  std::string GetTypeForMetrics() override {
++    return GetRootClient()->GetTypeForMetrics() == kRemoteDebuggerClientType
++               ? kRemoteDebuggerClientType
++               : "DevTools";
++  }
+   std::optional<url::Origin> GetNavigationInitiatorOrigin() override {
+     return GetRootClient()->GetNavigationInitiatorOrigin();
+   }
+@@ -939,6 +959,11 @@
+   CHECK(host, base::NotFatalUntil::M159);
+   CHECK(auto_attach_target_filter_, base::NotFatalUntil::M159);
+   if (!auto_attach_target_filter_->Match(*host)) {
++    return false;
++  }
++  // A page's own frames and workers belong to a target already exposed.
++  if (access_mode_ == AccessMode::kBrowser &&
++      !ExposesTarget(root_session_->GetClient(), host)) {
+     return false;
+   }
+   if (auto_attached_sessions_.contains(host)) {
+@@ -1201,7 +1226,8 @@
+   // TODO(dgozman): only allow reported hosts.
+   scoped_refptr<DevToolsAgentHost> agent_host =
+       DevToolsAgentHost::GetForId(target_id);
+-  if (!agent_host) {
++  if (!agent_host ||
++      !ExposesTarget(root_session_->GetClient(), agent_host.get())) {
+     return Response::InvalidParams(kTargetNotFound);
+   }
+   std::optional<std::string> session_id =
+@@ -1271,7 +1297,8 @@
+   // TODO(dgozman): only allow reported hosts.
+   scoped_refptr<DevToolsAgentHost> agent_host(
+       DevToolsAgentHost::GetForId(target_id));
+-  if (!agent_host) {
++  if (!agent_host ||
++      !ExposesTarget(root_session_->GetClient(), agent_host.get())) {
+     return Response::InvalidParams(kTargetNotFound);
+   }
+   *target_info = BuildTargetInfo(agent_host.get());
+@@ -1285,7 +1312,8 @@
+   // TODO(dgozman): only allow reported hosts.
+   scoped_refptr<DevToolsAgentHost> agent_host(
+       DevToolsAgentHost::GetForId(target_id));
+-  if (!agent_host) {
++  if (!agent_host ||
++      !ExposesTarget(root_session_->GetClient(), agent_host.get())) {
+     return Response::InvalidParams(kTargetNotFound);
+   }
+   agent_host->Activate();
+@@ -1296,7 +1324,8 @@
+                                     bool* out_success) {
+   scoped_refptr<DevToolsAgentHost> agent_host =
+       DevToolsAgentHost::GetForId(target_id);
+-  if (!agent_host) {
++  if (!agent_host ||
++      !ExposesTarget(root_session_->GetClient(), agent_host.get())) {
+     return Response::InvalidParams(kTargetNotFound);
+   }
+   if (access_mode_ == AccessMode::kAutoAttachOnly) {
+@@ -1324,7 +1353,8 @@
+   }
+   scoped_refptr<DevToolsAgentHost> agent_host =
+       DevToolsAgentHost::GetForId(target_id);
+-  if (!agent_host) {
++  if (!agent_host ||
++      !ExposesTarget(root_session_->GetClient(), agent_host.get())) {
+     callback->sendFailure(Response::InvalidParams(kTargetNotFound));
+     return;
+   }
+@@ -1459,7 +1489,8 @@
+   CHECK(effective_filter, base::NotFatalUntil::M159);
+   *target_infos = std::make_unique<protocol::Array<Target::TargetInfo>>();
+   for (const auto& host : DevToolsAgentHost::GetOrCreateAll()) {
+-    if (effective_filter->Match(*host)) {
++    if (effective_filter->Match(*host) &&
++        ExposesTarget(root_session_->GetClient(), host.get())) {
+ #if !BUILDFLAG(IS_ANDROID)
+       // Do not return initial WebUI as the DevTools targets.
+       // TODO(crbug.com/444358999): consider adding this into the `filter` when
+@@ -1483,7 +1514,8 @@
+ void TargetHandler::DevToolsAgentHostCreated(DevToolsAgentHost* host) {
+   CHECK(discover(), base::NotFatalUntil::M159);
+   CHECK(host, base::NotFatalUntil::M159);
+-  if (!discover_target_filter_->Match(*host)) {
++  if (!discover_target_filter_->Match(*host) ||
++      !ExposesTarget(root_session_->GetClient(), host)) {
+     return;
+   }
+   // If we start discovering late, all existing agent hosts will be reported,
+--- a/content/public/browser/devtools_manager_delegate.cc
++++ b/content/public/browser/devtools_manager_delegate.cc
+@@ -109,6 +109,11 @@
+   return true;
+ }
+ 
++bool DevToolsManagerDelegate::AllowRemoteDebuggingTarget(
++    DevToolsAgentHost* agent_host) {
++  return true;
++}
++
+ void DevToolsManagerDelegate::HandleCommand(
+     DevToolsAgentHostClientChannel* channel,
+     base::span<const uint8_t> message,
+--- a/content/public/browser/devtools_manager_delegate.h
++++ b/content/public/browser/devtools_manager_delegate.h
+@@ -155,6 +155,11 @@
+   // Returns whether embedder allows to inspect given |agent_host|.
+   virtual bool AllowInspectingTarget(DevToolsAgentHost* agent_host);
+ 
++  // Returns whether a remote debugging client, one that connects through the
++  // HTTP or pipe handler, and every session it opens may see and attach to
++  // |agent_host|. In-process clients are not asked.
++  virtual bool AllowRemoteDebuggingTarget(DevToolsAgentHost* agent_host);
++
+   // Call callback if command was not handled.
+   using NotHandledCallback =
+       base::RepeatingCallback<void(base::span<const uint8_t>)>;

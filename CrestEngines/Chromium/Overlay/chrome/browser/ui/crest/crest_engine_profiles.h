@@ -6,6 +6,7 @@
 #include <optional>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/functional/callback.h"
@@ -42,8 +43,17 @@ class EngineProfiles final {
   // The profile the engine started with. It is no Space's, is never deleted,
   // and until it exists no profile loads. Private profiles derive from it.
   void SetRoot(Profile* root);
+  Profile* root() const { return root_; }
+  // The id of the Space profile loaded last, or empty before any loads.
+  const std::string& last_regular() const { return last_regular_; }
 
   Profile* Find(const std::string& id) const;
+  // Lets `context`, a browser context DevTools automation browses in, show
+  // its pages as `id`'s: they join `id`'s Space while keeping their own
+  // store. It lasts as long as the context does.
+  void Lend(Profile* context, const std::string& id);
+  // Whether `context` browses for a profile it is not.
+  bool IsLent(const content::BrowserContext* context) const;
   // Whether the regular profile `id` names has anything on disk.
   bool HasStore(const std::string& id) const;
   // The Crest identity of an engine profile, or an empty string for one Crest
@@ -57,6 +67,10 @@ class EngineProfiles final {
   // Space's off-the-record profile derived from the engine's own, and answers
   // it, or nullptr when it cannot load or is being deleted.
   void Load(const std::string& id, bool is_private, base::OnceCallback<void(Profile*)> done);
+  // Loads the regular profile `id` names at once and holds it as `Load` does,
+  // for a caller that cannot wait: DevTools asking for its default browser
+  // context. Nullptr when it cannot load or is being deleted.
+  Profile* LoadNow(const std::string& id);
   // Loads a Space's regular profile for its extensions. Answers whether it is
   // ready; a private profile never is.
   void Prepare(const std::string& id, base::OnceCallback<void(bool)> done);
@@ -85,8 +99,11 @@ class EngineProfiles final {
   void Finished(const std::string& id, bool may_retry);
 
   raw_ptr<Profile> root_ = nullptr;
+  std::string last_regular_;
   bool disposing_ = false;
   std::map<std::string, raw_ptr<Profile>> profiles_;
+  // The browser contexts lent to a profile, by that profile's id.
+  std::vector<std::pair<base::WeakPtr<Profile>, std::string>> lent_;
   // The regular profiles Crest holds alive, by the Crest profile that uses
   // them: an off-the-record profile's lease is on its regular source, which
   // must outlive it.

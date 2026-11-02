@@ -536,6 +536,35 @@ A packaged experiment refuses startup without an explicit absolute
 This guard runs before Chromium loads its framework or opens any profile. The
 host restores its core-managed Spaces directly, without Chrome's profile picker.
 
+## Browser automation
+
+Settings › Automation lets Playwright, Puppeteer, ChromeDriver and the tools
+built on them drive the engine over DevTools remote debugging. The engine reads
+the setting once, at startup, from the app's defaults (`arma.automation.enabled`,
+`port`, `profile`, `tabs` and an optional `hostProfile`), or from the suite an
+isolated launch names in `ARMA_AUTOMATION_DEFAULTS_SUITE`, and declares
+`--remote-debugging-port` with `--arma-automation-profile`, `--arma-automation-tabs`
+and `--arma-automation-host-profile`. A switch already on the command line wins,
+so a development launch can pass them directly. Chromium listens on the
+loopback interface only; it ignores `--remote-debugging-address`. Its refusal
+of remote debugging in the default user data directory applies only to Google
+Chrome builds, and Arma's directory is its own in any case.
+
+The chosen profile, a Space's, or a fresh off-the-record one for `ephemeral`,
+is DevTools' default browser context, so Playwright's `connectOverCDP` works.
+Before, the default was whichever profile Chromium used last, which in Arma is
+usually not loaded, and every browser-context command failed.
+`Target.createBrowserContext` creates off-the-record contexts from it. Arma
+shows a page only in a Space, so pages of those contexts, and of an ephemeral
+profile, join the host Space's window as tabs while keeping their own store.
+
+A remote client, and every session it opens, sees only that profile's targets
+and the contexts DevTools created: other profiles' pages are missing from
+`/json/list`, `Target.getTargets` and target discovery and cannot be attached
+to. With `tabs` set to `opened`, the default, it sees only the pages it opened
+and those they open with an opener; with `all`, every page of the profile.
+Arma's own in-process DevTools clients are never limited.
+
 ## Releasing
 
 The release workflow calls `Build Crest` for the exact source SHA and waits for

@@ -1,0 +1,1 @@
+{"category": "fixed", "message": "Playwright's setup in Settings › Automation opens pages in the profile you chose, with its sign-ins, instead of an empty context."}
