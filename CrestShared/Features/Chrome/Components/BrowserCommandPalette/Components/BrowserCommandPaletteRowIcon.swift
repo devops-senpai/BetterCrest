@@ -24,6 +24,9 @@ struct BrowserCommandPaletteRowIcon: View {
                     profileID: model.space?.profileID,
                     size: BrowserCommandPaletteMetrics.rowFaviconSize
                 )
+            } else if let emoji = BrowserIconSymbol.emoji(from: row.symbol) {
+                // A Space or folder that wears an emoji.
+                Text(emoji).font(.system(size: BrowserCommandPaletteMetrics.rowSymbolPointSize))
             } else {
                 Image(systemName: row.symbol)
                     .font(

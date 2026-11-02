@@ -6,18 +6,24 @@ struct BrowserCredentialImportDestinationCard: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: CrestSpacing.large) {
-            Image(systemName: space.symbol)
-                .font(.title2)
-                .foregroundStyle(.tint)
-                .frame(
-                    width: BrowserCredentialImportReviewMetrics.destinationIconSize,
-                    height: BrowserCredentialImportReviewMetrics.destinationIconSize
-                )
-                .background(
-                    .tint.opacity(BrowserCredentialImportReviewMetrics.destinationIconFillOpacity),
-                    in: RoundedRectangle(cornerRadius: BrowserCredentialImportReviewMetrics.destinationIconRadius)
-                )
-                .accessibilityHidden(true)
+            Group {
+                if let emoji = BrowserIconSymbol.emoji(from: space.symbol) {
+                    Text(emoji)
+                } else {
+                    Image(systemName: space.symbol)
+                }
+            }
+            .font(.title2)
+            .foregroundStyle(.tint)
+            .frame(
+                width: BrowserCredentialImportReviewMetrics.destinationIconSize,
+                height: BrowserCredentialImportReviewMetrics.destinationIconSize
+            )
+            .background(
+                .tint.opacity(BrowserCredentialImportReviewMetrics.destinationIconFillOpacity),
+                in: RoundedRectangle(cornerRadius: BrowserCredentialImportReviewMetrics.destinationIconRadius)
+            )
+            .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: CrestSpacing.extraSmall) {
                 Text("Importing into")
