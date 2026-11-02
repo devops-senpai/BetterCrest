@@ -108,7 +108,7 @@ struct BrowserSidebarSpacePage: View {
         .onChange(of: isLocked) { _, locked in
             if locked, isSelected { browser.tabMultiSelection.clear() }
         }
-        .modifier(SpaceColorScheme(branding: space.settings.look))
+        .modifier(SpaceColorScheme(branding: space.settings.shownLook))
         .blur(
             radius: isLocked
                 ? BrowserSidebarMetrics.lockedSpaceBlurRadius

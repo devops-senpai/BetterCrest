@@ -77,6 +77,10 @@ struct BrowserCrestForge: View {
     @State private var initialAppearance: SpaceBranding?
     @State private var ownHistory = BrowserCrestForgeHistory()
     @State private var choosesEmoji = false
+    @Environment(\.browserSpaceThemeFiles) private var themeFiles
+    @Environment(\.colorScheme) private var colorScheme
+    /// Why the last theme file could not be written or read, until the next try.
+    @State private var themeFileProblem: String?
 
     private var history: Binding<BrowserCrestForgeHistory> { sharedHistory ?? $ownHistory }
 
@@ -180,6 +184,8 @@ struct BrowserCrestForge: View {
             finishSections
         case .sidebar:
             sidebarSections
+        case .other:
+            otherSections
         }
     }
 
@@ -277,6 +283,31 @@ struct BrowserCrestForge: View {
     private var sidebarSections: some View {
         sidebarGallery
         sidebarSection
+        BrowserCrestStudioFolders(context: context, isEmbedded: true)
+    }
+
+    /// What the Space dresses beyond its crest and sidebar: the command
+    /// palette's card, then the look as a file to share. The stage heads the
+    /// page as the galleries' do.
+    @ViewBuilder
+    private var otherSections: some View {
+        BrowserCrestStudioCommandPalette(context: context, isEmbedded: true) { stageHeader }
+        if let themeFiles {
+            Section {
+                Button("Export Theme…") { run(themeFiles.export) }
+                Button("Load Theme from File…") { run(themeFiles.load) }
+                if let themeFileProblem {
+                    Text(themeFileProblem).font(.caption).foregroundStyle(.secondary)
+                }
+            } header: {
+                Text("Theme")
+            }
+        }
+    }
+
+    /// Runs one theme file action and keeps what went wrong for the section.
+    private func run(_ action: @escaping @MainActor () async -> String?) {
+        Task { @MainActor in themeFileProblem = await action() }
     }
 
     private var identityRow: some View {
@@ -371,12 +402,14 @@ struct BrowserCrestForge: View {
                 }
             }
             BrowserCrestStudioSlider(title: "Readability fade", value: context.setting(\.readabilityFade))
-            BrowserCrestStudioSlider(title: "Folder colors", value: context.setting(\.folderColorIntensity))
             let texture = context.setting(\.showsTexture)
             CrestSettingRow("Texture", setting: texture.resettable("Texture")) {
                 Toggle("Texture", isOn: texture.binding).labelsHidden()
             }
             segmentedText
+            BrowserCrestStudioColorPickerRow(
+                title: "Text color", value: context.setting(\.sidebarTextColor, default: nil),
+                fallback: branding.sidebarTextColor(over: colorScheme))
         }
     }
 

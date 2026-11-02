@@ -331,7 +331,7 @@ struct MobileBrowserRootContent: View, BrowserChromeAnimating {
                             .isSwitcherExpanded,
                         selectedSurface: navigation.utilityPresentation.surface,
                         badgeColor: browser.shownSpace.flatMap {
-                            $0.settings.look.colors.first?.color
+                            $0.settings.shownLook.colors.first?.color
                         } ?? .accentColor,
                         downloads: model.selectedUtilityDownloads,
                         newDownloadCount: model.newUtilityDownloads.count,

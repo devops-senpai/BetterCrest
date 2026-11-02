@@ -31,7 +31,7 @@ struct BrowserSpaceIdentity: Equatable, Identifiable {
         name = space.settings.name
         symbol = space.settings.symbol
         accent = space.settings.accent
-        branding = space.settings.look
+        branding = space.settings.shownLook
         requiresAuthentication = space.settings.requiresAuthentication
     }
 

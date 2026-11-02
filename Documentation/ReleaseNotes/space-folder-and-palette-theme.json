@@ -1,0 +1,4 @@
+{
+  "category": "new",
+  "message": "Each Space's Appearance page can now choose the color its folders wear and their back face, one text color for the sidebar, a tint, opacity and text color for the command palette in light and dark, and a second look the Space wears while windows are dark, each group with its own Reset. On Mac, Export Theme and Load Theme share a Space's look as a file, and crest-browser theme does the same from the terminal."
+}

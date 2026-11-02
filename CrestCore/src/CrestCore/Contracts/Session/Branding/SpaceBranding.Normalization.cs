@@ -45,6 +45,10 @@ public sealed partial record SpaceBranding {
             GradientAngle = NormalizedAngle(branding.GradientAngle),
             FolderColorIntensity = Unit(branding.FolderColorIntensity),
             SymbolColor = branding.SymbolColor is { } symbol ? NormalizedColor(symbol) : null,
+            FolderColor = branding.FolderColor is { } folder ? NormalizedColor(folder) : null,
+            FolderBackColor = branding.FolderBackColor is { } folderBack ? NormalizedColor(folderBack) : null,
+            CommandPalette = branding.CommandPalette is { } paletteLook ? NormalizedPalette(paletteLook) : null,
+            SidebarTextColor = branding.SidebarTextColor is { } sidebarText ? NormalizedColor(sidebarText) : null,
             Crest = crest with {
                 Palette = palette is null ? null : new(palette),
                 BackplateColorIndex = LayerIndex(crest.BackplateColorIndex, layers),
@@ -83,6 +87,17 @@ public sealed partial record SpaceBranding {
         var figure = charge.Kind.Normalized(charge);
         return figure.Kind == CrestChargeKind.Heraldic && figure.Symbol == symbol ? null : figure;
     }
+
+    /// A palette look with each surface's tint a color and its opacity within 0
+    /// through 1. A look that tints neither appearance is no look at all.
+    private static SpacePaletteLook? NormalizedPalette(SpacePaletteLook look) {
+        var normalized = new SpacePaletteLook(NormalizedSurface(look.Light), NormalizedSurface(look.Dark));
+        return normalized.IsTinted ? normalized : null;
+    }
+
+    private static SpacePaletteSurface NormalizedSurface(SpacePaletteSurface surface) =>
+        new(surface.Tint is { } tint ? NormalizedColor(tint) : null, Unit(surface.Opacity),
+            surface.TextColor is { } text ? NormalizedColor(text) : null);
 
     /// A strength, fade, intensity or color component, kept within 0 through 1.
     /// A value that is not a number falls back to `fallback`.

@@ -87,7 +87,7 @@ struct BrowserWebPageSurface: View {
                 page: page,
                 branding: browser.spaceModel(
                     matching: BrowserSpaceRuntimeAssignment(spaceID: page.spaceID, profileID: page.profileID)
-                ).map(\.settings.look),
+                ).map { $0.settings.shownLook },
                 pagePresentation: pagePresentation
             )
 

@@ -35,8 +35,34 @@ internal sealed partial record SpacePayload {
             value.Value["symbolColor"] is { } symbolColor ? Color(symbolColor) : null,
             ReadCrest(value.Nested("crest")), version, value.TolerantNumber("folderColorIntensity") ?? 0,
             SpaceTextColorMode.Named(value.TolerantText("textColorMode")) ?? SpaceTextColorMode.Automatic,
-            value.OptionalFlag("hasCustomAppearance"));
+            value.OptionalFlag("hasCustomAppearance"), OptionalColor(value.Value["folderColor"]),
+            OptionalColor(value.Value["folderBackColor"]), PaletteLook(value.Value["commandPalette"]),
+            OptionalColor(value.Value["sidebarTextColor"]));
         return SpaceBranding.Normalized(branding);
+    }
+
+    /// A color a record may hold, or null when it holds none every client reads.
+    private static BrandColor? OptionalColor(JsonNode? node) {
+        if (node is null) return null;
+        try {
+            return Color(node);
+        } catch (UnreadableSyncPayloadException) {
+            return null;
+        }
+    }
+
+    /// The command palette's look, or null when the record holds none every
+    /// client reads. A surface a client cannot read is the system material alone.
+    private static SpacePaletteLook? PaletteLook(JsonNode? node) {
+        if (node is not JsonObject) return null;
+        var value = new SyncPayloadReader(node, SyncPayloadForm.Journal);
+        return new(PaletteSurface(value.Value["light"]), PaletteSurface(value.Value["dark"]));
+    }
+
+    private static SpacePaletteSurface PaletteSurface(JsonNode? node) {
+        if (node is not JsonObject) return SpacePaletteSurface.Neutral;
+        var value = new SyncPayloadReader(node, SyncPayloadForm.Journal);
+        return new(OptionalColor(value.Value["tint"]), value.TolerantNumber("opacity") ?? 0, OptionalColor(value.Value["textColor"]));
     }
 
     /// A crest as every client reads it: each member it cannot read takes its

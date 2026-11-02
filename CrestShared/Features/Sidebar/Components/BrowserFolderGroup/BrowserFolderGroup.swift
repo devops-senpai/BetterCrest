@@ -115,7 +115,7 @@ struct BrowserFolderGroup: View {
         .environment(\.browserInteractionCapabilities, context.capabilities)
         .modifier(
             BrowserFolderSectionSurface(
-                color: folder.displayColor,
+                color: configuration.displayBranding?.folderColor(of: folder) ?? folder.displayColor,
                 intensity: configuration.displayBranding?.folderColorIntensity ?? 0,
                 textColorMode: configuration.displayBranding?.shownTextColorMode ?? .automatic,
                 depth: depth,
@@ -275,7 +275,7 @@ struct BrowserFolderGroup: View {
 
     private var folderColorBinding: Binding<BrandColor> {
         Binding(
-            get: { folder.displayColor },
+            get: { configuration.displayBranding?.folderColor(of: folder) ?? folder.displayColor },
             set: { color in
                 guard let request = colorRequest,
                     isDeferredAssignmentAvailable(request)

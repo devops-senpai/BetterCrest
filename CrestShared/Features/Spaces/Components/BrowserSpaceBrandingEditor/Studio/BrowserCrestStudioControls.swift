@@ -29,6 +29,14 @@ struct BrowserCrestStudioContext {
     }
 
     func setting<Value: Equatable>(_ path: WritableKeyPath<SpaceBranding, Value>) -> CrestSettingValue<Value> {
+        setting(path, default: defaults[keyPath: path])
+    }
+
+    /// A setting whose default is `defaultValue` whatever the starting look
+    /// holds, such as a color a Space leaves unchosen.
+    func setting<Value: Equatable>(_ path: WritableKeyPath<SpaceBranding, Value>, default defaultValue: Value)
+        -> CrestSettingValue<Value>
+    {
         CrestSettingValue(
             Binding(
                 get: { value[keyPath: path] },
@@ -37,7 +45,7 @@ struct BrowserCrestStudioContext {
                         $0[keyPath: path] = next
                         $0.hasCustomAppearance = true
                     }
-                }), default: defaults[keyPath: path])
+                }), default: defaultValue)
     }
 
     func slider(
@@ -94,16 +102,19 @@ struct BrowserCrestStudioGroup<Content: View>: View {
     let systemImage: String
     var preview: SpaceBranding? = nil
     var symbol: String = "sparkles"
+    /// The settings the group's Reset puts back, when it offers one.
+    var resets: [CrestResettableSetting] = []
     @ViewBuilder var content: Content
 
     init(
         title: LocalizedStringResource, systemImage: String, preview: SpaceBranding? = nil, symbol: String = "sparkles",
-        @ViewBuilder content: () -> Content
+        resets: [CrestResettableSetting] = [], @ViewBuilder content: () -> Content
     ) {
         self.title = title
         self.systemImage = systemImage
         self.preview = preview
         self.symbol = symbol
+        self.resets = resets
         self.content = content()
     }
 
@@ -123,6 +134,9 @@ struct BrowserCrestStudioGroup<Content: View>: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
                 Spacer()
+                if !resets.isEmpty {
+                    BrowserCrestStudioResetButton(title: title, settings: resets)
+                }
                 if let preview {
                     BrowserCrestStudioMark(branding: preview, symbol: symbol, size: 56)
                         .frame(width: 72, height: 64)
@@ -145,6 +159,41 @@ struct BrowserCrestStudioGroup<Content: View>: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Text(title))
+    }
+}
+
+/// One group's Reset: puts every setting the group owns back to its default,
+/// and offers nothing while they all still hold it.
+struct BrowserCrestStudioResetButton: View {
+    let title: LocalizedStringResource
+    let settings: [CrestResettableSetting]
+
+    var body: some View {
+        Button("Reset") { settings.resetAll() }
+            .buttonStyle(.borderless)
+            .disabled(!settings.isModified)
+            .accessibilityLabel(Text("Reset \(Text(title)) to default"))
+    }
+}
+
+/// A color a Space may leave unchosen: the picker shows `fallback` until a
+/// color is picked, and the row's reset lets the color go again.
+struct BrowserCrestStudioColorPickerRow: View {
+    let title: LocalizedStringKey
+    let value: CrestSettingValue<BrandColor?>
+    let fallback: BrandColor
+
+    var body: some View {
+        CrestSettingRow(title, setting: value.resettable(title)) {
+            ColorPicker(
+                title,
+                selection: Binding(
+                    get: { (value.wrappedValue ?? fallback).color },
+                    set: { value.binding.wrappedValue = BrandColor(color: $0) }),
+                supportsOpacity: false
+            )
+            .labelsHidden()
+        }
     }
 }
 
