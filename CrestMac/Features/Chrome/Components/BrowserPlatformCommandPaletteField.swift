@@ -51,6 +51,10 @@ struct BrowserPlatformCommandPaletteField: NSViewRepresentable {
     }
 
     func updateNSView(_ field: NSTextField, context: Context) {
+        // The text, placeholder and completion suffix are AppKit's, so they
+        // read the field's appearance rather than SwiftUI's scheme: a Space's
+        // dark palette in a light window would otherwise draw dark on dark.
+        field.appearance = NSAppearance(named: context.environment.colorScheme == .dark ? .darkAqua : .aqua)
         let canFocus = context.environment.isEnabled && context.environment.spaceContentIsInteractive
         field.isEditable = canFocus
         field.isSelectable = canFocus

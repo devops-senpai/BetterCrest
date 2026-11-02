@@ -43,6 +43,15 @@ extension SpacePaletteSurface {
     /// material, or a text color of its own.
     var isTinted: Bool { (tint != nil && opacity > 0) || textColor != nil }
 
+    /// The tone the card's text reads in over this surface: the chosen text
+    /// color's brightness, else the tint's when it mostly covers the
+    /// material, else nil to follow the window.
+    var foregroundTone: BrowserSpaceForegroundTone? {
+        if let textColor { return textColor.luminance > 0.5 ? .light : .dark }
+        guard let tint, opacity >= 0.5 else { return nil }
+        return tint.luminance > 0.5 ? .dark : .light
+    }
+
     // MARK: - Actions - Tinting
 
     /// This surface wearing `tint`. A tint picked over a surface that covered
