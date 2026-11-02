@@ -17,7 +17,8 @@ struct ThemeCommandLine {
     static let usage = """
         usage: arma theme --space <name> [options]
 
-        Apply a look to one Space of the running Crest, and share it.
+        The first form of arma theme: changes one Space's look, and so the theme it
+        uses. Run arma theme help for the theme commands that replace it.
 
           --from-file <path>            apply a theme file (JSON)
           --dark-from-file <path>       apply a theme file as the look for dark windows

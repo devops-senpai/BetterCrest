@@ -44,11 +44,18 @@ Turn on **Dark look** at the top of a theme under **Settings → Themes** on Mac
 On Mac, use the export and import buttons under the theme list in **Settings → Themes** to save a theme as a file or add one someone shared. The `arma` tool inside Arma does the same from the terminal while Arma is open. It needs only Arma running; agents can stay off.
 
 ```sh
-/Applications/Arma.app/Contents/Helpers/arma theme --space Personal --export ~/Desktop/dusk.json
-/Applications/Arma.app/Contents/Helpers/arma theme --space Work --from-file ~/Desktop/dusk.json
-/Applications/Arma.app/Contents/Helpers/arma theme --space Work --folder-color "#7a8bb0" --palette-dark "#101218" --palette-dark-opacity 0.7
-/Applications/Arma.app/Contents/Helpers/arma theme --space Work --reset command-palette
+A=/Applications/Arma.app/Contents/Helpers/arma
+$A theme list                                   # * marks the shown Space's theme
+$A theme show Dusk > ~/Desktop/dusk.json        # a theme as a file
+$A theme import ~/Desktop/dusk.json             # save a file as a theme
+$A theme edit Dusk --folder-color "#7a8bb0" --palette-dark "#101218" --palette-dark-opacity 0.7
+$A theme edit --space Work --dark --background "#101218,#3a2f5b"   # the theme Work uses, dark look
+$A theme use Dusk --space Work
+$A crest set --space Work --shape banner --emblem crane --field-color "#1d2a44" --emblem-color "#f4f1ea"
+$A crest show --space Work                      # its parts, colors, and every name each part takes
 ```
+
+`arma theme` makes, edits and picks themes; `arma crest` shapes a Space's own crest or icon, whose colors no theme changes. The first form, `arma theme --space <name> [options]`, still changes a Space's look and so the theme it uses.
 
 A theme file is JSON with a section for each part of the look, and a theme can name only the parts it changes:
 
@@ -62,7 +69,7 @@ A theme file is JSON with a section for each part of the look, and a theme can n
 }
 ```
 
-Colors are `#RRGGBB` or `#RRGGBBAA`; the word `default` lets a chosen color go. A `"dark"` object with the same sections gives the Space its look for dark windows, and `--dark-from-file` applies a second theme file as that look. Run `arma theme` with no options to see every flag.
+Colors are `#RRGGBB` or `#RRGGBBAA`; the word `default` lets a chosen color go. A `"dark"` object with the same sections gives the Space its look for dark windows, and `--dark-from-file` applies a second theme file as that look. Run `arma theme help` and `arma crest help` to see every option.
 
 ## Customize the browser around your Spaces
 
