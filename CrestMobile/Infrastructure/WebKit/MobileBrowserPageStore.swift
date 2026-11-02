@@ -582,7 +582,8 @@ final class MobileBrowserPageStore:
         else { return }
         MobileBrowserDialogPresenter.exportDownloadedFile(
             at: destinationURL,
-            to: destination
+            to: destination,
+            in: activePage?.webView.window
         )
     }
 
