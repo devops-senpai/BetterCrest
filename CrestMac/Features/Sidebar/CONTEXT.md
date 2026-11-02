@@ -15,7 +15,7 @@ behavior.
 
 | Path | What it is |
 | --- | --- |
-| `BrowserSidebar/` | Loaded content and Space pages, the sidebar's address band and tab list scroll, pointer navigation, saved-location restore |
+| `BrowserSidebar/` | Loaded content and Space pages, the sidebar's address band and tab list scroll, `BrowserSidebarResizeSettle` (keeps rows drawn when the window resizes while scrolled), pointer navigation, saved-location restore |
 | `BrowserSiteControlButton/` | The site control by the address: security button, popover, quick actions, site data, blocked-popup notice |
 | `Components/` | Tab selection targets and monitor, native emoji field, and the AppKit seams in `BrowserIconCustomization/`, `BrowserSidebarDrag/` (drag sources, lift previews, autoscroll), `BrowserSidebarNavigationControls/` (history menus), `BrowserSidebarRow/` (auxiliary click, tab promotion), `BrowserSpaceSwitcher/` |
 | `Models/` | Background and mouse-button actions, dispositions and pointer scope |

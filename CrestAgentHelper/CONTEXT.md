@@ -20,6 +20,8 @@ running app only for the calls that need it.
 | `AgentAppLink.swift` | The socket link to the app, reconnected after Arma restarts |
 | `AgentLinkResponse+AgentAppLink.swift` | Reading the app's answers off the link |
 | `AgentLineChannel.swift` | Newline-delimited messages over one file descriptor |
+| `ThemeCommandLine.swift` | `arma theme`: reads, writes and resets a Space's theme from the terminal |
+| `CommandAppLink.swift` | The link `arma theme` uses to reach the running app over the commands socket |
 
 ## Depends on
 
