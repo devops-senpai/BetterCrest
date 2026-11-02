@@ -36,7 +36,7 @@ public sealed partial record SpaceBranding {
         return new(new(colors), pattern, strength, readabilityFade, readabilityFade > 0, theme, gradientAngle, showsTexture,
             SpaceIconStyle.SimpleSymbol, SymbolColor: null, crest, BaselineRenderingVersion, FolderColorIntensity: 0,
             SpaceTextColorMode.Automatic, HasCustomAppearance: null, FolderColor: null, FolderBackColor: null, CommandPalette: null,
-            SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null);
+            SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null, SidebarSecondaryTextColor: null);
     }
 
     #endregion

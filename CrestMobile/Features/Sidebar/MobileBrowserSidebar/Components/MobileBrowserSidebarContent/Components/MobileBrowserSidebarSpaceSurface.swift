@@ -14,7 +14,11 @@ struct MobileBrowserSidebarSpaceSurface: View {
             space: space,
             isSelected: isSelected
         )
-        .modifier(SpaceTextColor(color: space.settings.shownLook.sidebarTextColor))
+        .modifier(
+            SpaceTextColor(
+                color: space.settings.shownLook.sidebarTextColor,
+                secondary: space.settings.shownLook.sidebarSecondaryTextColor)
+        )
         .environment(\.colorScheme, spaceColorScheme)
         // Blur and redaction are drawing effects; rows still run their tasks.
         // This stops the ones that would otherwise disclose a locked Space's

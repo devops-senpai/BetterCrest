@@ -7,7 +7,7 @@ import Foundation
 enum CoreCodec {
     /// SHA-256 of the canonical contract schema. The core refuses any other.
     static let fingerprint: [UInt8] = [
-        0x2f, 0x38, 0x65, 0x63, 0xd8, 0x15, 0xcb, 0x0d, 0x98, 0x13, 0xac, 0x62, 0xea, 0x2d, 0xc6, 0x69, 0x8a, 0x0a, 0x60, 0x2f, 0x05, 0x85, 0xbc, 0xd0, 0xca, 0x3f, 0xc0, 0xb0, 0xde, 0x3c, 0x02, 0xe5
+        0x9a, 0x7e, 0xe1, 0x06, 0x50, 0x2b, 0xfc, 0xad, 0x42, 0xef, 0xc9, 0x90, 0x02, 0xe9, 0x34, 0xb3, 0x53, 0xe3, 0x20, 0x1d, 0x4f, 0xd2, 0x0a, 0xa6, 0xc0, 0xe8, 0x73, 0x77, 0x50, 0x77, 0x78, 0x51
     ]
     /// SHA-256 of the engine contract alone, which an engine binding registers with.
     static let engineFingerprint: [UInt8] = [
@@ -21966,7 +21966,14 @@ extension SpaceBranding {
         } else {
             folderOverrides = nil
         }
-        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance, folderColor: folderColor, folderBackColor: folderBackColor, commandPalette: commandPalette, sidebarTextColor: sidebarTextColor, folderOutlineColor: folderOutlineColor, folderOverrides: folderOverrides)
+        let sidebarSecondaryTextColor: BrandColor?
+        if try reader.readPresence() {
+            let sidebarSecondaryTextColorValue = try BrandColor(from: &reader)
+            sidebarSecondaryTextColor = sidebarSecondaryTextColorValue
+        } else {
+            sidebarSecondaryTextColor = nil
+        }
+        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance, folderColor: folderColor, folderBackColor: folderBackColor, commandPalette: commandPalette, sidebarTextColor: sidebarTextColor, folderOutlineColor: folderOutlineColor, folderOverrides: folderOverrides, sidebarSecondaryTextColor: sidebarSecondaryTextColor)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -22026,6 +22033,12 @@ extension SpaceBranding {
             writer.writePresence(false)
         }
         if let present0 = folderOverrides {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = sidebarSecondaryTextColor {
             writer.writePresence(true)
             present0.encode(into: &writer)
         } else {

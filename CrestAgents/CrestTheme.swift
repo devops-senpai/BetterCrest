@@ -40,6 +40,9 @@ struct CrestTheme: Codable, Equatable, Sendable {
         var textColor: String?
         /// The one color the sidebar's text reads in, or `default` to follow `textColor`.
         var sidebarText: String?
+        /// The color the sidebar's quieter text reads in, such as New Tab and
+        /// Clear, or `default` to dim the sidebar's text as the system does.
+        var sidebarSecondaryText: String?
     }
 
     /// The Space's icon.
@@ -113,6 +116,7 @@ struct CrestTheme: Codable, Equatable, Sendable {
                 if let value = background.texture { section.texture = value }
                 if let value = background.textColor { section.textColor = value }
                 if let value = background.sidebarText { section.sidebarText = value }
+                if let value = background.sidebarSecondaryText { section.sidebarSecondaryText = value }
                 merged.background = section
             }
             if let icon = other.icon {
