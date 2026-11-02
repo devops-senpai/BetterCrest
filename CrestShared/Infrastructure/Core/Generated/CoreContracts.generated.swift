@@ -10060,6 +10060,7 @@ struct CrestBackplate: Hashable, Sendable {
         case oval
         case banner
         case badge
+        case flag
     }
 
     let tag: Int
@@ -10178,6 +10179,14 @@ struct CrestBackplate: Hashable, Sendable {
         drawnSince: CrestVocabulary.studio,
         hasTeeth: false
     )
+    static let flag = CrestBackplate(
+        tag: 12,
+        kind: .flag,
+        name: "flag",
+        title: LocalizedStringResource("Banner Flag"),
+        drawnSince: CrestVocabulary.studio,
+        hasTeeth: false
+    )
 
     static let all: [CrestBackplate] = [
         none,
@@ -10191,7 +10200,8 @@ struct CrestBackplate: Hashable, Sendable {
         roundedSquare,
         oval,
         banner,
-        badge
+        badge,
+        flag
     ]
 
     static func named(_ name: String?) -> CrestBackplate? {
@@ -11767,6 +11777,24 @@ struct CrestSymbol: Hashable, Sendable {
         assetName: nil,
         isOffered: true
     )
+    static let sparrow = CrestSymbol(
+        tag: 64,
+        name: "sparrow",
+        title: LocalizedStringResource("Sparrow"),
+        drawnSince: CrestVocabulary.studio,
+        systemImage: "bird.fill",
+        assetName: "CrestCharge-sparrow",
+        isOffered: true
+    )
+    static let crane = CrestSymbol(
+        tag: 65,
+        name: "crane",
+        title: LocalizedStringResource("Crane"),
+        drawnSince: CrestVocabulary.studio,
+        systemImage: "bird.fill",
+        assetName: "CrestCharge-crane",
+        isOffered: true
+    )
 
     static let all: [CrestSymbol] = [
         dragon,
@@ -11832,7 +11860,9 @@ struct CrestSymbol: Hashable, Sendable {
         sailboat,
         crown,
         horn,
-        crossedBanners
+        crossedBanners,
+        sparrow,
+        crane
     ]
 
     static func named(_ name: String?) -> CrestSymbol? {
