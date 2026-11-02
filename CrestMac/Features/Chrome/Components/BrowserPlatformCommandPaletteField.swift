@@ -72,6 +72,15 @@ struct BrowserPlatformCommandPaletteField: NSViewRepresentable {
                 guard let field, coordinator?.field === field, field.isEditable, let window = field.window else {
                     return
                 }
+                // SwiftUI's focus may already have made the field the one
+                // being edited. Asking again ends that editing session and
+                // starts another, which makes the system set up its text
+                // cursor indicator twice; the one torn down mid-launch can
+                // leave an empty white panel under the field.
+                if let editor = field.currentEditor(), window.firstResponder === editor {
+                    editor.selectAll(nil)
+                    return
+                }
                 window.makeFirstResponder(field)
                 field.currentEditor()?.selectAll(nil)
             }
