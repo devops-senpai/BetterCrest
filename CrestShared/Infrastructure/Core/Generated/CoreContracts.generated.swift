@@ -6235,7 +6235,8 @@ struct SpaceBranding: Equatable, Sendable {
         commandPalette: nil,
         sidebarTextColor: nil,
         folderOutlineColor: nil,
-        folderOverrides: nil
+        folderOverrides: nil,
+        sidebarSecondaryTextColor: nil
     )
 
     var colors: ColorPalette
@@ -6259,6 +6260,7 @@ struct SpaceBranding: Equatable, Sendable {
     var sidebarTextColor: BrandColor?
     var folderOutlineColor: BrandColor?
     var folderOverrides: FolderColorOverrides?
+    var sidebarSecondaryTextColor: BrandColor?
 }
 
 struct SpaceCrest: Equatable, Sendable {
@@ -21071,7 +21073,8 @@ struct SpaceAccent: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         swatch: BrandColor(red: 0.29, green: 0.25, blue: 0.58, alpha: 1)
     )
@@ -21150,7 +21153,8 @@ struct SpaceAccent: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         swatch: BrandColor(red: 0.85, green: 0.27, blue: 0.2, alpha: 1)
     )
@@ -21229,7 +21233,8 @@ struct SpaceAccent: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         swatch: BrandColor(red: 0.12, green: 0.49, blue: 0.52, alpha: 1)
     )
@@ -21308,7 +21313,8 @@ struct SpaceAccent: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         swatch: BrandColor(red: 0.72, green: 0.25, blue: 0.42, alpha: 1)
     )
@@ -21557,7 +21563,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaWinter"
     )
@@ -21631,7 +21638,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaLion"
     )
@@ -21705,7 +21713,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaStorm"
     )
@@ -21779,7 +21788,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaDragon"
     )
@@ -21853,7 +21863,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaMeadow"
     )
@@ -21927,7 +21938,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaIron"
     )
@@ -22001,7 +22013,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaRiver"
     )
@@ -22075,7 +22088,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaSun"
     )
@@ -22149,7 +22163,8 @@ struct SpaceHouse: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         ),
         appIconName: "ArmaVigil"
     )
@@ -22309,7 +22324,8 @@ struct SpaceScheme: Hashable, Sendable {
             commandPalette: nil,
             sidebarTextColor: nil,
             folderOutlineColor: nil,
-            folderOverrides: nil
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
         )
     )
 

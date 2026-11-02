@@ -16,7 +16,9 @@ struct SpaceColorScheme: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .modifier(SpaceTextColor(color: branding?.sidebarTextColor))
+            .modifier(
+                SpaceTextColor(color: branding?.sidebarTextColor, secondary: branding?.sidebarSecondaryTextColor)
+            )
             .environment(\.colorScheme, branding?.shown.colorScheme(over: colorScheme) ?? .dark)
     }
 }

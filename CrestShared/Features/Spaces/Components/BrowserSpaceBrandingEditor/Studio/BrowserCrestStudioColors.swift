@@ -156,6 +156,9 @@ struct BrowserCrestStudioBackground: View {
             BrowserCrestStudioColorPickerRow(
                 title: "Text color", value: context.setting(\.sidebarTextColor, default: nil),
                 fallback: context.value.sidebarTextColor(over: colorScheme))
+            BrowserCrestStudioColorPickerRow(
+                title: "Secondary text color", value: context.setting(\.sidebarSecondaryTextColor, default: nil),
+                fallback: context.value.sidebarTextColor(over: colorScheme))
         }
     }
 

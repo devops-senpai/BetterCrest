@@ -11,7 +11,9 @@ namespace CrestCore.Contracts;
 /// follow <see cref="TextColorMode"/>. <see cref="FolderOutlineColor"/> draws a line
 /// around a folder without a color of its own, or null for none.
 /// <see cref="FolderOverrides"/> are the colors folders wear in place of the Space's,
-/// by folder path, or null for none.
+/// by folder path, or null for none. <see cref="SidebarSecondaryTextColor"/> is the color
+/// the sidebar's quieter text reads in, such as New Tab and Clear, or null to dim the
+/// sidebar's text as the system does.
 /// </summary>
 public sealed partial record SpaceBranding(
     ColorPalette Colors,
@@ -34,7 +36,8 @@ public sealed partial record SpaceBranding(
     SpacePaletteLook? CommandPalette,
     BrandColor? SidebarTextColor,
     BrandColor? FolderOutlineColor,
-    FolderColorOverrides? FolderOverrides) {
+    FolderColorOverrides? FolderOverrides,
+    BrandColor? SidebarSecondaryTextColor) {
     #region Static Variables
 
     /// The rendering vocabulary every shipped build draws. A banner strength stored
@@ -53,7 +56,7 @@ public sealed partial record SpaceBranding(
         SpaceCrest.PlainField(CrestBackplate.Shield, CrestSymbol.Mountain, CrestTrim.None, layers: [1, 1, 2, 1, 2, 1], trimWeight: 1,
             chargeScale: 1),
         BaselineRenderingVersion, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: null,
-        FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null);
+        FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null, SidebarSecondaryTextColor: null);
 
     #endregion
 
@@ -77,7 +80,7 @@ public sealed partial record SpaceBranding(
         return new(new(accent.LegacyColors), SpaceBannerPattern.Diagonal, BannerStrength: 1, LegacyReadabilityFade,
             KeepsControlsReadable: true, SpaceThemeMode.Banner, GradientAngle: 0, ShowsTexture: false, SpaceIconStyle.SimpleSymbol,
             SymbolColor: null, crest, BaselineRenderingVersion, FolderColorIntensity: 0, SpaceTextColorMode.Automatic,
-            HasCustomAppearance: null, FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null);
+            HasCustomAppearance: null, FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null, SidebarSecondaryTextColor: null);
     }
 
     /// The crest figure an SF Symbol name suggested before crests had their own.

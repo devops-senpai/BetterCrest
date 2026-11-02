@@ -14,7 +14,7 @@ namespace CrestCore.Native;
 public static class ContractCodec {
     /// <summary>SHA-256 of the canonical contract schema.</summary>
     public static ReadOnlySpan<byte> Fingerprint => [
-        0x41, 0x9b, 0x84, 0x40, 0xbf, 0xc9, 0x22, 0x8e, 0x11, 0x67, 0xd2, 0x0a, 0x71, 0x1d, 0x3e, 0x38, 0xd9, 0x78, 0xa1, 0xb4, 0x7d, 0x1c, 0x53, 0xc9, 0x84, 0x01, 0xa0, 0x4f, 0x93, 0x08, 0xba, 0xf0
+        0xd9, 0xe8, 0x0f, 0x6d, 0x04, 0x13, 0x77, 0xd2, 0x36, 0x1e, 0xbd, 0x09, 0xdd, 0xf3, 0xb7, 0x43, 0xe4, 0x66, 0x80, 0x05, 0xcb, 0x55, 0x61, 0x51, 0x29, 0xe2, 0x20, 0x63, 0x06, 0xc4, 0xeb, 0x60
     ];
 
     /// <summary>SHA-256 of the engine contract alone, which an engine binding registers with.</summary>
@@ -17100,7 +17100,8 @@ public static class ContractCodec {
             reader.ReadPresence() ? (SpacePaletteLook?)ReadSpacePaletteLook(reader) : null,
             reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
             reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
-            reader.ReadPresence() ? (FolderColorOverrides?)ReadFolderColorOverrides(reader) : null);
+            reader.ReadPresence() ? (FolderColorOverrides?)ReadFolderColorOverrides(reader) : null,
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null);
     }
 
     public static void WriteSpaceBranding(WireWriter writer, SpaceBranding value) {
@@ -17164,6 +17165,12 @@ public static class ContractCodec {
         if (value.FolderOverrides is { } presentFolderOverrides) {
             writer.WritePresence(true);
             WriteFolderColorOverrides(writer, presentFolderOverrides);
+        } else {
+            writer.WritePresence(false);
+        }
+        if (value.SidebarSecondaryTextColor is { } presentSidebarSecondaryTextColor) {
+            writer.WritePresence(true);
+            WriteBrandColor(writer, presentSidebarSecondaryTextColor);
         } else {
             writer.WritePresence(false);
         }

@@ -51,6 +51,8 @@ public sealed partial record SpaceBranding {
             SidebarTextColor = branding.SidebarTextColor is { } sidebarText ? NormalizedColor(sidebarText) : null,
             FolderOutlineColor = branding.FolderOutlineColor is { } outline ? NormalizedColor(outline) : null,
             FolderOverrides = NormalizedOverrides(branding.FolderOverrides),
+            SidebarSecondaryTextColor = branding.SidebarSecondaryTextColor is { } secondaryText
+                ? NormalizedColor(secondaryText) : null,
             Crest = crest with {
                 Palette = palette is null ? null : new(palette),
                 BackplateColorIndex = LayerIndex(crest.BackplateColorIndex, layers),

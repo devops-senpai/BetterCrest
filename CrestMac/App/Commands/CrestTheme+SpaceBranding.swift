@@ -63,7 +63,9 @@ extension CrestTheme.Sections {
                 readabilityFade: look.readabilityFade,
                 texture: look.showsTexture,
                 textColor: look.textColorMode.name,
-                sidebarText: look.sidebarTextColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord),
+                sidebarText: look.sidebarTextColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
+                sidebarSecondaryText: look.sidebarSecondaryTextColor.map(CrestTheme.text)
+                    ?? CrestTheme.defaultColorWord),
             icon: CrestTheme.Icon(color: look.symbolColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord),
             folders: CrestTheme.Folders(
                 color: look.folderColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
@@ -137,6 +139,9 @@ extension SpaceBranding {
                 look.textColorMode = mode
             }
             if let text = background.sidebarText { look.sidebarTextColor = try CrestTheme.color(text) }
+            if let text = background.sidebarSecondaryText {
+                look.sidebarSecondaryTextColor = try CrestTheme.color(text)
+            }
         }
         if let icon = sections.icon, let text = icon.color {
             look.symbolColor = try CrestTheme.color(text)
@@ -180,6 +185,7 @@ extension SpaceBranding {
             look.showsTexture = starting.showsTexture
             look.textColorMode = starting.textColorMode
             look.sidebarTextColor = starting.sidebarTextColor
+            look.sidebarSecondaryTextColor = starting.sidebarSecondaryTextColor
         case .icon:
             look.symbolColor = starting.symbolColor
         case .folders:

@@ -36,6 +36,7 @@ struct ThemeCommandLine {
           --texture on|off
           --text automatic|light|dark|system
           --sidebar-text <hex>|default     the one color the sidebar's text reads in
+          --sidebar-secondary-text <hex>|default  the color of the sidebar's quieter text
 
           --icon-color <hex>|default
           --folder-color <hex>|default
@@ -198,6 +199,9 @@ struct ThemeCommandLine {
             case "--sidebar-text":
                 flags.background = flags.background ?? .init()
                 flags.background?.sidebarText = try color(for: flag)
+            case "--sidebar-secondary-text":
+                flags.background = flags.background ?? .init()
+                flags.background?.sidebarSecondaryText = try color(for: flag)
             case "--icon-color":
                 flags.icon = .init(color: try color(for: flag))
             case "--folder-color":

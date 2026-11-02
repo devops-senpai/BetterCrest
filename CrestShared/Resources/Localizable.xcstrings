@@ -4,6 +4,96 @@
     "" : {
 
     },
+    "Secondary text color" : {
+
+    },
+    "The theme of the Space this window shows" : {
+
+    },
+    "Theme of the shown Space" : {
+
+    },
+    "%@ uses this theme; choose another for it first." : {
+
+    },
+    "No Theme" : {
+
+    },
+    "The theme this Space wears; edit themes in Settings › Themes" : {
+
+    },
+    "Also used by %@" : {
+
+    },
+    "Saved themes for Spaces" : {
+
+    },
+    "themes saved theme new duplicate rename delete import export colors look dark light background image picture tab backing Catppuccin" : {
+
+    },
+    "crest studio name icon emblem colors theme banner background image picture tab backing sidebar pattern gradient accent" : {
+
+    },
+    "Behind Each Row" : {
+
+    },
+    "Behind the Sidebar" : {
+
+    },
+    "Tab Backing" : {
+
+    },
+    "Tab backing" : {
+
+    },
+    "Tab backing color" : {
+
+    },
+    "Duplicate" : {
+
+    },
+    "Delete Theme" : {
+
+    },
+    "New Theme" : {
+
+    },
+    "Duplicate Theme" : {
+
+    },
+    "Choose a theme, or make a new one." : {
+
+    },
+    "Give this theme a look of its own while windows are dark" : {
+
+    },
+    "%@ Copy" : {
+
+    },
+    "Dark look" : {
+
+    },
+    "The theme’s colors are on, but its background image could not be read." : {
+
+    },
+    "Fill Window" : {
+
+    },
+    "Original Size" : {
+
+    },
+    "Match Width" : {
+
+    },
+    "Match Height" : {
+
+    },
+    "Grow to fit" : {
+
+    },
+    "Repeat" : {
+
+    },
     "Automation" : {
 
     },
