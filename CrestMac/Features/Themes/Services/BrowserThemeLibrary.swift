@@ -71,6 +71,7 @@ final class BrowserThemeLibrary {
         self.directory = directory
         reload()
         loadLinks()
+        installBundledThemes()
     }
 
     /// The installed app's Themes folder, or, for a review launch, one kept
@@ -347,6 +348,32 @@ final class BrowserThemeLibrary {
         sort()
         DiagnosticLog.themes.notice("Theme \(entry.id) saved")
         return entry.id
+    }
+
+    /// Saves each theme Arma ships with that this library has never had,
+    /// under its own identity, so a new library starts with them and one
+    /// the person deleted stays deleted. A theme saved under the same name
+    /// counts as had.
+    private func installBundledThemes() {
+        guard let directory else { return }
+        let record = directory.appendingPathComponent("bundled.json")
+        var installed = (try? JSONDecoder().decode(Set<UUID>.self, from: Data(contentsOf: record))) ?? []
+        var changed = false
+        for bundled in BrowserBundledTheme.all where !installed.contains(bundled.id) {
+            installed.insert(bundled.id)
+            changed = true
+            guard entry(bundled.id) == nil, !entries.contains(where: { $0.name == bundled.name }),
+                let theme = bundled.theme
+            else { continue }
+            let entry = Entry(id: bundled.id, theme: theme)
+            entries.append(entry)
+            write(entry)
+            DiagnosticLog.themes.notice("Bundled theme \(bundled.id) installed")
+        }
+        sort()
+        guard changed else { return }
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        try? JSONEncoder().encode(installed).write(to: record, options: .atomic)
     }
 
     /// Saves a theme of the plain look, answering its identity.

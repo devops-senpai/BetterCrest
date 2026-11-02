@@ -39,8 +39,12 @@ struct BrowserOnboardingStepContent: View, BrowserOnboardingPages {
     func lookPage() -> some View {
         BrowserOnboardingLookPage(
             look: flow.look,
+            theme: flow.theme,
             choose: { look in
                 withAnimation(motion(CrestMotion.onboardingProgress)) { flow.chooseLook(look) }
+            },
+            chooseTheme: { theme in
+                withAnimation(motion(CrestMotion.onboardingProgress)) { flow.chooseTheme(theme) }
             },
             back: back,
             continueSetup: continueSetup

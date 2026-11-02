@@ -80,16 +80,16 @@ struct BrowserOnboardingWindowContent: View {
         case .welcome:
             return SpaceHouse.all[welcomeHouse % SpaceHouse.all.count].look
         case .manualSetup:
-            return flow.manualSetup.space(selectedManualSpaceID)?.customization.branding ?? flow.look.previewBranding
+            return flow.manualSetup.space(selectedManualSpaceID)?.customization.branding ?? flow.previewBranding
         case .review:
             guard let review = flow.selectedReview(id: flow.shownReviewSpaceID) else {
-                return flow.look.previewBranding
+                return flow.previewBranding
             }
-            return flow.previewDestinationSpace(for: review)?.settings.look ?? flow.look.previewBranding
+            return flow.previewDestinationSpace(for: review)?.settings.look ?? flow.previewBranding
         case .complete:
-            return flow.manualSetup.spaces.first?.customization.branding ?? flow.look.previewBranding
+            return flow.manualSetup.spaces.first?.customization.branding ?? flow.previewBranding
         case .look, .featureSpaces, .featureTabs, .featureSync, .importBrowser:
-            return flow.look.previewBranding
+            return flow.previewBranding
         }
     }
 

@@ -1,0 +1,75 @@
+{
+ "background": {
+  "colors": [
+   "#e4eff4",
+   "#54c8f1",
+   "#c2dee6"
+  ],
+  "intensity": 0.8,
+  "pattern": "solid",
+  "readabilityFade": 0,
+  "sidebarText": "#001e2a",
+  "style": "banner",
+  "textColor": "dark",
+  "texture": true
+ },
+ "commandPalette": {
+  "dark": {
+   "opacity": 0.94,
+   "text": "#001e2a",
+   "tint": "#fcfdfe"
+  },
+  "light": {
+   "opacity": 0.94,
+   "text": "#001e2a",
+   "tint": "#fcfdfe"
+  }
+ },
+ "dark": {
+  "background": {
+   "colors": [
+    "#001e2a",
+    "#54c8f1",
+    "#2a8ba7"
+   ],
+   "intensity": 0.8,
+   "pattern": "solid",
+   "readabilityFade": 0,
+   "sidebarText": "#d1e6ec",
+   "style": "banner",
+   "textColor": "light",
+   "texture": true
+  },
+  "commandPalette": {
+   "dark": {
+    "opacity": 0.94,
+    "text": "#d1e6ec",
+    "tint": "#000f15"
+   },
+   "light": {
+    "opacity": 0.94,
+    "text": "#d1e6ec",
+    "tint": "#000f15"
+   }
+  },
+  "folders": {
+   "backColor": "#2a8ba7",
+   "color": "#1d4a5c",
+   "intensity": 0.3,
+   "outlineColor": "#84cff0"
+  },
+  "icon": {
+   "color": "#dcf3fc"
+  }
+ },
+ "folders": {
+  "backColor": "#84cff0",
+  "color": "#e5f4fb",
+  "intensity": 0.3,
+  "outlineColor": "#0e7195"
+ },
+ "icon": {
+  "color": "#1f5f80"
+ },
+ "name": "Arc Sky"
+}

@@ -60,6 +60,19 @@ final class BrowserOnboardingFlow {
     /// The look the Spaces setup makes wear, which the stage and every
     /// preview follow.
     var look: SetupLook { state?.look ?? .heraldic }
+    /// A theme Arma ships with that the Spaces setup makes wear over the
+    /// heraldic look, or nil for the look alone. It is this Mac's choice, as
+    /// the theme library is, so the flow keeps it rather than the core.
+    private(set) var theme: BrowserBundledTheme?
+
+    /// The look the stage and every preview show: the setup look, dressed in
+    /// the chosen theme when there is one.
+    var previewBranding: SpaceBranding {
+        guard let theme = theme?.theme, let dressed = try? look.previewBranding.dressed(in: theme) else {
+            return look.previewBranding
+        }
+        return dressed
+    }
     var failure: SetupFailure? { state?.failure }
     var review: SetupImportReview? { state?.review }
     var selectedImportApplications: Set<ImportSource> { Set(state?.selected ?? []) }
@@ -225,10 +238,19 @@ final class BrowserOnboardingFlow {
         send(ShowSetupStep(step: step))
     }
 
-    /// Gives the Spaces setup makes from here on `look`.
+    /// Gives the Spaces setup makes from here on `look`, and no theme.
     func chooseLook(_ look: SetupLook) {
         guard !isImportSelectionLocked else { return }
+        theme = nil
         send(ChooseSetupLook(look: look))
+    }
+
+    /// Gives the Spaces setup makes from here on the heraldic look dressed in
+    /// `theme`, which each wears once setup finishes.
+    func chooseTheme(_ theme: BrowserBundledTheme) {
+        guard !isImportSelectionLocked else { return }
+        send(ChooseSetupLook(look: .heraldic))
+        self.theme = theme
     }
 
     /// Sets Spaces up by hand, leaving any read that has not finished.
