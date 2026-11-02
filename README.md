@@ -35,7 +35,7 @@ window and its command palette.
 | ![Catppuccin Latte / Mocha](Brand/Readme/theme-catppuccin-latte.jpg) | ![JellyFish, with a picture behind the tabs](Brand/Readme/theme-jellyfish.jpg) |
 | **Catppuccin Latte / Mocha** | **A picture of your own** (JellyFish) |
 
-![Settings › Themes: the theme list, a live preview of the window and its command palette, and the sidebar's colors](Brand/Readme/settings-themes.jpg)
+![Settings › Themes: the theme list, a live preview of the window and its command palette, and the sidebar's colors](Brand/Readme/settings-themes-arc-sky.jpg)
 
 A Space picks its theme; its crest stays its own. The Crest Studio shapes it,
 starting from Arma's own **Guidon**, its bird and the Crane.
@@ -116,7 +116,7 @@ local DevTools port, limited to one Space's profile or an empty Ephemeral one,
 and to the tabs they open or existing tabs too. The page shows the setup for
 each tool.
 
-![Settings › Automation: allow testing frameworks, the profile and tabs they reach, the port, and setup for Playwright, Puppeteer, Selenium, WebdriverIO, Katalon and TestCafe](Brand/Readme/settings-automation.jpg)
+![Settings › Automation: allow testing frameworks, the profile and tabs they reach, the port, and setup for Playwright, Puppeteer, Selenium, WebdriverIO, Katalon and TestCafe](Brand/Readme/settings-automation-arc-sky.jpg)
 
 ```sh
 arma automation on --profile Work --tabs opened --port 9222
