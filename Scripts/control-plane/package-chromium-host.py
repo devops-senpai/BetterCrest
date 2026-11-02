@@ -59,24 +59,42 @@ def remove_engine_alerts_helper(frameworks):
             shutil.rmtree(helper)
 
 
-def name_engine_helpers(frameworks, product_name):
+def name_engine_helpers(frameworks, product_name, icon):
     """Show the engine's helpers as the product's wherever macOS names one
     from its bundle, the way Chromium names its own alert helper: a localized
     display name. Bundle and executable names, identifiers and paths keep the
     engine's built names, which the engine resolves at run time. The name is
-    localized for the helper's development region, the one localization
-    Launch Services falls back to for every language, so the helper process
-    keeps the language it runs in today."""
+    written in every localization the helper carries, Base included, and in
+    its development region, the one Launch Services falls back to for every
+    language, so the helper process keeps the language it runs in today.
+
+    An alerts helper, such as the Aperitif variant's, posts the notifications
+    and asks for their permission, so Notification Center shows its name and
+    icon. It is named the product itself and given the product's icon."""
     for helper in engine_helpers(frameworks):
         if not helper.stem.startswith(ENGINE_HELPER_NAME):
             continue
         suffix = helper.stem.removeprefix(ENGINE_HELPER_NAME)
-        with (helper / "Contents/Info.plist").open("rb") as stream:
-            region = plistlib.load(stream)["CFBundleDevelopmentRegion"]
-        strings = helper / f"Contents/Resources/{region}.lproj/InfoPlist.strings"
-        strings.parent.mkdir(parents=True, exist_ok=True)
-        strings.write_bytes(plistlib.dumps(
-            {"CFBundleDisplayName": f"{product_name} Helper{suffix}"}, fmt=plistlib.FMT_BINARY))
+        alerts = suffix.endswith("Alerts)")
+        name = product_name if alerts else f"{product_name} Helper{suffix}"
+        info_path = helper / "Contents/Info.plist"
+        with info_path.open("rb") as stream:
+            info = plistlib.load(stream)
+        resources = helper / "Contents/Resources"
+        regions = {path.parent for path in resources.glob("*.lproj/InfoPlist.strings")}
+        regions.add(resources / f"{info['CFBundleDevelopmentRegion']}.lproj")
+        for region in regions:
+            region.mkdir(parents=True, exist_ok=True)
+            (region / "InfoPlist.strings").write_bytes(
+                plistlib.dumps({"CFBundleDisplayName": name}, fmt=plistlib.FMT_BINARY))
+        if alerts and icon.is_file():
+            # The helper's asset catalog holds Chromium's icon under its icon
+            # name, which macOS prefers to the icon file.
+            shutil.copy2(icon, resources / "app.icns")
+            info["CFBundleIconFile"] = "app.icns"
+            info.pop("CFBundleIconName", None)
+            with info_path.open("wb") as stream:
+                plistlib.dump(info, stream)
 
 
 def name_product_in_localized_info(resources, product_name):
@@ -367,7 +385,7 @@ def main():
         # The system names a host package after its own identity, never the
         # engine's: in Notifications, privacy prompts and process lists.
         remove_engine_alerts_helper(frameworks)
-        name_engine_helpers(frameworks, info["CFBundleDisplayName"])
+        name_engine_helpers(frameworks, info["CFBundleDisplayName"], resources / "Arma.icns")
         name_product_in_localized_info(resources, info["CFBundleDisplayName"])
     targets = [] if args.baseline else [frameworks / "CrestCore.Native.dylib", frameworks / ui.name,
                                       *([frameworks / "libarma_servo.dylib"] if args.servo else []),
