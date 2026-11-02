@@ -204,7 +204,8 @@ extension TerminalTabCommand {
         if found.tab.placement.isDurable {
             let assignment = BrowserTabRuntimeAssignment(
                 tabID: found.tab.id, spaceID: found.space.id, profileID: found.space.profileID)
-            guard terminal.browser.closeDurableTab(assignment) else { throw Refusal("Arma could not close that tab.") }
+            let browser = terminal.frontWindow(over: found.space)?.browser ?? terminal.browser
+            guard browser.closeDurableTab(assignment) else { throw Refusal("Arma could not close that tab.") }
             return TerminalOutput(text: "Put away \(title)'s page; the tab stays \(found.tab.placement.name).")
         }
         let browser = terminal.frontWindow(over: found.space)?.browser ?? terminal.browser
