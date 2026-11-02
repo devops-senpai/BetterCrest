@@ -16,6 +16,8 @@ extension BrowserStore {
         else { return false }
         // The core returns the window to the tab it showed before, skipping the
         // closed tab's split, whose other members would present it again.
-        return closeSessionTab(tab.id, in: space.id)
+        guard closeSessionTab(tab.id, in: space.id) else { return false }
+        returnToStartPage(in: space.id)
+        return true
     }
 }

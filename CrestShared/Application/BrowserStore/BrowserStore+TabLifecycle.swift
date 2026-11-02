@@ -102,11 +102,24 @@ extension BrowserStore {
         guard let space = spaceModel(spaceID), let tab = space.shownTab(id), !tab.placement.isDurable
         else { return false }
         let assignment = BrowserTabRuntimeAssignment(tabID: id, spaceID: spaceID, profileID: space.profileID)
+        let showsPage = tab.surface != .startPage
         // The core asks the tab's page whether it may go before it closes the tab.
         return performPageDismissal(of: [assignment]) { [weak self] in
-            guard let self, self.spaceModel(spaceID) != nil else { return false }
-            return self.closeSessionTab(id, in: spaceID)
+            guard let self, self.spaceModel(spaceID) != nil, self.closeSessionTab(id, in: spaceID) else { return false }
+            if showsPage { self.returnToStartPage(in: spaceID) }
+            return true
         }
+    }
+
+    /// Shows the Start Page in Space `spaceID` when this window shows it and
+    /// a page closed there left it no open tab, or nothing to show, so closing
+    /// the last page goes back to the Start Page. Closing the Start Page
+    /// itself does not.
+    func returnToStartPage(in spaceID: UUID) {
+        guard shownSpace?.id == spaceID, let space = spaceModel(spaceID),
+            space.currentTabs.isEmpty || selectedTabID(in: spaceID) == nil
+        else { return }
+        presentStartPageForSpaceEntry()
     }
 
     /// Opens an address another app handed Crest in the Space this window
