@@ -1,0 +1,4 @@
+{
+  "category": "fixed",
+  "message": "A tab an extension closes while Crest is switching its engine or going back to another engine's page stays closed instead of coming back empty."
+}
