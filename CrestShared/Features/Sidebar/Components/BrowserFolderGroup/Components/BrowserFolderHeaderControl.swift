@@ -28,7 +28,7 @@ struct BrowserFolderHeaderControl: View {
                         folder: folder,
                         isExpanded: interaction.isExpanded.wrappedValue,
                         metrics: configuration.headerMetrics,
-                        branding: configuration.displayBranding
+                        branding: configuration.displayBranding, space: configuration.context.space
                     )
 
                     TextField("Folder Name", text: interaction.draftTitle)
@@ -63,12 +63,13 @@ struct BrowserFolderHeaderControl: View {
                             folder: folder,
                             isExpanded: interaction.isExpanded.wrappedValue,
                             metrics: configuration.headerMetrics,
-                            branding: configuration.displayBranding
+                            branding: configuration.displayBranding, space: configuration.context.space
                         )
 
                         BrowserFolderHeaderTitle(
                             folder: folder, context: configuration.context, tintsTitle: tintsTitle,
-                            tint: configuration.displayBranding?.folderColor(of: folder) ?? folder.displayColor,
+                            tint: configuration.displayBranding?.folderColor(
+                                of: folder, in: configuration.context.space) ?? folder.displayColor,
                             emphasizesShownTab: alwaysVisible
                         )
                         .equatable()

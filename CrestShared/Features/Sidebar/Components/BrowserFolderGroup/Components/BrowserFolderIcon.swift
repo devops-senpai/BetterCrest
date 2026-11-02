@@ -8,13 +8,24 @@ struct BrowserFolderIcon: View {
     /// The look of the Space the folder is drawn in, whose folder colors a
     /// folder without its own wears. Nil draws the folder's own colors alone.
     var branding: SpaceBranding? = nil
+    /// The Space the folder is drawn in, whose paths name its overrides.
+    var space: SpaceModel? = nil
     private var iconOnly: Bool { BrowserDeviceAppearanceStore.shared.foldersIconOnly }
+
+    /// The colors the Space gives the folder, or nil without a Space look.
+    private var colors: (color: BrandColor, backColor: BrandColor?, outlineColor: BrandColor?)? {
+        guard let branding else { return nil }
+        guard let space else { return (branding.folderColor ?? folder.displayColor, nil, nil) }
+        return (
+            branding.folderColor(of: folder, in: space), branding.folderBackColor(of: folder, in: space),
+            branding.folderOutlineColor(of: folder, in: space)
+        )
+    }
 
     var body: some View {
         BrowserFolderArtwork(
-            symbol: folder.displaySymbol, color: branding?.folderColor(of: folder) ?? folder.displayColor,
-            backColor: branding?.folderBackColor(of: folder),
-            outlineColor: branding?.folderOutlineColor(of: folder), isExpanded: isExpanded
+            symbol: folder.displaySymbol, color: colors?.color ?? folder.displayColor,
+            backColor: colors?.backColor, outlineColor: colors?.outlineColor, isExpanded: isExpanded
         )
         .modifier(
             BrowserFolderIconColumn(

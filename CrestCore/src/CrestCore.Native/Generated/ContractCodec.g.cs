@@ -14,7 +14,7 @@ namespace CrestCore.Native;
 public static class ContractCodec {
     /// <summary>SHA-256 of the canonical contract schema.</summary>
     public static ReadOnlySpan<byte> Fingerprint => [
-        0x40, 0x8f, 0xe7, 0x3d, 0x93, 0x09, 0xb8, 0xd3, 0x5c, 0xa2, 0xc7, 0x6f, 0x3c, 0xae, 0xde, 0xef, 0x0c, 0x7e, 0xf6, 0xe9, 0xf6, 0x81, 0xa3, 0xf5, 0x35, 0xa3, 0xa7, 0xa0, 0xdc, 0x31, 0xe7, 0xbe
+        0xd7, 0x98, 0x40, 0x9e, 0x2f, 0xce, 0xfb, 0xf3, 0x52, 0x69, 0x16, 0xc8, 0x17, 0x22, 0x1b, 0x6b, 0x32, 0x0a, 0xef, 0x61, 0xc4, 0x3f, 0x36, 0x84, 0xfc, 0x1d, 0x2d, 0xe7, 0x52, 0x96, 0x82, 0x65
     ];
 
     /// <summary>SHA-256 of the engine contract alone, which an engine binding registers with.</summary>
@@ -9004,6 +9004,54 @@ public static class ContractCodec {
         writer.WriteGuid(value.FolderId);
     }
 
+    public static FolderColorOverride ReadFolderColorOverride(WireReader reader) {
+        ArgumentNullException.ThrowIfNull(reader);
+        return new FolderColorOverride(
+            reader.ReadString(),
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null);
+    }
+
+    public static void WriteFolderColorOverride(WireWriter writer, FolderColorOverride value) {
+        ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(value);
+        writer.WriteString(value.Path);
+        if (value.Color is { } presentColor) {
+            writer.WritePresence(true);
+            WriteBrandColor(writer, presentColor);
+        } else {
+            writer.WritePresence(false);
+        }
+        if (value.BackColor is { } presentBackColor) {
+            writer.WritePresence(true);
+            WriteBrandColor(writer, presentBackColor);
+        } else {
+            writer.WritePresence(false);
+        }
+        if (value.OutlineColor is { } presentOutlineColor) {
+            writer.WritePresence(true);
+            WriteBrandColor(writer, presentOutlineColor);
+        } else {
+            writer.WritePresence(false);
+        }
+    }
+
+    public static FolderColorOverrides ReadFolderColorOverrides(WireReader reader) {
+        ArgumentNullException.ThrowIfNull(reader);
+        return new FolderColorOverrides(
+            reader.ReadList(() => ReadFolderColorOverride(reader)));
+    }
+
+    public static void WriteFolderColorOverrides(WireWriter writer, FolderColorOverrides value) {
+        ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(value);
+        writer.WriteCount(value.Overrides.Count);
+        foreach (var itemOverrides in value.Overrides) {
+            WriteFolderColorOverride(writer, itemOverrides);
+        }
+    }
+
     public static FolderCycle ReadFolderCycle(WireReader reader) {
         ArgumentNullException.ThrowIfNull(reader);
         return new FolderCycle(
@@ -15629,7 +15677,7 @@ public static class ContractCodec {
             reader.ReadGuid(),
             reader.ReadGuid(),
             reader.ReadGuid(),
-            ReadBrandColor(reader));
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null);
     }
 
     public static void WriteSetFolderColor(WireWriter writer, SetFolderColor value) {
@@ -15638,7 +15686,12 @@ public static class ContractCodec {
         writer.WriteGuid(value.WorkspaceId);
         writer.WriteGuid(value.SpaceId);
         writer.WriteGuid(value.FolderId);
-        WriteBrandColor(writer, value.Color);
+        if (value.Color is { } presentColor) {
+            writer.WritePresence(true);
+            WriteBrandColor(writer, presentColor);
+        } else {
+            writer.WritePresence(false);
+        }
     }
 
     public static SetFolderSymbol ReadSetFolderSymbol(WireReader reader) {
@@ -16999,7 +17052,8 @@ public static class ContractCodec {
             reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
             reader.ReadPresence() ? (SpacePaletteLook?)ReadSpacePaletteLook(reader) : null,
             reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
-            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null);
+            reader.ReadPresence() ? (BrandColor?)ReadBrandColor(reader) : null,
+            reader.ReadPresence() ? (FolderColorOverrides?)ReadFolderColorOverrides(reader) : null);
     }
 
     public static void WriteSpaceBranding(WireWriter writer, SpaceBranding value) {
@@ -17057,6 +17111,12 @@ public static class ContractCodec {
         if (value.FolderOutlineColor is { } presentFolderOutlineColor) {
             writer.WritePresence(true);
             WriteBrandColor(writer, presentFolderOutlineColor);
+        } else {
+            writer.WritePresence(false);
+        }
+        if (value.FolderOverrides is { } presentFolderOverrides) {
+            writer.WritePresence(true);
+            WriteFolderColorOverrides(writer, presentFolderOverrides);
         } else {
             writer.WritePresence(false);
         }

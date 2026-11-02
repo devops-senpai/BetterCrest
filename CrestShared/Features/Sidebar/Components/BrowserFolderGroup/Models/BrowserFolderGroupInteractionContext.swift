@@ -13,7 +13,6 @@ struct BrowserFolderGroupInteractionContext {
     let isConfirmingDeletion: Binding<Bool>
     let collapsedTabVisibility: Binding<BrowserCollapsedFolderTabVisibilityState>
     let isTitleFocused: FocusState<Bool>.Binding
-    let folderColor: Binding<BrandColor>
     let beginCreatingChild: () -> Void
     let beginRenaming: () -> Void
     let toggleExpansion: () -> Void

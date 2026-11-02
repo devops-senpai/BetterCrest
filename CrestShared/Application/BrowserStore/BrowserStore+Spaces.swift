@@ -280,8 +280,7 @@ extension BrowserStore {
 
     @discardableResult
     func renameFolder(_ folderID: UUID, in spaceID: UUID, title: String) -> Bool {
-        guard renameSessionFolder(folderID, in: spaceID, title: title) else { return false }
-        return true
+        keepingFolderOverrides(in: spaceID) { renameSessionFolder(folderID, in: spaceID, title: title) }
     }
 
     @discardableResult
@@ -305,6 +304,16 @@ extension BrowserStore {
             SetFolderColor(
                 workspaceID: family.workspaceID, spaceID: spaceID, folderID: folderID,
                 color: color),
+            from: self)
+    }
+
+    /// Lets the folder wear its Space's folder colors again.
+    @discardableResult
+    func clearFolderColor(_ folderID: UUID, matching assignment: BrowserSpaceRuntimeAssignment) -> Bool {
+        guard let space = spaceModel(matching: assignment), space.folders.contains(folderID) else { return false }
+        return family.send(
+            SetFolderColor(
+                workspaceID: family.workspaceID, spaceID: assignment.spaceID, folderID: folderID, color: nil),
             from: self)
     }
 
@@ -418,15 +427,9 @@ extension BrowserStore {
         into parentID: UUID?,
         before siblingID: UUID? = nil
     ) -> Bool {
-        guard
-            moveSessionFolder(
-                folderID,
-                in: spaceID,
-                into: parentID,
-                before: siblingID
-            )
-        else { return false }
-        return true
+        keepingFolderOverrides(in: spaceID) {
+            moveSessionFolder(folderID, in: spaceID, into: parentID, before: siblingID)
+        }
     }
 
     @discardableResult

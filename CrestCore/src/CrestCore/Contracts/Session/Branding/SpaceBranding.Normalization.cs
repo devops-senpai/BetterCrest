@@ -50,6 +50,7 @@ public sealed partial record SpaceBranding {
             CommandPalette = branding.CommandPalette is { } paletteLook ? NormalizedPalette(paletteLook) : null,
             SidebarTextColor = branding.SidebarTextColor is { } sidebarText ? NormalizedColor(sidebarText) : null,
             FolderOutlineColor = branding.FolderOutlineColor is { } outline ? NormalizedColor(outline) : null,
+            FolderOverrides = NormalizedOverrides(branding.FolderOverrides),
             Crest = crest with {
                 Palette = palette is null ? null : new(palette),
                 BackplateColorIndex = LayerIndex(crest.BackplateColorIndex, layers),
@@ -118,6 +119,23 @@ public sealed partial record SpaceBranding {
 
     /// A layer index outside the addressable colors falls back to the first.
     private static int LayerIndex(int index, int colorCount) => index >= 0 && index < colorCount ? index : 0;
+
+    /// Overrides with a path and at least one color, the last for each path,
+    /// at most the most a look keeps; null when none remain.
+    private static FolderColorOverrides? NormalizedOverrides(FolderColorOverrides? overrides) {
+        if (overrides is null) return null;
+        var kept = new List<FolderColorOverride>();
+        foreach (var entry in overrides.Overrides) {
+            string path = entry.Path.Trim();
+            if (path.Length is 0 or > FolderColorOverrides.MaximumPathLength) continue;
+            if (entry.Color is null && entry.BackColor is null && entry.OutlineColor is null) continue;
+            kept.RemoveAll(existing => existing.Path == path);
+            kept.Add(new(path, entry.Color is { } color ? NormalizedColor(color) : null,
+                entry.BackColor is { } back ? NormalizedColor(back) : null,
+                entry.OutlineColor is { } outline ? NormalizedColor(outline) : null));
+        }
+        return kept.Count == 0 ? null : new([.. kept.Take(FolderColorOverrides.MaximumCount)]);
+    }
 
     private static BrandColor NormalizedColor(BrandColor color) =>
         new(Unit(color.Red), Unit(color.Green), Unit(color.Blue), Unit(color.Alpha, 1));

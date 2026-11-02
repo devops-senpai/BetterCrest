@@ -50,6 +50,14 @@ struct CrestTheme: Codable, Equatable, Sendable {
 
     /// The sidebar's folders.
     struct Folders: Codable, Equatable, Sendable {
+        /// One folder's colors in place of the Space's, each `default` or
+        /// absent to follow them.
+        struct Override: Codable, Equatable, Sendable {
+            var color: String?
+            var backColor: String?
+            var outlineColor: String?
+        }
+
         /// The color a folder without one of its own wears, or `default`.
         var color: String?
         /// The color of that folder's back face, or `default` to shade the front.
@@ -58,6 +66,9 @@ struct CrestTheme: Codable, Equatable, Sendable {
         var outlineColor: String?
         /// How strongly folders tint their rows, 0 through 1.
         var intensity: Double?
+        /// Colors for single folders by path, such as `.HomeLab.proxmox`,
+        /// replacing every override the Space had.
+        var overrides: [String: Override]?
     }
 
     /// The command palette's card, in each appearance.
@@ -114,6 +125,9 @@ struct CrestTheme: Codable, Equatable, Sendable {
                 if let value = folders.color { section.color = value }
                 if let value = folders.backColor { section.backColor = value }
                 if let value = folders.outlineColor { section.outlineColor = value }
+                if let value = folders.overrides {
+                    section.overrides = (section.overrides ?? [:]).merging(value) { $1 }
+                }
                 if let value = folders.intensity { section.intensity = value }
                 merged.folders = section
             }

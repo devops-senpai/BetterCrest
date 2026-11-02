@@ -40,8 +40,8 @@ public sealed partial class BrowserTabCollection {
         folders[folders.IndexOf(folder)] = folder with { IsCollapsed = collapsed, CollapseModifiedAt = now };
     }
 
-    /// Whether the folder's color changed.
-    public bool SetFolderColor(Guid id, BrandColor color) {
+    /// Whether the folder's color changed; null clears it.
+    public bool SetFolderColor(Guid id, BrandColor? color) {
         var folder = KnownFolder(id);
         if (folder.Color == color) return false;
         folders[folders.IndexOf(folder)] = folder with { Color = color };

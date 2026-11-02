@@ -57,7 +57,7 @@ public sealed class SpaceScheme {
             KeepsControlsReadable: false, SpaceThemeMode.Gradient, GradientAngle: 0, showsTexture, SpaceIconStyle.SimpleSymbol,
             symbol.Color, SpaceBranding.Neutral.Crest, SpaceBranding.BaselineRenderingVersion, FolderColorIntensity: 0,
             SpaceTextColorMode.System, HasCustomAppearance: false, FolderColor: null, FolderBackColor: null, CommandPalette: null,
-            SidebarTextColor: null, FolderOutlineColor: null);
+            SidebarTextColor: null, FolderOutlineColor: null, FolderOverrides: null);
 
     #endregion
 }
