@@ -100,9 +100,12 @@ struct BrowserCommandPaletteCard: View {
     }
 
     /// The contents in the text color the Space chose for this appearance,
-    /// when it chose one.
+    /// when it chose one, and in the scheme that text reads in, so the query
+    /// field, its placeholder and the secondary text read on a dark surface
+    /// in a light window too.
     private var contents: some View {
         rows.modifier(SpaceTextColor(color: paletteSurface?.textColor))
+            .environment(\.colorScheme, paletteSurface?.foregroundTone?.colorScheme ?? colorScheme)
     }
 
     /// The field, the provider chips while what is typed names some, and the

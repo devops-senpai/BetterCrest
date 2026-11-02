@@ -1,0 +1,4 @@
+{
+  "category": "fixed",
+  "message": "A Space's dark command palette now shows the text you type, its placeholder and the suggested completion in light text, even when the Mac uses Light mode."
+}
