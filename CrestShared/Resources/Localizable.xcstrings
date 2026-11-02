@@ -46,16 +46,31 @@
     "Apply to “%@”" : {
 
     },
+    "Brightness" : {
+
+    },
     "Choose a theme, or save this Space’s look as one with +." : {
 
     },
+    "Color Wheel" : {
+
+    },
     "Colors" : {
+
+    },
+    "Edit Appearance…" : {
 
     },
     "Export Theme" : {
 
     },
     "Export Theme…" : {
+
+    },
+    "Folder Appearance" : {
+
+    },
+    "Hex Color" : {
 
     },
     "Import Theme" : {
@@ -77,6 +92,9 @@
 
     },
     "Outline color" : {
+
+    },
+    "Pick from Screen" : {
 
     },
     "Remove Theme" : {
@@ -128,6 +146,9 @@
 
     },
     "Update from “%@”" : {
+
+    },
+    "Use Space Folder Colors" : {
 
     },
     "·" : {

@@ -38,8 +38,32 @@ internal static partial class StoredSessionCodec {
             value[Key.FolderBackColor] is JsonObject folderBackColor ? DecodeColor(folderBackColor) : null,
             value[Key.CommandPalette] is JsonObject palette ? DecodePaletteLook(palette) : null,
             value[Key.SidebarTextColor] is JsonObject sidebarText ? DecodeColor(sidebarText) : null,
-            value[Key.FolderOutlineColor] is JsonObject folderOutline ? DecodeColor(folderOutline) : null);
+            value[Key.FolderOutlineColor] is JsonObject folderOutline ? DecodeColor(folderOutline) : null,
+            DecodeFolderOverrides(value[Key.FolderOverrides]));
     }
+
+    /// A look's folder overrides, each an object with a path and its colors;
+    /// an entry without a path is left out, and none leaves null.
+    internal static FolderColorOverrides? DecodeFolderOverrides(JsonNode? node) {
+        if (node is not JsonArray entries) return null;
+        var overrides = entries.OfType<JsonObject>()
+            .Select(entry => (Path: Text(entry[Key.Path]), Entry: entry))
+            .Where(pair => pair.Path is { Length: > 0 })
+            .Select(pair => new FolderColorOverride(pair.Path!,
+                pair.Entry[Key.Color] is JsonObject color ? DecodeColor(color) : null,
+                pair.Entry[Key.BackColor] is JsonObject back ? DecodeColor(back) : null,
+                pair.Entry[Key.OutlineColor] is JsonObject outline ? DecodeColor(outline) : null))
+            .ToArray();
+        return overrides.Length == 0 ? null : new(overrides);
+    }
+
+    internal static JsonArray Encode(FolderColorOverrides overrides) => [.. overrides.Overrides.Select(entry => {
+        var value = new JsonObject { [Key.Path] = entry.Path };
+        if (entry.Color is { } color) value[Key.Color] = Encode(color);
+        if (entry.BackColor is { } back) value[Key.BackColor] = Encode(back);
+        if (entry.OutlineColor is { } outline) value[Key.OutlineColor] = Encode(outline);
+        return (JsonNode)value;
+    })];
 
     internal static JsonObject Encode(SpaceBranding branding) {
         var value = new JsonObject {
@@ -64,6 +88,7 @@ internal static partial class StoredSessionCodec {
         if (branding.CommandPalette is { } palette) value[Key.CommandPalette] = Encode(palette);
         if (branding.SidebarTextColor is { } sidebarText) value[Key.SidebarTextColor] = Encode(sidebarText);
         if (branding.FolderOutlineColor is { } folderOutline) value[Key.FolderOutlineColor] = Encode(folderOutline);
+        if (branding.FolderOverrides is { } overrides) value[Key.FolderOverrides] = Encode(overrides);
         return value;
     }
 

@@ -69,7 +69,19 @@ extension CrestTheme.Sections {
                 color: look.folderColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
                 backColor: look.folderBackColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
                 outlineColor: look.folderOutlineColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
-                intensity: look.folderColorIntensity),
+                intensity: look.folderColorIntensity,
+                overrides: look.folderOverrides.map { overrides in
+                    Dictionary(
+                        overrides.overrides.map { entry in
+                            (
+                                entry.path,
+                                CrestTheme.Folders.Override(
+                                    color: entry.color.map(CrestTheme.text),
+                                    backColor: entry.backColor.map(CrestTheme.text),
+                                    outlineColor: entry.outlineColor.map(CrestTheme.text))
+                            )
+                        }, uniquingKeysWith: { first, _ in first })
+                }),
             commandPalette: CrestTheme.CommandPalette(
                 light: Self.surface(look.commandPalette?.light),
                 dark: Self.surface(look.commandPalette?.dark)))
@@ -133,6 +145,17 @@ extension SpaceBranding {
             if let text = folders.color { look.folderColor = try CrestTheme.color(text) }
             if let text = folders.backColor { look.folderBackColor = try CrestTheme.color(text) }
             if let text = folders.outlineColor { look.folderOutlineColor = try CrestTheme.color(text) }
+            if let overrides = folders.overrides {
+                var entries: [FolderColorOverride] = []
+                for (path, colors) in overrides.sorted(by: { $0.key < $1.key }) {
+                    entries.append(
+                        FolderColorOverride(
+                            path: path, color: try colors.color.flatMap(CrestTheme.color),
+                            backColor: try colors.backColor.flatMap(CrestTheme.color),
+                            outlineColor: try colors.outlineColor.flatMap(CrestTheme.color)))
+                }
+                look.folderOverrides = entries.isEmpty ? nil : FolderColorOverrides(overrides: entries)
+            }
             if let intensity = folders.intensity { look.folderColorIntensity = intensity }
         }
         if let palette = sections.commandPalette {
@@ -163,6 +186,7 @@ extension SpaceBranding {
             look.folderColor = starting.folderColor
             look.folderBackColor = starting.folderBackColor
             look.folderOutlineColor = starting.folderOutlineColor
+            look.folderOverrides = starting.folderOverrides
             look.folderColorIntensity = starting.folderColorIntensity
         case .commandPalette:
             look.commandPalette = starting.commandPalette

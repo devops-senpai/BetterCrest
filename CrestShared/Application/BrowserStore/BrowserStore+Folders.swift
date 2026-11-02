@@ -30,11 +30,11 @@ extension BrowserStore {
         to location: BrowserFolderLocation, into parentID: UUID? = nil,
         before siblingID: UUID? = nil, beforeTabID: UUID? = nil
     ) -> Bool {
-        guard spaceModel(matching: assignment) != nil,
+        guard spaceModel(matching: assignment) != nil else { return false }
+        return keepingFolderOverrides(in: assignment.spaceID) {
             moveSessionFolder(
                 id, in: assignment.spaceID, into: parentID, before: siblingID,
                 location: location, beforeTabID: beforeTabID)
-        else { return false }
-        return true
+        }
     }
 }

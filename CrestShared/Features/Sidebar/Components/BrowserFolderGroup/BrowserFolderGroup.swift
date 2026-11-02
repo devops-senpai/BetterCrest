@@ -86,7 +86,6 @@ struct BrowserFolderGroup: View {
             collapsedTabVisibility: Binding(
                 get: { collapsedTabVisibility }, set: { collapsedTabVisibility = $0 }),
             isTitleFocused: $isTitleFocused,
-            folderColor: folderColorBinding,
             beginCreatingChild: beginCreatingChild,
             beginRenaming: beginRenaming,
             toggleExpansion: toggleExpansion,
@@ -115,7 +114,7 @@ struct BrowserFolderGroup: View {
         .environment(\.browserInteractionCapabilities, context.capabilities)
         .modifier(
             BrowserFolderSectionSurface(
-                color: configuration.displayBranding?.folderColor(of: folder) ?? folder.displayColor,
+                color: configuration.displayBranding?.folderColor(of: folder, in: context.space) ?? folder.displayColor,
                 intensity: configuration.displayBranding?.folderColorIntensity ?? 0,
                 textColorMode: configuration.displayBranding?.shownTextColorMode ?? .automatic,
                 depth: depth,
@@ -271,22 +270,6 @@ struct BrowserFolderGroup: View {
         deletionRequest = nil
         guard isDeferredAssignmentAvailable(request) else { return }
         context.browser.deleteFolder(request.folderID, matching: request.spaceAssignment)
-    }
-
-    private var folderColorBinding: Binding<BrandColor> {
-        Binding(
-            get: { configuration.displayBranding?.folderColor(of: folder) ?? folder.displayColor },
-            set: { color in
-                guard let request = colorRequest,
-                    isDeferredAssignmentAvailable(request)
-                else { return }
-                context.browser.setFolderColor(
-                    request.folderID,
-                    matching: request.spaceAssignment,
-                    color: color
-                )
-            }
-        )
     }
 
     private var colorPresentation: Binding<Bool> {

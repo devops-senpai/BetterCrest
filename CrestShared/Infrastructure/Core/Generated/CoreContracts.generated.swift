@@ -2883,6 +2883,20 @@ struct FolderAlreadyExists: Equatable, Sendable {
     let folderID: UUID
 }
 
+struct FolderColorOverride: Equatable, Sendable {
+    var path: String
+    var color: BrandColor?
+    var backColor: BrandColor?
+    var outlineColor: BrandColor?
+}
+
+struct FolderColorOverrides: Equatable, Sendable {
+    static let maximumCount: Int = 200
+    static let maximumPathLength: Int = 512
+
+    var overrides: [FolderColorOverride]
+}
+
 struct FolderCycle: Equatable, Sendable {
     let folderID: UUID
 }
@@ -5678,7 +5692,7 @@ struct SetFolderColor: Intent, SessionIntent, Equatable, Sendable {
     let workspaceID: UUID
     let spaceID: UUID
     let folderID: UUID
-    let color: BrandColor
+    let color: BrandColor?
 }
 
 struct SetFolderSymbol: Intent, SessionIntent, Equatable, Sendable {
@@ -6208,7 +6222,8 @@ struct SpaceBranding: Equatable, Sendable {
         folderBackColor: nil,
         commandPalette: nil,
         sidebarTextColor: nil,
-        folderOutlineColor: nil
+        folderOutlineColor: nil,
+        folderOverrides: nil
     )
 
     var colors: ColorPalette
@@ -6231,6 +6246,7 @@ struct SpaceBranding: Equatable, Sendable {
     var commandPalette: SpacePaletteLook?
     var sidebarTextColor: BrandColor?
     var folderOutlineColor: BrandColor?
+    var folderOverrides: FolderColorOverrides?
 }
 
 struct SpaceCrest: Equatable, Sendable {
@@ -21042,7 +21058,8 @@ struct SpaceAccent: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         swatch: BrandColor(red: 0.29, green: 0.25, blue: 0.58, alpha: 1)
     )
@@ -21120,7 +21137,8 @@ struct SpaceAccent: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         swatch: BrandColor(red: 0.85, green: 0.27, blue: 0.2, alpha: 1)
     )
@@ -21198,7 +21216,8 @@ struct SpaceAccent: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         swatch: BrandColor(red: 0.12, green: 0.49, blue: 0.52, alpha: 1)
     )
@@ -21276,7 +21295,8 @@ struct SpaceAccent: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         swatch: BrandColor(red: 0.72, green: 0.25, blue: 0.42, alpha: 1)
     )
@@ -21524,7 +21544,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaWinter"
     )
@@ -21597,7 +21618,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaLion"
     )
@@ -21670,7 +21692,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaStorm"
     )
@@ -21743,7 +21766,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaDragon"
     )
@@ -21816,7 +21840,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaMeadow"
     )
@@ -21889,7 +21914,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaIron"
     )
@@ -21962,7 +21988,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaRiver"
     )
@@ -22035,7 +22062,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaSun"
     )
@@ -22108,7 +22136,8 @@ struct SpaceHouse: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         ),
         appIconName: "ArmaVigil"
     )
@@ -22267,7 +22296,8 @@ struct SpaceScheme: Hashable, Sendable {
             folderBackColor: nil,
             commandPalette: nil,
             sidebarTextColor: nil,
-            folderOutlineColor: nil
+            folderOutlineColor: nil,
+            folderOverrides: nil
         )
     )
 

@@ -7,7 +7,7 @@ import Foundation
 enum CoreCodec {
     /// SHA-256 of the canonical contract schema. The core refuses any other.
     static let fingerprint: [UInt8] = [
-        0x40, 0x8f, 0xe7, 0x3d, 0x93, 0x09, 0xb8, 0xd3, 0x5c, 0xa2, 0xc7, 0x6f, 0x3c, 0xae, 0xde, 0xef, 0x0c, 0x7e, 0xf6, 0xe9, 0xf6, 0x81, 0xa3, 0xf5, 0x35, 0xa3, 0xa7, 0xa0, 0xdc, 0x31, 0xe7, 0xbe
+        0xd7, 0x98, 0x40, 0x9e, 0x2f, 0xce, 0xfb, 0xf3, 0x52, 0x69, 0x16, 0xc8, 0x17, 0x22, 0x1b, 0x6b, 0x32, 0x0a, 0xef, 0x61, 0xc4, 0x3f, 0x36, 0x84, 0xfc, 0x1d, 0x2d, 0xe7, 0x52, 0x96, 0x82, 0x65
     ]
     /// SHA-256 of the engine contract alone, which an engine binding registers with.
     static let engineFingerprint: [UInt8] = [
@@ -9413,6 +9413,76 @@ extension FolderAlreadyExists {
 
     func encode(into writer: inout WireWriter) {
         writer.writeUUID(folderID)
+    }
+}
+
+extension FolderColorOverride {
+    init(from reader: inout WireReader) throws(WireError) {
+        let path = try reader.readString()
+        let color: BrandColor?
+        if try reader.readPresence() {
+            let colorValue = try BrandColor(from: &reader)
+            color = colorValue
+        } else {
+            color = nil
+        }
+        let backColor: BrandColor?
+        if try reader.readPresence() {
+            let backColorValue = try BrandColor(from: &reader)
+            backColor = backColorValue
+        } else {
+            backColor = nil
+        }
+        let outlineColor: BrandColor?
+        if try reader.readPresence() {
+            let outlineColorValue = try BrandColor(from: &reader)
+            outlineColor = outlineColorValue
+        } else {
+            outlineColor = nil
+        }
+        self.init(path: path, color: color, backColor: backColor, outlineColor: outlineColor)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        writer.writeString(path)
+        if let present0 = color {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = backColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = outlineColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+    }
+}
+
+extension FolderColorOverrides {
+    init(from reader: inout WireReader) throws(WireError) {
+        let overridesCount = try reader.readCount()
+        var overrides: [FolderColorOverride] = []
+        overrides.reserveCapacity(overridesCount)
+        for _ in 0..<overridesCount {
+            let overridesElement = try FolderColorOverride(from: &reader)
+            overrides.append(overridesElement)
+        }
+        self.init(overrides: overrides)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        writer.writeCount(overrides.count)
+        for element0 in overrides {
+            element0.encode(into: &writer)
+        }
     }
 }
 
@@ -19797,7 +19867,13 @@ extension SetFolderColor {
         let workspaceID = try reader.readUUID()
         let spaceID = try reader.readUUID()
         let folderID = try reader.readUUID()
-        let color = try BrandColor(from: &reader)
+        let color: BrandColor?
+        if try reader.readPresence() {
+            let colorValue = try BrandColor(from: &reader)
+            color = colorValue
+        } else {
+            color = nil
+        }
         self.init(workspaceID: workspaceID, spaceID: spaceID, folderID: folderID, color: color)
     }
 
@@ -19805,7 +19881,12 @@ extension SetFolderColor {
         writer.writeUUID(workspaceID)
         writer.writeUUID(spaceID)
         writer.writeUUID(folderID)
-        color.encode(into: &writer)
+        if let present0 = color {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
     }
 
     func encodeIntent(into writer: inout WireWriter) {
@@ -21852,7 +21933,14 @@ extension SpaceBranding {
         } else {
             folderOutlineColor = nil
         }
-        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance, folderColor: folderColor, folderBackColor: folderBackColor, commandPalette: commandPalette, sidebarTextColor: sidebarTextColor, folderOutlineColor: folderOutlineColor)
+        let folderOverrides: FolderColorOverrides?
+        if try reader.readPresence() {
+            let folderOverridesValue = try FolderColorOverrides(from: &reader)
+            folderOverrides = folderOverridesValue
+        } else {
+            folderOverrides = nil
+        }
+        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance, folderColor: folderColor, folderBackColor: folderBackColor, commandPalette: commandPalette, sidebarTextColor: sidebarTextColor, folderOutlineColor: folderOutlineColor, folderOverrides: folderOverrides)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -21906,6 +21994,12 @@ extension SpaceBranding {
             writer.writePresence(false)
         }
         if let present0 = folderOutlineColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = folderOverrides {
             writer.writePresence(true)
             present0.encode(into: &writer)
         } else {
