@@ -118,6 +118,8 @@ def main():
         write_json(icon / "icon.json", icon_document(color))
         preview = PREVIEWS / f"{name}Preview.imageset"
         preview.mkdir(exist_ok=True)
+        for stale in preview.glob("*.png"):
+            stale.unlink()
         (preview / "icon.svg").write_text(preview_svg(color))
         write_json(preview / "Contents.json", {
             "images": [{"filename": "icon.svg", "idiom": "universal"}],
