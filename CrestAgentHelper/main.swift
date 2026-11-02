@@ -36,7 +36,9 @@ case "mcp":
         await endpoint.receive(line)
     }
     exit(0)
-case "theme":
+// The first form of arma theme, which dressed one Space from options, reads
+// as it did; arma theme <action> is the theme section.
+case "theme" where arguments.dropFirst().first.map { $0.hasPrefix("--") && $0 != "--help" } == true:
     let command: ThemeCommandLine
     do {
         command = try ThemeCommandLine(arguments: Array(arguments.dropFirst()))

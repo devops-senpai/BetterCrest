@@ -28,7 +28,8 @@ enum TerminalCommandLine {
         TerminalFolderCommandLine.self, TerminalSplitCommandLine.self, TerminalMenuCommandLine.self,
         TerminalExtensionCommandLine.self, TerminalHistoryCommandLine.self, TerminalDownloadCommandLine.self,
         TerminalPageCommandLine.self, TerminalAutomationCommandLine.self,
-        TerminalSettingsCommandLine.self, TerminalSiteCommandLine.self,
+        TerminalSettingsCommandLine.self, TerminalSiteCommandLine.self, TerminalThemeCommandLine.self,
+        TerminalCrestCommandLine.self,
     ]
 
     /// The words every section accepts.
@@ -37,7 +38,6 @@ enum TerminalCommandLine {
     static var usage: String {
         var entries: [(name: String, summary: String)] = []
         for section in sections { entries.append((section.name, section.summary)) }
-        entries.append(("theme", "Apply or export a Space's theme (arma theme --help)"))
         entries.append(("mcp", "Serve Arma's tools to a coding agent over MCP"))
         let width = entries.map { $0.name.count }.max() ?? 0
         let lines = entries.map { entry in
