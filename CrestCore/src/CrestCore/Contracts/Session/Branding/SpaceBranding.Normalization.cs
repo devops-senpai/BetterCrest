@@ -49,6 +49,7 @@ public sealed partial record SpaceBranding {
             FolderBackColor = branding.FolderBackColor is { } folderBack ? NormalizedColor(folderBack) : null,
             CommandPalette = branding.CommandPalette is { } paletteLook ? NormalizedPalette(paletteLook) : null,
             SidebarTextColor = branding.SidebarTextColor is { } sidebarText ? NormalizedColor(sidebarText) : null,
+            FolderOutlineColor = branding.FolderOutlineColor is { } outline ? NormalizedColor(outline) : null,
             Crest = crest with {
                 Palette = palette is null ? null : new(palette),
                 BackplateColorIndex = LayerIndex(crest.BackplateColorIndex, layers),

@@ -37,7 +37,7 @@ internal sealed partial record SpacePayload {
             SpaceTextColorMode.Named(value.TolerantText("textColorMode")) ?? SpaceTextColorMode.Automatic,
             value.OptionalFlag("hasCustomAppearance"), OptionalColor(value.Value["folderColor"]),
             OptionalColor(value.Value["folderBackColor"]), PaletteLook(value.Value["commandPalette"]),
-            OptionalColor(value.Value["sidebarTextColor"]));
+            OptionalColor(value.Value["sidebarTextColor"]), OptionalColor(value.Value["folderOutlineColor"]));
         return SpaceBranding.Normalized(branding);
     }
 

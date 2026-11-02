@@ -68,6 +68,7 @@ extension CrestTheme.Sections {
             folders: CrestTheme.Folders(
                 color: look.folderColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
                 backColor: look.folderBackColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
+                outlineColor: look.folderOutlineColor.map(CrestTheme.text) ?? CrestTheme.defaultColorWord,
                 intensity: look.folderColorIntensity),
             commandPalette: CrestTheme.CommandPalette(
                 light: Self.surface(look.commandPalette?.light),
@@ -131,6 +132,7 @@ extension SpaceBranding {
         if let folders = sections.folders {
             if let text = folders.color { look.folderColor = try CrestTheme.color(text) }
             if let text = folders.backColor { look.folderBackColor = try CrestTheme.color(text) }
+            if let text = folders.outlineColor { look.folderOutlineColor = try CrestTheme.color(text) }
             if let intensity = folders.intensity { look.folderColorIntensity = intensity }
         }
         if let palette = sections.commandPalette {
@@ -160,6 +162,7 @@ extension SpaceBranding {
         case .folders:
             look.folderColor = starting.folderColor
             look.folderBackColor = starting.folderBackColor
+            look.folderOutlineColor = starting.folderOutlineColor
             look.folderColorIntensity = starting.folderColorIntensity
         case .commandPalette:
             look.commandPalette = starting.commandPalette

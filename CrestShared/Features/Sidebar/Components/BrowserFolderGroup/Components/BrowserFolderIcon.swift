@@ -13,7 +13,8 @@ struct BrowserFolderIcon: View {
     var body: some View {
         BrowserFolderArtwork(
             symbol: folder.displaySymbol, color: branding?.folderColor(of: folder) ?? folder.displayColor,
-            backColor: branding?.folderBackColor(of: folder), isExpanded: isExpanded
+            backColor: branding?.folderBackColor(of: folder),
+            outlineColor: branding?.folderOutlineColor(of: folder), isExpanded: isExpanded
         )
         .modifier(
             BrowserFolderIconColumn(
@@ -31,13 +32,15 @@ struct BrowserFolderArtwork: View {
     let symbol: String
     let color: BrandColor
     var backColor: BrandColor? = nil
+    var outlineColor: BrandColor? = nil
     var isExpanded = false
     private var iconOnly: Bool { BrowserDeviceAppearanceStore.shared.foldersIconOnly }
     private var tintsTitle: Bool { BrowserDeviceAppearanceStore.shared.foldersTintTitle }
 
     var body: some View {
         BrowserFolderArtworkContent(
-            symbol: symbol, color: color, backColor: backColor, isExpanded: isExpanded, iconOnly: iconOnly,
+            symbol: symbol, color: color, backColor: backColor, outlineColor: outlineColor, isExpanded: isExpanded,
+            iconOnly: iconOnly,
             tintsTitle: tintsTitle)
     }
 

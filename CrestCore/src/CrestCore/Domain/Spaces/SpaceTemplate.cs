@@ -24,7 +24,7 @@ public sealed class SpaceTemplate {
         SpaceCrest.PlainField(CrestBackplate.None, CrestSymbol.Key, CrestTrim.None, layers: [0, 0, 0, 0, 0, 0], trimWeight: 1,
             chargeScale: 1),
         RenderingVersion: 2, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: null, FolderColor: null,
-        FolderBackColor: null, CommandPalette: null, SidebarTextColor: null);
+        FolderBackColor: null, CommandPalette: null, SidebarTextColor: null, FolderOutlineColor: null);
 
     /// What an ordinary Space searches and keeps: the device's default search
     /// and suggestions, which it follows.

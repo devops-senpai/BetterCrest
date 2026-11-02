@@ -37,7 +37,8 @@ internal static partial class StoredSessionCodec {
             value[Key.FolderColor] is JsonObject folderColor ? DecodeColor(folderColor) : null,
             value[Key.FolderBackColor] is JsonObject folderBackColor ? DecodeColor(folderBackColor) : null,
             value[Key.CommandPalette] is JsonObject palette ? DecodePaletteLook(palette) : null,
-            value[Key.SidebarTextColor] is JsonObject sidebarText ? DecodeColor(sidebarText) : null);
+            value[Key.SidebarTextColor] is JsonObject sidebarText ? DecodeColor(sidebarText) : null,
+            value[Key.FolderOutlineColor] is JsonObject folderOutline ? DecodeColor(folderOutline) : null);
     }
 
     internal static JsonObject Encode(SpaceBranding branding) {
@@ -62,6 +63,7 @@ internal static partial class StoredSessionCodec {
         if (branding.FolderBackColor is { } folderBackColor) value[Key.FolderBackColor] = Encode(folderBackColor);
         if (branding.CommandPalette is { } palette) value[Key.CommandPalette] = Encode(palette);
         if (branding.SidebarTextColor is { } sidebarText) value[Key.SidebarTextColor] = Encode(sidebarText);
+        if (branding.FolderOutlineColor is { } folderOutline) value[Key.FolderOutlineColor] = Encode(folderOutline);
         return value;
     }
 

@@ -40,6 +40,7 @@ struct ThemeCommandLine {
           --icon-color <hex>|default
           --folder-color <hex>|default
           --folder-back-color <hex>|default
+          --folder-outline-color <hex>|default   a line around each folder, or none
           --folder-intensity <0-1>
           --palette-light <hex>|default   --palette-light-opacity <0-1>   --palette-light-text <hex>|default
           --palette-dark <hex>|default    --palette-dark-opacity <0-1>    --palette-dark-text <hex>|default
@@ -205,6 +206,9 @@ struct ThemeCommandLine {
             case "--folder-back-color":
                 flags.folders = flags.folders ?? .init()
                 flags.folders?.backColor = try color(for: flag)
+            case "--folder-outline-color":
+                flags.folders = flags.folders ?? .init()
+                flags.folders?.outlineColor = try color(for: flag)
             case "--folder-intensity":
                 flags.folders = flags.folders ?? .init()
                 flags.folders?.intensity = try unit(for: flag)

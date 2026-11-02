@@ -54,6 +54,8 @@ struct CrestTheme: Codable, Equatable, Sendable {
         var color: String?
         /// The color of that folder's back face, or `default` to shade the front.
         var backColor: String?
+        /// The line drawn around that folder, or `default` for none.
+        var outlineColor: String?
         /// How strongly folders tint their rows, 0 through 1.
         var intensity: Double?
     }
@@ -111,6 +113,7 @@ struct CrestTheme: Codable, Equatable, Sendable {
                 var section = merged.folders ?? Folders()
                 if let value = folders.color { section.color = value }
                 if let value = folders.backColor { section.backColor = value }
+                if let value = folders.outlineColor { section.outlineColor = value }
                 if let value = folders.intensity { section.intensity = value }
                 merged.folders = section
             }
