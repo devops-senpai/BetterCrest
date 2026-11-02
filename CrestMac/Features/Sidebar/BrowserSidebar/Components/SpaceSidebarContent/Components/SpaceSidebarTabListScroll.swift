@@ -36,12 +36,13 @@ struct SpaceSidebarTabListScroll<Background: View, Content: View>: View {
                 .frame(minHeight: geometry.size.height, alignment: .top)
                 .background {
                     // A ScrollView's outer background is a native sibling of
-                    // its NSScrollView. The bridge needs the document ancestry.
+                    // its NSScrollView. The bridges need the document ancestry.
                     BrowserSidebarDragAutoscrollObserver(
                         regionID: scrollRegionID,
                         viewport: viewport,
                         state: sidebarInteraction.sidebarReorderState
                     )
+                    BrowserSidebarResizeSettle()
                 }
             }
             .environment(\.browserSidebarScrollRegionID, scrollRegionID)
