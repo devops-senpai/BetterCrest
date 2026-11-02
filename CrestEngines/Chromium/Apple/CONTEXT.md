@@ -22,7 +22,7 @@ shared code naming a Chromium type.
 | `ChromiumComposition.swift`, `ChromiumApplication.swift`, `ChromiumApplicationDelegate.swift` | The native application with a deferred Chromium runtime, and its AppKit launch hooks |
 | `ChromiumMacUI.swift`, `ChromiumShellHost.swift` | What Chromium's Mac shell asks of Arma's UI, and what Arma's shell asks of Chromium |
 | `BrowserEngineRegistration+Chromium.swift` | Chromium's registration and declared capabilities |
-| `ChromiumInternalURL.swift`, `ChromiumSelectionTranslation.swift`, `ChromiumProfileNotifications.swift` | `crest://` addresses for engine pages, selection translation, per-profile web notifications |
+| `ChromiumInternalURL.swift`, `ChromiumSelectionTranslation.swift`, `ChromiumProfileNotifications.swift` | `arma://` addresses for engine pages, selection translation, per-profile web notifications |
 | `CrestChromiumHost.h` | The Objective-C bridging header the host frameworks build with |
 | `EnginePresentations/` | One `+ChromiumEngine` file per engine event (`EnginePresentation`), each presenting itself on `ChromiumEngine` |
 | `Extensions/` | Extension controls, store, side panels, `ExtensionCommand`, the Chrome Web Store install view, the extension settings pane |

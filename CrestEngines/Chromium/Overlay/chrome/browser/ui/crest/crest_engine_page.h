@@ -49,7 +49,7 @@ class PageStore;
 //
 // The core decides what each event records; this only decides when the
 // engine's callbacks amount to one. Addresses are in Crest's namespace, where
-// the engine's own `chrome://` pages are `crest://` pages.
+// the engine's own `chrome://` pages are `arma://` pages.
 //
 // It also answers what the platform asks of the page directly: its history,
 // reload, find, zoom, capture, export and whether it is on screen, its media
@@ -412,7 +412,7 @@ class EnginePage final : public content::WebContentsObserver,
   base::WeakPtrFactory<EnginePage> weak_factory_{this};
 };
 
-// An engine address in Crest's namespace, where `chrome://` is `crest://`.
+// An engine address in Crest's namespace, where `chrome://` is `arma://`.
 std::string PresentedURL(const GURL& url);
 // A Crest address as the engine loads it.
 GURL EngineURL(const std::string& url);

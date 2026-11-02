@@ -3,7 +3,7 @@ import Foundation
 struct BrowserQuickWindowRequest: Hashable, Identifiable, Sendable {
     private static let emptyLookupURL: URL = {
         var components = URLComponents()
-        components.scheme = "crest"
+        components.scheme = "arma"
         components.host = "quick-window"
         return components.url ?? URL(fileURLWithPath: "/")
     }()

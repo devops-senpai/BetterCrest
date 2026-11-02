@@ -1,7 +1,7 @@
 import Foundation
 
 /// A web link shared to Crest from another app. The share extension hands it
-/// to the app as a `crest://open` URL.
+/// to the app as a `arma://open` URL.
 ///
 /// Any app can open that URL, so it carries the web link and nothing else,
 /// and the app routes the link as it would any link another app opens: link
@@ -9,7 +9,9 @@ import Foundation
 struct BrowserSharedLink: Equatable, Sendable {
     // MARK: - Static Variables
 
-    private static let handOffScheme = "crest"
+    private static let handOffScheme = "arma"
+    /// The scheme earlier releases handed links over with.
+    private static let legacyHandOffScheme = "crest"
     private static let handOffHost = "open"
     private static let urlParameter = "url"
     private static let webSchemes: Set<String> = ["http", "https"]
@@ -22,7 +24,7 @@ struct BrowserSharedLink: Equatable, Sendable {
 
     let url: URL
 
-    /// The `crest://open` URL that hands this link to the app.
+    /// The `arma://open` URL that hands this link to the app.
     var handOffURL: URL {
         var components = URLComponents()
         components.scheme = Self.handOffScheme
@@ -33,7 +35,7 @@ struct BrowserSharedLink: Equatable, Sendable {
                 value: url.absoluteString.addingPercentEncoding(withAllowedCharacters: Self.queryValueCharacters))
         ]
         guard let handOffURL = components.url else {
-            preconditionFailure("A crest://open URL with an escaped link always forms.")
+            preconditionFailure("A arma://open URL with an escaped link always forms.")
         }
         return handOffURL
     }
@@ -49,11 +51,12 @@ struct BrowserSharedLink: Equatable, Sendable {
         self.url = url
     }
 
-    /// The link a `crest://open` URL hands over, or nil for any other URL,
+    /// The link a `arma://open` URL hands over, or nil for any other URL,
     /// for a link given more than once, and for a link that is not a web
     /// link.
     init?(handOffURL: URL) {
-        guard handOffURL.scheme?.lowercased() == Self.handOffScheme,
+        guard let scheme = handOffURL.scheme?.lowercased(),
+            scheme == Self.handOffScheme || scheme == Self.legacyHandOffScheme,
             handOffURL.host(percentEncoded: false)?.lowercased() == Self.handOffHost,
             handOffURL.path().isEmpty || handOffURL.path() == "/",
             let parameters = URLComponents(url: handOffURL, resolvingAgainstBaseURL: false)?.queryItems

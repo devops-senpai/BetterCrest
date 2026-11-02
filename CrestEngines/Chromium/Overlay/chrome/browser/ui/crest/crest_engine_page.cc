@@ -71,7 +71,10 @@ namespace crest {
 namespace {
 
 constexpr char kEngineScheme[] = "chrome://";
-constexpr char kCrestScheme[] = "crest://";
+constexpr char kCrestScheme[] = "arma://";
+// The spelling earlier releases gave Arma's pages, which saved tabs and
+// history still hold.
+constexpr char kLegacyCrestScheme[] = "crest://";
 
 // The saved navigation history's own spelling, and its limits: the entries a
 // page may keep, the bytes one entry may take and the bytes of the whole.
@@ -182,7 +185,7 @@ std::string PresentedURL(const GURL& url) {
 }
 
 GURL EngineURL(const std::string& url) {
-  return GURL(ReplacingScheme(url, kCrestScheme, kEngineScheme));
+  return GURL(ReplacingScheme(ReplacingScheme(url, kLegacyCrestScheme, kCrestScheme), kCrestScheme, kEngineScheme));
 }
 
 EnginePage::EnginePage(EngineBinding& binding, const engine::CreatePage& creation)

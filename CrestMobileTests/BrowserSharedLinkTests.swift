@@ -26,5 +26,9 @@ final class BrowserSharedLinkTests: XCTestCase {
 
         let accepted = try XCTUnwrap(URL(string: "CREST://open?url=http%3A%2F%2Fexample.com&later=1"))
         XCTAssertEqual(BrowserSharedLink(handOffURL: accepted)?.url.absoluteString, "http://example.com")
+
+        // The hand-off is now `arma://open`; earlier releases' `crest://open` still works.
+        let current = try XCTUnwrap(URL(string: "arma://open?url=http%3A%2F%2Fexample.com"))
+        XCTAssertEqual(BrowserSharedLink(handOffURL: current)?.url.absoluteString, "http://example.com")
     }
 }
