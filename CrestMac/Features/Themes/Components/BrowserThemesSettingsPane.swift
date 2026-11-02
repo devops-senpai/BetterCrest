@@ -42,7 +42,8 @@ struct BrowserThemesSettingsPane: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .onAppear { if selection == nil { selection = library.entries.first?.id } }
+        // Opening Themes selects the theme the shown Space wears.
+        .onAppear { selection = shownSpaceThemeID ?? selection ?? library.entries.first?.id }
         .onChange(of: selection, initial: true) { previous, _ in
             if let previous { commitName(of: previous) }
             name = selected?.name ?? ""
@@ -56,31 +57,36 @@ struct BrowserThemesSettingsPane: View {
 
     private var list: some View {
         VStack(spacing: 0) {
-            List(library.entries, selection: $selection) { entry in
-                HStack(spacing: CrestSpacing.small) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(entry.name)
-                        Text(subtitle(of: entry)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+            ScrollViewReader { proxy in
+                List(library.entries, selection: $selection) { entry in
+                    HStack(spacing: CrestSpacing.small) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(entry.name)
+                            Text(subtitle(of: entry)).font(.caption).foregroundStyle(.secondary).lineLimit(1)
+                        }
+                        Spacer(minLength: 0)
+                        if entry.id == shownSpaceThemeID {
+                            Image(systemName: "star.fill")
+                                .help("The theme of the Space this window shows")
+                                .accessibilityLabel("Theme of the shown Space")
+                        }
                     }
-                    Spacer(minLength: 0)
-                    if entry.id == shownSpaceThemeID {
-                        Image(systemName: "star.fill")
-                            .help("The theme of the Space this window shows")
-                            .accessibilityLabel("Theme of the shown Space")
+                    .tag(entry.id)
+                    .contextMenu {
+                        Group {
+                            Button("Duplicate", systemImage: "plus.square.on.square") { duplicate(entry.id) }
+                            Button("Export Theme…", systemImage: "square.and.arrow.up") { export(entry.id) }
+                            Divider()
+                            Button("Delete Theme", systemImage: "trash", role: .destructive) {
+                                requestRemoval(entry.id)
+                            }
+                        }
+                        .crestMenuActionLabelStyle()
                     }
                 }
-                .tag(entry.id)
-                .contextMenu {
-                    Group {
-                        Button("Duplicate", systemImage: "plus.square.on.square") { duplicate(entry.id) }
-                        Button("Export Theme…", systemImage: "square.and.arrow.up") { export(entry.id) }
-                        Divider()
-                        Button("Delete Theme", systemImage: "trash", role: .destructive) { requestRemoval(entry.id) }
-                    }
-                    .crestMenuActionLabelStyle()
-                }
+                .listStyle(.bordered)
+                .onChange(of: selection, initial: true) { _, selected in if let selected { proxy.scrollTo(selected) } }
             }
-            .listStyle(.bordered)
             .overlay {
                 if library.entries.isEmpty {
                     Text("No Saved Themes").foregroundStyle(.secondary)
