@@ -18,7 +18,7 @@ struct MobileOnboardingWelcomePage: View {
                         Text("Arma").font(.headline)
                     }
                     HStack(spacing: 16) {
-                        ForEach(Array(SpaceHouse.all.prefix(3).enumerated()), id: \.element.name) {
+                        ForEach(Array(SpaceHouse.offered.prefix(3).enumerated()), id: \.element.name) {
                             index, preset in
                             BrowserSpaceCrestIcon(
                                 branding: preset.look,

@@ -14,7 +14,7 @@ struct BrowserPlatformAppIconSettingsSection: View {
         ) {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 78), spacing: 12)], spacing: 16) {
                 iconChoice(name: "", title: "Arma", preview: "ArmaPreview")
-                ForEach(SpaceHouse.all, id: \.self) { house in
+                ForEach(SpaceHouse.withAppIcons, id: \.self) { house in
                     iconChoice(name: house.appIconName, title: house.title, preview: house.appIconName + "Preview")
                 }
             }

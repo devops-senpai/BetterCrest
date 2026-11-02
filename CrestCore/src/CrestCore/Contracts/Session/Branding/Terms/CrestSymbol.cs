@@ -39,6 +39,9 @@ public sealed class CrestSymbol {
     public static readonly CrestSymbol Castle = new("castle", "Castle", CrestVocabulary.Studio, "shield.fill", "CrestCharge-castle");
     public static readonly CrestSymbol Scales = new("scales", "Scales", CrestVocabulary.Studio, "shield.fill", "CrestCharge-scales");
     public static readonly CrestSymbol DragonHead = new("dragonHead", "Dragon Head", CrestVocabulary.Studio, "shield.fill", "CrestCharge-dragonHead");
+    // Arma's own birds, as its app icons draw them: the sparrow of its logo and the crane.
+    public static readonly CrestSymbol Sparrow = new("sparrow", "Sparrow", CrestVocabulary.Studio, "bird.fill", "CrestCharge-sparrow");
+    public static readonly CrestSymbol Crane = new("crane", "Crane", CrestVocabulary.Studio, "bird.fill", "CrestCharge-crane");
     public static readonly CrestSymbol Hound = new("hound", "Hound", CrestVocabulary.ExpandedCharges, "dog.fill", null);
     public static readonly CrestSymbol Paw = new("paw", "Paw", CrestVocabulary.ExpandedCharges, "pawprint.fill", null);
     public static readonly CrestSymbol Hare = new("hare", "Hare", CrestVocabulary.Baseline, "hare.fill", null);
@@ -77,7 +80,7 @@ public sealed class CrestSymbol {
         Kraken, Seahorse, Scorpion, Bat, Falcon, Rose, Lily, Pine, Willow, Swords, Axes, Sword, Trident, Anchor, Castle,
         Scales, DragonHead, Hound, Paw, Hare, Bird, Fish, Bee, Shell, Sun, RisingSun, Crescent, Star, Sparkles, Lightning,
         Flame, Snowflake, Drop, Mountain, Tree, Oak, Leaf, Fern, Flower, Waves, Tower, Book, Key, Hammer, Compass, Sailboat,
-        Crown, Horn, CrossedBanners
+        Crown, Horn, CrossedBanners, Sparrow, Crane
     ];
 
     /// The figure a crest draws when it names none this build can read.

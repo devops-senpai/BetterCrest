@@ -167,7 +167,7 @@ struct BrowserCrestForgePalette: View {
     let color: BrandColor
     let select: (BrandColor) -> Void
 
-    private let houses = SpaceHouse.all
+    private let houses = SpaceHouse.offered
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {

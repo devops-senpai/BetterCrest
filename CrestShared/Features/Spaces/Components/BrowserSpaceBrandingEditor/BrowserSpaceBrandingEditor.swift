@@ -90,7 +90,7 @@ struct BrowserSpaceBrandingEditor: View {
     private var presets: some View {
         BrowserCrestStudioGroup(step: .start) {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 84), spacing: 10)], spacing: 10) {
-                ForEach(SpaceHouse.all, id: \.self) { house in
+                ForEach(SpaceHouse.offered, id: \.self) { house in
                     BrowserCrestStudioChoice(title: house.title, selected: house.isWorn(by: branding)) {
                         branding = house.applying(to: branding)
                         beforeShuffle = nil
