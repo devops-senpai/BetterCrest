@@ -23,12 +23,18 @@ import CoreGraphics
 /// monitor that believes it is carrying swallows every press that follows.
 struct BrowserSplitCardLiftGesture {
     let begin: @MainActor @Sendable (CGPoint, BrowserKeyboardModifierFlags) -> Bool
+    /// Picks the card up where the pointer is now, as a menu asked, so it
+    /// follows the pointer with no button held and a click puts it down.
+    let place: @MainActor @Sendable (UUID, CGPoint) -> Bool
     let update: @MainActor @Sendable (CGPoint) -> Void
     let drop: @MainActor @Sendable () -> Void
     let cancel: @MainActor @Sendable () -> Void
     /// Whether a card is on the pointer at this instant, straight from the state
     /// that owns the carry.
     let isCarrying: @MainActor @Sendable () -> Bool
+    /// Whether the carry in flight was asked for from a menu, so a click puts
+    /// the card down rather than a release.
+    let isPlaced: @MainActor @Sendable () -> Bool
 }
 
 /// Everything the floating preview window needs to draw a carried Split View

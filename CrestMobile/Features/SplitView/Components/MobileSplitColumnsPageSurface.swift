@@ -29,27 +29,33 @@ struct MobileSplitColumnsPageSurface: View {
     let space: SpaceModel
     let members: [TabStateModel]
     let adjoinsSidebar: Bool
-    /// The slot a drag out of the sidebar would drop a card into.
-    /// `MobileRegularPageSurface` owns the decision; the row only draws it.
-    let placeholderIndex: Int?
+    /// Where a drag out of the sidebar would land a card.
+    /// `MobileRegularPageSurface` owns the decision; the tiles only draw it.
+    let placeholder: BrowserSplitDropLanding?
+    /// The card of the split a drag out of the sidebar is, if it is one.
+    let placeholderMover: UUID?
 
     private var appearance: BrowserChromeAppearance { .device(windowCornerRadius: windowCornerRadius) }
 
     var body: some View {
-        BrowserSplitColumnsView(
+        BrowserSplitTilesView(
             members: members,
+            layout: model.browser.shownSplitLayout(in: space),
+            groupID: model.browser.shownSplitGroupID(in: space),
             focusedTabID: model.browser.shownTab?.id,
             frameInsets: frameInsets,
             accent: space.settings.shownLook.primaryColor.color,
-            placeholderIndex: placeholderIndex,
+            placeholder: placeholder,
+            placeholderMover: placeholderMover,
             // "Fancy Move" is a pointer gesture: ⇧⌘-held mouse-down, and a
             // card that follows a cursor. iPadOS reorders its cards from the
-            // member menu instead, so the row here is never carrying one.
-            liftedTabID: nil,
-            widthTransaction: foldFractions.map { .constant(BrowserSplitWidthTransaction(persistedFractions: $0)) }
-                ?? model.splitWidthTransactionBinding,
+            // member menu instead, so the tiles here are never carrying one.
+            lift: nil,
+            layoutTransaction: layoutTransaction,
             // The fold's columns are never the person's, so none are kept.
-            onResizeCommit: foldFractions == nil ? model.commitSplitColumnFractions : { _ in },
+            onResizeCommit: { branchID, fractions in
+                if foldFractions == nil { model.commitSplitColumnFractions(fractions, branchID: branchID) }
+            },
             onFocus: model.focusSplitCard,
             usesTransparentInnerSurface: usesTransparentInnerSurface,
             content: { member, _ in
@@ -103,16 +109,26 @@ struct MobileSplitColumnsPageSurface: View {
         }
     }
 
+    private var layoutTransaction: Binding<BrowserSplitLayoutTransaction> {
+        guard let foldFractions else { return model.splitWidthTransactionBinding }
+        return .constant(BrowserSplitLayoutTransaction(persistedFractions: foldFractions))
+    }
+
     private var frameInsets: EdgeInsets {
         controlPlacement.pageInsets(
             appearance.pageInsets(docked: adjoinsSidebar, direction: layoutDirection)
         )
     }
 
-    /// Columns that meet in the fold while the display is folded, or nil to
-    /// keep the split's own.
-    private var foldFractions: [Double]? {
-        guard let fold else { return nil }
+    /// Columns that meet in the fold while the display is folded, by the
+    /// outer row's branch, or nil to keep the split's own. Only a split whose
+    /// outer branch runs across has columns to line up with a fold; a stack
+    /// of rows keeps its own shares.
+    private var foldFractions: [UUID: [Double]]? {
+        guard let fold,
+            case .branch(let branchID, let axis, let children) = model.browser.shownSplitTile(in: space),
+            axis.isHorizontal
+        else { return nil }
         let insets = frameInsets
         let row = CGRect(
             x: globalFrame.minX + (layoutDirection == .rightToLeft ? insets.trailing : insets.leading),
@@ -121,11 +137,11 @@ struct MobileSplitColumnsPageSurface: View {
             height: globalFrame.height
         )
         return fold.columnFractions(
-            memberCount: members.count,
+            memberCount: children.count,
             across: row,
             direction: layoutDirection,
             gap: foldGap(fold)
-        )
+        ).map { [branchID: $0] }
     }
 
     /// The space between cards: the whole fold while the pages meet in it,

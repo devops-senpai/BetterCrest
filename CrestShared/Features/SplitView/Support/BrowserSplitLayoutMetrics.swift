@@ -20,6 +20,10 @@ enum BrowserSplitLayoutMetrics {
     /// than dissolving the group: layout never destroys membership.
     static let minimumCardWidth: CGFloat = 240
 
+    /// The shortest a card ever becomes in a stack, which is lower than the
+    /// narrowest it becomes in a row: a page reads at less height than width.
+    static let minimumCardHeight: CGFloat = 160
+
     /// How far the resize affordance reaches past the gap on each side, so the
     /// divider is grabbable without swallowing the card edges behind it.
     static let resizeHandleOverhang: CGFloat = 4

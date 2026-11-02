@@ -26,13 +26,15 @@ import SwiftUI
 struct BrowserSplitPageSurface: View {
     let model: BrowserRootModel
     let space: SpaceModel
-    /// The presented cards in session order. What the row *draws* is this list
+    /// The presented cards in session order. What the tiles *draw* is these
     /// with any carried card moved to the gap.
     let members: [TabStateModel]
-    /// The slot a drag in flight would drop into, or `nil` when no drop is
-    /// resolved. `BrowserRootPageSurface` owns the decision; the row only draws
-    /// it.
-    let placeholderIndex: Int?
+    /// Where a drag in flight would land a card, or `nil` when no drop is
+    /// resolved. `BrowserRootPageSurface` owns the decision; the tiles only
+    /// draw it.
+    let placeholder: BrowserSplitDropLanding?
+    /// The card of the split a drag out of the sidebar is, if it is one.
+    let placeholderMover: UUID?
     let tabPromotionNamespace: Namespace.ID
     /// The chords the window's commands show in a Start Page card's palette.
     let shortcuts: BrowserShortcutStore?
@@ -51,28 +53,37 @@ struct BrowserSplitPageSurface: View {
         model.browser.selectedSpaceID == space.id && !model.spaceAccess.isLocked(space)
     }
 
-    private var widthTransaction: Binding<BrowserSplitWidthTransaction> {
+    private var layoutTransaction: Binding<BrowserSplitLayoutTransaction> {
         guard !isSelectedSpace else { return model.splitWidthTransactionBinding }
         let persisted = model.browser.shownSplitGroupID(in: space)
-            .flatMap { model.windowState?.splitColumnFractions(for: $0) }
-        return .constant(
-            BrowserSplitWidthTransaction(
-                persistedFractions:
-                    BrowserSplitColumnLayout.seedFractions(persisted: persisted, memberCount: members.count)))
+            .map { model.windowState?.splitColumnFractions(for: $0) ?? [:] }
+        return .constant(BrowserSplitLayoutTransaction(persistedFractions: persisted ?? [:]))
+    }
+
+    /// The card on the pointer and where the gap it left is standing, while
+    /// this Space is the one being carried in.
+    private var lift: (tabID: UUID, landing: BrowserSplitDropLanding)? {
+        guard isSelectedSpace, let lift = model.splitCardLift.lift, !lift.isSettling else { return nil }
+        return (lift.tabID, lift.landing)
     }
 
     var body: some View {
-        BrowserSplitColumnsView(
-            members: displayMembers,
+        BrowserSplitTilesView(
+            members: members,
+            layout: model.browser.shownSplitLayout(in: space),
+            groupID: model.browser.shownSplitGroupID(in: space),
             focusedTabID: isSelectedSpace ? model.pages.activeTabID : model.browser.selectedTabID(in: space.id),
             frameInsets: BrowserChromeAppearance.device(windowCornerRadius: nil).pageInsets(
                 docked: model.sidebarPresentation.reservesSidebarWidth, direction: layoutDirection
             ),
             accent: space.settings.shownLook.primaryColor.color,
-            placeholderIndex: placeholderIndex,
-            liftedTabID: isSelectedSpace ? model.splitCardLift.carriedTabID : nil,
-            widthTransaction: widthTransaction,
-            onResizeCommit: { if isSelectedSpace { model.commitSplitColumnFractions($0) } },
+            placeholder: placeholder,
+            placeholderMover: placeholderMover,
+            lift: lift,
+            layoutTransaction: layoutTransaction,
+            onResizeCommit: { branchID, fractions in
+                if isSelectedSpace { model.commitSplitColumnFractions(fractions, branchID: branchID) }
+            },
             onFocus: { if isSelectedSpace { model.focusSplitCard($0) } },
             usesTransparentInnerSurface: usesTransparentInnerSurface,
             content: { member, _ in
@@ -117,7 +128,9 @@ struct BrowserSplitPageSurface: View {
                 BrowserSplitCardPointerMonitor(
                     cardFrames: cardFrames,
                     handleMouseDown: handleMouseDown,
-                    lift: liftGesture
+                    lift: liftGesture,
+                    carryRequest: model.sidebarInteraction.cardCarryRequest,
+                    claimCarryRequest: model.sidebarInteraction.claimCardCarry
                 )
             }
         }
@@ -150,32 +163,43 @@ struct BrowserSplitPageSurface: View {
         }
     }
 
-    /// The row as it is drawn: session order, with a carried card moved to the
-    /// gap it has reached.
-    ///
-    /// The carried card is still in the list, at its own identity, which is what
-    /// keeps its host — and the live `WKWebView` inside it — alive through a
-    /// whole reorder. Once the release settles, the session's own order is the
-    /// order already on screen.
-    private var displayMembers: [TabStateModel] {
-        guard isSelectedSpace, let lift = model.splitCardLift.lift, !lift.isSettling else {
-            return members
-        }
-        return BrowserSplitCardLift.displayMembers(
-            members,
-            lifted: lift.tabID,
-            gapIndex: lift.gapIndex
-        )
-    }
-
     private var liftGesture: BrowserSplitCardLiftGesture {
         BrowserSplitCardLiftGesture(
             begin: beginLift,
+            place: placeLift,
             update: updateLift,
             drop: dropLift,
             cancel: { model.splitCardLift.cancel() },
-            isCarrying: { model.splitCardLift.isCarrying }
+            isCarrying: { model.splitCardLift.isCarrying },
+            isPlaced: { model.splitCardLift.isPlaced }
         )
+    }
+
+    /// A menu's "Move Card": the same pickup a ⇧⌘-held press makes, of the
+    /// card the menu named, from wherever the pointer is, with nothing held.
+    /// The card then rides the pointer until a click puts it down.
+    private func placeLift(_ tabID: UUID, at point: CGPoint) -> Bool {
+        guard isSelectedSpace, members.count > 1, !model.splitCardLift.isCarrying,
+            let index = members.firstIndex(where: { $0.id == tabID }),
+            let frame = memberCardFrames[tabID], !frame.isEmpty,
+            let origin = model.browser.shownSplitTile(in: space).restoringLanding(for: tabID)
+        else { return false }
+        let token = model.splitCardLift.reserve()
+        loadSnapshot(for: members[index], token: token)
+        guard
+            model.splitCardLift.begin(
+                token: token, tabID: tabID, origin: origin, cardFrame: frame, aimFrames: memberCardFrames,
+                pointer: frame.contains(point) ? point : CGPoint(x: frame.midX, y: frame.midY),
+                surfaceOrigin: surfaceOrigin, placed: true)
+        else {
+            model.splitCardLift.discard(token)
+            return false
+        }
+        model.focusSplitCard(tabID)
+        updateLift(to: point)
+        DiagnosticLog.splits.notice(
+            "Menu picks up card \(tabID.uuidString.prefix(8)) at \(Int(point.x)),\(Int(point.y))")
+        return true
     }
 
     /// The frames of the cards actually on show, by tab.
@@ -196,8 +220,8 @@ struct BrowserSplitPageSurface: View {
     ///
     /// The order is the whole of it, and it is deliberate:
     ///
-    /// 1. **Resolve the card** against the row's membership, so the answer is a
-    ///    slot as well as a tab and there is no second way to fail.
+    /// 1. **Resolve the card** against the tiles' membership, so the answer is
+    ///    a landing as well as a tab and there is no second way to fail.
     /// 2. **Stage the carry**, which mints its identity and changes nothing.
     /// 3. **Ask WebKit for the picture**, issued here inside the mouse-down —
     ///    before the row has been told anything at all.
@@ -223,21 +247,14 @@ struct BrowserSplitPageSurface: View {
                 modifiers: modifiers,
                 isInsideCard: card != nil,
                 isOverDivider: BrowserSplitCardLift.isOverDivider(
-                    point,
-                    orderedCardFrames:
-                        BrowserSplitCardLift
-                        .orderedMemberFrames(
-                            members: members,
-                            cardFrames: frames
-                        ),
-                    panelFrame: panelFrame
-                ),
+                    point, members: members, cardFrames: frames, panelFrame: panelFrame),
                 memberCount: members.count,
                 isDraggingSidebarItem:
                     model.sidebarInteraction.sidebarReorderState.isDragging,
                 isCommandPalettePresented: model.chrome.isCommandPalettePresented
             ),
-            let card
+            let card,
+            let origin = model.browser.shownSplitTile(in: space).restoringLanding(for: card.tabID)
         else { return false }
 
         let token = model.splitCardLift.reserve()
@@ -246,8 +263,9 @@ struct BrowserSplitPageSurface: View {
             model.splitCardLift.begin(
                 token: token,
                 tabID: card.tabID,
-                originIndex: card.index,
+                origin: origin,
                 cardFrame: card.frame,
+                aimFrames: frames,
                 pointer: point,
                 surfaceOrigin: surfaceOrigin
             )
@@ -264,26 +282,24 @@ struct BrowserSplitPageSurface: View {
     }
 
     private func updateLift(to point: CGPoint) {
-        guard let carried = model.splitCardLift.carriedTabID else { return }
+        guard let carried = model.splitCardLift.carriedTabID, let lift = model.splitCardLift.lift else { return }
         model.splitCardLift.update(
             pointer: point,
-            gapIndex: BrowserSplitCardLift.gapIndex(
-                at: point,
-                cardFrames: memberCardFrames,
-                lifted: carried,
-                layoutDirection: layoutDirection
-            ),
+            landing: BrowserSplitCardLift.landing(
+                at: point, cardFrames: lift.aimFrames, lifted: carried, origin: lift.origin,
+                rightToLeft: layoutDirection == .rightToLeft),
             surfaceOrigin: surfaceOrigin
         )
     }
 
-    /// The release. The domain clamps the index as well, so the row may hand over
-    /// whatever slot the gap ended on without checking the ends first.
+    /// The release. The domain lands the card as the tiles already draw it,
+    /// or refuses a move that changes nothing.
     private func dropLift() {
         guard let move = model.splitCardLift.drop() else { return }
-        model.browser.moveSplitMember(
+        DiagnosticLog.splits.notice("Carry of \(move.tabID.uuidString.prefix(8)) drops at \(move.landing)")
+        model.browser.tileSplitMember(
             move.tabID,
-            toMemberIndex: move.memberIndex,
+            at: move.landing,
             matching: BrowserSpaceRuntimeAssignment(space: space)
         )
     }

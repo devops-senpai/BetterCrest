@@ -57,27 +57,6 @@ final class BrowserSplitCardLiftTests: XCTestCase {
         )
     }
 
-    private static func isOverDivider(atX x: CGFloat, in cards: [CGRect]) -> Bool {
-        BrowserSplitCardLift.isOverDivider(
-            CGPoint(x: x, y: 300),
-            orderedCardFrames: cards
-        )
-    }
-
-    private static func gapIndex(
-        atX x: CGFloat,
-        in frames: [UUID: CGRect],
-        lifted: UUID,
-        layoutDirection: LayoutDirection = .leftToRight
-    ) -> Int {
-        BrowserSplitCardLift.gapIndex(
-            at: CGPoint(x: x, y: 300),
-            cardFrames: frames,
-            lifted: lifted,
-            layoutDirection: layoutDirection
-        )
-    }
-
     /// Three 300pt cards with an 8pt gap: midpoints at 150, 458, and 766.
     private static func cardFrames(count: Int) -> [CGRect] {
         frames(widths: Array(repeating: 300, count: count))

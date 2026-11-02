@@ -23,10 +23,10 @@ public sealed partial class NativeSessionAuthority {
     /// A durable target's split copied into new tabs keeps its name, icon and
     /// tint.
     internal SessionEdit Joining(SessionState basis, SpaceState space, BrowserTabCollection edited, Guid windowId, Guid tabId, Guid targetId,
-        int? index, Pages? pages, DateTimeOffset now, IIdSource ids) {
+        int? index, SplitLanding? landing, Pages? pages, DateTimeOffset now, IIdSource ids) {
         var target = edited.Tab(targetId);
         var durableGroup = target.Placement.IsDurable ? target.SplitGroupId : null;
-        var joined = edited.JoinSplit(tabId, targetId, index, ids, now);
+        var joined = edited.JoinSplit(tabId, targetId, index, landing, ids, now);
         foreach (var (source, copyId) in joined.Copies) StartFromSourcePage(edited.Tab(copyId), source, windowId, pages);
         if (durableGroup is { } copied && joined.Copies.Any(pair => pair.Source == targetId)
             && edited.Tab(joined.SelectedTab).SplitGroupId is { } copy)

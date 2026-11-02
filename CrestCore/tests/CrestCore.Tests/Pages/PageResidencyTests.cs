@@ -61,7 +61,7 @@ public sealed partial class BrowserContractsTests {
         var (_, second) = ShowNewTab(app, engine, clock, workspace, window, space, "https://second.example/");
         var (left, leftPage) = ShowNewTab(app, engine, clock, workspace, window, space, "https://left.example/");
         var (right, rightPage) = ShowNewTab(app, engine, clock, workspace, window, space, "https://right.example/");
-        app.Send(new JoinSplit(workspace, window, space, right, left, null));
+        app.Send(new JoinSplit(workspace, window, space, right, left, null, null));
         app.Report(engine, new PageStateChanged(playing, Showing("https://playing.example/") with { Media = PageMediaActivity.Playing }));
         // A video paused in its Picture in Picture window, and a screen being
         // shared, run media as much as a video playing does.

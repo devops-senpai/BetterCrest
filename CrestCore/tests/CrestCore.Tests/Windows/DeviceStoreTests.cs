@@ -51,7 +51,7 @@ public sealed partial class BrowserContractsTests {
             Assert.Equal(tab, Assert.Single(Assert.Single(touched.OfType<TabsChanged>()).Updated).Id);
             Assert.Equal(second, Shown(touched).ShownSpaceId);
             var members = spaces[0]!["tabs"]!.AsArray().Count(item => item!["splitGroupID"]?["rawValue"]?.GetValue<string>() == group.ToString().ToUpperInvariant());
-            var resized = Shown(app.Send(new ResizeSplitColumns(window, group, [.. Enumerable.Repeat(1.0, members)])));
+            var resized = Shown(app.Send(new ResizeSplitColumns(window, group, group, [.. Enumerable.Repeat(1.0, members)])));
             Assert.Equal(1.0 / members, resized.SplitColumnShares.Single().Shares[0], precision: 12);
             Assert.Equal([new WindowClosed(window)], Own(app.Send(new CloseWindow(window))));
         }

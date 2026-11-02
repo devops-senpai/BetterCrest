@@ -37,6 +37,10 @@ struct BrowserSidebarSplitGroupContextMenu: View {
 
                 Divider()
 
+                arrangeMenu
+
+                Divider()
+
                 Button("Separate All Tabs", systemImage: "rectangle.split.2x1.slash") {
                     guard configuration.isCurrentAndUnlocked,
                         let first = configuration.members.first
@@ -59,5 +63,33 @@ struct BrowserSidebarSplitGroupContextMenu: View {
             }
         }
         .crestMenuActionLabelStyle()
+    }
+
+    /// The ready-made layouts for as many cards as the split holds, the one on
+    /// show checked.
+    private var arrangeMenu: some View {
+        let members = configuration.members.map(\.id)
+        let shown = configuration.browser.shownSplitTile(in: configuration.context.space)
+        return Menu("Arrange", systemImage: "rectangle.split.2x2") {
+            ForEach(SplitArrangement.all.filter { $0.memberCount == members.count }, id: \.name) { arrangement in
+                let isCurrent = shown.hasShape(of: BrowserSplitTile.arranged(arrangement, members: members))
+                Toggle(
+                    isOn: Binding(
+                        get: { isCurrent },
+                        set: { chosen in
+                            guard chosen, configuration.isCurrentAndUnlocked else { return }
+                            configuration.browser.arrangeSplit(
+                                configuration.groupID, as: arrangement, matching: configuration.assignment)
+                        })
+                ) {
+                    Label {
+                        Text(arrangement.title)
+                    } icon: {
+                        BrowserSplitArrangementIcon.image(for: arrangement)
+                    }
+                }
+            }
+        }
+        .disabled(!configuration.isAvailableForDisplay || members.count < 2)
     }
 }

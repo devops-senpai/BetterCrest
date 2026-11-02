@@ -118,6 +118,11 @@ final class BrowserSidebarReorderState {
     private(set) var isSuppressingActivation = false
     // Latch the content host for the drag so its WebView does not change parents repeatedly.
     private(set) var hasEnteredSplitContent = false
+    /// The split's cards as they stood when the drag first aimed at them,
+    /// which it keeps aiming against while it is over them: the cards that
+    /// step aside for the placeholder would otherwise aim it somewhere else
+    /// every frame.
+    @ObservationIgnored private var splitAimCards: [UUID: BrowserSidebarReorderGeometry.SplitCard]?
     var suppressesActivation: Bool {
         isDragging || isSuppressingActivation
     }
@@ -369,6 +374,7 @@ final class BrowserSidebarReorderState {
         stagedLift = nil
         cancelStagedLiftExpiration()
         hasEnteredSplitContent = false
+        splitAimCards = nil
         verticalDirection = 0
         lastPreviewShape = nil
         self.pointer = pointer
@@ -465,6 +471,7 @@ final class BrowserSidebarReorderState {
             layout = BrowserSidebarReorderLayout()
             lastPreviewShape = nil
             hasEnteredSplitContent = false
+            splitAimCards = nil
             constraintMessage = nil
         }
         guard constraintMessage == nil, let lift, let target = resolvedTarget else { return nil }
@@ -488,6 +495,7 @@ final class BrowserSidebarReorderState {
         layout = BrowserSidebarReorderLayout()
         lastPreviewShape = nil
         hasEnteredSplitContent = false
+        splitAimCards = nil
         constraintMessage = nil
     }
 
@@ -719,12 +727,18 @@ final class BrowserSidebarReorderState {
             resolvedTarget = nil
             return
         }
+        let splitCards = splitAimCards ?? geometry.splitCards(in: lift.item.spaceAssignment)
         resolvedTarget = BrowserSidebarReorderAim(
             lift: lift, pointer: pointer, insertionPoint: insertionProbe(for: lift), layout: layout,
             pinned: pinnedGeometry, zones: visibleZones, rows: geometry.rows(in: lift.item.spaceAssignment),
-            splitCards: Array(geometry.splitCards.values)
+            splitCards: splitCards
         ).target(previousTarget: previousTarget)
-        if case .splitInsert = resolvedTarget?.kind { hasEnteredSplitContent = true }
+        if case .splitInsert = resolvedTarget?.kind {
+            hasEnteredSplitContent = true
+            splitAimCards = splitCards
+        } else {
+            splitAimCards = nil
+        }
     }
 
     /// Asks the lift's plan about the target it is over: a target the core

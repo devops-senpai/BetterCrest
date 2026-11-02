@@ -131,6 +131,10 @@ internal sealed class SqliteConnection : IDisposable {
             + "PRIMARY KEY (window, space))");
         Execute("CREATE TABLE IF NOT EXISTS device_window_split (window TEXT NOT NULL, split_group TEXT NOT NULL, "
             + "position INTEGER NOT NULL, share REAL NOT NULL, PRIMARY KEY (window, split_group, position))");
+        // The shares of every branch of a split's layout. `device_window_split`
+        // keeps the outer branch's for a build that predates layouts.
+        Execute("CREATE TABLE IF NOT EXISTS device_window_branch (window TEXT NOT NULL, split_group TEXT NOT NULL, "
+            + "branch TEXT NOT NULL, position INTEGER NOT NULL, share REAL NOT NULL, PRIMARY KEY (window, split_group, branch, position))");
         Execute("CREATE TABLE IF NOT EXISTS device_window_reopen (id TEXT PRIMARY KEY, position INTEGER NOT NULL)");
         Execute("CREATE TABLE IF NOT EXISTS device_marker (name TEXT PRIMARY KEY)");
         Execute("CREATE TABLE IF NOT EXISTS device_adoption (name TEXT PRIMARY KEY)");
@@ -201,7 +205,8 @@ internal sealed class SqliteConnection : IDisposable {
     private List<SavedWindow> ReadWindows() {
         var windows = new Dictionary<Guid, (Guid ShownSpace, long Used)>();
         var tabs = new List<(Guid Window, ShownTab Tab)>();
-        var shares = new List<(Guid Window, Guid Group, double Share)>();
+        var shares = new List<(Guid Window, Guid Group, Guid Branch, double Share)>();
+        var branches = new HashSet<(Guid Window, Guid Group, Guid Branch)>();
         Rows("SELECT id, shown_space, used FROM device_window", statement => {
             if (Identity(statement, 0) is { } id && Identity(statement, 1) is { } shown)
                 windows[id] = (shown, Sqlite.sqlite3_column_int64(statement, 2));
@@ -210,14 +215,22 @@ internal sealed class SqliteConnection : IDisposable {
             if (Identity(statement, 0) is { } window && Identity(statement, 1) is { } space)
                 tabs.Add((window, new ShownTab(space, Sqlite.ColumnIsNull(statement, 2) ? null : Identity(statement, 2))));
         });
+        Rows("SELECT window, split_group, branch, share FROM device_window_branch ORDER BY window, split_group, branch, position",
+            statement => {
+                if (Identity(statement, 0) is { } window && Identity(statement, 1) is { } group && Identity(statement, 2) is { } branch) {
+                    branches.Add((window, group, branch));
+                    shares.Add((window, group, branch, Sqlite.sqlite3_column_double(statement, 3)));
+                }
+            });
+        // A record written before layouts kept only the outer branch, named by the split.
         Rows("SELECT window, split_group, share FROM device_window_split ORDER BY window, split_group, position", statement => {
-            if (Identity(statement, 0) is { } window && Identity(statement, 1) is { } group)
-                shares.Add((window, group, Sqlite.sqlite3_column_double(statement, 2)));
+            if (Identity(statement, 0) is { } window && Identity(statement, 1) is { } group && !branches.Contains((window, group, group)))
+                shares.Add((window, group, group, Sqlite.sqlite3_column_double(statement, 2)));
         });
         return [.. windows.Select(window => new SavedWindow(window.Key, window.Value.ShownSpace,
             [.. tabs.Where(tab => tab.Window == window.Key).Select(tab => tab.Tab)],
-            [.. shares.Where(share => share.Window == window.Key).GroupBy(share => share.Group)
-                .Select(group => new SplitColumnShares(group.Key, [.. group.Select(share => share.Share)]))],
+            [.. shares.Where(share => share.Window == window.Key).GroupBy(share => (share.Group, share.Branch))
+                .Select(group => new SplitColumnShares(group.Key.Group, group.Key.Branch, [.. group.Select(share => share.Share)]))],
             window.Value.Used)).OrderBy(record => record.Used)];
     }
 
@@ -449,7 +462,8 @@ internal sealed class SqliteConnection : IDisposable {
     }
 
     private void WriteWindows(IReadOnlyList<SavedWindow> windows) {
-        foreach (var table in new[] { "device_window", "device_window_tab", "device_window_split" }) Execute($"DELETE FROM {table}");
+        foreach (var table in new[] { "device_window", "device_window_tab", "device_window_split", "device_window_branch" })
+            Execute($"DELETE FROM {table}");
         foreach (var window in windows) {
             Insert("INSERT INTO device_window(id, shown_space, used) VALUES(?,?,?)", statement => {
                 Bind(statement, 1, Spelling(window.Id));
@@ -465,6 +479,14 @@ internal sealed class SqliteConnection : IDisposable {
             foreach (var group in window.Shares)
                 for (int position = 0; position < group.Shares.Count; position++) {
                     int column = position;
+                    Insert("INSERT INTO device_window_branch(window, split_group, branch, position, share) VALUES(?,?,?,?,?)", statement => {
+                        Bind(statement, 1, Spelling(window.Id));
+                        Bind(statement, 2, Spelling(group.GroupId));
+                        Bind(statement, 3, Spelling(group.BranchId));
+                        Checked(Sqlite.sqlite3_bind_int64(statement, 4, column));
+                        Checked(Sqlite.sqlite3_bind_double(statement, 5, group.Shares[column]));
+                    });
+                    if (group.BranchId != group.GroupId) continue;
                     Insert("INSERT INTO device_window_split(window, split_group, position, share) VALUES(?,?,?,?)", statement => {
                         Bind(statement, 1, Spelling(window.Id));
                         Bind(statement, 2, Spelling(group.GroupId));

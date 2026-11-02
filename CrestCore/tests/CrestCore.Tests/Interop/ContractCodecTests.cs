@@ -67,8 +67,11 @@ public sealed unsafe class ContractCodecTests {
     }
 
     /// A value of `type` with every optional set or every optional absent.
-    private static object Sample(Type type, NullabilityInfo? info, bool optionals) {
-        if (Nullable.GetUnderlyingType(type) is { } underlying) return optionals ? Sample(underlying, null, optionals) : null!;
+    /// A sample value of `type`. `building` holds the records being made,
+    /// so a record that holds itself through a list holds none of itself.
+    private static object Sample(Type type, NullabilityInfo? info, bool optionals, HashSet<Type>? building = null) {
+        building ??= [];
+        if (Nullable.GetUnderlyingType(type) is { } underlying) return optionals ? Sample(underlying, null, optionals, building) : null!;
         if (!type.IsValueType && info?.ReadState == NullabilityState.Nullable && !optionals) return null!;
         if (type == typeof(bool)) return true;
         if (type == typeof(int)) return -7;
@@ -83,20 +86,25 @@ public sealed unsafe class ContractCodecTests {
         if (type == typeof(byte[])) return new byte[] { 0, 0x7f, 0x80, 0xff };
         if (type.IsEnum) return Enum.GetValues(type).Cast<object>().Last();
         if (SetMembers(type) is { } members) return members[^1];
-        if (Roots.Contains(type)) return Sample(RootMembers(type).First(), null, optionals);
+        if (Roots.Contains(type)) return Sample(RootMembers(type).First(), null, optionals, building);
         if (type.IsAbstract && Roots.Any(root => root.IsAssignableFrom(type)))
             return Sample(Contracts.Where(member => member is { IsAbstract: false } && type.IsAssignableFrom(member))
-                .OrderBy(member => member.Name, StringComparer.Ordinal).First(), null, optionals);
+                .OrderBy(member => member.Name, StringComparer.Ordinal).First(), null, optionals, building);
         if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>)) {
             var element = type.GetGenericArguments()[0];
-            var items = Array.CreateInstance(element, 2);
+            var items = Array.CreateInstance(element, building.Contains(element) ? 0 : 2);
             for (int index = 0; index < items.Length; index++)
-                items.SetValue(Sample(element, info?.GenericTypeArguments.FirstOrDefault(), optionals), index);
+                items.SetValue(Sample(element, info?.GenericTypeArguments.FirstOrDefault(), optionals, building), index);
             return items;
         }
         var constructor = type.GetConstructors().Single();
-        return constructor.Invoke([.. constructor.GetParameters().Select(parameter =>
-            Sample(parameter.ParameterType, Nullability.Create(parameter), optionals))]);
+        building.Add(type);
+        try {
+            return constructor.Invoke([.. constructor.GetParameters().Select(parameter =>
+                Sample(parameter.ParameterType, Nullability.Create(parameter), optionals, building))]);
+        } finally {
+            building.Remove(type);
+        }
     }
 
     private static void AssertSameValue(object? expected, object? actual) {

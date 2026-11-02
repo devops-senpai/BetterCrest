@@ -1,8 +1,7 @@
 import SwiftUI
 
-/// The whole of "Fancy Move": when a Split View card can be picked up, which
-/// slot the gap it leaves is standing in, and how the row is drawn while
-/// somebody is carrying one.
+/// The whole of "Fancy Move": when a Split View card can be picked up, and
+/// where the gap it leaves is standing while somebody is carrying one.
 ///
 /// Every decision is arithmetic over frames and booleans, for the same reason
 /// the surface's focus guards are: the gesture itself is a local `NSEvent`
@@ -89,105 +88,52 @@ extension BrowserSplitCardLift {
         return nil
     }
 
-    /// The cards on show, in reading order — the only frames a divider between
-    /// two of them may be measured from.
-    ///
-    /// Restricted to members for the same reason `card(at:members:cardFrames:)`
-    /// is: a frame left behind by a departing card sits between two that are
-    /// still there, and the midpoint between it and its neighbour lands in the
-    /// middle of a card, which would read a whole column as a resize divider and
-    /// refuse every pickup inside it.
-    static func orderedMemberFrames<Member: Identifiable>(
-        members: [Member],
-        cardFrames: [UUID: CGRect]
-    ) -> [CGRect] where Member.ID == UUID {
-        BrowserSplitColumnLayout.orderedCardFrames(members.compactMap { cardFrames[$0.id] })
-    }
-
     /// Whether `point` belongs to the divider between two cards rather than to
     /// the card whose frame contains it.
     ///
     /// Measured from the cards themselves rather than from a handle's frame, for
     /// the same reason a divider drag is: the handles are positioned from the
-    /// widths the row is drawing, so the cards are the only geometry that is
-    /// true before the handle has been laid out.
-    static func isOverDivider(
+    /// frames the tiles are drawing, so the cards are the only geometry that is
+    /// true before the handle has been laid out. Restricted to members for the
+    /// same reason `card(at:members:cardFrames:)` is: a frame left behind by a
+    /// departing card sits between two that are still there.
+    static func isOverDivider<Member: Identifiable>(
         _ point: CGPoint,
-        orderedCardFrames: [CGRect],
-        panelFrame: CGRect? = nil,
-        hitWidth: CGFloat = BrowserSplitLayoutMetrics.resizeHandleHitWidth
-    ) -> Bool {
-        let reach = max(0, hitWidth) / 2
-        let frames = BrowserSplitColumnLayout.orderedCardFrames(
-            orderedCardFrames + (panelFrame.map { [$0] } ?? [])
-        )
-        return zip(frames, frames.dropFirst()).contains {
-            leading, trailing in
-            abs(point.x - (leading.maxX + trailing.minX) / 2) <= reach
-        }
+        members: [Member],
+        cardFrames: [UUID: CGRect],
+        panelFrame: CGRect? = nil
+    ) -> Bool where Member.ID == UUID {
+        BrowserSplitTileLayout.isOverDivider(
+            point, cardFrames: members.compactMap { cardFrames[$0.id] } + (panelFrame.map { [$0] } ?? []))
     }
 
-    /// The slot the carried card would drop into, from where the pointer is and
-    /// where the cards it is *not* carrying are.
+    /// Where the carried card would land, from where the pointer is and where
+    /// the cards stood when it was picked up.
     ///
-    /// The lifted card's own column is the gap, and a gap the pointer is inside
-    /// is not a card it has passed, so the card is excluded before the same
-    /// arithmetic a drag from the sidebar uses runs over what is left. The
-    /// remaining `n - 1` neighbours answer in `0...n - 1`, which is exactly the
-    /// vocabulary `moveSplitMember(toMemberIndex:)` takes — remove the card, put
-    /// it back at this index — so the index the gap is drawn at is the index the
-    /// release commits, with no translation in between.
-    ///
-    /// The answer survives the layout it causes, the way the drop placeholder's
-    /// does: moving the gap toward the pointer moves the neighbour it passed the
-    /// other way, which is the direction that holds the new index rather than
-    /// arguing with it.
-    ///
-    /// Frames are screen geometry and member order is reading order, and the two
-    /// only agree left to right. A mirrored row draws the first member at the
-    /// trailing edge, so the count of cards the pointer has passed is counted
-    /// from the wrong end and is reflected back before it leaves.
-    static func gapIndex(
+    /// The frames are the ones from pickup, never the tiles as the gap has
+    /// rearranged them: measured against cards that stepped aside for the
+    /// gap, the pointer would aim somewhere else and the gap would chase it
+    /// back and forth with every sample. Over the card's own place, it goes
+    /// back to `origin`. Elsewhere the card is excluded and the same aim a
+    /// drag from the sidebar uses runs over the others; the landing the gap
+    /// is drawn at is the landing the release commits. Nil beyond the outer
+    /// band around every card, or with no other card measured, which keeps
+    /// the gap where it was — so a card carried from a menu keeps its place
+    /// until the pointer first reaches the tiles.
+    static func landing(
         at point: CGPoint,
         cardFrames: [UUID: CGRect],
         lifted liftedTabID: UUID,
-        layoutDirection: LayoutDirection
-    ) -> Int {
-        let neighbours = BrowserSplitColumnLayout.orderedCardFrames(
-            cardFrames.lazy.filter { $0.key != liftedTabID }.map(\.value)
-        )
-        let passed = BrowserSplitColumnLayout.insertionIndex(
-            at: point,
-            orderedCardFrames: neighbours
-        )
-        guard layoutDirection == .rightToLeft else { return passed }
-        return neighbours.count - passed
-    }
-
-    /// The row as it is drawn while one card is being carried: the lifted member
-    /// moved to the gap, everybody else closed up around where it was.
-    ///
-    /// The lifted member stays in the list rather than standing down for a slot
-    /// of its own, and that is the whole reason a lift never remounts a card.
-    /// Its `UUID` is still the identity at the gap's position, so `ForEach`
-    /// moves the host it already has instead of building a second one for a live
-    /// `WKWebView` to be handed to. The card simply stops drawing while it is
-    /// away.
-    ///
-    /// It is also why the drop is invisible: the row is already in the order the
-    /// commit produces, so the session catching up changes nothing on screen.
-    static func displayMembers<Member: Identifiable>(
-        _ members: [Member],
-        lifted liftedTabID: UUID?,
-        gapIndex: Int
-    ) -> [Member] where Member.ID == UUID {
-        guard let liftedTabID,
-            let sourceIndex = members.firstIndex(where: { $0.id == liftedTabID })
-        else { return members }
-        var ordered = members
-        let lifted = ordered.remove(at: sourceIndex)
-        ordered.insert(lifted, at: min(max(gapIndex, 0), ordered.count))
-        return ordered
+        origin: BrowserSplitDropLanding,
+        rightToLeft: Bool = false
+    ) -> BrowserSplitDropLanding? {
+        let frames = cardFrames.values.filter { !$0.isEmpty }
+        if let own = cardFrames[liftedTabID], !own.isEmpty, own.contains(point) { return origin }
+        let band = BrowserSplitDropLanding.outerBand
+        let reach = frames.reduce(CGRect.null) { $0.union($1) }.insetBy(dx: -band, dy: -band)
+        guard !reach.isNull, reach.contains(point) else { return nil }
+        return BrowserSplitDropLanding.aimed(
+            at: point, cardFrames: cardFrames, member: liftedTabID, rightToLeft: rightToLeft)
     }
 
     /// Where inside the card the pointer took hold, as a fraction of it on each

@@ -42,7 +42,7 @@ extension BrowserStore {
             SplitTabs(
                 workspaceID: family.workspaceID, windowID: windowID, spaceID: request.spaceID,
                 selection: request.selection,
-                targetTabID: target, index: index),
+                targetTabID: target, index: index, landing: nil),
             reselection: .items)
     }
 

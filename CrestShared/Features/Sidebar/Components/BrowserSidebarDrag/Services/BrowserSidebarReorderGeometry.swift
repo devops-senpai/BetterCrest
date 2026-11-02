@@ -73,6 +73,13 @@ final class BrowserSidebarReorderGeometry {
         rows[space]?[id]
     }
 
+    /// The cards `space` shows, by the tab each shows.
+    func splitCards(in space: BrowserSpaceRuntimeAssignment) -> [UUID: SplitCard] {
+        Dictionary(
+            splitCards.filter { $0.key.space == space }.map { ($0.key.id, $0.value) },
+            uniquingKeysWith: { first, _ in first })
+    }
+
     /// `space`'s rows, by item.
     func rows(in space: BrowserSpaceRuntimeAssignment) -> [BrowserSidebarReorderItemID: RegisteredRow] {
         rows[space] ?? [:]

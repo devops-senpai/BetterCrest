@@ -49,7 +49,8 @@ public sealed partial class BrowserTabCollection {
             if (copied.Length < 2) continue;
             var copiedGroup = ids.Next();
             foreach (var tab in copied.Skip(1)) JoinSplitInPlace(tab, copied[0], null, copiedGroup, now);
-            CopySplitMetadata(group, copiedGroup, now);
+            CopySplitMetadata(group, copiedGroup, now, copies.Where(pair => copied.Contains(pair.Copy))
+                .ToDictionary(pair => pair.Source, pair => pair.Copy));
         }
         return copies;
     }
@@ -66,7 +67,7 @@ public sealed partial class BrowserTabCollection {
     /// `SplitNeedsTwoTabs` or `SplitLimitReached` for a split that would be
     /// too small or too large.
     public (Guid? Shown, IReadOnlyList<(Guid Source, Guid Copy)> Copies) SplitSelected(ResolvedSelection selection, Guid? target,
-        int? index, Guid? shown, IIdSource ids, DateTimeOffset now) {
+        int? index, SplitLanding? landing, Guid? shown, IIdSource ids, DateTimeOffset now) {
         RequireSelectedTabs(selection);
         var targetId = target ?? selection.MemberIds[0];
         if (Tab(targetId).Content.IsStartPage) throw new Rejected(new WebPagesOnly(targetId));
@@ -77,9 +78,13 @@ public sealed partial class BrowserTabCollection {
         List<(Guid Source, Guid Copy)> copies = [];
         List<(Guid Source, Guid Copy)> groupCopies = [];
         var insertion = index;
+        // Each joiner lands beside the one before it on a side that comes
+        // after what the landing names, so the selection keeps its order; on a
+        // side before it, each lands beside the same node, which keeps it too.
+        var beside = landing;
         foreach (var id in selection.MemberIds.Where(id => !existing.Contains(id))) {
             var group = Tab(targetId).SplitGroupId;
-            var joined = JoinSplit(id, targetId, insertion, ids, now);
+            var joined = JoinSplit(id, targetId, insertion, beside, ids, now);
             copies.AddRange(joined.Copies);
             shown = joined.SelectedTab;
             var targetCopy = joined.Copies.FirstOrDefault(pair => pair.Source == targetId);
@@ -87,6 +92,7 @@ public sealed partial class BrowserTabCollection {
                 targetId = targetCopy.Copy;
                 if (group is { } copiedFrom) groupCopies.Add((copiedFrom, Tab(targetId).SplitGroupId!.Value));
             }
+            if (landing is { Side.IsAfter: true } after) beside = after with { NodeId = joined.SelectedTab };
             if (insertion is { } slot) insertion = checked(slot + 1);
         }
         foreach (var (source, copy) in groupCopies) CopySplitMetadata(source, copy, now);

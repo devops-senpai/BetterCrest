@@ -18,7 +18,7 @@ final class CoreReadModelTests: XCTestCase {
         let value = WindowState(
             id: UUID(), workspaceID: UUID(), shownSpaceID: UUID(),
             shownTabs: [ShownTab(spaceID: UUID(), tabID: UUID())],
-            splitColumnShares: [SplitColumnShares(groupID: UUID(), shares: [0.5, 0.5])],
+            splitColumnShares: [SplitColumnShares(groupID: UUID(), branchID: UUID(), shares: [0.5, 0.5])],
             cards: [ShownCards(spaceID: UUID(), tabIDs: [UUID(), UUID()], splitGroupID: UUID())],
             unavailableCommands: [.duplicateTab, .archiveTab])
         let model = WindowStateModel(value)
@@ -133,7 +133,8 @@ final class CoreReadModelTests: XCTestCase {
             })
         let split = SplitGroupState(
             id: UUID(), customTitle: "Stored", titleModifiedAt: nil, customIconSymbol: nil, iconModifiedAt: nil,
-            tint: nil, tintModifiedAt: nil, displayTitle: "Stored", displayEmojiIcon: nil)
+            tint: nil, tintModifiedAt: nil, layout: nil, layoutModifiedAt: nil, displayTitle: "Stored",
+            displayEmojiIcon: nil)
         assertStoredFirst(
             "SpaceModel", reading: { detachedSpace.splitGroups },
             after: {

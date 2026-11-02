@@ -11,6 +11,13 @@ final class BrowserSidebarInteractionState: BrowserStoreInteractionObserving {
     /// The folder whose title the window's sidebar is editing, such as one it
     /// just made. The folder's row starts editing when it appears.
     var editingFolderRequest: BrowserFolderRuntimeAssignment?
+    /// The card a menu asked the content area to pick up, each request its
+    /// own, so asking twice for one card picks it up twice.
+    private(set) var cardCarryRequest: BrowserSplitCardCarryRequest?
+    /// The last request a content area took up. Kept here rather than by the
+    /// content area, which is rebuilt with a Space switch or a split coming
+    /// back, so a new one never takes up a request somebody made long ago.
+    @ObservationIgnored private var claimedCardCarrySequence = 0
     @ObservationIgnored weak var sidebarSpaceAccess: BrowserSpaceAccessController?
     @ObservationIgnored private var collapsedFolders: [BrowserFolderRuntimeAssignment: BrowserSidebarFolderVisibility] =
         [:]
@@ -50,6 +57,21 @@ final class BrowserSidebarInteractionState: BrowserStoreInteractionObserving {
         hasFolderDrag: Bool
     ) -> Bool {
         hasSidebarLift || hasTabDrag || hasFolderDrag
+    }
+
+    /// Asks the content area to pick `tabID`'s card up and carry it with the
+    /// pointer until a click puts it down.
+    func requestCardCarry(_ tabID: UUID) {
+        cardCarryRequest = BrowserSplitCardCarryRequest(
+            tabID: tabID, sequence: (cardCarryRequest?.sequence ?? 0) &+ 1)
+    }
+
+    /// Takes up `request` once: true the first time any content area asks,
+    /// false for a request already taken up.
+    func claimCardCarry(_ request: BrowserSplitCardCarryRequest) -> Bool {
+        guard request.sequence > claimedCardCarrySequence else { return false }
+        claimedCardCarrySequence = request.sequence
+        return true
     }
 
     func cancel() {

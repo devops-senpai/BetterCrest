@@ -174,6 +174,10 @@ internal static partial class StoredSessionCodec {
         public const string ThemeMode = "themeMode";
         public const string Tint = "tint";
         public const string TintModifiedAt = "tintModifiedAt";
+        public const string SplitLayout = "layout";
+        public const string SplitLayoutModifiedAt = "layoutModifiedAt";
+        public const string SplitAxis = "axis";
+        public const string SplitChildren = "children";
         public const string Title = "title";
         public const string TitleModifiedAt = "titleModifiedAt";
         public const string TranslationRules = "translationRules";

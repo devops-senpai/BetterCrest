@@ -1,22 +1,26 @@
 import AppKit
 import CoreGraphics
 
-/// One Split View card, off the row and on the pointer.
+/// One Split View card, off the tiles and on the pointer.
 ///
 /// Everything a carry needs, as one value: what was picked up, where it was
-/// picked up from, where the pointer has taken it, and which slot it would drop
-/// into if it were let go now. The row reads the gap out of it, the floating
-/// preview window reads the pose out of it, and the release reads the move out
-/// of it — three presentations of one carry rather than three copies of it.
+/// picked up from, where the pointer has taken it, and where it would land if
+/// it were let go now. The tiles read the gap out of it, the floating preview
+/// window reads the pose out of it, and the release reads the move out of it —
+/// three presentations of one carry rather than three copies of it.
 struct BrowserSplitCardLift: Equatable {
     /// This carry's own identity, minted when the pickup was staged. An image
     /// asked for by an earlier carry cannot match it, so nothing this carry did
     /// not request can ever be shown on it.
     let token: BrowserSplitCardLiftToken
     let tabID: UUID
-    /// The slot the card came from, so a cancelled carry has somewhere to be put
+    /// Where the card came from, so a cancelled carry has somewhere to be put
     /// back.
-    let originIndex: Int
+    let origin: BrowserSplitDropLanding
+    /// The cards' frames at pickup, which the carry aims against for its
+    /// whole life: the tiles move as the gap does, and aiming at where they
+    /// moved to would send the gap after the pointer and back every sample.
+    let aimFrames: [UUID: CGRect]
     /// The card's size at pickup. The preview keeps it for the whole carry: it
     /// is the card somebody picked up, not a card resized to whichever column
     /// the gap is currently standing in.
@@ -39,16 +43,21 @@ struct BrowserSplitCardLift: Equatable {
     var surfaceOrigin: CGPoint
     /// The pointer, in the split surface's card-frame space.
     var pointer: CGPoint
-    /// The slot the gap is standing in, and the member index a release commits.
-    var gapIndex: Int
+    /// Where the gap is standing, and the landing a release commits.
+    var landing: BrowserSplitDropLanding
     /// The page as WebKit had it rendered at pickup.
     ///
     /// `nil` until it arrives, which is a frame or two after the card is already
     /// moving: the carry never waits for the image.
     var snapshot: NSImage?
     /// True from the release until the preview has finished settling, during
-    /// which the card is back in the row and the preview is only fading off it.
+    /// which the card is back in the tiles and the preview is only fading off
+    /// it.
     var isSettling = false
+    /// The carry was asked for from a menu rather than picked up by a press:
+    /// the card follows the pointer with no button held, and a click puts it
+    /// down.
+    var isPlaced = false
 
     /// Top-left of the preview, in the window-global space the preview window is
     /// pinned to.

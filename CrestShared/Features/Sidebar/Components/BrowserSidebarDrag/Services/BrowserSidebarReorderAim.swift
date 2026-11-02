@@ -12,7 +12,7 @@ struct BrowserSidebarReorderAim {
     let pinned: (layout: BrowserPinnedTabReorderLayout, frame: CGRect, emptyHeight: CGFloat)?
     let zones: [BrowserSidebarReorderZone]
     let rows: [BrowserSidebarReorderItemID: BrowserSidebarReorderGeometry.RegisteredRow]
-    let splitCards: [BrowserSidebarReorderGeometry.SplitCard]
+    let splitCards: [UUID: BrowserSidebarReorderGeometry.SplitCard]
 
     func target(previousTarget: BrowserSidebarReorderTarget?) -> BrowserSidebarReorderTarget? {
         let available = zones.filter { !$0.frame.isEmpty && allowsNesting(in: $0) }
@@ -89,14 +89,18 @@ struct BrowserSidebarReorderAim {
         -> BrowserSidebarReorderTarget?
     {
         // Departing Space cards may remain registered until their transition finishes.
-        let cards = splitCards.filter { $0.space == assignment && !$0.frame.isEmpty }
-        guard !cards.isEmpty else { return nil }
-        return BrowserSidebarReorderTarget(
-            kind: .splitInsert(
-                assignment: assignment,
-                index: BrowserSplitColumnLayout.insertionIndex(
-                    at: pointer,
-                    orderedCardFrames: BrowserSplitColumnLayout.orderedCardFrames(cards.map(\.frame)))
-            ))
+        let cards = splitCards.filter { $0.value.space == assignment && !$0.value.frame.isEmpty }
+        // A card of the split lifted from its sidebar row may take another card's place.
+        let member: UUID? =
+            if case .tab(let tabID) = lift.item.id, cards[tabID] != nil, lift.item.selectionRowIDs.count <= 1 {
+                tabID
+            } else {
+                nil
+            }
+        guard
+            let landing = BrowserSplitDropLanding.aimed(
+                at: pointer, cardFrames: cards.mapValues(\.frame), member: member)
+        else { return nil }
+        return BrowserSidebarReorderTarget(kind: .splitInsert(assignment: assignment, landing: landing, mover: member))
     }
 }

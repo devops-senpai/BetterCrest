@@ -3,14 +3,14 @@ import CoreGraphics
 /// The whole of Crest's column arithmetic: fractions in, widths out.
 ///
 /// Every function here is pure and deterministic, which is what lets one set of
-/// numbers serve the macOS layout manager, the iPad columns, and the unit tests
-/// without a view in the loop. Two invariants hold across all of them:
+/// numbers serve every branch of `BrowserSplitTileLayout`, across or down, and
+/// the unit tests without a view in the loop. Two invariants hold across all of them:
 ///
 /// - Widths are never negative.
 /// - Widths sum to the container's available width — the container minus the
-///   gaps between columns — whenever the container can hold the columns'
-///   minimums. When it cannot, every card falls back to its minimum and the
-///   container clips. Layout never dissolves a split to make it fit.
+///   gaps between columns. When the container cannot hold the columns'
+///   minimums, they share it in proportion to those minimums, so no card
+///   spills over its neighbour. Layout never dissolves a split to make it fit.
 ///
 /// Fractions are shares of that available width and always sum to one.
 enum BrowserSplitColumnLayout {
@@ -18,48 +18,6 @@ enum BrowserSplitColumnLayout {
     static func equalFractions(count: Int) -> [Double] {
         guard count > 0 else { return [] }
         return Array(repeating: 1 / Double(count), count: count)
-    }
-
-    /// The slot a tab dragged over the content area would take among
-    /// `orderedCardFrames`, in `0...orderedCardFrames.count`. Pure geometry,
-    /// so a drop can be exercised without a live drag.
-    ///
-    /// The columns view lays cards out in reading order along one axis, so the
-    /// rule is the horizontal twin of `BrowserSidebarReorderRow.insertionIndex`:
-    /// the pointer has passed a card once it is beyond that card's midpoint,
-    /// and the index is how many cards it has passed.
-    ///
-    /// Only presented cards are measured. The drop placeholder registers no
-    /// frame of its own, and the cards it displaces provably keep the same
-    /// answer: inserting a placeholder at `index` moves every earlier card's
-    /// midpoint left and every later card's midpoint right, which is the
-    /// direction that reinforces the index the pointer already resolved. That
-    /// is what lets the placeholder appear without the layout it causes
-    /// changing the slot it appears in.
-    ///
-    /// A lone card is not a special case: the pointer resolves to `0` on its
-    /// leading half and `1` on its trailing half, which is exactly how a split
-    /// gets created out of a window presenting one tab.
-    static func insertionIndex(
-        at point: CGPoint,
-        orderedCardFrames: [CGRect]
-    ) -> Int {
-        var index = 0
-        for frame in orderedCardFrames {
-            guard point.x > frame.midX else { break }
-            index += 1
-        }
-        return index
-    }
-
-    /// Reading order for measured cards.
-    ///
-    /// Sorting by leading edge rather than trusting a dictionary's iteration is
-    /// what keeps the index tied to what is on screen. It matches the ordering
-    /// `BrowserSidebarReorderRow` already uses for the pinned grid, including
-    /// its indifference to layout direction.
-    static func orderedCardFrames(_ frames: [CGRect]) -> [CGRect] {
-        frames.filter { !$0.isEmpty }.sorted { $0.minX < $1.minX }
     }
 
     /// Which fractions a split starts a layout pass with.
@@ -104,23 +62,43 @@ enum BrowserSplitColumnLayout {
     /// Fractions are normalized, distributed across the width left after the
     /// gaps, floored at `minimum`, and the overflow that flooring creates is
     /// taken back from the cards still above the floor in proportion to their
-    /// shares. A container that cannot seat every card at `minimum` returns
-    /// minimums and clips.
+    /// shares. A container that cannot seat every card at `minimum` gives
+    /// each card an equal share of what it has.
     static func widths(
         containerWidth: CGFloat,
         fractions: [Double],
         gap: CGFloat = BrowserSplitLayoutMetrics.interCardGap,
         minimum: CGFloat = BrowserSplitLayoutMetrics.minimumCardWidth
     ) -> [CGFloat] {
+        widths(
+            containerWidth: containerWidth, fractions: fractions, gap: gap,
+            minimums: Array(repeating: minimum, count: fractions.count))
+    }
+
+    /// The width of each child of a branch, each floored at its own minimum:
+    /// a child that is itself a branch needs room for every card inside it.
+    ///
+    /// A container too small for the minimums shares what it has in
+    /// proportion to them, so a child never spills over its neighbour.
+    static func widths(
+        containerWidth: CGFloat,
+        fractions: [Double],
+        gap: CGFloat,
+        minimums: [CGFloat]
+    ) -> [CGFloat] {
         guard !fractions.isEmpty else { return [] }
-        let floorWidth = max(0, minimum)
+        let floors = fractions.indices.map { max(0, $0 < minimums.count ? minimums[$0] : 0) }
         let available = availableWidth(
             containerWidth: containerWidth,
             columnCount: fractions.count,
             gap: gap
         )
-        guard available > floorWidth * CGFloat(fractions.count) else {
-            return Array(repeating: floorWidth, count: fractions.count)
+        let floorTotal = floors.reduce(0, +)
+        guard available > floorTotal else {
+            guard available > 0, floorTotal > 0 else {
+                return Array(repeating: max(available, 0) / CGFloat(fractions.count), count: fractions.count)
+            }
+            return floors.map { $0 * available / floorTotal }
         }
 
         let shares = normalizedFractions(fractions)
@@ -142,11 +120,11 @@ enum BrowserSplitColumnLayout {
             for index in flexible {
                 widths[index] = remaining * CGFloat(shares[index] / shareTotal)
             }
-            let flooring = flexible.filter { widths[$0] < floorWidth }
+            let flooring = flexible.filter { widths[$0] < floors[$0] }
             guard !flooring.isEmpty else { break }
             for index in flooring {
-                widths[index] = floorWidth
-                remaining -= floorWidth
+                widths[index] = floors[index]
+                remaining -= floors[index]
             }
             flexible.removeAll(where: flooring.contains)
         }
@@ -160,15 +138,17 @@ enum BrowserSplitColumnLayout {
     /// travel from where the drag began, and only the pair around the divider
     /// moves: the cards beyond it keep the widths they had, which is what makes
     /// a drag feel local. The pair's own boundary stops as soon as either side
-    /// reaches `minimum`, and a pair with no room to give returns unchanged
-    /// fractions.
+    /// reaches its minimum — `pairMinimums` when the two are branches of
+    /// different sizes, else `minimum` — and a pair with no room to give
+    /// returns unchanged fractions.
     static func fractionsAfterResize(
         fractions: [Double],
         dividerIndex: Int,
         delta: CGFloat,
         containerWidth: CGFloat,
         gap: CGFloat = BrowserSplitLayoutMetrics.interCardGap,
-        minimum: CGFloat = BrowserSplitLayoutMetrics.minimumCardWidth
+        minimum: CGFloat = BrowserSplitLayoutMetrics.minimumCardWidth,
+        pairMinimums: (leading: CGFloat, trailing: CGFloat)? = nil
     ) -> [Double] {
         var shares = normalizedFractions(fractions)
         guard shares.count > 1, dividerIndex >= 0, dividerIndex < shares.count - 1 else {
@@ -181,35 +161,16 @@ enum BrowserSplitColumnLayout {
         )
         guard available > 0 else { return shares }
 
-        let floorWidth = max(0, minimum)
+        let leadingFloor = max(0, pairMinimums?.leading ?? minimum)
+        let trailingFloor = max(0, pairMinimums?.trailing ?? minimum)
         let pairWidth = available * CGFloat(shares[dividerIndex] + shares[dividerIndex + 1])
-        guard pairWidth >= floorWidth * 2 else { return shares }
+        guard pairWidth >= leadingFloor + trailingFloor else { return shares }
 
         let leadingWidth = available * CGFloat(shares[dividerIndex])
-        let resolvedWidth = min(max(leadingWidth + delta, floorWidth), pairWidth - floorWidth)
+        let resolvedWidth = min(max(leadingWidth + delta, leadingFloor), pairWidth - trailingFloor)
         shares[dividerIndex] = Double(resolvedWidth / available)
         shares[dividerIndex + 1] = Double((pairWidth - resolvedWidth) / available)
         return shares
-    }
-
-    /// How far one divider's handle sits from the row's leading edge, which
-    /// centers its hit width on the gap after `dividerIndex`.
-    ///
-    /// Pure, and deliberately so: the handle's position is a function of the
-    /// widths the drag is writing, which is exactly why a drag can never be
-    /// measured against the handle's own frame. `BrowserSplitResizeSpace` is
-    /// where it is measured instead, and the test that pairs the two is what
-    /// keeps the boundary tracking the pointer one to one.
-    static func dividerLeadingDistance(
-        after dividerIndex: Int,
-        cardWidths: [CGFloat],
-        gap: CGFloat = BrowserSplitLayoutMetrics.interCardGap,
-        handleWidth: CGFloat = BrowserSplitLayoutMetrics.resizeHandleHitWidth
-    ) -> CGFloat {
-        guard dividerIndex >= 0 else { return 0 }
-        let cards = cardWidths.prefix(dividerIndex + 1).reduce(0, +)
-        let gapCenter = cards + gap * CGFloat(dividerIndex) + gap / 2
-        return gapCenter - handleWidth / 2
     }
 
     /// The fractions after a card joins at `index`.

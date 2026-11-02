@@ -41,6 +41,14 @@ public sealed record InvalidSplitIcon(Guid GroupId) : Rejection;
 /// Stepping the tab `Offset` members along its split would move nothing.
 public sealed record NoSplitStep(Guid TabId, int Offset) : Rejection;
 
+/// The tab is in no split, or the card or branch it would land beside,
+/// `NodeId`, is not part of its split's layout.
+public sealed record NotSplitMembers(Guid TabId, Guid NodeId) : Rejection;
+
+/// The arrangement lays out `MemberCount` tabs, which is not how many the
+/// split holds.
+public sealed record ArrangementNeedsMembers(Guid GroupId, int MemberCount) : Rejection;
+
 /// The tabs would land between two members of a split they do not belong to.
 public sealed record SplitBoundary : Rejection;
 

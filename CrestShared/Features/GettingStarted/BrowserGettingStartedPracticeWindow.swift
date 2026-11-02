@@ -63,12 +63,14 @@
                         "Open tabs cleared", systemImage: "sun.max",
                         description: Text("Your pinned and saved tabs are still in the sidebar."))
                 } else {
-                    BrowserSplitColumnsView(
-                        members: members, focusedTabID: practice.selectedTabID,
+                    BrowserSplitTilesView(
+                        members: members, layout: practice.browser.shownSplitLayout(in: practice.space),
+                        groupID: practice.browser.shownSplitGroupID(in: practice.space),
+                        focusedTabID: practice.selectedTabID,
                         frameInsets: EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10),
                         accent: CrestBrandPalette.coral,
-                        placeholderIndex: nil, liftedTabID: nil, widthTransaction: $practice.splitWidths,
-                        onResizeCommit: { _ in }, onFocus: practice.browser.selectTab,
+                        placeholder: nil, lift: nil, layoutTransaction: $practice.splitWidths,
+                        onResizeCommit: { _, _ in }, onFocus: practice.browser.selectTab,
                         usesTransparentInnerSurface: { _ in false }
                     ) { tab, _ in
                         practiceDocument(tab)

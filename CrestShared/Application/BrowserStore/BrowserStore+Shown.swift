@@ -52,6 +52,35 @@ extension BrowserStore {
         windowModel?.cards(in: space.id)?.splitGroupID
     }
 
+    /// How the split the window shows in `space` tiles its cards, as the core
+    /// keeps it, or nil for one row of columns or a tab shown alone.
+    func shownSplitLayout(in space: SpaceModel) -> SplitLayoutNode? {
+        guard let groupID = shownSplitGroupID(in: space) else { return nil }
+        return space.splitGroups.first { $0.id == groupID }?.layout
+    }
+
+    /// The tile the window's content draws for `space`: the shown split's
+    /// layout over its cards, or the lone card.
+    func shownSplitTile(in space: SpaceModel) -> BrowserSplitTile {
+        BrowserSplitTile.resolved(
+            layout: shownSplitLayout(in: space), groupID: shownSplitGroupID(in: space),
+            members: windowModel?.cards(in: space.id)?.tabIDs ?? [])
+    }
+
+    /// The landing `drop` names among the cards shown in `space`, as the core
+    /// takes it: beside the card, or beside the whole split's outer node.
+    func splitLanding(for drop: BrowserSplitDropLanding, in space: SpaceModel) -> SplitLanding? {
+        switch drop {
+        case .beside(let nodeID, let side):
+            return SplitLanding(nodeID: nodeID, side: side)
+        case .outside(let side):
+            guard let nodeID = shownSplitTile(in: space).nodeID else { return nil }
+            return SplitLanding(nodeID: nodeID, side: side)
+        case .swapping(_, let nodeID):
+            return SplitLanding(nodeID: nodeID, side: nil)
+        }
+    }
+
     /// The Space `assignment` names, while this device is not deleting it and
     /// it keeps that profile.
     func spaceModel(matching assignment: BrowserSpaceRuntimeAssignment) -> SpaceModel? {

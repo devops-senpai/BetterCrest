@@ -30,11 +30,13 @@ struct BrowserSidebarReorderTarget: Equatable, Sendable {
         case createCurrentFolder(UUID)
         /// Move to another space.
         case space(BrowserSpaceRuntimeAssignment)
-        /// Join the cards the content area is presenting, as the card at
-        /// `index` among them. The index counts presented cards only — the drop
-        /// placeholder is not one of them — so it stays put as the row of cards
-        /// shifts to make room.
-        case splitInsert(assignment: BrowserSpaceRuntimeAssignment, index: Int)
+        /// Join the cards the content area is presenting, where `landing`
+        /// says among them: beside one card, or beside the whole split. The
+        /// landing names presented cards only — the drop placeholder is not
+        /// one of them — so it stays put as the tiles shift to make room.
+        /// `mover` is the card of the split the lift is, when it is one, which
+        /// leaves its own tile for the landing.
+        case splitInsert(assignment: BrowserSpaceRuntimeAssignment, landing: BrowserSplitDropLanding, mover: UUID?)
 
         // MARK: - Actions - Verdicts
 
@@ -98,14 +100,16 @@ struct BrowserSidebarReorderTarget: Equatable, Sendable {
                     following: follows ? destinationSpace : nil,
                     leavesSpace: true
                 )
-            case .splitInsert(let assignment, let index):
+            case .splitInsert(let assignment, let landing, _):
                 // The cards on show are the shown tab's split, so the shown tab is
                 // the one the lift joins, and a window showing one tab makes a split.
-                guard assignment.spaceID == spaceID, let shown = browser.selectedTabID(in: spaceID) else { return nil }
+                guard assignment.spaceID == spaceID, let shown = browser.selectedTabID(in: spaceID),
+                    let resolved = browser.splitLanding(for: landing, in: space)
+                else { return nil }
                 return BrowserSidebarDrop(
                     intent: DropIntoSplit(
                         workspaceID: workspaceID, windowID: windowID, spaceID: spaceID, selection: selection,
-                        targetTabID: shown, index: index)
+                        targetTabID: shown, index: nil, landing: resolved)
                 )
             case .createCurrentFolder(let tabID):
                 return BrowserSidebarDrop(

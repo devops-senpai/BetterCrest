@@ -13,12 +13,18 @@ Split View keeps two to four live tabs in one durable sidebar group. The focused
 
 Use any of these paths:
 
-- Drag a sidebar tab onto the current page.
+- Drag a sidebar tab onto the current page: onto its left or right edge for a column beside it, or onto its top or bottom edge to stack the two.
 - Open the tab context menu and choose the Split View action.
 - Right-click or touch and hold a page link, then choose **Open Link in Split View**.
 - Run **Split With Next Tab** from the command palette or assign it a shortcut.
 
 A one-card placeholder lets you add the next tab without losing the first page.
+
+## Tile the cards
+
+Every card has four drop edges. Drop a tab on the top or bottom edge of a card to stack the new page above or below that card, or on the left or right edge to put it beside that card alone. Drop it on the outer edge of the whole split to give it the full height or width of the window: stack two pages, then drop a third on the right edge of the split for two rows on the left and one tall page on the right. Drop a card of the split on the middle of another card to swap the two. Arma keeps the arrangement with the group and syncs it with the Space.
+
+The split's **…** menu has an **Arrange** list of ready-made layouts for two, three and four cards: side by side, stacked, one page beside a stack, a grid, and more. The arrangement on show is checked; choosing another keeps the cards in their order.
 
 ## Focus a card
 
@@ -28,7 +34,7 @@ On Mac, turn on **Focus follows pointer** in **Settings → Tabs** to make point
 
 ## Resize and reorder
 
-Drag a divider to resize columns on Mac or iPad. Arma remembers widths for the window. Use **Shift-Command-Left/Right** to move the focused card, or drag when the interface exposes a reordering target.
+Drag a divider to resize the cards on either side of it, across or down, on Mac or iPad. Arma remembers the sizes for the window. Use **Shift-Command-Left/Right** to move the focused card one place, or hold Shift-Command and drag a card to any edge of another card, to the outer edge of the split, or onto the middle of another card to swap with it. A tab's menu offers **Move Card**, which picks the card up without any keys held: move the pointer to where it goes and click to put it down, or press Escape to leave it where it was.
 
 In the sidebar, drag the split's header to move the whole group. Drag an individual tab row to move just that tab out of the split, into a folder, or into another Split View. The remaining tabs stay together.
 
@@ -42,4 +48,4 @@ iPad uses the same resizable column model as Mac. On iPhone, the group remains c
 
 ## Sync behavior
 
-The durable group and its card order can sync with the Space. A receiving device adapts the presentation to its screen instead of flattening the group.
+The durable group, its card order and its arrangement can sync with the Space. A receiving device adapts the presentation to its screen instead of flattening the group.

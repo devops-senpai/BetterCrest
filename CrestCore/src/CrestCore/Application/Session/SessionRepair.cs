@@ -68,12 +68,16 @@ internal sealed class SessionRepair(IIdSource ids, DateTimeOffset now) {
         var folders = Folders(space);
         var tabs = Tabs(space, spaceIndex, folders);
         var groups = SplitMember.Repair(tabs.Select(tab => new SplitMember(tab.SplitGroupId, tab.Placement, tab.FolderId)).ToArray());
+        // The tab collection repairs each split's layout against its run and
+        // orders the run as the layout reads it.
+        var organized = BrowserTabCollection.Restore([.. tabs.Select((tab, index) => tab with { SplitGroupId = groups[index] })],
+            folders, SplitGroupState.Merged(space.SplitGroups));
         return identified with {
             Folders = folders,
-            Tabs = [.. tabs.Select((tab, index) => tab with { SplitGroupId = groups[index] })],
+            Tabs = organized.TabStates,
             ArchivedTabs = Archive(space),
             History = [.. space.History.Take(HistoryEntryState.MaximumEntries)],
-            SplitGroups = SplitGroupState.Merged(space.SplitGroups)
+            SplitGroups = organized.SplitGroups
         };
     }
 
