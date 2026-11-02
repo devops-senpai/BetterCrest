@@ -1,0 +1,4 @@
+{
+  "category": "fixed",
+  "message": "The sidebar no longer goes blank when the window enters or leaves full screen or changes size while the tab list is scrolled; a list scrolled to its end stays there."
+}
