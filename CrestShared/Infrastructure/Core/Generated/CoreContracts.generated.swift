@@ -22339,7 +22339,7 @@ struct SpaceHouse: Hashable, Sendable {
                     colors: [
                         BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1),
                         BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1),
-                        BrandColor(red: 0.843, green: 0.216, blue: 0.263, alpha: 1),
+                        BrandColor(red: 0.286, green: 0.302, blue: 0.392, alpha: 1),
                         BrandColor(red: 0.97, green: 0.97, blue: 0.96, alpha: 1),
                         BrandColor(red: 0.725, green: 0.608, blue: 0.376, alpha: 1),
                         BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1)
@@ -24069,6 +24069,12 @@ struct Tincture: Hashable, Sendable {
         title: LocalizedStringResource("Arma White"),
         color: BrandColor(red: 0.97, green: 0.97, blue: 0.96, alpha: 1)
     )
+    static let armaGrey = Tincture(
+        tag: 61,
+        name: "armaGrey",
+        title: LocalizedStringResource("Arma Grey"),
+        color: BrandColor(red: 0.286, green: 0.302, blue: 0.392, alpha: 1)
+    )
 
     static let all: [Tincture] = [
         ink,
@@ -24131,7 +24137,8 @@ struct Tincture: Hashable, Sendable {
         armaNavy,
         armaRed,
         armaGold,
-        armaWhite
+        armaWhite,
+        armaGrey
     ]
 
     static func named(_ name: String?) -> Tincture? {

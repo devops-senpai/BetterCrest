@@ -61,9 +61,10 @@ final class BrowserOnboardingFlow {
     /// preview follow.
     var look: SetupLook { state?.look ?? .heraldic }
     /// A theme Arma ships with that the Spaces setup makes wear over the
-    /// heraldic look, or nil for the look alone. It is this Mac's choice, as
-    /// the theme library is, so the flow keeps it rather than the core.
-    private(set) var theme: BrowserBundledTheme?
+    /// heraldic look, or nil for the look alone: Catppuccin Macchiato until
+    /// the person picks another look. It is this Mac's choice, as the theme
+    /// library is, so the flow keeps it rather than the core.
+    private(set) var theme: BrowserBundledTheme? = .macchiato
 
     /// The look the stage and every preview show: the setup look, dressed in
     /// the chosen theme when there is one.
