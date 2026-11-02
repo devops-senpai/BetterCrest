@@ -1,0 +1,4 @@
+{
+  "category": "improved",
+  "message": "Opening a tab whose page was unloaded no longer waits for other tabs' states to finish saving, so a tab opens as quickly right after minimizing a window or closing many tabs as at any other time."
+}
