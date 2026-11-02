@@ -4,7 +4,7 @@
   <p><strong>An open source browser for Mac, iPhone, and iPad.</strong></p>
   <p>Built with SwiftUI, running Chromium, WebKit and Servo on Mac, with separate Spaces for different parts of your life.</p>
   <p>
-    <a href="https://github.com/devops-senpai/Arma/actions/workflows/ci.yml"><img alt="Build Arma" src="https://github.com/devops-senpai/Arma/actions/workflows/ci.yml/badge.svg"></a>
+    <a href="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml"><img alt="Build Arma" src="https://github.com/devops-senpai/BetterCrest/actions/workflows/ci.yml/badge.svg"></a>
     <a href="LICENSE"><img alt="MPL-2.0 license" src="https://img.shields.io/badge/license-MPL--2.0-315f93"></a>
   </p>
   <img src="Brand/Readme/collage.jpg" alt="Arma windows fanned out: Arc Sky, Catppuccin Latte, a four-page Split View, Catppuccin Macchiato and JellyFish">
@@ -13,7 +13,7 @@
 Arma is a fork of [Crest](https://github.com/pauljoda/Crest) by Paul Davis.
 It carries Crest's main branch plus fixes, speedups and features that are
 not upstream. Arma is not affiliated with or endorsed by Crest or Paul
-Davis. The
+Davis. The repository keeps the name BetterCrest; the browser is Arma. The
 user guides live in this repository under `HelpCenter/docs/`.
 
 ## A quick tour
@@ -73,7 +73,7 @@ $ arma tab list --space Work
 ID        SPACE  WHERE   FOLDER  ENGINE    TITLE
 6c1124f0  Work   open    -       webkit    Jellyfish - Wikipedia
 7194b03d  Work   open    -       servo     Servo, the embeddable web engine
-29c94624  Work   open    -       chromium  devops-senpai/Arma
+29c94624  Work   open    -       chromium  devops-senpai/BetterCrest
 
 $ arma tab engine 6c11 chromium              # the first few characters are enough
 ```
@@ -83,7 +83,7 @@ $ arma tab engine 6c11 chromium              # the first few characters are enou
 `arma` lives inside the app (`/Applications/Arma.app/Contents/Helpers/arma`)
 and drives the running browser. Every command takes `--json` for scripts.
 
-![arma in a terminal: listing Spaces and themes, picking a theme, listing a Split View, setting site engines and shaping a crest](Brand/Readme/terminal.jpg)
+![arma --help in a terminal, listing every section the command line manages](Brand/Readme/terminal-arma-help.jpg)
 
 ```sh
 arma space list                              # Spaces; * marks the one shown
@@ -280,18 +280,11 @@ Read the [Space isolation guide](HelpCenter/docs/spaces/spaces-and-isolation.md)
 
 ## Get Arma
 
-Download the latest **Installer** disk image from
-[Releases](https://github.com/devops-senpai/Arma/releases), open it, and drag
-Arma onto **Applications**. Arma for Mac needs Apple silicon and macOS 26.1 or
-later.
+_Placeholder: no screenshots of Arma yet._
 
-These preview builds are signed but not yet notarized by Apple, so the first
-time you open Arma, macOS stops it. Open **System Settings › Privacy &
-Security**, scroll to the message about Arma, and choose **Open Anyway**; after
-that it opens normally.
-
-You can also build it from source as described below; the Mac app runs
-Chromium when a prebuilt engine is packaged in, and WebKit alone otherwise.
+Arma has no signed releases yet. Build it from source as described
+below; the Mac app runs Chromium when a prebuilt engine is packaged in, and
+WebKit alone otherwise.
 
 ## Built as an Apple-platform app
 
@@ -318,7 +311,7 @@ Requirements:
 - .NET SDK pinned by `CrestCore/global.json`, installable with `Scripts/control-plane/install-dotnet.sh`
 
 ```bash
-git clone https://github.com/devops-senpai/Arma.git
+git clone https://github.com/devops-senpai/BetterCrest.git
 cd Arma
 Scripts/bootstrap.sh
 open Crest.xcodeproj
@@ -342,7 +335,7 @@ Run the relevant behavioral tests and repository checks. Review visual, layout, 
 
 Arma tracks Crest's `main` and merges it in regularly; its own
 changes stay here. Use
-[GitHub Issues](https://github.com/devops-senpai/Arma/issues) for bugs.
+[GitHub Issues](https://github.com/devops-senpai/BetterCrest/issues) for bugs.
 
 ## AI usage
 
