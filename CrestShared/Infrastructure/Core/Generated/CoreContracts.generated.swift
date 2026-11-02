@@ -22300,8 +22300,83 @@ struct SpaceHouse: Hashable, Sendable {
         ),
         appIconName: "ArmaVigil"
     )
+    static let arma = SpaceHouse(
+        tag: 9,
+        name: "arma",
+        title: LocalizedStringResource("Arma"),
+        look: SpaceBranding(
+            colors: ColorPalette(
+                colors: [
+                    BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1),
+                    BrandColor(red: 0.843, green: 0.216, blue: 0.263, alpha: 1),
+                    BrandColor(red: 0.725, green: 0.608, blue: 0.376, alpha: 1)
+                ]
+            ),
+            bannerPattern: SpaceBannerPattern.solid,
+            bannerStrength: 1,
+            readabilityFade: 0.45,
+            keepsControlsReadable: true,
+            themeMode: SpaceThemeMode.banner,
+            gradientAngle: 0,
+            showsTexture: false,
+            iconStyle: SpaceIconStyle.layeredCrest,
+            symbolColor: nil,
+            crest: SpaceCrest(
+                backplate: CrestBackplate.flag,
+                fieldDivision: CrestFieldDivision.plain,
+                ordinary: CrestOrdinary.pale,
+                trim: CrestTrim.laurel,
+                symbol: CrestSymbol.sparrow,
+                chargeLayout: CrestChargeLayout.single,
+                backplateColorIndex: 0,
+                secondaryFieldColorIndex: 1,
+                ordinaryColorIndex: 2,
+                trimColorIndex: 4,
+                symbolColorIndex: 3,
+                startingPresetID: nil,
+                edgeColorIndex: 5,
+                palette: ColorPalette(
+                    colors: [
+                        BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1),
+                        BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1),
+                        BrandColor(red: 0.843, green: 0.216, blue: 0.263, alpha: 1),
+                        BrandColor(red: 0.97, green: 0.97, blue: 0.96, alpha: 1),
+                        BrandColor(red: 0.725, green: 0.608, blue: 0.376, alpha: 1),
+                        BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1)
+                    ]
+                ),
+                charge: nil,
+                plateScale: 1,
+                edgeWidth: 0.2,
+                divisionCount: 4,
+                finish: CrestFinish.flat,
+                ordinaryWidth: 1,
+                trimWeight: 0.75,
+                trimDetail: 12,
+                chargeScale: 1.15,
+                chargeOffset: 0,
+                chargeWeight: CrestChargeWeight.bold,
+                sheenAngle: 45,
+                sealTeeth: 12,
+                showsOutline: false,
+                depth: CrestDepth.soft
+            ),
+            renderingVersion: 5,
+            folderColorIntensity: 0,
+            textColorMode: SpaceTextColorMode.automatic,
+            hasCustomAppearance: false,
+            folderColor: nil,
+            folderBackColor: nil,
+            commandPalette: nil,
+            sidebarTextColor: nil,
+            folderOutlineColor: nil,
+            folderOverrides: nil,
+            sidebarSecondaryTextColor: nil
+        ),
+        appIconName: "Arma"
+    )
 
-    static let all: [SpaceHouse] = [winter, lion, storm, dragon, meadow, iron, river, sun, vigil]
+    static let all: [SpaceHouse] = [winter, lion, storm, dragon, meadow, iron, river, sun, vigil, arma]
 
     static func named(_ name: String?) -> SpaceHouse? {
         all.first { $0.name == name }
@@ -23970,6 +24045,30 @@ struct Tincture: Hashable, Sendable {
         title: LocalizedStringResource("Gray"),
         color: BrandColor(red: 0.588, green: 0.588, blue: 0.588, alpha: 1)
     )
+    static let armaNavy = Tincture(
+        tag: 57,
+        name: "armaNavy",
+        title: LocalizedStringResource("Arma Navy"),
+        color: BrandColor(red: 0.192, green: 0.196, blue: 0.267, alpha: 1)
+    )
+    static let armaRed = Tincture(
+        tag: 58,
+        name: "armaRed",
+        title: LocalizedStringResource("Arma Red"),
+        color: BrandColor(red: 0.843, green: 0.216, blue: 0.263, alpha: 1)
+    )
+    static let armaGold = Tincture(
+        tag: 59,
+        name: "armaGold",
+        title: LocalizedStringResource("Arma Gold"),
+        color: BrandColor(red: 0.725, green: 0.608, blue: 0.376, alpha: 1)
+    )
+    static let armaWhite = Tincture(
+        tag: 60,
+        name: "armaWhite",
+        title: LocalizedStringResource("Arma White"),
+        color: BrandColor(red: 0.97, green: 0.97, blue: 0.96, alpha: 1)
+    )
 
     static let all: [Tincture] = [
         ink,
@@ -24028,7 +24127,11 @@ struct Tincture: Hashable, Sendable {
         sunOr,
         vigilBone,
         neutralSmoke,
-        neutralGray
+        neutralGray,
+        armaNavy,
+        armaRed,
+        armaGold,
+        armaWhite
     ]
 
     static func named(_ name: String?) -> Tincture? {

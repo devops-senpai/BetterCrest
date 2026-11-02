@@ -210,7 +210,7 @@ struct BrowserCrestForge: View {
     // MARK: - Step sections
 
     private var startSections: some View {
-        gallery(SpaceHouse.all, id: \.self) { house in
+        gallery(SpaceHouse.offered, id: \.self) { house in
             BrowserCrestStudioChoice(title: house.title, selected: house.isWorn(by: branding), tint: .accentColor) {
                 branding = house.applying(to: branding)
             } artwork: {

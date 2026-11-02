@@ -15,6 +15,30 @@ extension CrestSymbol {
     }()
 }
 
+extension SpaceHouse {
+    // MARK: - Static Variables
+
+    /// The houses the galleries offer, Arma's own first.
+    static let offered: [SpaceHouse] = [.arma] + all.filter { $0 != .arma }
+
+    /// The houses that bring an app icon of their own; Arma's is the app's
+    /// own icon, which the picker offers first already.
+    static let withAppIcons: [SpaceHouse] = all.filter { $0 != .arma }
+}
+
+extension SpaceBranding {
+    /// This look under Arma's own arms: the guidon, pale and bird of its logo,
+    /// in this look's colors, as the core dresses a new Space.
+    var wearingArmaArms: SpaceBranding {
+        var look = self
+        look.crest.backplate = .flag
+        look.crest.ordinary = .pale
+        look.crest.symbol = .sparrow
+        look.crest.charge = nil
+        return look
+    }
+}
+
 extension CrestBackplate {
     // MARK: - Static Variables
 

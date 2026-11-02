@@ -37,7 +37,7 @@ struct BrowserOnboardingHeraldicSheet: View {
     private var startFrom: some View {
         BrowserOnboardingMakeSection("Start from") {
             BrowserOnboardingMakeStrip {
-                ForEach(SpaceHouse.all, id: \.self) { house in
+                ForEach(SpaceHouse.offered, id: \.self) { house in
                     BrowserOnboardingMakeTile(title: house.title, isSelected: house.isWorn(by: branding)) {
                         branding = house.applying(to: branding)
                     } artwork: {

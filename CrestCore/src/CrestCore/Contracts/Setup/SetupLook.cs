@@ -16,7 +16,7 @@ public sealed class SetupLook {
 
     /// A Space wears a template's banner and its layered crest.
     public static readonly SetupLook Heraldic = new(Kinds.Heraldic, name: "heraldic", title: "Heraldic",
-        newSpaceLook: accent => accent.House,
+        newSpaceLook: SpaceHouse.NewSpaceLook,
         applying: branding => branding with { ThemeMode = SpaceThemeMode.Banner, IconStyle = SpaceIconStyle.LayeredCrest });
 
     /// A Space wears a gradient of its colors, from top to bottom, and a

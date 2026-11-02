@@ -72,7 +72,28 @@ public sealed class SpaceHouse {
                 Tincture.VigilAsh],
             trimWeight: 0.9, depth: CrestDepth.None)));
 
-    public static IReadOnlyList<SpaceHouse> All { get; } = [Winter, Lion, Storm, Dragon, Meadow, Iron, River, Sun, Vigil];
+    /// Arma's own arms, as its logo draws them: a white bird on a navy guidon
+    /// with a red pale, wreathed in gold laurel.
+    public static readonly SpaceHouse Arma = new("arma", "Arma", "Arma", HouseLook(
+        [Tincture.ArmaNavy, Tincture.ArmaRed, Tincture.ArmaGold], SpaceThemeMode.Banner, SpaceBannerPattern.Solid,
+        Arms(CrestBackplate.Flag, CrestSymbol.Sparrow, CrestTrim.Laurel, edgeWidth: 0.2,
+            [Tincture.ArmaNavy, Tincture.ArmaNavy, Tincture.ArmaRed, Tincture.ArmaWhite, Tincture.ArmaGold, Tincture.ArmaNavy],
+            chargeScale: 1.15) with { Ordinary = CrestOrdinary.Pale }));
+
+    /// Every house, in the order the core first knew them; the gallery offers
+    /// Arma's first.
+    public static IReadOnlyList<SpaceHouse> All { get; } = [Winter, Lion, Storm, Dragon, Meadow, Iron, River, Sun, Vigil, Arma];
+
+    /// The look a new Space wears for `accent`: Arma's own house for the first
+    /// accent, and every other accent's house colors under Arma's arms, its
+    /// guidon, pale and bird.
+    public static SpaceBranding NewSpaceLook(SpaceAccent accent) {
+        ArgumentNullException.ThrowIfNull(accent);
+        if (accent == SpaceAccent.All[0]) return Arma.Look;
+        var house = accent.House;
+        var arms = house.Crest with { Backplate = CrestBackplate.Flag, Ordinary = CrestOrdinary.Pale, Symbol = CrestSymbol.Sparrow, Charge = null };
+        return house with { Crest = arms };
+    }
 
     public string Name { get; }
 
