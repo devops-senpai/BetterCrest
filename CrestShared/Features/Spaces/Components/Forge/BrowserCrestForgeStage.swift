@@ -18,6 +18,7 @@ struct BrowserCrestForgeStage: View {
     /// Shows a step of the Forge, for a color whose part the crest doesn't draw.
     let openStep: (BrowserCrestStudioStep) -> Void
 
+    @Environment(\.browserCrestForgeStageHero) private var hero
     @State private var openLayer: BrowserCrestForgeLayer?
     @State private var openSidebarColor: BrowserSpaceBrandColorRole?
 
@@ -45,9 +46,13 @@ struct BrowserCrestForgeStage: View {
 
     private var wideStage: some View {
         HStack(spacing: BrowserCrestForgeMetrics.stageSpacing) {
-            VStack(spacing: 12) {
-                mark(size: BrowserCrestForgeMetrics.crestSize)
-                nameField
+            if let hero {
+                hero.content(branding)
+            } else {
+                VStack(spacing: 12) {
+                    mark(size: BrowserCrestForgeMetrics.crestSize)
+                    nameField
+                }
             }
             swatches(columnWidth: BrowserCrestForgeMetrics.swatchColumnWidth)
             Spacer(minLength: 0)
@@ -55,13 +60,17 @@ struct BrowserCrestForgeStage: View {
         .padding(.leading, 28)
         .padding(.trailing, 16)
         .frame(maxWidth: .infinity, minHeight: BrowserCrestForgeMetrics.stageHeight, alignment: .leading)
-        .background { field(shadeFrom: .leading, to: .trailing) }
+        .background { stageBackground(shadeFrom: .leading, to: .trailing) }
     }
 
     private var compactStage: some View {
         VStack(spacing: 14) {
-            mark(size: BrowserCrestForgeMetrics.compactCrestSize)
-            nameField
+            if let hero {
+                hero.content(branding)
+            } else {
+                mark(size: BrowserCrestForgeMetrics.compactCrestSize)
+                nameField
+            }
             swatches(
                 columnWidth: BrowserCrestForgeMetrics.compactSwatchColumnWidth,
                 sidebarColumnWidth: BrowserCrestForgeMetrics.compactSidebarSwatchColumnWidth)
@@ -70,7 +79,7 @@ struct BrowserCrestForgeStage: View {
         .padding(.horizontal, 8)
         .padding(.bottom, 14)
         .frame(maxWidth: .infinity)
-        .background { field(shadeFrom: .top, to: .bottom) }
+        .background { stageBackground(shadeFrom: .top, to: .bottom) }
     }
 
     private func mark(size: CGFloat) -> some View {
@@ -106,6 +115,17 @@ struct BrowserCrestForgeStage: View {
                     }
                 }
             }
+        }
+    }
+
+    /// Behind a crest, the Space's own field; behind a small browser, which
+    /// wears the colors itself, a plain dark stage.
+    @ViewBuilder
+    private func stageBackground(shadeFrom start: UnitPoint, to end: UnitPoint) -> some View {
+        if hero == nil {
+            field(shadeFrom: start, to: end)
+        } else {
+            Color.black.opacity(0.82)
         }
     }
 

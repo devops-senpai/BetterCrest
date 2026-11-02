@@ -165,6 +165,7 @@ struct BrowserThemesSettingsPane: View {
                 )
                 .id("\(entry.id)-\(editsDark)")
                 .environment(\.browserSpaceSidebarSections, backdropSections(entry.id))
+                .environment(\.browserCrestForgeStageHero, stagePreview(entry.id))
             }
         } else {
             Text("Choose a theme, or make a new one.")
@@ -256,6 +257,16 @@ struct BrowserThemesSettingsPane: View {
     }
 
     /// Theme `id`'s picture and tab backing, edited in the library's preview store.
+    /// A small window in theme `id`'s look, where a Space's Forge shows its crest.
+    private func stagePreview(_ id: UUID) -> BrowserCrestForgeStageHero {
+        let symbol = baseSpace?.settings.symbol ?? "paintpalette"
+        return BrowserCrestForgeStageHero { [library] branding in
+            AnyView(
+                BrowserThemeStagePreview(
+                    branding: branding, symbol: symbol, themeID: id, backdrops: library.previewBackdrops))
+        }
+    }
+
     private func backdropSections(_ id: UUID) -> BrowserSpaceSidebarSections {
         let target = BrowserSpaceBackdropSection.Target(
             store: library.previewBackdrops, ownerID: id, branding: shownLight(id),

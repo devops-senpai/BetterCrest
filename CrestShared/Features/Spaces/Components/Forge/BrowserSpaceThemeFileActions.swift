@@ -19,7 +19,16 @@ struct BrowserSpaceSidebarSections {
     let content: @MainActor () -> AnyView
 }
 
+/// What a Forge's stage shows in place of the crest, drawn from the look
+/// being edited, as Settings › Themes shows a small browser in its colors.
+struct BrowserCrestForgeStageHero {
+    // MARK: - Variables
+
+    let content: @MainActor (SpaceBranding) -> AnyView
+}
+
 extension EnvironmentValues {
+    @Entry var browserCrestForgeStageHero: BrowserCrestForgeStageHero? = nil
     @Entry var browserSpaceThemeFiles: BrowserSpaceThemeFileActions? = nil
     @Entry var browserSpaceSidebarSections: BrowserSpaceSidebarSections? = nil
 }
