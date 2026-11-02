@@ -5,12 +5,12 @@ import Foundation
 //
 //   arma mcp
 //   arma theme --space <name> [options]
+//   arma <section> <action> [options]
 //
 // `mcp` speaks the Model Context Protocol over its standard streams for an
 // agent, and needs Crest running with agents turned on. `theme` dresses one
-// Space from the terminal, and needs only Crest running.
-
-let usage = "usage: arma mcp\n       arma theme --space <name> [options]\n"
+// Space from the terminal, and the other sections (`TerminalCommandLine`)
+// manage Spaces, tabs and windows; they need only Crest running.
 let arguments = Array(CommandLine.arguments.dropFirst())
 
 /// The `lane` socket of the Crest this helper ships inside, at
@@ -46,6 +46,5 @@ case "theme":
     }
     exit(await command.run(over: CommandAppLink(path: socketPath(lane: .commands))))
 default:
-    FileHandle.standardError.write(Data(usage.utf8))
-    exit(64)
+    exit(await TerminalCommandLine.run(arguments, over: CommandAppLink(path: socketPath(lane: .commands))))
 }

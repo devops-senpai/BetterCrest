@@ -4,6 +4,15 @@
     "" : {
 
     },
+    "Command-line page control" : {
+
+    },
+    "Lets arma page in your terminal read, capture and act inside your tabs’ pages, as you would." : {
+
+    },
+    "Save “%@” as a New Theme" : {
+
+    },
     "%@ has no content scripts Servo can run." : {
 
     },
@@ -46,10 +55,25 @@
     "Apply to “%@”" : {
 
     },
+    "Background Image" : {
+
+    },
+    "Blur" : {
+
+    },
+    "Bottom Left" : {
+
+    },
     "Brightness" : {
 
     },
-    "Choose a theme, or save this Space’s look as one with +." : {
+    "Change Image…" : {
+
+    },
+    "Choose a theme, or save this Space’s look as a new one." : {
+
+    },
+    "Choose Image…" : {
 
     },
     "Color Wheel" : {
@@ -71,6 +95,9 @@
 
     },
     "Hex Color" : {
+
+    },
+    "Image" : {
 
     },
     "Import Theme" : {
@@ -97,6 +124,9 @@
     "Pick from Screen" : {
 
     },
+    "Remove Image" : {
+
+    },
     "Remove Theme" : {
 
     },
@@ -106,7 +136,13 @@
     "Save “%@” as a Theme" : {
 
     },
+    "Space colors" : {
+
+    },
     "That file is not an Arma theme." : {
+
+    },
+    "That file is not an image Arma can show." : {
 
     },
     "That theme is no longer saved." : {
@@ -137,6 +173,9 @@
 
     },
     "themes saved theme import export colors look catppuccin" : {
+
+    },
+    "Top Left" : {
 
     },
     "Type @tabs, @saved, @history, @actions, @spaces or @themes, then a space or Tab, to show only that kind." : {
@@ -3092,9 +3131,6 @@
     "Building your review…" : {
 
     },
-    "Built on ungoogled-chromium, with Google integrations removed. Smooth browsing and extensions." : {
-
-    },
     "Cache" : {
 
     },
@@ -3496,6 +3532,9 @@
       "comment" : "The name of a browser engine. Keep the product name as it is."
     },
     "Chromium WebKit hybrid default browser engine websites rules protected video DRM compatibility" : {
+
+    },
+    "Chromium without Google’s data collection. Smooth browsing and extensions." : {
 
     },
     "Claude Code" : {
@@ -10450,6 +10489,9 @@
     "Profiles, bookmarks, open tabs, and passwords" : {
       "comment" : "What importing from another browser brings. Keep product names as they are."
     },
+    "Protected video, with WebKit fallback" : {
+
+    },
     "Pull and Merge" : {
 
     },
@@ -15587,9 +15629,6 @@
     "WebKit Chromium experimental preview testable developer stable runtime flags features" : {
 
     },
-    "WebKit fallback for protected video" : {
-
-    },
     "Webpages" : {
 
     },
@@ -15719,6 +15758,12 @@
           }
         }
       }
+    },
+    "With %lld Sub-Spaces" : {
+
+    },
+    "With a Sub-Space" : {
+
     },
     "Wolf Grey" : {
 

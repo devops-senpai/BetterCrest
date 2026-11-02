@@ -256,6 +256,9 @@ struct ThemeCommandLine {
                 return 0
             case .theme(let theme):
                 return write(theme)
+            case .output(let output):
+                print(output.text)
+                return 0
             case .refused(let message):
                 FileHandle.standardError.write(Data((message + "\n").utf8))
                 return 1

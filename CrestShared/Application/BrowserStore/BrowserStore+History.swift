@@ -106,6 +106,28 @@ extension BrowserStore {
                 tabID: id))
     }
 
+    /// Reopens the archived tab `id` of Space `spaceID` as an open tab, which
+    /// this window shows, and answers whether the core restored it.
+    @discardableResult
+    func restoreArchivedTab(_ id: UUID, in spaceID: UUID) -> Bool {
+        guard spaceModel(spaceID)?.archive.contains(tabID: id) == true else { return false }
+        return sendRecords(
+            RestoreArchivedTab(workspaceID: family.workspaceID, windowID: windowID, spaceID: spaceID, tabID: id))
+    }
+
+    /// Removes the archived tab `id` from Space `spaceID`'s archive for good.
+    @discardableResult
+    func removeArchivedTab(_ id: UUID, in spaceID: UUID) -> Bool {
+        sendRecords(RemoveArchivedTab(workspaceID: family.workspaceID, spaceID: spaceID, tabID: id))
+    }
+
+    /// Removes the tabs a Space archived within `range` for good, or those of
+    /// every Space this window may read when `spaceID` is nil.
+    @discardableResult
+    func clearArchive(in spaceID: UUID?, range: BrowsingDataRange = .allTime) -> Bool {
+        sendRecords(ClearArchive(workspaceID: family.workspaceID, spaceID: spaceID, range: range))
+    }
+
     /// Reopens the tab the Space this window shows archived last, which the
     /// core chooses, and shows it here. False when it keeps none.
     @discardableResult

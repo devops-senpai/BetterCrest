@@ -3,8 +3,8 @@ import SwiftUI
 
 /// Whether agents the person runs on this Mac, such as coding agents, may use
 /// Crest; how to connect one; which of the person's Spaces agents reach;
-/// whether agents may run scripts in pages; and the agents connected now and
-/// allowed before.
+/// whether agents may run scripts in pages; whether `arma page` may act in
+/// pages from the terminal; and the agents connected now and allowed before.
 struct BrowserAgentsSettingsPane: View {
     // MARK: - Types
 
@@ -40,6 +40,8 @@ struct BrowserAgentsSettingsPane: View {
     let core: CrestCore
     @Environment(BrowserAgentEndpointStatus.self) private var endpoint: BrowserAgentEndpointStatus?
     @State private var failure: String?
+    @AppStorage(BrowserTerminalPagePreference.key, store: BrowserTerminalPagePreference.defaults)
+    private var terminalControlsPages = false
 
     private var preferences: AgentPreferences { core.state.agentPreferences }
     /// The helper agents run, inside this app.
@@ -91,6 +93,12 @@ struct BrowserAgentsSettingsPane: View {
                 CrestFormFootnote("Scripts run with the page’s own access to the site.")
             }
             .disabled(!preferences.isOn)
+            Section {
+                Toggle("Command-line page control", isOn: $terminalControlsPages)
+            } footer: {
+                CrestFormFootnote(
+                    "Lets arma page in your terminal read, capture and act inside your tabs’ pages, as you would.")
+            }
             if !core.state.agentSessions.isEmpty {
                 Section {
                     ForEach(core.state.agentSessions, id: \.sessionID) { session in

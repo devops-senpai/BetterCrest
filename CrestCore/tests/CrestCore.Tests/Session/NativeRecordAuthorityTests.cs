@@ -73,4 +73,29 @@ public sealed partial class BrowserContractsTests {
         Assert.Empty(SavedHistory(core, f.Space));
     }
 
+    [Fact]
+    public void RemovingAnArchivedTabDropsOnlyItAndClearingTheArchiveKeepsWhatARangeLeavesOut() {
+        var f = SavedSession(); var session = f.Document["session"]!; var space = session["spaces"]![0]!;
+        JsonNode Archived(Guid id, double time) {
+            var tab = space["tabs"]![0]!.DeepClone(); tab["id"] = SwiftId(id);
+            tab["placement"] = "current"; tab["folderID"] = null; tab["splitGroupID"] = null;
+            return new JsonObject { ["tab"] = tab, ["archivedAt"] = time, ["reason"] = "closed" };
+        }
+        Guid removed = Guid.NewGuid(), recent = Guid.NewGuid(), older = Guid.NewGuid();
+        space["archivedTabs"] = new JsonArray(Archived(removed, 800000000), Archived(recent, 800000000), Archived(older, 799990000));
+        using var device = new TestDevice(session);
+        device.Clock.Now = StoredSessionCodec.Date(800000100);
+        Guid[] Kept() => [.. JsonNode.Parse(device.Authority.Checkpoint().Read("core"))!["spaces"]![0]!["archivedTabs"]!.AsArray()
+            .Select(archived => Guid.Parse(archived!["tab"]!["id"]!["rawValue"]!.GetValue<string>()))];
+
+        device.Send(new RemoveArchivedTab(device.Workspace, f.Space, removed));
+        Assert.Equal([recent, older], Kept());
+        Assert.IsType<UnknownArchivedTab>(Assert.Throws<Rejected>(() =>
+            device.Send(new RemoveArchivedTab(device.Workspace, f.Space, removed))).Rejection);
+
+        device.Send(new ClearArchive(device.Workspace, f.Space, BrowsingDataRange.LastHour));
+        Assert.Equal([older], Kept());
+        device.Send(new ClearArchive(device.Workspace, null, BrowsingDataRange.AllTime));
+        Assert.Empty(Kept());
+    }
 }

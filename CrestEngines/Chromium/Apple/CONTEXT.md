@@ -25,7 +25,7 @@ shared code naming a Chromium type.
 | `ChromiumInternalURL.swift`, `ChromiumSelectionTranslation.swift`, `ChromiumProfileNotifications.swift` | `arma://` addresses for engine pages, selection translation, per-profile web notifications |
 | `CrestChromiumHost.h` | The Objective-C bridging header the host frameworks build with |
 | `EnginePresentations/` | One `+ChromiumEngine` file per engine event (`EnginePresentation`), each presenting itself on `ChromiumEngine` |
-| `Extensions/` | Extension controls, store, side panels, `ExtensionCommand`, the Chrome Web Store install view, the extension settings pane |
+| `Extensions/` | Extension controls, store (and `ChromiumExtensionStore+Terminal`, its side of `arma extension`), side panels, `ExtensionCommand`, the Chrome Web Store install view, the extension settings pane |
 | `Extensions/Presentation/` | Extension toolbar, pinned strip, popup anchors, badges, context menus, install pages |
 | `Presentation/` | The Chromium feature-flag settings pane and site sections |
 

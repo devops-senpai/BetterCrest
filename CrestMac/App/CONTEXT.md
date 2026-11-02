@@ -17,8 +17,8 @@ host can do, through `BrowserMacEngineHost`.
 | `BrowserMacApplication.swift`, `BrowserMacApplication+WindowRequests.swift` | The app's services, the window content every product shows, and window requests |
 | `BrowserMacWindowScene.swift` | A window's scene, following the session revision without rebuilding its body |
 | `BrowserEngineMoveNotices.swift` | Explains automatic engine switches for protected video and offers the move back |
-| `Commands/` | `BrowserMacCommands`, which answers `arma theme` over the commands socket, `CrestTheme+SpaceBranding`, a theme file read onto a Space's branding and back, and `CrestThemeProblem`, why a theme could not dress a Space |
-| `Agents/` | `BrowserMacAgents`: the agent tool catalog and calls (tabs, pages, windows), approvals, failures and fill refusals |
+| `Commands/` | `BrowserMacCommands`, which answers `arma theme` and the `arma <section>` commands over the commands socket; `BrowserMacTerminal`, which runs them, with one `+Section` file per section (spaces, tabs, windows, folders, splits, menu commands, pages, extensions, history, archive, downloads, settings, sites); `BrowserTerminalSetting`, the settings `arma settings` exposes, each with its key, values and store calls; `BrowserTerminalPagePreference`, the off-by-default Command-line page control switch; `BrowserMacExtensionManaging`, how the terminal reaches the Chromium extension store; `CrestTheme+SpaceBranding`, a theme file read onto a Space's branding and back, and `CrestThemeProblem`, why a theme could not dress a Space |
+| `Agents/` | `BrowserMacAgents`: the agent tool catalog and calls (tabs, pages, windows), approvals, failures and fill refusals; `BrowserPageControl`, the page reading and input that agents and `arma page` share |
 | `Shell/` | `BrowserMacShell`, `BrowserMacEngineHost`, launch recovery, main menu and menu bar, Dock menu and tile, external opening, window controller and kinds, quit |
 | `Services/` | `BrowserMacWindowCoordinator` (normal and temporary windows), `BrowserWindowCloseGate`, quit preparation, tab tear-off placement and window drops |
 | `Models/` | `BrowserMacWindowModel` and `BrowserMacWindowRequest` |
