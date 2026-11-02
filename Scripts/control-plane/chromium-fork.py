@@ -70,6 +70,8 @@ def main():
         build.add_argument("--ninja", type=Path, default=Path(shutil.which("ninja") or "ninja"))
         build.add_argument("--jobs", type=int, default=4)
         build.add_argument("--min-free-gib", type=int, default=15)
+        build.add_argument("--ccache", action="store_true",
+                           help="Compile through ccache (Chromium's docs/ccache_mac.md); needs ccache on PATH")
         if name == "update":
             build.add_argument("--version", required=True, help="A Chrome release on the fork's channel")
             build.add_argument("--allow-major", action="store_true")
@@ -103,7 +105,9 @@ def main():
             if run("git", "-C", REPO, "status", "--porcelain", capture=True).strip():
                 parser.error("Start an upstream update from a clean Crest checkout")
             workspace = prepare_update(REPO, workspace.root, args.version)
-        workspace.build(args.sdk, args.ninja.resolve(), args.jobs, args.min_free_gib)
+        if args.ccache and shutil.which("ccache") is None:
+            parser.error("--ccache needs ccache on PATH (brew install ccache)")
+        workspace.build(args.sdk, args.ninja.resolve(), args.jobs, args.min_free_gib, ccache=args.ccache)
         key = chromium_engine.engine_key(REPO)
         receipt = {"engineKey": key, "chromium": workspace.lock["chromium"]["version"],
                    "source": str(workspace.source), "configuration": "performance",

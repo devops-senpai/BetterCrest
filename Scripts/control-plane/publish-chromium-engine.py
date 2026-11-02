@@ -46,7 +46,10 @@ def publish(args):
     repo = Path(__file__).resolve().parents[2]
     source = args.source.resolve()
     lock = read_json(repo / "CrestEngines/Chromium/source.lock.json")
-    if not performance_configuration_matches(source, lock):
+    # A build compiled through Chromium's documented ccache wrapper makes
+    # the same engine, so either configuration publishes.
+    if not (performance_configuration_matches(source, lock)
+            or performance_configuration_matches(source, lock, ccache=True)):
         raise SystemExit("Published engines require the pinned performance configuration, SDK and PGO profile")
     run(sys.executable, repo / "Scripts/control-plane/prepare-chromium.py", "--source", source, "--verify-only")
     key = chromium_engine.engine_key(repo)

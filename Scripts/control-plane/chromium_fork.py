@@ -25,6 +25,9 @@ import chromium_engine
 
 REPO = Path(__file__).resolve().parents[2]
 ENGINE = Path("CrestEngines/Chromium")
+# Chromium's documented compiler cache for Mac builds (docs/ccache_mac.md). It
+# changes how objects are compiled on this machine, never what they contain.
+CCACHE_WRAPPER = "env CCACHE_SLOPPINESS=time_macros ccache"
 # The directory the workspace's Actions runner works in.
 RUNNER_WORK = "runner-work"
 VERSION = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+")
@@ -207,18 +210,18 @@ class Workspace:
                    for p in (self.repo / ENGINE / "Overlay").rglob("*") if p.is_file()}
         write_json(installed, {"patch": patch, "inputs": inputs, "overlay": overlay})
 
-    def build(self, sdk, ninja, jobs, reserve):
+    def build(self, sdk, ninja, jobs, reserve, ccache=False):
         self.prepare()
         self.apply_host()
         profile = download_profile(self.root, self.lock["performanceInputs"])
-        if performance_configuration_matches(self.source, self.lock, sdk):
+        if performance_configuration_matches(self.source, self.lock, sdk, ccache):
             # Preserve equivalent absolute paths in an adopted build. Rewriting its
             # PGO path alone invalidates every compile command in Ninja.
             run(self.source / "out/CrestBaseline/gn", "gen", "out/CrestBaseline", "--fail-on-unused-args", cwd=self.source)
         else:
             self.script("configure-chromium.py", "--source", self.source, "--configuration", "performance",
-                        "--sdk", sdk, "--pgo-profile", profile)
-        if not performance_configuration_matches(self.source, self.lock, sdk):
+                        "--sdk", sdk, "--pgo-profile", profile, *(["--ccache"] if ccache else []))
+        if not performance_configuration_matches(self.source, self.lock, sdk, ccache):
             raise ValueError("GN arguments contain unpinned overrides; review args.gn before building a published engine")
         self.script("build-chromium-baseline.py", "--source", self.source, "--ninja", ninja,
                     "--jobs", jobs, "--min-free-gib", reserve)
@@ -272,7 +275,7 @@ def smoke_engine(source, workspace, version):
                     process.wait()
 
 
-def performance_configuration_matches(source, lock, sdk=None):
+def performance_configuration_matches(source, lock, sdk=None, ccache=False):
     def assignments(text):
         values = {}
         for line in text.splitlines():
@@ -289,7 +292,12 @@ def performance_configuration_matches(source, lock, sdk=None):
     except (ValueError, OSError):
         return False
     expected_flags = {**lock["buildArguments"], **lock["performanceBuildArguments"]}
-    actual_flags = {name: value for name, value in values.items() if name not in ("mac_sdk_path", "pgo_data_path")}
+    # The compiler cache is this machine's choice, allowed only as Chromium
+    # documents it; it never changes the engine that is built.
+    if values.get("cc_wrapper") != (CCACHE_WRAPPER if ccache else None):
+        return False
+    actual_flags = {name: value for name, value in values.items()
+                    if name not in ("mac_sdk_path", "pgo_data_path", "cc_wrapper")}
     if actual_flags != expected_flags:
         return False
     selected_sdk = values.get("mac_sdk_path", "")

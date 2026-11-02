@@ -98,6 +98,14 @@ ThinLTO, and the V8 snapshot command for `--turbo-profiling-input`. Changing
 configuration recompiles the engine; reuse the existing output directory and
 allow additional time and memory for the final ThinLTO link.
 
+Builds can compile through ccache as Chromium's `docs/ccache_mac.md` describes:
+install it (`brew install ccache`), then pass `--ccache` to
+`chromium-fork.py build` or `update`, or to `configure-chromium.py`. It adds
+only `cc_wrapper="env CCACHE_SLOPPINESS=time_macros ccache"`, the one argument
+the pinned-configuration check accepts beyond the lock. Files unchanged between
+two Chromium versions then come from the cache; a new milestone still
+recompiles most of the engine. The engine built is the same either way.
+
 Compare stock and native hosts with the same engine, build settings, foreground
 state, window size, and accessibility mode. Native accessibility inspection can
 activate Chromium's full screen-reader mode and affect Speedometer scores. A

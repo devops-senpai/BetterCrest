@@ -9,6 +9,9 @@ import re
 import subprocess
 
 
+from chromium_fork import CCACHE_WRAPPER
+
+
 REPO = Path(__file__).resolve().parents[2]
 
 
@@ -18,6 +21,7 @@ def main():
     parser.add_argument("--configuration", required=True, choices=["development", "performance"])
     parser.add_argument("--sdk", type=Path, help="Compatible macOS SDK; required for performance builds")
     parser.add_argument("--pgo-profile", type=Path, help="Pinned mac-arm profile; required for performance builds")
+    parser.add_argument("--ccache", action="store_true", help="Compile through ccache, as docs/ccache_mac.md describes")
     args = parser.parse_args()
     source = args.source.resolve()
     if source == REPO or REPO in source.parents:
@@ -62,11 +66,13 @@ def main():
                         pgo_data_path=str(profile))
     elif args.sdk or args.pgo_profile:
         parser.error("--sdk and --pgo-profile apply only to performance builds")
+    if args.ccache:
+        settings["cc_wrapper"] = CCACHE_WRAPPER
 
     # Replace only the lock's scalar arguments, including prior duplicates.
     # Keep independent flags a contributor added for a local build.
     owned = set(lock["buildArguments"]) | set(lock["developmentBuildArguments"]) | set(lock["performanceBuildArguments"])
-    owned.update(["mac_sdk_path", "pgo_data_path"])
+    owned.update(["mac_sdk_path", "pgo_data_path", "cc_wrapper"])
     previous = arguments.read_text()
     retained = []
     for line in previous.splitlines():
