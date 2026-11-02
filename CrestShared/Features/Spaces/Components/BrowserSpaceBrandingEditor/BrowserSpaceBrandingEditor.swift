@@ -56,6 +56,8 @@ struct BrowserSpaceBrandingEditor: View {
                 BrowserCrestStudioOrnaments(context: context, symbol: symbol)
             }
             BrowserCrestStudioBackground(context: context, symbol: symbol)
+            BrowserCrestStudioFolders(context: context)
+            BrowserCrestStudioCommandPalette(context: context)
             Text("Tab, address bar, and sidebar sizing are in Look and Feel. These choices belong to this Space.")
                 .font(.caption).foregroundStyle(.secondary)
             HStack {

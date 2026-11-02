@@ -4,6 +4,11 @@ namespace CrestCore.Contracts;
 /// How a Space's sidebar and icon look. <see cref="RenderingVersion"/> is the newest
 /// vocabulary the branding uses, which older readers need to read it faithfully.
 /// <see cref="HasCustomAppearance"/> is null for branding stored before it was recorded.
+/// <see cref="FolderColor"/> is the color a folder without one of its own wears, and
+/// <see cref="FolderBackColor"/> its back face, each null to follow the default folder
+/// color. <see cref="CommandPalette"/> is null to leave the palette to the system material.
+/// <see cref="SidebarTextColor"/> is the one color the sidebar's text reads in, or null to
+/// follow <see cref="TextColorMode"/>.
 /// </summary>
 public sealed partial record SpaceBranding(
     ColorPalette Colors,
@@ -20,7 +25,11 @@ public sealed partial record SpaceBranding(
     int RenderingVersion,
     double FolderColorIntensity,
     SpaceTextColorMode TextColorMode,
-    bool? HasCustomAppearance) {
+    bool? HasCustomAppearance,
+    BrandColor? FolderColor,
+    BrandColor? FolderBackColor,
+    SpacePaletteLook? CommandPalette,
+    BrandColor? SidebarTextColor) {
     #region Static Variables
 
     /// The rendering vocabulary every shipped build draws. A banner strength stored
@@ -38,7 +47,8 @@ public sealed partial record SpaceBranding(
         SpaceIconStyle.SimpleSymbol, SymbolColor: null,
         SpaceCrest.PlainField(CrestBackplate.Shield, CrestSymbol.Mountain, CrestTrim.None, layers: [1, 1, 2, 1, 2, 1], trimWeight: 1,
             chargeScale: 1),
-        BaselineRenderingVersion, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: null);
+        BaselineRenderingVersion, FolderColorIntensity: 0, SpaceTextColorMode.Automatic, HasCustomAppearance: null,
+        FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null);
 
     #endregion
 
@@ -62,7 +72,7 @@ public sealed partial record SpaceBranding(
         return new(new(accent.LegacyColors), SpaceBannerPattern.Diagonal, BannerStrength: 1, LegacyReadabilityFade,
             KeepsControlsReadable: true, SpaceThemeMode.Banner, GradientAngle: 0, ShowsTexture: false, SpaceIconStyle.SimpleSymbol,
             SymbolColor: null, crest, BaselineRenderingVersion, FolderColorIntensity: 0, SpaceTextColorMode.Automatic,
-            HasCustomAppearance: null);
+            HasCustomAppearance: null, FolderColor: null, FolderBackColor: null, CommandPalette: null, SidebarTextColor: null);
     }
 
     /// The crest figure an SF Symbol name suggested before crests had their own.

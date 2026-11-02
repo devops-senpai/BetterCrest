@@ -34,9 +34,22 @@ internal static class NativeSyncCompatibility {
         "backplate fieldDivision ordinary trim symbol chargeLayout backplateColorIndex secondaryFieldColorIndex ordinaryColorIndex trimColorIndex symbolColorIndex edgeColorIndex palette charge plateScale edgeWidth divisionCount finish ordinaryWidth trimWeight trimDetail chargeScale chargeOffset chargeWeight startingPresetID sheenAngle sealTeeth showsOutline depth",
         new() { ["palette"] = List(Color), ["charge"] = Charge });
 
+    private static readonly Shape PaletteSurface = new("tint opacity textColor", new() { ["tint"] = Color, ["textColor"] = Color });
+
+    private static readonly Shape PaletteLook = new("light dark",
+        new() { ["light"] = PaletteSurface, ["dark"] = PaletteSurface });
+
     private static readonly Shape Branding = new(
-        "colors bannerPattern bannerStrength readabilityFade keepsControlsReadable themeMode gradientAngle showsTexture iconStyle symbolColor crest renderingVersion folderColorIntensity textColorMode hasCustomAppearance",
-        new() { ["colors"] = List(Color), ["symbolColor"] = Color, ["crest"] = Crest });
+        "colors bannerPattern bannerStrength readabilityFade keepsControlsReadable themeMode gradientAngle showsTexture iconStyle symbolColor crest renderingVersion folderColorIntensity textColorMode hasCustomAppearance folderColor folderBackColor commandPalette sidebarTextColor",
+        new() {
+            ["colors"] = List(Color),
+            ["symbolColor"] = Color,
+            ["crest"] = Crest,
+            ["folderColor"] = Color,
+            ["folderBackColor"] = Color,
+            ["commandPalette"] = PaletteLook,
+            ["sidebarTextColor"] = Color
+        });
 
     private static readonly Shape SearchProvider = new("id name searchURLTemplate suggestionURLTemplate");
 
@@ -59,6 +72,7 @@ internal static class NativeSyncCompatibility {
             [StoredSessionCodec.Key.Id] = Identity,
             [StoredSessionCodec.Key.PrimarySpaceId] = Identity,
             [StoredSessionCodec.Key.Branding] = Branding,
+            [StoredSessionCodec.Key.DarkBranding] = Branding,
             [StoredSessionCodec.Key.BrowsingPreferences] = Browsing,
             [StoredSessionCodec.Key.SplitGroups] = List(Group, true)
         }),

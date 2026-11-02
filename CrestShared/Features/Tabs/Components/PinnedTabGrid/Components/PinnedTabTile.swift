@@ -40,7 +40,7 @@ struct PinnedTabTile: View {
                 grid.select(runtimeAssignment)
             },
             isMultiSelected: context.map { BrowserSidebarSelection.showsSelected(.tab(tab.id), in: $0) } ?? false,
-            branding: context.map(\.space.settings.look),
+            branding: context.map(\.space.settings.shownLook),
             statusSource: statusSource,
             iconCustomization: iconCustomization
         )

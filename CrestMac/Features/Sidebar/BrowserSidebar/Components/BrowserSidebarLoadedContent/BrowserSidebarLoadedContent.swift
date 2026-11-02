@@ -100,7 +100,7 @@ struct BrowserSidebarLoadedContent: View {
                 selectSpace: context.selectSpace,
                 accessories: switcherAccessories
             )
-            .modifier(SpaceColorScheme(branding: context.browser.shownSpace?.settings.look))
+            .modifier(SpaceColorScheme(branding: context.browser.shownSpace?.settings.shownLook))
             .modifier(
                 SpaceForegroundBlend(
                     spaces: context.availableSpaces, selectedSpaceID: context.browser.selectedSpaceID))

@@ -14,6 +14,7 @@ struct MobileBrowserSidebarSpaceSurface: View {
             space: space,
             isSelected: isSelected
         )
+        .modifier(SpaceTextColor(color: space.settings.shownLook.sidebarTextColor))
         .environment(\.colorScheme, spaceColorScheme)
         // Blur and redaction are drawing effects; rows still run their tasks.
         // This stops the ones that would otherwise disclose a locked Space's
@@ -43,7 +44,7 @@ struct MobileBrowserSidebarSpaceSurface: View {
     /// than from the system appearance, as every compact placement does, so
     /// they keep agreeing.
     private var spaceColorScheme: ColorScheme {
-        space.settings.look.colorScheme(over: colorScheme)
+        space.settings.shownLook.colorScheme(over: colorScheme)
     }
 
     private func selectUnlockedSpace(_ assignment: BrowserSpaceRuntimeAssignment) {

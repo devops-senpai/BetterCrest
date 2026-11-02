@@ -5,18 +5,24 @@ struct BrowserFolderIcon: View {
     let folder: FolderStateModel
     let isExpanded: Bool
     let metrics: BrowserFolderHeaderMetrics
+    /// The look of the Space the folder is drawn in, whose folder colors a
+    /// folder without its own wears. Nil draws the folder's own colors alone.
+    var branding: SpaceBranding? = nil
     private var iconOnly: Bool { BrowserDeviceAppearanceStore.shared.foldersIconOnly }
 
     var body: some View {
-        BrowserFolderArtwork(symbol: folder.displaySymbol, color: folder.displayColor, isExpanded: isExpanded)
-            .modifier(
-                BrowserFolderIconColumn(
-                    metrics: metrics,
-                    isExpanded: isExpanded
-                        && !(iconOnly && BrowserFolderArtwork.customGlyph(for: folder.displaySymbol) != nil)
-                )
+        BrowserFolderArtwork(
+            symbol: folder.displaySymbol, color: branding?.folderColor(of: folder) ?? folder.displayColor,
+            backColor: branding?.folderBackColor(of: folder), isExpanded: isExpanded
+        )
+        .modifier(
+            BrowserFolderIconColumn(
+                metrics: metrics,
+                isExpanded: isExpanded
+                    && !(iconOnly && BrowserFolderArtwork.customGlyph(for: folder.displaySymbol) != nil)
             )
-            .accessibilityHidden(true)
+        )
+        .accessibilityHidden(true)
     }
 }
 
@@ -24,13 +30,15 @@ struct BrowserFolderIcon: View {
 struct BrowserFolderArtwork: View {
     let symbol: String
     let color: BrandColor
+    var backColor: BrandColor? = nil
     var isExpanded = false
     private var iconOnly: Bool { BrowserDeviceAppearanceStore.shared.foldersIconOnly }
     private var tintsTitle: Bool { BrowserDeviceAppearanceStore.shared.foldersTintTitle }
 
     var body: some View {
         BrowserFolderArtworkContent(
-            symbol: symbol, color: color, isExpanded: isExpanded, iconOnly: iconOnly, tintsTitle: tintsTitle)
+            symbol: symbol, color: color, backColor: backColor, isExpanded: isExpanded, iconOnly: iconOnly,
+            tintsTitle: tintsTitle)
     }
 
     static func customGlyph(for symbol: String) -> Text? {

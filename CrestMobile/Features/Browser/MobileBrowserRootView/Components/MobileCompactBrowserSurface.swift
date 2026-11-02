@@ -75,7 +75,7 @@ struct MobileCompactBrowserSurface<
                     .environment(\.spacePagerPresentation, floatingPagerPresentation)
                     .modifier(
                         MobileBrowserSideToolbarHost(
-                            colorScheme: space?.settings.look.colorScheme(over: colorScheme)
+                            colorScheme: space?.settings.shownLook.colorScheme(over: colorScheme)
                         )
                     )
                     .environment(\.mobileBrowserSideToolbarIsHosted, false)

@@ -33,7 +33,11 @@ internal static partial class StoredSessionCodec {
             Integer(value[Key.RenderingVersion]) ?? FirstRenderingVersion,
             OptionalNumber(value[Key.FolderColorIntensity]) ?? 0,
             SpaceTextColorMode.Named(Text(value[Key.TextColorMode])) ?? SpaceTextColorMode.Automatic,
-            Flag(value[Key.HasCustomAppearance]));
+            Flag(value[Key.HasCustomAppearance]),
+            value[Key.FolderColor] is JsonObject folderColor ? DecodeColor(folderColor) : null,
+            value[Key.FolderBackColor] is JsonObject folderBackColor ? DecodeColor(folderBackColor) : null,
+            value[Key.CommandPalette] is JsonObject palette ? DecodePaletteLook(palette) : null,
+            value[Key.SidebarTextColor] is JsonObject sidebarText ? DecodeColor(sidebarText) : null);
     }
 
     internal static JsonObject Encode(SpaceBranding branding) {
@@ -54,6 +58,31 @@ internal static partial class StoredSessionCodec {
         value[Key.FolderColorIntensity] = branding.FolderColorIntensity;
         value[Key.TextColorMode] = branding.TextColorMode.Name;
         if (branding.HasCustomAppearance is { } custom) value[Key.HasCustomAppearance] = custom;
+        if (branding.FolderColor is { } folderColor) value[Key.FolderColor] = Encode(folderColor);
+        if (branding.FolderBackColor is { } folderBackColor) value[Key.FolderBackColor] = Encode(folderBackColor);
+        if (branding.CommandPalette is { } palette) value[Key.CommandPalette] = Encode(palette);
+        if (branding.SidebarTextColor is { } sidebarText) value[Key.SidebarTextColor] = Encode(sidebarText);
+        return value;
+    }
+
+    /// The command palette's look over a Space. A surface that is missing or
+    /// not an object is the system material alone.
+    internal static SpacePaletteLook DecodePaletteLook(JsonObject value) =>
+        new(DecodePaletteSurface(value[Key.Light] as JsonObject), DecodePaletteSurface(value[Key.Dark] as JsonObject));
+
+    private static SpacePaletteSurface DecodePaletteSurface(JsonObject? value) => value is null
+        ? SpacePaletteSurface.Neutral
+        : new(value[Key.Tint] is JsonObject tint ? DecodeColor(tint) : null, OptionalNumber(value[Key.Opacity]) ?? 0,
+            value[Key.TextColor] is JsonObject text ? DecodeColor(text) : null);
+
+    internal static JsonObject Encode(SpacePaletteLook look) =>
+        new() { [Key.Light] = Encode(look.Light), [Key.Dark] = Encode(look.Dark) };
+
+    private static JsonObject Encode(SpacePaletteSurface surface) {
+        var value = new JsonObject();
+        if (surface.Tint is { } tint) value[Key.Tint] = Encode(tint);
+        value[Key.Opacity] = surface.Opacity;
+        if (surface.TextColor is { } text) value[Key.TextColor] = Encode(text);
         return value;
     }
 

@@ -7,7 +7,7 @@ import Foundation
 enum CoreCodec {
     /// SHA-256 of the canonical contract schema. The core refuses any other.
     static let fingerprint: [UInt8] = [
-        0x89, 0x62, 0xf2, 0x37, 0xf9, 0x10, 0x12, 0x07, 0x12, 0x69, 0xee, 0x73, 0x7a, 0x29, 0x3f, 0xf0, 0x8c, 0xe9, 0x62, 0x53, 0x82, 0x0d, 0x44, 0x36, 0x17, 0x3f, 0xbc, 0xac, 0x17, 0xb4, 0x09, 0x4c
+        0x9a, 0x78, 0x01, 0x30, 0xda, 0x16, 0xb1, 0x67, 0x0d, 0xcd, 0x38, 0x0d, 0x5c, 0x9a, 0x80, 0x48, 0xfd, 0x9a, 0x35, 0xc5, 0xc5, 0x76, 0x44, 0x7e, 0x38, 0x6a, 0xdc, 0xef, 0xf7, 0x70, 0xcd, 0xb3
     ]
     /// SHA-256 of the engine contract alone, which an engine binding registers with.
     static let engineFingerprint: [UInt8] = [
@@ -244,34 +244,35 @@ enum CoreCodec {
         case 224: return try SetSeparatePinnedTabs(from: &reader)
         case 225: return try SetSpaceAccess(from: &reader)
         case 226: return try SetSpaceBranding(from: &reader)
-        case 227: return try SetSpaceIdentity(from: &reader)
-        case 228: return try SetSpaceSearch(from: &reader)
-        case 229: return try SetSplitIcon(from: &reader)
-        case 230: return try SetTranslationRule(from: &reader)
-        case 231: return try SettleCloudOverwrite(from: &reader)
-        case 232: return try ShowAdjacentSpace(from: &reader)
-        case 233: return try ShowAdjacentTab(from: &reader)
-        case 234: return try ShowHistoryEntry(from: &reader)
-        case 235: return try ShowImportSpace(from: &reader)
-        case 236: return try ShowLeastRecentTab(from: &reader)
-        case 237: return try ShowMostRecentTab(from: &reader)
-        case 238: return try ShowSetupStep(from: &reader)
-        case 239: return try ShowSpace(from: &reader)
-        case 240: return try ShowStartPage(from: &reader)
-        case 241: return try ShowTab(from: &reader)
-        case 242: return try SplitTabs(from: &reader)
-        case 243: return try StageLink(from: &reader)
-        case 244: return try StartCloudSync(from: &reader)
-        case 245: return try StartSetup(from: &reader)
-        case 246: return try StepHistory(from: &reader)
-        case 247: return try StepSplitMember(from: &reader)
-        case 248: return try StopAgentTab(from: &reader)
-        case 249: return try StopAllAgents(from: &reader)
-        case 250: return try SweepExpiredRecords(from: &reader)
-        case 251: return try TintSplit(from: &reader)
-        case 252: return try ToggleImportSource(from: &reader)
-        case 253: return try TogglePin(from: &reader)
-        case 254: return try UnassignShortcut(from: &reader)
+        case 227: return try SetSpaceDarkBranding(from: &reader)
+        case 228: return try SetSpaceIdentity(from: &reader)
+        case 229: return try SetSpaceSearch(from: &reader)
+        case 230: return try SetSplitIcon(from: &reader)
+        case 231: return try SetTranslationRule(from: &reader)
+        case 232: return try SettleCloudOverwrite(from: &reader)
+        case 233: return try ShowAdjacentSpace(from: &reader)
+        case 234: return try ShowAdjacentTab(from: &reader)
+        case 235: return try ShowHistoryEntry(from: &reader)
+        case 236: return try ShowImportSpace(from: &reader)
+        case 237: return try ShowLeastRecentTab(from: &reader)
+        case 238: return try ShowMostRecentTab(from: &reader)
+        case 239: return try ShowSetupStep(from: &reader)
+        case 240: return try ShowSpace(from: &reader)
+        case 241: return try ShowStartPage(from: &reader)
+        case 242: return try ShowTab(from: &reader)
+        case 243: return try SplitTabs(from: &reader)
+        case 244: return try StageLink(from: &reader)
+        case 245: return try StartCloudSync(from: &reader)
+        case 246: return try StartSetup(from: &reader)
+        case 247: return try StepHistory(from: &reader)
+        case 248: return try StepSplitMember(from: &reader)
+        case 249: return try StopAgentTab(from: &reader)
+        case 250: return try StopAllAgents(from: &reader)
+        case 251: return try SweepExpiredRecords(from: &reader)
+        case 252: return try TintSplit(from: &reader)
+        case 253: return try ToggleImportSource(from: &reader)
+        case 254: return try TogglePin(from: &reader)
+        case 255: return try UnassignShortcut(from: &reader)
         default: throw WireError.malformed("Unknown Intent tag \(tag)")
         }
     }
@@ -19982,6 +19983,37 @@ extension SetSpaceBranding {
     }
 }
 
+extension SetSpaceDarkBranding {
+    init(from reader: inout WireReader) throws(WireError) {
+        let workspaceID = try reader.readUUID()
+        let spaceID = try reader.readUUID()
+        let branding: SpaceBranding?
+        if try reader.readPresence() {
+            let brandingValue = try SpaceBranding(from: &reader)
+            branding = brandingValue
+        } else {
+            branding = nil
+        }
+        self.init(workspaceID: workspaceID, spaceID: spaceID, branding: branding)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        writer.writeUUID(workspaceID)
+        writer.writeUUID(spaceID)
+        if let present0 = branding {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+    }
+
+    func encodeIntent(into writer: inout WireWriter) {
+        writer.writeTag(227)
+        encode(into: &writer)
+    }
+}
+
 extension SetSpaceIdentity {
     init(from reader: inout WireReader) throws(WireError) {
         let workspaceID = try reader.readUUID()
@@ -20001,7 +20033,7 @@ extension SetSpaceIdentity {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(227)
+        writer.writeTag(228)
         encode(into: &writer)
     }
 }
@@ -20045,7 +20077,7 @@ extension SetSpaceSearch {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(228)
+        writer.writeTag(229)
         encode(into: &writer)
     }
 }
@@ -20078,7 +20110,7 @@ extension SetSplitIcon {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(229)
+        writer.writeTag(230)
         encode(into: &writer)
     }
 }
@@ -20100,7 +20132,7 @@ extension SetTranslationRule {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(230)
+        writer.writeTag(231)
         encode(into: &writer)
     }
 }
@@ -20138,7 +20170,7 @@ extension SettleCloudOverwrite {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(231)
+        writer.writeTag(232)
         encode(into: &writer)
     }
 }
@@ -20991,7 +21023,7 @@ extension ShowAdjacentSpace {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(232)
+        writer.writeTag(233)
         encode(into: &writer)
     }
 }
@@ -21009,7 +21041,7 @@ extension ShowAdjacentTab {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(233)
+        writer.writeTag(234)
         encode(into: &writer)
     }
 }
@@ -21048,7 +21080,7 @@ extension ShowHistoryEntry {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(234)
+        writer.writeTag(235)
         encode(into: &writer)
     }
 }
@@ -21064,7 +21096,7 @@ extension ShowImportSpace {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(235)
+        writer.writeTag(236)
         encode(into: &writer)
     }
 }
@@ -21080,7 +21112,7 @@ extension ShowLeastRecentTab {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(236)
+        writer.writeTag(237)
         encode(into: &writer)
     }
 }
@@ -21096,7 +21128,7 @@ extension ShowMostRecentTab {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(237)
+        writer.writeTag(238)
         encode(into: &writer)
     }
 }
@@ -21133,7 +21165,7 @@ extension ShowSetupStep {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(238)
+        writer.writeTag(239)
         encode(into: &writer)
     }
 }
@@ -21151,7 +21183,7 @@ extension ShowSpace {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(239)
+        writer.writeTag(240)
         encode(into: &writer)
     }
 }
@@ -21175,7 +21207,7 @@ extension ShowStartPage {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(240)
+        writer.writeTag(241)
         encode(into: &writer)
     }
 }
@@ -21206,7 +21238,7 @@ extension ShowTab {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(241)
+        writer.writeTag(242)
         encode(into: &writer)
     }
 }
@@ -21699,7 +21731,35 @@ extension SpaceBranding {
         } else {
             hasCustomAppearance = nil
         }
-        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance)
+        let folderColor: BrandColor?
+        if try reader.readPresence() {
+            let folderColorValue = try BrandColor(from: &reader)
+            folderColor = folderColorValue
+        } else {
+            folderColor = nil
+        }
+        let folderBackColor: BrandColor?
+        if try reader.readPresence() {
+            let folderBackColorValue = try BrandColor(from: &reader)
+            folderBackColor = folderBackColorValue
+        } else {
+            folderBackColor = nil
+        }
+        let commandPalette: SpacePaletteLook?
+        if try reader.readPresence() {
+            let commandPaletteValue = try SpacePaletteLook(from: &reader)
+            commandPalette = commandPaletteValue
+        } else {
+            commandPalette = nil
+        }
+        let sidebarTextColor: BrandColor?
+        if try reader.readPresence() {
+            let sidebarTextColorValue = try BrandColor(from: &reader)
+            sidebarTextColor = sidebarTextColorValue
+        } else {
+            sidebarTextColor = nil
+        }
+        self.init(colors: colors, bannerPattern: bannerPattern, bannerStrength: bannerStrength, readabilityFade: readabilityFade, keepsControlsReadable: keepsControlsReadable, themeMode: themeMode, gradientAngle: gradientAngle, showsTexture: showsTexture, iconStyle: iconStyle, symbolColor: symbolColor, crest: crest, renderingVersion: renderingVersion, folderColorIntensity: folderColorIntensity, textColorMode: textColorMode, hasCustomAppearance: hasCustomAppearance, folderColor: folderColor, folderBackColor: folderBackColor, commandPalette: commandPalette, sidebarTextColor: sidebarTextColor)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -21725,6 +21785,30 @@ extension SpaceBranding {
         if let present0 = hasCustomAppearance {
             writer.writePresence(true)
             writer.writeBool(present0)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = folderColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = folderBackColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = commandPalette {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = sidebarTextColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
         } else {
             writer.writePresence(false)
         }
@@ -22066,6 +22150,56 @@ extension SpaceMembership {
     }
 }
 
+extension SpacePaletteLook {
+    init(from reader: inout WireReader) throws(WireError) {
+        let light = try SpacePaletteSurface(from: &reader)
+        let dark = try SpacePaletteSurface(from: &reader)
+        self.init(light: light, dark: dark)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        light.encode(into: &writer)
+        dark.encode(into: &writer)
+    }
+}
+
+extension SpacePaletteSurface {
+    init(from reader: inout WireReader) throws(WireError) {
+        let tint: BrandColor?
+        if try reader.readPresence() {
+            let tintValue = try BrandColor(from: &reader)
+            tint = tintValue
+        } else {
+            tint = nil
+        }
+        let opacity = try reader.readDouble()
+        let textColor: BrandColor?
+        if try reader.readPresence() {
+            let textColorValue = try BrandColor(from: &reader)
+            textColor = textColorValue
+        } else {
+            textColor = nil
+        }
+        self.init(tint: tint, opacity: opacity, textColor: textColor)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        if let present0 = tint {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+        writer.writeDouble(opacity)
+        if let present0 = textColor {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
+    }
+}
+
 extension SpaceProfileChanged {
     init(from reader: inout WireReader) throws(WireError) {
         let spaceID = try reader.readUUID()
@@ -22129,9 +22263,17 @@ extension SpaceSettings {
         } else {
             protectionModifiedAt = nil
         }
+        let darkBranding: SpaceBranding?
+        if try reader.readPresence() {
+            let darkBrandingValue = try SpaceBranding(from: &reader)
+            darkBranding = darkBrandingValue
+        } else {
+            darkBranding = nil
+        }
         let look = try SpaceBranding(from: &reader)
+        let darkLook = try SpaceBranding(from: &reader)
         let requiresAuthentication = try reader.readBool()
-        self.init(name: name, symbol: symbol, accent: accent, branding: branding, browsingPreferences: browsingPreferences, credentialPreferences: credentialPreferences, accessPolicy: accessPolicy, isSavedTabsExpanded: isSavedTabsExpanded, savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt, credentialsEnabledModifiedAt: credentialsEnabledModifiedAt, accessPolicyModifiedAt: accessPolicyModifiedAt, separatesPinnedTabs: separatesPinnedTabs, separatesPinnedTabsModifiedAt: separatesPinnedTabsModifiedAt, protectionModifiedAt: protectionModifiedAt, look: look, requiresAuthentication: requiresAuthentication)
+        self.init(name: name, symbol: symbol, accent: accent, branding: branding, browsingPreferences: browsingPreferences, credentialPreferences: credentialPreferences, accessPolicy: accessPolicy, isSavedTabsExpanded: isSavedTabsExpanded, savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt, credentialsEnabledModifiedAt: credentialsEnabledModifiedAt, accessPolicyModifiedAt: accessPolicyModifiedAt, separatesPinnedTabs: separatesPinnedTabs, separatesPinnedTabsModifiedAt: separatesPinnedTabsModifiedAt, protectionModifiedAt: protectionModifiedAt, darkBranding: darkBranding, look: look, darkLook: darkLook, requiresAuthentication: requiresAuthentication)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -22179,7 +22321,14 @@ extension SpaceSettings {
         } else {
             writer.writePresence(false)
         }
+        if let present0 = darkBranding {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
+        } else {
+            writer.writePresence(false)
+        }
         look.encode(into: &writer)
+        darkLook.encode(into: &writer)
         writer.writeBool(requiresAuthentication)
     }
 }
@@ -22236,7 +22385,14 @@ extension SpaceSettings.Seed {
         } else {
             protectionModifiedAt = nil
         }
-        self.init(name: name, symbol: symbol, accent: accent, branding: branding, browsingPreferences: browsingPreferences, credentialPreferences: credentialPreferences, accessPolicy: accessPolicy, isSavedTabsExpanded: isSavedTabsExpanded, savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt, credentialsEnabledModifiedAt: credentialsEnabledModifiedAt, accessPolicyModifiedAt: accessPolicyModifiedAt, separatesPinnedTabs: separatesPinnedTabs, separatesPinnedTabsModifiedAt: separatesPinnedTabsModifiedAt, protectionModifiedAt: protectionModifiedAt)
+        let darkBranding: SpaceBranding?
+        if try reader.readPresence() {
+            let darkBrandingValue = try SpaceBranding(from: &reader)
+            darkBranding = darkBrandingValue
+        } else {
+            darkBranding = nil
+        }
+        self.init(name: name, symbol: symbol, accent: accent, branding: branding, browsingPreferences: browsingPreferences, credentialPreferences: credentialPreferences, accessPolicy: accessPolicy, isSavedTabsExpanded: isSavedTabsExpanded, savedTabsExpansionModifiedAt: savedTabsExpansionModifiedAt, credentialsEnabledModifiedAt: credentialsEnabledModifiedAt, accessPolicyModifiedAt: accessPolicyModifiedAt, separatesPinnedTabs: separatesPinnedTabs, separatesPinnedTabsModifiedAt: separatesPinnedTabsModifiedAt, protectionModifiedAt: protectionModifiedAt, darkBranding: darkBranding)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -22281,6 +22437,12 @@ extension SpaceSettings.Seed {
         if let present0 = protectionModifiedAt {
             writer.writePresence(true)
             writer.writeDate(present0)
+        } else {
+            writer.writePresence(false)
+        }
+        if let present0 = darkBranding {
+            writer.writePresence(true)
+            present0.encode(into: &writer)
         } else {
             writer.writePresence(false)
         }
@@ -22931,7 +23093,7 @@ extension SplitTabs {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(242)
+        writer.writeTag(243)
         encode(into: &writer)
     }
 }
@@ -22953,7 +23115,7 @@ extension StageLink {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(243)
+        writer.writeTag(244)
         encode(into: &writer)
     }
 }
@@ -23031,7 +23193,7 @@ extension StartCloudSync {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(244)
+        writer.writeTag(245)
         encode(into: &writer)
     }
 }
@@ -23060,7 +23222,7 @@ extension StartSetup {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(245)
+        writer.writeTag(246)
         encode(into: &writer)
     }
 }
@@ -23078,7 +23240,7 @@ extension StepHistory {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(246)
+        writer.writeTag(247)
         encode(into: &writer)
     }
 }
@@ -23100,7 +23262,7 @@ extension StepSplitMember {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(247)
+        writer.writeTag(248)
         encode(into: &writer)
     }
 }
@@ -23116,7 +23278,7 @@ extension StopAgentTab {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(248)
+        writer.writeTag(249)
         encode(into: &writer)
     }
 }
@@ -23130,7 +23292,7 @@ extension StopAllAgents {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(249)
+        writer.writeTag(250)
         encode(into: &writer)
     }
 }
@@ -23362,7 +23524,7 @@ extension SweepExpiredRecords {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(250)
+        writer.writeTag(251)
         encode(into: &writer)
     }
 }
@@ -24323,7 +24485,7 @@ extension TintSplit {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(251)
+        writer.writeTag(252)
         encode(into: &writer)
     }
 }
@@ -24339,7 +24501,7 @@ extension ToggleImportSource {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(252)
+        writer.writeTag(253)
         encode(into: &writer)
     }
 }
@@ -24359,7 +24521,7 @@ extension TogglePin {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(253)
+        writer.writeTag(254)
         encode(into: &writer)
     }
 }
@@ -24534,7 +24696,7 @@ extension UnassignShortcut {
     }
 
     func encodeIntent(into writer: inout WireWriter) {
-        writer.writeTag(254)
+        writer.writeTag(255)
         encode(into: &writer)
     }
 }
