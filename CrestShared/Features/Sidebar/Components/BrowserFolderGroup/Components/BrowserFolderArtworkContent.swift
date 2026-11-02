@@ -6,6 +6,8 @@ struct BrowserFolderArtworkContent: View {
     let color: BrandColor
     /// The back face's own color, or nil to shade `color` for it.
     var backColor: BrandColor? = nil
+    /// The line drawn around each face, or nil for none.
+    var outlineColor: BrandColor? = nil
     var isExpanded = false
     let iconOnly: Bool
     var tintsTitle = false
@@ -29,7 +31,7 @@ struct BrowserFolderArtworkContent: View {
         } else {
             BrowserFolderFaces(
                 glyph: Self.customGlyph(for: symbol), color: color, backColor: backColor ?? color.folderBackShade,
-                isExpanded: isExpanded
+                outlineColor: outlineColor, isExpanded: isExpanded
             )
             .foregroundStyle(faceForeground)
         }
@@ -74,8 +76,12 @@ private struct BrowserFolderFaces: View {
     let glyph: Text?
     let color: BrandColor
     let backColor: BrandColor
+    let outlineColor: BrandColor?
     let isExpanded: Bool
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    /// The outline's width, as a share of the folder's width.
+    private static let outlineWidthShare = 0.085
 
     var body: some View {
         Image(systemName: "folder").hidden().overlay {
@@ -112,6 +118,11 @@ private struct BrowserFolderFaces: View {
                             startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
                         path.closeSubpath()
                         context.fill(path, with: .color(backColor.color))
+                        if let outlineColor {
+                            context.stroke(
+                                path, with: .color(outlineColor.color),
+                                style: StrokeStyle(lineWidth: size.width * Self.outlineWidthShare, lineJoin: .round))
+                        }
                     }
                     .modifier(
                         BrowserFolderFaceProjection(front: false, openness: isExpanded ? 1 : 0)
@@ -125,6 +136,15 @@ private struct BrowserFolderFaces: View {
                         var tint = context
                         tint.opacity = BrandColor.folderFrontHighlightOpacity
                         tint.fill(path, with: .color(.white))
+                        if let outlineColor {
+                            let inset = size.width * Self.outlineWidthShare / 2
+                            let outline = Path(
+                                roundedRect: CGRect(origin: .zero, size: size).insetBy(dx: inset, dy: inset),
+                                cornerRadius: max(0, radius - inset))
+                            context.stroke(
+                                outline, with: .color(outlineColor.color),
+                                style: StrokeStyle(lineWidth: size.width * Self.outlineWidthShare, lineJoin: .round))
+                        }
                         if let glyph {
                             context.draw(
                                 glyph.font(.system(size: size.height * 0.5, weight: .semibold)),

@@ -147,6 +147,7 @@ internal static partial class StoredSessionCodec {
         public const string ShowsTexture = "showsTexture";
         public const string ShowsTopHit = "showsTopHit";
         public const string SidebarTextColor = "sidebarTextColor";
+        public const string FolderOutlineColor = "folderOutlineColor";
         public const string Source = "source";
         public const string Sources = "sources";
         public const string SpaceDeletions = "spaceDeletions";

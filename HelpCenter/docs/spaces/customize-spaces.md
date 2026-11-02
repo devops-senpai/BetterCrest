@@ -55,7 +55,7 @@ A theme file is JSON with a section for each part of the look, and a theme can n
   "name": "Dusk",
   "background": { "colors": ["#1b1f2a", "#3a2f5b"], "style": "gradient", "angle": 135, "intensity": 0.8, "sidebarText": "#e6e9ef" },
   "icon": { "color": "#ffd166" },
-  "folders": { "color": "#7a8bb0", "backColor": "#5c6b8a", "intensity": 0.3 },
+  "folders": { "color": "#7a8bb0", "backColor": "#5c6b8a", "outlineColor": "default", "intensity": 0.3 },
   "commandPalette": { "light": { "tint": "#ffffff", "opacity": 0.5 }, "dark": { "tint": "#101218", "opacity": 0.7, "text": "#cdd6f4" } }
 }
 ```

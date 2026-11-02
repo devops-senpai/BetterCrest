@@ -23,7 +23,7 @@ extension SpaceBranding {
     /// color, else the default every folder starts with.
     @MainActor
     func folderColor(of folder: FolderStateModel) -> BrandColor {
-        folder.color ?? folderColor ?? folder.displayColor
+        followsSpace(folder) ? folderColor ?? folder.displayColor : folder.displayColor
     }
 
     /// The color `folder`'s back face is drawn in, when the folder follows the
@@ -31,6 +31,21 @@ extension SpaceBranding {
     /// folder's own color.
     @MainActor
     func folderBackColor(of folder: FolderStateModel) -> BrandColor? {
-        folder.color == nil ? folderBackColor : nil
+        followsSpace(folder) ? folderBackColor : nil
+    }
+
+    /// The line drawn around `folder`, when the folder follows the Space and
+    /// the Space names one.
+    @MainActor
+    func folderOutlineColor(of folder: FolderStateModel) -> BrandColor? {
+        followsSpace(folder) ? folderOutlineColor : nil
+    }
+
+    /// Whether `folder` wears this Space's folder colors: it chose none, or
+    /// what it holds is the default every folder starts with, which imports
+    /// and older builds wrote into folders nobody colored.
+    @MainActor
+    private func followsSpace(_ folder: FolderStateModel) -> Bool {
+        folder.color == nil || folder.color == .folderDefault
     }
 }
