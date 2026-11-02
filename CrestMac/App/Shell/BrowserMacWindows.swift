@@ -64,6 +64,12 @@ final class BrowserMacWindows {
     /// as About Crest credits it.
     var engineCredits: String? { engineHost.aboutCredits }
 
+    /// What manages the engine's per-Space extensions for the terminal, or
+    /// nil for an engine that runs none.
+    var extensionManager: (any BrowserMacExtensionManaging)? {
+        engineHost.importedExtensionInstaller as? any BrowserMacExtensionManaging
+    }
+
     /// The windows open now, in the order they opened.
     private var controllers: [BrowserMacWindowController] = []
     /// The content of each Quick Window open now, by its identity.

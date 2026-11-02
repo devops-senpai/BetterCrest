@@ -16,6 +16,8 @@ enum CommandLinkRequest: Codable, Sendable {
     /// `export`, else what changed.
     case theme(
         version: Int, space: String, changes: CrestTheme?, resets: [CrestThemeSection], removeDark: Bool, export: Bool)
+    /// Run `command` from `arma <section> <action>`.
+    case terminal(version: Int, command: TerminalCommand)
 }
 
 /// What Crest answers.
@@ -24,6 +26,8 @@ enum CommandLinkResponse: Codable, Sendable {
     case applied(summary: String)
     /// The Space's theme, as asked.
     case theme(CrestTheme)
+    /// What a terminal command answered.
+    case output(TerminalOutput)
     /// Crest did not run the command, for the reason `message` gives.
     case refused(message: String)
 }

@@ -18,8 +18,10 @@ Arma is closed and served by the app when it runs.
 | `AgentToolDefinition+Browser.swift` | The browser's tool catalog |
 | `AgentLink.swift` | What the helper and the app say over the socket, one JSON object per line |
 | `AgentJSON.swift` | JSON values for arguments, results and schemas |
-| `AgentSocketLocation.swift` | The per-bundle-identifier Unix sockets in the person's Arma data, one lane for agents and one for commands |
-| `CommandLink.swift` | What `arma theme` and the app say over the commands socket |
+| `AgentSocketLocation.swift` | The per-bundle-identifier Unix sockets in the person's Arma data, one lane for agents and one for commands; an isolated launch's carry its isolation name |
+| `CommandLink.swift` | What `arma theme`, the terminal sections and the app say over the commands socket |
+| `Terminal/TerminalCommand.swift` | `TerminalCommand`, one case per section, and the `TerminalOutput` a command answers as text and JSON |
+| `Terminal/Terminal*Command.swift` | One section's typed actions each: `space`, `tab`, `window`, `folder`, `split`, menu `command`, `page`, `extension`, `history`, `download`, `settings`, `site` |
 | `CrestTheme.swift` | A Space theme as a file: its sections, colors and dark look |
 | `CrestThemeHex.swift` | How a theme spells a color, `#RRGGBB` or `#RRGGBBAA` |
 | `MCPProtocolVersion.swift` | Model Context Protocol revisions the helper speaks |

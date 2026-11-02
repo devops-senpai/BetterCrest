@@ -13,11 +13,15 @@ final class BrowserMacCommands {
 
     static let maximumConnections = 8
 
+    private static let otherBuild = "This helper is from another build. Run the one inside the Arma that is open."
+
     private static let logger = Logger(subsystem: "com.senpaimedia.arma", category: "Commands")
 
     // MARK: - Variables
 
     unowned let application: BrowserMacApplication
+    /// Runs `arma <section> <action>`.
+    private let terminal: BrowserMacTerminal
     /// Where the helper connects, or nil when this launch offers no socket.
     let path: String?
     /// What a helper must be to be heard: this Crest's own.
@@ -29,8 +33,9 @@ final class BrowserMacCommands {
 
     // MARK: - Initializers
 
-    init(application: BrowserMacApplication) {
+    init(application: BrowserMacApplication, windows: BrowserMacWindows) {
         self.application = application
+        terminal = BrowserMacTerminal(application: application, windows: windows)
         helper = BrowserAgentHelperRequirement(bundle: .main)
         path =
             helper == nil
@@ -85,15 +90,32 @@ final class BrowserMacCommands {
             connection.close()
             return
         }
+        if case .terminal(let version, let command) = request {
+            Task { @MainActor in
+                let response: CommandLinkResponse
+                if version != CommandLinkRequest.version {
+                    response = .refused(message: Self.otherBuild)
+                } else {
+                    do throws(BrowserMacTerminal.Refusal) {
+                        response = .output(try await terminal.run(command))
+                    } catch {
+                        response = .refused(message: error.message)
+                    }
+                }
+                if let answer = try? JSONEncoder().encode(response) { connection.send(answer) }
+                connection.close()
+            }
+            return
+        }
         let response: CommandLinkResponse
         switch request {
         case .theme(let version, let space, let changes, let resets, let removeDark, let export):
             response =
                 version == CommandLinkRequest.version
                 ? theme(space, changes: changes, resets: resets, removeDark: removeDark, export: export)
-                : .refused(
-                    message:
-                        "This helper is from another build. Run the one inside the Arma that is open.")
+                : .refused(message: Self.otherBuild)
+        case .terminal:
+            return
         }
         if let answer = try? JSONEncoder().encode(response) { connection.send(answer) }
         connection.close()

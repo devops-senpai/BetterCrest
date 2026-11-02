@@ -23,6 +23,9 @@ change; the commit of the same name has the detail.
 
 - **Extended theming.** Each Space's Appearance page goes further than upstream: pick the colors of folders and their backs, the sidebar text color, and the command palette's tint, opacity and text color, with a separate look for dark windows. Export a Space's theme as a JSON file and load one back from the page or the Space's menu; four Catppuccin themes ship as examples.
 - **Theme CLI tools.** `arma theme` sets any part of a Space's look, applies or exports theme files, and pairs a light file with a dark one from the terminal. Changes show in the running app right away, so a theme can be tuned without reopening Settings.
+- **Command-line control.** `arma` manages the running browser from the terminal: Spaces, tabs (open in a chosen engine, move, pin, save, rename), windows (move, resize, tile), folders, Split View, any menu command, extensions, history, downloads, settings (get, set, export, import) and site rules, with `--json` for scripts. `arma page` reads and drives a page (text, snapshot, screenshot, click, type, JavaScript) once Settings › Agents › Command-line page control is on.
+- **Saved themes.** A Space's Themes page keeps a library of themes on this Mac: save a Space's look with +, import and export theme files, rename them, and put one on any Space. Type `@themes` in the command palette to switch themes from the keyboard, or use Save Look as Theme, Import Theme and Export Theme.
+- **Background images.** A Space's Themes page sets a picture behind the sidebar and window, held to its top-left or bottom-left corner, with sliders for how strongly it shows, how much of the Space's colors lie over it, and how blurred it is.
 - **Tiled Split View.** Drop a tab on the top or bottom edge of a page to stack it there, on the outer edge of the split to give it the full height or width, or on the middle of a page to swap the two; make quadrants from any of these. The split's menu has ready-made arrangements for two, three and four pages, a tab's menu can pick its card up to move with the pointer (⇧⌘-drag does the same), and the bars between pages drag either way; each window keeps the sizes.
 - **Servo engine.** Pages can run on Servo, the independent engine written in Rust, as a third engine beside Chromium and WebKit: pick it as the default engine, set it for a website, or move a page with Open Page in Servo. Install Firefox add-ons whose page scripts and styles Servo can run from Settings › Engines.
 
@@ -87,12 +90,13 @@ When several Spaces should share one set of sign-ins, make them **Sub-Spaces**: 
 
 ## Two engines on Mac
 
-Arma for Mac opens pages in **Chromium** by default. Its engine is built on
-[ungoogled-chromium](https://github.com/ungoogled-software/ungoogled-chromium),
-with Google integrations removed, and runs Chrome Web Store extensions. Any
-website or page can open in **WebKit** instead, which adds Reader, whole-page
-translation, built-in content blocking, and FairPlay video. When a page needs
-protected video, Arma switches to WebKit automatically, respecting any
+Arma for Mac opens pages in **Chromium** by default. Its engine is Chromium
+with Arma's privacy changes, which keep your browsing, form and account data
+away from Google, and runs Chrome Web Store extensions. Any website or page can
+open in **WebKit** instead, which adds Reader, whole-page translation, built-in
+content blocking, and FairPlay video. Chromium plays Widevine video; Netflix,
+Disney+, Max and Prime Video open in WebKit, and a page that needs protected
+video Chromium can't play switches to WebKit automatically, respecting any
 unsaved-changes prompt before moving it. Choose the default engine and
 per-website rules in **Settings → Engines**. iPhone and iPad use WebKit. The
 [engine guide](HelpCenter/docs/browsing/engines.md) lists what each engine

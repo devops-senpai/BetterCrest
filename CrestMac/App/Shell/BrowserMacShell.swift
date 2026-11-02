@@ -92,7 +92,7 @@ final class BrowserMacShell {
             dockMenu: BrowserMacDockMenu(application: application, windows: windows),
             externalOpening: BrowserMacExternalOpening(application: application, windows: windows),
             agents: BrowserMacAgents(application: application, windows: windows),
-            commands: BrowserMacCommands(application: application))
+            commands: BrowserMacCommands(application: application, windows: windows))
         recovery?.close()
         recovery = nil
         guard application.presentsInstalledApplicationUI else { return }

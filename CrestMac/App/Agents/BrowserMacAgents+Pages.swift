@@ -106,13 +106,6 @@ extension BrowserMacAgents {
         let limit: Int?
     }
 
-    private struct PageText: Decodable {
-        let url: String
-        let title: String
-        let text: String
-        let truncated: Bool
-    }
-
     private struct DialogAnswer: Decodable {
         let tab: UUID
         let accept: Bool
@@ -132,24 +125,6 @@ extension BrowserMacAgents {
     private struct Script: Decodable {
         let tab: UUID
         let function: String
-    }
-
-    /// Where the element a uid names is in the viewport, in CSS pixels.
-    private struct Located: Decodable {
-        let x: Double
-        let y: Double
-        let left: Double
-        let top: Double
-        let width: Double
-        let height: Double
-        let tag: String
-    }
-
-    private struct Outline: Decodable {
-        let url: String
-        let title: String
-        let outline: String
-        let truncated: Bool
     }
 
     private struct ConsoleListing: Encodable {
@@ -236,12 +211,6 @@ extension BrowserMacAgents {
 
     // MARK: - Static Variables
 
-    private static let scriptTimeout = Duration.seconds(15)
-    private static let settleTimeout = Duration.seconds(15)
-    private static let inputTimeout = Duration.seconds(10)
-    /// How long after input a page is given for a load the input started to
-    /// begin, as a click on a link or a submit button does.
-    private static let loadGrace = Duration.seconds(1)
     private static let untrustedNote =
         "This page’s engine took the input as script events, which some pages ignore. If nothing changed, try another way."
 
@@ -251,7 +220,9 @@ extension BrowserMacAgents {
         let reference = try call.arguments(BrowserMacAgents.TabReference.self)
         return try await serially(on: reference.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
             let page = try await self.settledPage(for: reference.tab, call)
-            let outline = try await self.run(BrowserAgentPageScript.snapshot, on: page).decoded(Outline.self)
+            let outline = try await Self.attempt { () async throws(BrowserPageControl.Failure) in
+                try await BrowserPageControl(page: page).outline()
+            }
             var text = "Page: \(outline.title)\nAddress: \(outline.url)\n\n\(outline.outline)"
             if outline.truncated { text += "\n\n(The outline was cut short. Scroll or act on what is shown.)" }
             return .message(text)
@@ -266,8 +237,9 @@ extension BrowserMacAgents {
         }
         return try await serially(on: reading.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
             let page = try await self.settledPage(for: reading.tab, call)
-            let read = try await self.run(BrowserAgentPageScript.readText(limit: limit), on: page).decoded(
-                PageText.self)
+            let read = try await Self.attempt { () async throws(BrowserPageControl.Failure) in
+                try await BrowserPageControl(page: page).text(limit: limit)
+            }
             var text = "Page: \(read.title)\nAddress: \(read.url)\n\n\(read.text)"
             if read.truncated { text += "\n\n(The text was cut short at \(limit) characters.)" }
             return .message(text)
@@ -281,12 +253,11 @@ extension BrowserMacAgents {
             let png: Data?
             if let uid = capture.uid {
                 let located = try await self.locate(uid, on: page)
-                png = await page.enginePage.capture(
-                    area: CGRect(x: located.left, y: located.top, width: located.width, height: located.height))
+                png = await BrowserPageControl(page: page).capture(area: located.area)
             } else if capture.fullPage == true {
-                png = try? await page.enginePage.export(.png)
+                png = await BrowserPageControl(page: page).captureFullPage()
             } else {
-                png = await page.enginePage.capture()
+                png = await BrowserPageControl(page: page).capture()
             }
             guard let png, !png.isEmpty else { throw .refused("The page showed nothing to capture.") }
             // Base64 makes the image a third larger on its way to the agent.
@@ -302,7 +273,7 @@ extension BrowserMacAgents {
         return try await serially(on: click.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
             let page = try await self.settledPage(for: click.tab, call)
             let located = try await self.locate(click.uid, on: page)
-            let point = PagePoint(x: located.x, y: located.y)
+            let point = located.center
             page.pointAgent(at: point, presses: true)
             let delivered = try await self.deliver(
                 .click(at: point, button: click.button?.pointer ?? .primary, count: click.double == true ? 2 : 1),
@@ -316,7 +287,7 @@ extension BrowserMacAgents {
         return try await serially(on: reference.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
             let page = try await self.settledPage(for: reference.tab, call)
             let located = try await self.locate(reference.uid, on: page)
-            let point = PagePoint(x: located.x, y: located.y)
+            let point = located.center
             page.pointAgent(at: point, presses: false)
             let delivered = try await self.deliver(.hover(at: point), to: page, tab: reference.tab, call)
             return .message(Self.done("The pointer is over the \(located.tag) \(reference.uid).", delivered))
@@ -329,7 +300,7 @@ extension BrowserMacAgents {
             let page = try await self.settledPage(for: fill.tab, call)
             // The pointer goes to the field first, as a person's would.
             if let located = try? await self.locate(fill.uid, on: page) {
-                page.pointAgent(at: PagePoint(x: located.x, y: located.y), presses: true)
+                page.pointAgent(at: located.center, presses: true)
             }
             let prepared = try await self.run(BrowserAgentPageScript.prepareFill(fill.uid, value: fill.value), on: page)
             if let refusal = BrowserAgentFillRefusal.named(prepared["error"]?.string) {
@@ -373,7 +344,7 @@ extension BrowserMacAgents {
             var point = PagePoint(x: 10, y: 10)
             if let uid = scrolling.uid {
                 let located = try await self.locate(uid, on: page)
-                point = PagePoint(x: located.x, y: located.y)
+                point = located.center
                 page.pointAgent(at: point, presses: false)
             }
             let (dx, dy) = (scrolling.dx ?? 0, scrolling.dy ?? 0)
@@ -396,7 +367,7 @@ extension BrowserMacAgents {
                     if page.live.url?.contains(address) == true {
                         return .message("The tab is at \(page.live.url ?? address).")
                     }
-                } else if (try? await self.run(BrowserAgentPageScript.shows(waiting.text), on: page)) == .bool(true) {
+                } else if await BrowserPageControl(page: page).shows(waiting.text) {
                     return .message(waiting.text.map { "The page shows \($0)." } ?? "The page finished loading.")
                 }
                 try? await Task.sleep(for: .milliseconds(250))
@@ -471,7 +442,8 @@ extension BrowserMacAgents {
         return try await serially(on: script.tab) { () async throws(BrowserAgentFailure) -> AgentToolResult in
             let page = try await self.settledPage(for: script.tab, call)
             guard
-                let evaluated = await page.enginePage.evaluate(script.function, in: .page, timeout: Self.scriptTimeout)
+                let evaluated = await page.enginePage.evaluate(
+                    script.function, in: .page, timeout: BrowserPageControl.scriptTimeout)
             else { throw .timedOut }
             self.note(.ranScript, page.live.url ?? "", call)
             if let error = evaluated.error { throw .script(error) }
@@ -488,7 +460,7 @@ extension BrowserMacAgents {
     func page(for tabID: UUID, _ call: BrowserAgentCall) throws(BrowserAgentFailure) -> BrowserPage {
         let (space, tab) = try claim(tabID, call)
         guard let page = application.pages.agentPage(for: tab, in: space) else { throw .noPage }
-        guard Self.showsWebPage(page.live.url) else { throw .notWebPage }
+        guard BrowserPageControl(page: page).showsWebPage else { throw .notWebPage }
         if call.link.observedPages[tabID] != page.enginePage.id, page.enginePage.observeActivity(true) {
             call.link.observedPages[tabID] = page.enginePage.id
         }
@@ -502,67 +474,36 @@ extension BrowserMacAgents {
     private func settledPage(for tabID: UUID, _ call: BrowserAgentCall) async throws(BrowserAgentFailure) -> BrowserPage
     {
         let page = try page(for: tabID, call)
-        if let input = call.link.lastInput.removeValue(forKey: tabID) {
-            while !page.live.isLoading, page.live.pendingURL == nil, ContinuousClock.now < input + Self.loadGrace {
-                try? await Task.sleep(for: .milliseconds(50))
-            }
-        }
-        let deadline = ContinuousClock.now + Self.settleTimeout
-        while page.committedNavigationCount == 0 || page.live.isLoading || page.live.pendingURL != nil,
-            ContinuousClock.now < deadline
-        {
-            try? await Task.sleep(for: .milliseconds(100))
-        }
+        let control = BrowserPageControl(page: page)
+        await control.settle(after: call.link.lastInput.removeValue(forKey: tabID))
         // The page renders for the agent from now on, at the size of the window
         // over its Space, once its engine made it; a page still being made is
         // asked again on the agent's next call.
         // A load may have left the web for a page agents can't use.
-        guard Self.showsWebPage(page.live.url) else { throw .notWebPage }
-        if call.link.heldPages[tabID] != page.enginePage.id {
-            let size =
-                frontWindow(over: try claim(tabID, call).0)?.pages.presentationWindow?.contentLayoutRect.size
-                ?? CGSize(width: 1280, height: 800)
-            if page.enginePage.holdRendering(true, size: size) {
-                call.link.heldPages[tabID] = page.enginePage.id
-                // A page that took a size lays out again before it is read.
-                try? await Task.sleep(for: .milliseconds(150))
-            }
+        guard control.showsWebPage else { throw .notWebPage }
+        if call.link.heldPages[tabID] != page.enginePage.id,
+            await control.holdRendering(over: frontWindow(over: try claim(tabID, call).0))
+        {
+            call.link.heldPages[tabID] = page.enginePage.id
         }
         return page
-    }
-
-    /// Whether `address` shows a web page, or a blank one or none yet, which
-    /// an agent may use, rather than one of the browser's own, an extension's
-    /// or a file.
-    private static func showsWebPage(_ address: String?) -> Bool {
-        guard let address else { return true }
-        guard address != "about:blank" else { return true }
-        let scheme = URL(string: address)?.scheme?.lowercased()
-        return scheme == "http" || scheme == "https"
     }
 
     /// What `script` answered in the agent's world of `page`.
     private func run(_ script: BrowserAgentPageScript, on page: BrowserPage) async throws(BrowserAgentFailure)
         -> AgentJSON
     {
-        guard let evaluated = await page.enginePage.evaluate(script.source, in: .agent, timeout: Self.scriptTimeout)
-        else {
-            throw page.scriptDialog.map(BrowserAgentFailure.dialog) ?? .timedOut
+        try await Self.attempt { () async throws(BrowserPageControl.Failure) in
+            try await BrowserPageControl(page: page).run(script)
         }
-        if let error = evaluated.error { throw .script(error) }
-        guard let json = evaluated.json, let value = try? JSONDecoder().decode(AgentJSON.self, from: Data(json.utf8))
-        else {
-            return .null
-        }
-        return value
     }
 
-    private func locate(_ uid: String, on page: BrowserPage) async throws(BrowserAgentFailure) -> Located {
-        let answer = try await run(BrowserAgentPageScript.locate(uid), on: page)
-        guard answer["error"] == nil, let located = try? answer.decoded(as: Located.self) else {
-            throw .unknownElement(uid)
+    private func locate(_ uid: String, on page: BrowserPage) async throws(BrowserAgentFailure)
+        -> BrowserPageControl.Located
+    {
+        try await Self.attempt { () async throws(BrowserPageControl.Failure) in
+            try await BrowserPageControl(page: page).locate(uid)
         }
-        return located
     }
 
     /// Delivers `input` to `page` of tab `tabID`, which the agent's next call
@@ -570,36 +511,25 @@ extension BrowserMacAgents {
     private func deliver(_ input: EnginePageInput, to page: BrowserPage, tab tabID: UUID, _ call: BrowserAgentCall)
         async throws(BrowserAgentFailure) -> PageInputDelivered
     {
-        guard let delivered = await page.enginePage.deliver(input, timeout: Self.inputTimeout), delivered.delivered
-        else {
-            // Input that opens a dialog waits on its answer.
-            throw page.scriptDialog.map(BrowserAgentFailure.dialog) ?? .refused("The page did not take the input.")
+        let delivered = try await Self.attempt { () async throws(BrowserPageControl.Failure) in
+            try await BrowserPageControl(page: page).deliver(input)
         }
         call.link.lastInput[tabID] = .now
         return delivered
     }
 
+    /// What `work` answered, its failure as the agent hears it.
+    private static func attempt<Value>(
+        _ work: () async throws(BrowserPageControl.Failure) -> Value
+    ) async throws(BrowserAgentFailure) -> Value {
+        do {
+            return try await work()
+        } catch {
+            throw error.agentFailure
+        }
+    }
+
     private static func done(_ message: String, _ delivered: PageInputDelivered) -> String {
         delivered.trusted ? message : "\(message) \(untrustedNote)"
-    }
-}
-
-extension AgentJSON {
-    /// The value read as `Value`, or the failure that says the page answered
-    /// something else.
-    fileprivate func decoded<Value: Decodable>(_: Value.Type) throws(BrowserAgentFailure) -> Value {
-        guard let value = try? decoded(as: Value.self) else {
-            throw .refused("The page answered something Arma can’t read.")
-        }
-        return value
-    }
-}
-
-extension EnginePage {
-    /// What the page's view shows now, all of it or `area`, as a PNG.
-    fileprivate func capture(area: CGRect? = nil) async -> Data? {
-        await withCheckedContinuation { continuation in
-            capture(area: area) { continuation.resume(returning: $0) }
-        }
     }
 }

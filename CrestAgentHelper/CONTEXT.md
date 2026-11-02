@@ -21,7 +21,10 @@ running app only for the calls that need it.
 | `AgentLinkResponse+AgentAppLink.swift` | Reading the app's answers off the link |
 | `AgentLineChannel.swift` | Newline-delimited messages over one file descriptor |
 | `ThemeCommandLine.swift` | `arma theme`: reads, writes and resets a Space's theme from the terminal |
-| `CommandAppLink.swift` | The link `arma theme` uses to reach the running app over the commands socket |
+| `CommandAppLink.swift` | The link `arma theme` and the terminal sections use to reach the running app over the commands socket |
+| `Terminal/TerminalCommandLine.swift` | `arma <section> <action>`: the `TerminalSection` protocol, the list of sections, help, `--json`, and sending a command |
+| `Terminal/TerminalArguments.swift` | The words after a section: values in order, `--options` and switches |
+| `Terminal/Terminal*CommandLine.swift` | One section each (`space`, `tab`, `window`, `folder`, `split`, `command`, `page`, `extension`, `history`, `download`, `settings`, `site`): its usage and how its words become a command |
 
 ## Depends on
 

@@ -271,6 +271,17 @@ struct BrowserAgentPageScript {
                 """)
     }
 
+    /// Scrolls the page to its top, or to its bottom when `bottom`, and
+    /// answers where it stopped.
+    static func scrollToEdge(bottom: Bool) -> Self {
+        Self(
+            source: """
+                const scroller = document.scrollingElement ?? document.documentElement;
+                scroller.scrollTo({ top: \(bottom) ? scroller.scrollHeight : 0, behavior: "instant" });
+                return { y: scroller.scrollTop, height: scroller.scrollHeight };
+                """)
+    }
+
     private static func json(_ value: String?) -> String {
         guard let value else { return "null" }
         let data = (try? JSONEncoder().encode(value)) ?? Data("\"\"".utf8)
