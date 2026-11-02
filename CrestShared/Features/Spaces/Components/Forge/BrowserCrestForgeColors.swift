@@ -132,16 +132,29 @@ extension SpaceBranding {
             symbolColor = color
             return
         }
-        if !hasLayeredCrestPalette {
-            let worn = BrowserCrestForgeLayer.all.map { layer -> BrandColor in
-                let colors = crest.layerColors(spaceColors: self.colors)
-                let index = crest[keyPath: layer.index]
-                return colors.indices.contains(index) ? colors[index] : colors[0]
-            }
-            crest.palette = ColorPalette(colors: worn)
-            for layer in BrowserCrestForgeLayer.all { crest[keyPath: layer.index] = layer.slot }
-        }
+        ownCrestPalette()
         crest.palette?[layer.slot] = color
+    }
+
+    /// Gives the crest and the icon colors of their own, the ones they wear
+    /// now, so a theme's colors never change them: the crest a palette entry
+    /// for each layer, and the icon its color rather than the accent.
+    mutating func keepIdentityColors() {
+        if symbolColor == nil { symbolColor = resolvedSymbolColor }
+        ownCrestPalette()
+    }
+
+    /// The crest's own palette, with an entry for each layer copied from what
+    /// each layer wears, the first time it needs one.
+    private mutating func ownCrestPalette() {
+        guard !hasLayeredCrestPalette else { return }
+        let colors = crest.layerColors(spaceColors: self.colors)
+        let worn = BrowserCrestForgeLayer.all.map { layer -> BrandColor in
+            let index = crest[keyPath: layer.index]
+            return colors.indices.contains(index) ? colors[index] : colors[0]
+        }
+        crest.palette = ColorPalette(colors: worn)
+        for layer in BrowserCrestForgeLayer.all { crest[keyPath: layer.index] = layer.slot }
     }
 
     // MARK: - Sidebar colors
