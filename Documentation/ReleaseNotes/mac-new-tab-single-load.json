@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "New tabs opened from a link, the palette, history or a local document start loading once instead of twice."
+}
