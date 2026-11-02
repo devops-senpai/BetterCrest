@@ -32,7 +32,8 @@ extension TerminalCrestCommand {
             var look = space.settings.look
             if let style = changes.style { look.iconStyle = style == "icon" ? .simpleSymbol : .layeredCrest }
             if let shape = changes.shape {
-                look.crest.backplate = try Self.pick(shape, CrestBackplate.all, \.name, "--shape")
+                look.crest.backplate = try Self.pick(
+                    shape == "guidon" ? CrestBackplate.flag.name : shape, CrestBackplate.offered, \.name, "--shape")
             }
             if let field = changes.field {
                 look.crest.fieldDivision = try Self.pick(field, CrestFieldDivision.all, \.name, "--field")
@@ -109,7 +110,7 @@ extension TerminalCrestCommand {
             "Icon     \(shown.symbol)  \(shown.iconColor)",
             "Colors   " + layerWords.map { "\($0) \(colors[$0] ?? "")" }.joined(separator: "  "),
             "",
-            "Shapes   " + CrestBackplate.all.map(\.name).joined(separator: ", "),
+            "Shapes   " + CrestBackplate.offered.map(\.name).joined(separator: ", "),
             "Fields   " + CrestFieldDivision.all.map(\.name).joined(separator: ", "),
             "Bands    " + CrestOrdinary.all.map(\.name).joined(separator: ", "),
             "Emblems  " + CrestSymbol.selectable.map(\.name).joined(separator: ", "),

@@ -225,7 +225,7 @@ struct BrowserCrestForge: View {
 
     @ViewBuilder
     private var shapeSections: some View {
-        crestGallery(\.backplate, CrestBackplate.all)
+        crestGallery(\.backplate, CrestBackplate.offered)
         Section {
             context.slider("Edge", \.edgeWidth, range: CrestMeasure.edgeWidth.range)
             context.slider("Size", \.plateScale, range: CrestMeasure.plateScale.range)

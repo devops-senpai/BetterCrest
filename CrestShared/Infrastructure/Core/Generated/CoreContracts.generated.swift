@@ -10183,7 +10183,7 @@ struct CrestBackplate: Hashable, Sendable {
         tag: 12,
         kind: .flag,
         name: "flag",
-        title: LocalizedStringResource("Banner Flag"),
+        title: LocalizedStringResource("Guidon"),
         drawnSince: CrestVocabulary.studio,
         hasTeeth: false
     )

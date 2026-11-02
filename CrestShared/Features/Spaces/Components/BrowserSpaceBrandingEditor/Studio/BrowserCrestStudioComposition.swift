@@ -7,7 +7,7 @@ struct BrowserCrestStudioComposition: View {
 
     var body: some View {
         BrowserCrestStudioGroup(step: .shape, preview: preview, symbol: symbol) {
-            gallery("Plate", \.backplate, CrestBackplate.all)
+            gallery("Plate", \.backplate, CrestBackplate.offered)
             if context.value.crest.backplate.hasTeeth {
                 context.count("Teeth", \.sealTeeth, range: CrestMeasure.sealTeeth.countRange)
             }

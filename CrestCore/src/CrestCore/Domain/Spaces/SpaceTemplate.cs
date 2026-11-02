@@ -7,7 +7,7 @@ namespace CrestCore.Domain;
 /// passwords, and the tabs it starts with. Every new Space has a profile of
 /// its own and opens freely. An ordinary Space takes the next accent in turn
 /// and wears that accent's house colors under Arma's own arms, its logo's
-/// banner flag and pale with a sparrow or a crane; a private one wears the private look
+/// guidon and pale with its bird; a private one wears the private look
 /// and never offers to save or sync passwords. Both start with one Start Page
 /// tab. The Getting Started practice starts from its own Space, holding the
 /// practice tabs, and a first launch from the Personal Space.
@@ -73,13 +73,11 @@ public sealed class SpaceTemplate {
 
     #region Static Actions
 
-    /// `accent`'s house look under Arma's own arms: the banner flag and pale of
-    /// its logo, in the house's colors, with its sparrow, or for every other
-    /// accent its crane, as the figure.
+    /// `accent`'s house look under Arma's own arms: the guidon, pale and
+    /// bird of its logo, in the house's colors.
     private static SpaceBranding ArmaArms(SpaceAccent accent) {
         var house = accent.House;
-        var figure = SpaceAccent.All.ToList().IndexOf(accent) % 2 == 0 ? CrestSymbol.Sparrow : CrestSymbol.Crane;
-        var arms = house.Crest with { Backplate = CrestBackplate.Flag, Ordinary = CrestOrdinary.Pale, Symbol = figure, Charge = null };
+        var arms = house.Crest with { Backplate = CrestBackplate.Flag, Ordinary = CrestOrdinary.Pale, Symbol = CrestSymbol.Sparrow, Charge = null };
         return house with { Crest = arms };
     }
 
