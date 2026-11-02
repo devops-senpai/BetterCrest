@@ -1,27 +1,5 @@
 import Foundation
 
-/// Why a theme could not dress a Space.
-enum CrestThemeProblem: Error {
-    case unknownStyle(String)
-    case unknownPattern(String)
-    case unknownTextColor(String)
-    case badColor(String)
-
-    /// What the person reads at the terminal.
-    var message: String {
-        switch self {
-        case .unknownStyle(let style):
-            "The style '\(style)' is not banner or gradient."
-        case .unknownPattern(let pattern):
-            "The pattern '\(pattern)' is not one Arma draws. Try \(SpaceBannerPattern.all.map(\.name).joined(separator: ", "))."
-        case .unknownTextColor(let mode):
-            "The text color '\(mode)' is not automatic, light, dark or system."
-        case .badColor(let text):
-            "'\(text)' is not a color. Colors are #RRGGBB or #RRGGBBAA, or the word default."
-        }
-    }
-}
-
 /// A theme read from a Space's looks, and laid onto them.
 extension CrestTheme {
     // MARK: - Initializers
@@ -171,6 +149,17 @@ extension SpaceBranding {
         return look
     }
 
+    /// This look and `dark`, the Space's look for dark windows, dressed in
+    /// `theme`: the top level dresses this look, and a `dark` object dresses
+    /// the dark look, started from the dressed look when the Space had none.
+    func dressed(in theme: CrestTheme, dark: SpaceBranding?) throws(CrestThemeProblem)
+        -> (look: SpaceBranding, dark: SpaceBranding?)
+    {
+        let look = try dressed(in: theme)
+        guard let darkSections = theme.dark else { return (look, dark) }
+        return (look, try (dark ?? look).dressed(in: darkSections))
+    }
+
     /// This look with `section` back to what `starting` gives it.
     func resetting(_ section: CrestThemeSection, to starting: SpaceBranding) -> SpaceBranding {
         var look = self
@@ -206,10 +195,10 @@ extension SpaceBranding {
         throws(CrestThemeProblem)
     {
         guard let surface else { return }
-        var current = (commandPalette ?? .neutral).surface(dark: dark)
-        if let text = surface.tint { current = current.tinted(try CrestTheme.color(text)) }
-        if let opacity = surface.opacity { current.opacity = opacity }
-        if let text = surface.text { current.textColor = try CrestTheme.color(text) }
-        setPaletteSurface(current, dark: dark)
+        try editPaletteSurface(dark: dark) { (current) throws(CrestThemeProblem) in
+            if let text = surface.tint { current = current.tinted(try CrestTheme.color(text)) }
+            if let opacity = surface.opacity { current.opacity = opacity }
+            if let text = surface.text { current.textColor = try CrestTheme.color(text) }
+        }
     }
 }

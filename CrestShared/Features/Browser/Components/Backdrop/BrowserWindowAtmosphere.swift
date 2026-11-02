@@ -16,7 +16,7 @@ struct BrowserWindowAtmosphere: View {
         ZStack {
             CrestColor.windowBackground
             if let branding {
-                BrowserSpaceBannerBackground(branding: branding)
+                BrowserSpaceBackdropLayer(spaceID: space?.id, branding: branding)
             }
         }
         .accessibilityHidden(true)

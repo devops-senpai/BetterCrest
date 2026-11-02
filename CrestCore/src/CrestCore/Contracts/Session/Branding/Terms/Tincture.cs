@@ -67,6 +67,8 @@ public sealed class Tincture {
     public static readonly Tincture ArmaRed = new("armaRed", "Arma Red", new(0.843, 0.216, 0.263));
     public static readonly Tincture ArmaGold = new("armaGold", "Arma Gold", new(0.725, 0.608, 0.376));
     public static readonly Tincture ArmaWhite = new("armaWhite", "Arma White", new(0.97, 0.97, 0.96));
+    /// The dark grey of the Catppuccin Macchiato theme Arma starts with.
+    public static readonly Tincture ArmaGrey = new("armaGrey", "Arma Grey", new(0.286, 0.302, 0.392));
 
     public static IReadOnlyList<Tincture> All { get; } = [
         Ink, Indigo, Ocean, Sky, Teal, Sage, Gold, Ember, Rose, Sand, WinterSlate, WinterSteel, WinterIce, LionOxblood,
@@ -74,7 +76,7 @@ public sealed class Tincture {
         MeadowForest, MeadowMoss, MeadowWheat, IronBlack, IronPewter, IronPatina, RiverNavy, RiverLapis, RiverRust,
         SunUmber, SunTerracotta, SunDune, VigilOnyx, VigilCharcoal, VigilAsh, WinterArgent, WinterWolf, LionGules, LionOr,
         StormOr, StormSable, DragonSable, DragonFire, MeadowVert, MeadowRose, IronOr, RiverAzure, RiverGules, RiverArgent,
-        SunTenne, SunGules, SunOr, VigilBone, NeutralSmoke, NeutralGray, ArmaNavy, ArmaRed, ArmaGold, ArmaWhite
+        SunTenne, SunGules, SunOr, VigilBone, NeutralSmoke, NeutralGray, ArmaNavy, ArmaRed, ArmaGold, ArmaWhite, ArmaGrey
     ];
 
     public string Name { get; }

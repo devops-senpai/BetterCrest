@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 1200" width="600" height="1200">
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f78c8"/><stop offset="0.3" stop-color="#0a58a8"/>
+      <stop offset="0.6" stop-color="#014799"/><stop offset="1" stop-color="#013a80"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#014799" stop-opacity="0"/><stop offset="0.55" stop-color="#014799" stop-opacity="0"/>
+      <stop offset="1" stop-color="#014799" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="ray" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#bfe8ff" stop-opacity="0.35"/><stop offset="1" stop-color="#bfe8ff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="bell" cx="0.45" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#ffd2f2" stop-opacity="0.95"/><stop offset="0.45" stop-color="#f070c8" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#9b3fd6" stop-opacity="0.75"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff9be0" stop-opacity="0.3"/><stop offset="0.7" stop-color="#ff9be0" stop-opacity="0.08"/><stop offset="1" stop-color="#ff9be0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="arm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f27ad0" stop-opacity="0.95"/><stop offset="1" stop-color="#7d3bd1" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="thread" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffc4ef" stop-opacity="0.8"/><stop offset="1" stop-color="#ffc4ef" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="1200" fill="url(#sea)"/>
+  <polygon points="120,0 220,0 420,1200 260,1200" fill="url(#ray)"/>
+  <polygon points="300,0 350,0 520,1200 440,1200" fill="url(#ray)" opacity="0.7"/>
+  
+  <polygon points="0,40 40,0 140,1200 0,1200" fill="url(#ray)" opacity="0.5"/>
+  <g fill="#e6f6ff">
+    <circle cx="90" cy="180" r="3" opacity="0.6"/><circle cx="470" cy="140" r="2.5" opacity="0.5"/>
+    <circle cx="520" cy="420" r="3.5" opacity="0.4"/><circle cx="60" cy="560" r="2" opacity="0.5"/>
+    <circle cx="430" cy="760" r="2.5" opacity="0.45"/><circle cx="150" cy="900" r="3" opacity="0.35"/>
+    <circle cx="500" cy="1020" r="2" opacity="0.4"/><circle cx="420" cy="80" r="2" opacity="0.5"/>
+    <circle cx="250" cy="1110" r="2.5" opacity="0.3"/><circle cx="380" cy="300" r="1.8" opacity="0.5"/>
+  </g>
+  <g transform="translate(190 380) rotate(-6) scale(0.74)">
+    <ellipse cx="0" cy="10" rx="300" ry="240" fill="url(#glow)"/>
+    <g fill="none" stroke="url(#thread)" stroke-width="3" stroke-linecap="round">
+      <path d="M-150 60 C-170 260 -110 420 -170 640 S-120 900 -160 1000"/>
+      <path d="M-110 80 C-120 300 -60 470 -100 700 S-60 900 -90 1060"/>
+      <path d="M150 60 C170 260 120 430 170 650 S130 880 170 990"/>
+      <path d="M115 80 C125 300 70 480 110 700 S80 900 100 1040"/>
+      <path d="M-40 90 C-50 320 0 520 -30 760 S0 960 -20 1080" stroke-width="2"/>
+      <path d="M45 90 C55 320 10 520 40 760 S10 950 30 1070" stroke-width="2"/>
+    </g>
+    <g fill="url(#arm)" stroke="#ffb3ea" stroke-opacity="0.5" stroke-width="2">
+      <path d="M-55 70 C-95 230 -20 330 -75 480 C-110 590 -40 680 -80 820 C-40 700 -10 600 -30 470 C-10 340 -60 230 -15 75 Z"/>
+      <path d="M15 75 C40 240 -15 350 30 500 C60 620 0 720 35 870 C70 730 80 620 55 480 C40 350 85 230 50 70 Z"/>
+      <path d="M-20 80 C-15 260 20 380 -5 560 C-20 690 25 790 5 930 C40 800 40 690 25 560 C45 390 15 260 25 80 Z" opacity="0.8"/>
+    </g>
+    <g fill="#ffe1f6" opacity="0.7">
+      <circle cx="-60" cy="250" r="4"/><circle cx="-48" cy="330" r="3"/><circle cx="-70" cy="420" r="4"/>
+      <circle cx="35" cy="270" r="3.5"/><circle cx="48" cy="360" r="4"/><circle cx="30" cy="450" r="3"/>
+      <circle cx="5" cy="520" r="3.5"/><circle cx="-55" cy="560" r="3"/><circle cx="50" cy="600" r="3.5"/>
+    </g>
+    <path d="M-190 70 C-200 -70 -100 -180 0 -180 C100 -180 200 -70 190 70 C170 60 160 85 140 72 C120 92 100 66 80 86 C60 66 40 92 20 76 C0 96 -20 70 -40 88 C-60 66 -80 94 -100 74 C-120 92 -140 64 -160 82 C-175 66 -185 80 -190 70 Z" fill="url(#bell)"/>
+    <g fill="none" stroke="#ffd9f4" stroke-opacity="0.55" stroke-width="3">
+      <path d="M-120 60 C-130 -40 -80 -140 0 -150"/><path d="M-60 70 C-70 -40 -30 -130 0 -150"/>
+      <path d="M60 70 C70 -40 30 -130 0 -150"/><path d="M120 60 C130 -40 80 -140 0 -150"/>
+    </g>
+    <g fill="#7a1fa8" opacity="0.45">
+      <circle cx="-100" cy="-40" r="5"/><circle cx="-60" cy="-90" r="4"/><circle cx="-20" cy="-120" r="5"/>
+      <circle cx="30" cy="-110" r="4"/><circle cx="80" cy="-70" r="5"/><circle cx="120" cy="-10" r="4"/>
+      <circle cx="-140" cy="20" r="4"/><circle cx="-30" cy="-40" r="6"/><circle cx="40" cy="-30" r="5"/>
+      <circle cx="0" cy="20" r="4"/><circle cx="-80" cy="20" r="5"/><circle cx="90" cy="30" r="4"/>
+    </g>
+    <path d="M-120 -70 C-100 -130 -40 -165 20 -165" fill="none" stroke="#ffffff" stroke-opacity="0.45" stroke-width="10" stroke-linecap="round"/>
+  </g>
+  <rect width="600" height="1200" fill="url(#fade)"/>
+</svg>

@@ -73,11 +73,15 @@ struct BrowserCrestForge: View {
     /// The Forge's history, on one of the step pages it opens; the Forge
     /// itself keeps its own.
     var sharedHistory: Binding<BrowserCrestForgeHistory>? = nil
+    /// The steps a person may open, every one unless the page edits only
+    /// part of a look, as a theme's.
+    var offeredSteps: [BrowserCrestStudioStep] = BrowserCrestStudioStep.all
 
     @State private var initialAppearance: SpaceBranding?
     @State private var ownHistory = BrowserCrestForgeHistory()
     @State private var choosesEmoji = false
     @Environment(\.browserSpaceThemeFiles) private var themeFiles
+    @Environment(\.browserSpaceSidebarSections) private var extraSidebarSections
     @Environment(\.colorScheme) private var colorScheme
     /// Why the last theme file could not be written or read, until the next try.
     @State private var themeFileProblem: String?
@@ -97,7 +101,21 @@ struct BrowserCrestForge: View {
 
     /// The step shown: the one chosen, unless an icon has no use for it.
     private var shownStep: BrowserCrestStudioStep {
-        isIcon && step.isCrestOnly ? .emblem : step
+        guard offeredSteps.contains(step) else { return offeredSteps.first ?? .sidebar }
+        return isIcon && step.isCrestOnly ? .emblem : step
+    }
+
+    /// Whether this Forge edits the sidebar's colors and pattern.
+    private var offersSidebar: Bool { offeredSteps.contains(.sidebar) }
+
+    /// Whether this Forge edits the crest or icon.
+    private var offersCrest: Bool {
+        offeredSteps.contains { $0.isCrestOnly || $0 == .emblem }
+    }
+
+    /// The steps the step bar greys out.
+    private var disabledSteps: Set<BrowserCrestStudioStep> {
+        Set(offeredSteps.filter { isIcon && $0.isCrestOnly })
     }
 
     var body: some View {
@@ -284,6 +302,9 @@ struct BrowserCrestForge: View {
         sidebarGallery
         sidebarSection
         BrowserCrestStudioFolders(context: context, isEmbedded: true)
+        if let extraSidebarSections {
+            extraSidebarSections.content()
+        }
     }
 
     /// What the Space dresses beyond its crest and sidebar: the command
@@ -411,7 +432,7 @@ struct BrowserCrestForge: View {
                 title: "Text color", value: context.setting(\.sidebarTextColor, default: nil),
                 fallback: branding.sidebarTextColor(over: colorScheme))
             BrowserCrestStudioColorPickerRow(
-                title: "Secondary text color", value: context.setting(\.sidebarSecondaryTextColor, default: nil),
+                title: "System text color", value: context.setting(\.sidebarSecondaryTextColor, default: nil),
                 fallback: branding.sidebarTextColor(over: colorScheme))
         }
     }
@@ -476,11 +497,12 @@ struct BrowserCrestForge: View {
         VStack(spacing: 16) {
             BrowserCrestForgeStage(
                 branding: $branding, symbol: symbol, name: name, canUndo: history.wrappedValue.canUndo,
+                showsCrest: offersCrest, showsSidebar: offersSidebar,
                 shuffle: shuffle, undo: undo, openStep: { step = $0 })
             if showsStepBar && !listsSteps {
                 BrowserPlatformCrestForgeStepBar(
                     step: Binding(get: { shownStep }, set: { step = $0 }),
-                    disabledSteps: isIcon ? Set(BrowserCrestStudioStep.all.filter(\.isCrestOnly)) : [])
+                    disabledSteps: disabledSteps, steps: offeredSteps)
             }
         }
         .textCase(nil)
@@ -514,8 +536,21 @@ struct BrowserCrestForge: View {
         branding = previous
     }
 
+    /// Shuffles only what this Forge edits, keeping the crest or the sidebar
+    /// it doesn't offer.
     private func shuffle() {
-        branding = Self.shuffled(branding)
+        var look = Self.shuffled(branding)
+        if !offersSidebar {
+            look.themeMode = branding.themeMode
+            look.bannerPattern = branding.bannerPattern
+            look.gradientAngle = branding.gradientAngle
+            look.colors = branding.colors
+        }
+        if !offersCrest {
+            look.crest = branding.crest
+            look.iconStyle = branding.iconStyle
+        }
+        branding = look.normalized()
     }
 
     // MARK: - Looks

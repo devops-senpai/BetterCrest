@@ -38,7 +38,8 @@ public sealed class ShortcutMenu {
     ]);
     public static readonly ShortcutMenu Spaces = new(name: "spaces", title: "Spaces", groups: [
         [ShortcutCommand.PreviousSpace, ShortcutCommand.NextSpace],
-        Numbered(NumberedSelectionTarget.Space)
+        Numbered(NumberedSelectionTarget.Space),
+        [ShortcutCommand.SaveSpaceTheme, ShortcutCommand.ImportTheme, ShortcutCommand.ExportTheme]
     ]);
     public static readonly ShortcutMenu Page = new(name: "page", title: "Page", groups: [
         [ShortcutCommand.ToggleReaderMode, ShortcutCommand.ToggleContentBlocking],

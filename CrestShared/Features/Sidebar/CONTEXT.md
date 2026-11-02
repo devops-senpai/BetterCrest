@@ -17,7 +17,7 @@ sized by `BrowserInteractionCapabilities` and the density preference.
 | --- | --- |
 | `BrowserSidebar.swift` | The shared sidebar owner |
 | `BrowserSidebar/` | Its context, loaded content, clear-history dialog and preview fixture |
-| `Components/` | Rows and sections: tab list and row, folder group, split group row, Space header and switcher, address field, navigation controls, drag, organization, selection and batch menus, icon customization |
+| `Components/` | Rows and sections: tab list and row, folder group, split group row, Space header and switcher, address field, navigation controls, drag, organization, selection and batch menus, icon customization, and the tab backing a Space's picture lays under its rows (`BrowserSidebarTabBacking`) |
 | `Models/` | List items and context, interaction state, folder and split presentation |
 | `Services/` | Tab, batch, selection, chrome and utility actions; the navigation and page-access ports |
 | `Support/` | Metrics, density, folder layout and appearance, Space picker layout, `BrowserStore` and `SpaceModel` sidebar extensions |

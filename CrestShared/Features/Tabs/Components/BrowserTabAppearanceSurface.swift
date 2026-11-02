@@ -43,5 +43,8 @@ struct BrowserTabAppearanceSurface: ViewModifier {
                     )
                 }
             }
+            // The Space's tab backing lies under the row's resting, hover and
+            // selection fills, so they draw over it.
+            .background { BrowserSidebarTabBackingPlate(cornerRadius: radius) }
     }
 }

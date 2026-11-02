@@ -6,12 +6,14 @@ import SwiftUI
 struct BrowserPlatformCrestForgeStepBar: NSViewRepresentable {
     @Binding var step: BrowserCrestStudioStep
     let disabledSteps: Set<BrowserCrestStudioStep>
+    /// The steps the bar offers, every one unless a page edits only part of a look.
+    var steps: [BrowserCrestStudioStep] = BrowserCrestStudioStep.all
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     func makeNSView(context: Context) -> NSSegmentedControl {
         let control = NSSegmentedControl(
-            labels: BrowserCrestStudioStep.all.map { String(localized: $0.title) },
+            labels: steps.map { String(localized: $0.title) },
             trackingMode: .selectOne, target: context.coordinator,
             action: #selector(Coordinator.changed(_:)))
         control.segmentStyle = .automatic
@@ -22,10 +24,10 @@ struct BrowserPlatformCrestForgeStepBar: NSViewRepresentable {
 
     func updateNSView(_ control: NSSegmentedControl, context: Context) {
         context.coordinator.parent = self
-        for (index, candidate) in BrowserCrestStudioStep.all.enumerated() {
+        for (index, candidate) in steps.enumerated() {
             control.setEnabled(!disabledSteps.contains(candidate), forSegment: index)
         }
-        control.selectedSegment = BrowserCrestStudioStep.all.firstIndex(of: step) ?? 0
+        control.selectedSegment = steps.firstIndex(of: step) ?? 0
     }
 
     final class Coordinator: NSObject {
@@ -34,7 +36,7 @@ struct BrowserPlatformCrestForgeStepBar: NSViewRepresentable {
         init(_ parent: BrowserPlatformCrestForgeStepBar) { self.parent = parent }
 
         @MainActor @objc func changed(_ sender: NSSegmentedControl) {
-            let steps = BrowserCrestStudioStep.all
+            let steps = parent.steps
             guard steps.indices.contains(sender.selectedSegment) else { return }
             parent.step = steps[sender.selectedSegment]
         }

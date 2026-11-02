@@ -1,0 +1,38 @@
+{
+ "background": {
+  "colors": [
+   "#24273a",
+   "#c6a0f6",
+   "#494d64"
+  ],
+  "intensity": 1,
+  "pattern": "solid",
+  "readabilityFade": 0,
+  "sidebarText": "#cad3f5",
+  "style": "banner",
+  "textColor": "light",
+  "texture": false
+ },
+ "commandPalette": {
+  "dark": {
+   "opacity": 0.92,
+   "text": "#cad3f5",
+   "tint": "#24273a"
+  },
+  "light": {
+   "opacity": 0.92,
+   "text": "#cad3f5",
+   "tint": "#24273a"
+  }
+ },
+ "folders": {
+  "backColor": "#2565dc",
+  "color": "#a581ff",
+  "intensity": 0.25,
+  "outlineColor": "#000000"
+ },
+ "icon": {
+  "color": "#c6a0f6"
+ },
+ "name": "Catppuccin Macchiato"
+}

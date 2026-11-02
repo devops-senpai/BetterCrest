@@ -34,6 +34,16 @@ extension SpaceBranding {
         look.setSurface(surface, dark: dark)
         commandPalette = look
     }
+
+    /// Changes the command palette's surface for the appearance `dark` names
+    /// in place, starting from the system material when the Space had none.
+    mutating func editPaletteSurface<Failure: Error>(
+        dark: Bool, _ edit: (inout SpacePaletteSurface) throws(Failure) -> Void
+    ) throws(Failure) {
+        var surface = (commandPalette ?? .neutral).surface(dark: dark)
+        try edit(&surface)
+        setPaletteSurface(surface, dark: dark)
+    }
 }
 
 extension SpacePaletteSurface {

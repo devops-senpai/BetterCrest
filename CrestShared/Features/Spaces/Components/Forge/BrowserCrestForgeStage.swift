@@ -9,13 +9,19 @@ struct BrowserCrestForgeStage: View {
     /// else on the page does.
     var name: Binding<String>? = nil
     let canUndo: Bool
+    /// Whether the stage offers the crest's colors, where the page edits the crest.
+    var showsCrest = true
+    /// Whether the stage offers the sidebar's colors, where the page edits them.
+    var showsSidebar = true
     let shuffle: () -> Void
     let undo: () -> Void
     /// Shows a step of the Forge, for a color whose part the crest doesn't draw.
     let openStep: (BrowserCrestStudioStep) -> Void
 
+    @Environment(\.browserCrestForgeStageHero) private var hero
     @State private var openLayer: BrowserCrestForgeLayer?
     @State private var openSidebarColor: BrowserSpaceBrandColorRole?
+    @State private var openTextColor: String?
 
     var body: some View {
         stage
@@ -41,9 +47,13 @@ struct BrowserCrestForgeStage: View {
 
     private var wideStage: some View {
         HStack(spacing: BrowserCrestForgeMetrics.stageSpacing) {
-            VStack(spacing: 12) {
-                mark(size: BrowserCrestForgeMetrics.crestSize)
-                nameField
+            if let hero {
+                hero.content(branding)
+            } else {
+                VStack(spacing: 12) {
+                    mark(size: BrowserCrestForgeMetrics.crestSize)
+                    nameField
+                }
             }
             swatches(columnWidth: BrowserCrestForgeMetrics.swatchColumnWidth)
             Spacer(minLength: 0)
@@ -51,13 +61,17 @@ struct BrowserCrestForgeStage: View {
         .padding(.leading, 28)
         .padding(.trailing, 16)
         .frame(maxWidth: .infinity, minHeight: BrowserCrestForgeMetrics.stageHeight, alignment: .leading)
-        .background { field(shadeFrom: .leading, to: .trailing) }
+        .background { stageBackground(shadeFrom: .leading, to: .trailing) }
     }
 
     private var compactStage: some View {
         VStack(spacing: 14) {
-            mark(size: BrowserCrestForgeMetrics.compactCrestSize)
-            nameField
+            if let hero {
+                hero.content(branding)
+            } else {
+                mark(size: BrowserCrestForgeMetrics.compactCrestSize)
+                nameField
+            }
             swatches(
                 columnWidth: BrowserCrestForgeMetrics.compactSwatchColumnWidth,
                 sidebarColumnWidth: BrowserCrestForgeMetrics.compactSidebarSwatchColumnWidth)
@@ -66,7 +80,7 @@ struct BrowserCrestForgeStage: View {
         .padding(.horizontal, 8)
         .padding(.bottom, 14)
         .frame(maxWidth: .infinity)
-        .background { field(shadeFrom: .top, to: .bottom) }
+        .background { stageBackground(shadeFrom: .top, to: .bottom) }
     }
 
     private func mark(size: CGFloat) -> some View {
@@ -88,16 +102,34 @@ struct BrowserCrestForgeStage: View {
     /// where that keeps their names whole.
     private func swatches(columnWidth: CGFloat, sidebarColumnWidth: CGFloat? = nil) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            swatchGroup(branding.iconStyle.title) {
-                ForEach(BrowserCrestForgeLayer.shown(by: branding)) { layer in
-                    layerSwatch(layer, columnWidth: columnWidth)
+            if showsCrest {
+                swatchGroup(branding.iconStyle.title) {
+                    ForEach(BrowserCrestForgeLayer.shown(by: branding)) { layer in
+                        layerSwatch(layer, columnWidth: columnWidth)
+                    }
                 }
             }
-            swatchGroup("Sidebar") {
-                ForEach(BrowserSpaceBrandColorRole.all) { role in
-                    sidebarSwatch(role, columnWidth: sidebarColumnWidth ?? columnWidth)
+            if showsSidebar {
+                swatchGroup("Sidebar") {
+                    ForEach(BrowserSpaceBrandColorRole.all) { role in
+                        sidebarSwatch(role, columnWidth: sidebarColumnWidth ?? columnWidth)
+                    }
+                    ForEach(BrowserCrestForgeTextColor.all) { text in
+                        textSwatch(text, columnWidth: sidebarColumnWidth ?? columnWidth)
+                    }
                 }
             }
+        }
+    }
+
+    /// Behind a crest, the Space's own field; behind a small browser, which
+    /// wears the colors itself, a plain dark stage.
+    @ViewBuilder
+    private func stageBackground(shadeFrom start: UnitPoint, to end: UnitPoint) -> some View {
+        if hero == nil {
+            field(shadeFrom: start, to: end)
+        } else {
+            Color.black.opacity(0.82)
         }
     }
 
@@ -162,6 +194,26 @@ struct BrowserCrestForgeStage: View {
         }
     }
 
+    private func textSwatch(_ text: BrowserCrestForgeTextColor, columnWidth: CGFloat) -> some View {
+        let color = text.color(in: branding, over: .dark)
+        return BrowserCrestForgeSwatch(
+            title: text.title, color: color, isOpen: openTextColor == text.id, columnWidth: columnWidth
+        ) {
+            openTextColor = text.id
+        }
+        .popover(
+            isPresented: Binding(
+                get: { openTextColor == text.id }, set: { if !$0, openTextColor == text.id { openTextColor = nil } }),
+            arrowEdge: .bottom
+        ) {
+            BrowserCrestForgePalette(title: text.title, caption: text.caption, color: color) { picked in
+                branding[keyPath: text.keyPath] = picked
+                branding = branding.normalized()
+            }
+            .presentationCompactAdaptation(.popover)
+        }
+    }
+
     private func sidebarSwatch(_ role: BrowserSpaceBrandColorRole, columnWidth: CGFloat) -> some View {
         BrowserCrestForgeSwatch(
             title: role.title, color: branding.forgeColor(of: role), isOpen: openSidebarColor == role,
@@ -181,6 +233,39 @@ struct BrowserCrestForgeStage: View {
             }
             .presentationCompactAdaptation(.popover)
         }
+    }
+}
+
+/// One of the sidebar's text colors the stage offers beside its field's:
+/// the tabs' text, and the quieter system text such as New Tab and Clear.
+private struct BrowserCrestForgeTextColor: Identifiable, Sendable {
+    // MARK: - Static Variables
+
+    static let tabs = BrowserCrestForgeTextColor(
+        id: "tabs", title: "Tab text", caption: "The color of the tabs' titles",
+        keyPath: \.sidebarTextColor, emphasis: 1)
+    static let system = BrowserCrestForgeTextColor(
+        id: "system", title: "System text", caption: "New Tab, Clear and the sidebar's other quieter text",
+        keyPath: \.sidebarSecondaryTextColor, emphasis: 0.6)
+    static let all = [tabs, system]
+
+    // MARK: - Variables
+
+    let id: String
+    let title: LocalizedStringResource
+    let caption: LocalizedStringResource
+    let keyPath: WritableKeyPath<SpaceBranding, BrandColor?> & Sendable
+    /// How strongly the text color shows where this one follows it.
+    let emphasis: Double
+
+    // MARK: - Actions - Colors
+
+    /// The color it draws in `branding` over a window in `appearance`: its
+    /// own, or the tab text faded as the system fades it.
+    func color(in branding: SpaceBranding, over appearance: ColorScheme) -> BrandColor {
+        if let own = branding[keyPath: keyPath] { return own }
+        let text = branding.sidebarTextColor(over: appearance)
+        return BrandColor(red: text.red, green: text.green, blue: text.blue, alpha: text.alpha * emphasis)
     }
 }
 

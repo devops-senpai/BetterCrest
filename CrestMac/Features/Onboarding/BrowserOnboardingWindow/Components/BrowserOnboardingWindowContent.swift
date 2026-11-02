@@ -37,7 +37,8 @@ struct BrowserOnboardingWindowContent: View {
                         selectedManualSpaceID: $selectedManualSpaceID,
                         customizationSpaceID: $customizationSpaceID,
                         close: close,
-                        openCrest: openCrest
+                        openCrest: openCrest,
+                        welcomeBranding: BrowserOnboardingWelcomeLook.look(at: welcomeHouse)
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
@@ -78,18 +79,18 @@ struct BrowserOnboardingWindowContent: View {
     private var stageBranding: SpaceBranding {
         switch flow.step.kind {
         case .welcome:
-            return SpaceHouse.all[welcomeHouse % SpaceHouse.all.count].look
+            return BrowserOnboardingWelcomeLook.look(at: welcomeHouse)
         case .manualSetup:
-            return flow.manualSetup.space(selectedManualSpaceID)?.customization.branding ?? flow.look.previewBranding
+            return flow.manualSetup.space(selectedManualSpaceID)?.customization.branding ?? flow.previewBranding
         case .review:
             guard let review = flow.selectedReview(id: flow.shownReviewSpaceID) else {
-                return flow.look.previewBranding
+                return flow.previewBranding
             }
-            return flow.previewDestinationSpace(for: review)?.settings.look ?? flow.look.previewBranding
+            return flow.previewDestinationSpace(for: review)?.settings.look ?? flow.previewBranding
         case .complete:
-            return flow.manualSetup.spaces.first?.customization.branding ?? flow.look.previewBranding
+            return flow.manualSetup.spaces.first?.customization.branding ?? flow.previewBranding
         case .look, .featureSpaces, .featureTabs, .featureSync, .importBrowser:
-            return flow.look.previewBranding
+            return flow.previewBranding
         }
     }
 

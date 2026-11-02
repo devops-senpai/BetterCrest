@@ -12,7 +12,7 @@ struct BrowserFloatingSidebarCardBackground: View {
             platformBackground
 
             if let space {
-                BrowserSpaceBannerBackground(branding: space.settings.shownLook.shown)
+                BrowserSpaceBackdropLayer(spaceID: space.id, branding: space.settings.shownLook.shown)
                     .opacity(Self.spaceThemeOpacity)
             }
 

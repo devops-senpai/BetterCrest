@@ -12,6 +12,12 @@ struct BrowserOnboardingSetupFinishing: BrowserSetupFinishReceiver {
     // MARK: - Actions - Finishing
 
     func setupCompleted(guide _: BrowserTabRuntimeAssignment?) {
+        // A theme chosen in setup dresses every Space setup made.
+        if let theme = flow.theme {
+            for space in flow.browser.spaceModels {
+                _ = BrowserThemeLibrary.shared.choose(theme.id, for: space.id, in: flow.browser)
+            }
+        }
         progress.setupFinished()
         onCompleted()
     }

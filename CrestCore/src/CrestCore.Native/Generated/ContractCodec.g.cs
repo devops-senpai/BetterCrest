@@ -14,7 +14,7 @@ namespace CrestCore.Native;
 public static class ContractCodec {
     /// <summary>SHA-256 of the canonical contract schema.</summary>
     public static ReadOnlySpan<byte> Fingerprint => [
-        0x47, 0xdc, 0x46, 0x6b, 0xbd, 0x3d, 0x98, 0x91, 0x4a, 0x2b, 0x44, 0xad, 0xb1, 0x3c, 0x2d, 0x32, 0x57, 0x6c, 0xa1, 0x72, 0x67, 0x64, 0xf2, 0xf0, 0xe9, 0xf8, 0xcf, 0x11, 0x0f, 0xd0, 0x83, 0xd7
+        0x59, 0xf3, 0xf8, 0x47, 0x94, 0x80, 0x6e, 0xfa, 0xe9, 0xce, 0x9a, 0xbd, 0xf5, 0xbc, 0x9a, 0x7c, 0xb0, 0x27, 0x88, 0x4f, 0xfe, 0x31, 0x1e, 0xd2, 0xab, 0x9b, 0x90, 0xfd, 0x39, 0xf2, 0x10, 0xe9
     ];
 
     /// <summary>SHA-256 of the engine contract alone, which an engine binding registers with.</summary>
@@ -13284,7 +13284,8 @@ public static class ContractCodec {
             reader.ReadPresence() ? (SearchProvider?)ReadSearchProviderSeed(reader) : null,
             reader.ReadPresence() ? (PaletteScope?)ReadPaletteScope(reader) : null,
             reader.ReadBool(),
-            reader.ReadPresence() ? (string?)reader.ReadString() : null);
+            reader.ReadPresence() ? (string?)reader.ReadString() : null,
+            reader.ReadList(() => ReadPaletteTheme(reader)));
     }
 
     public static void WritePaletteSuggestions(WireWriter writer, PaletteSuggestions value) {
@@ -13323,6 +13324,26 @@ public static class ContractCodec {
         } else {
             writer.WritePresence(false);
         }
+        writer.WriteCount(value.Themes.Count);
+        foreach (var itemThemes in value.Themes) {
+            WritePaletteTheme(writer, itemThemes);
+        }
+    }
+
+    public static PaletteTheme ReadPaletteTheme(WireReader reader) {
+        ArgumentNullException.ThrowIfNull(reader);
+        return new PaletteTheme(
+            reader.ReadGuid(),
+            reader.ReadString(),
+            reader.ReadString());
+    }
+
+    public static void WritePaletteTheme(WireWriter writer, PaletteTheme value) {
+        ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(value);
+        writer.WriteGuid(value.Id);
+        writer.WriteString(value.Name);
+        writer.WriteString(value.Detail);
     }
 
     public static PasskeyAccess ReadPasskeyAccess(WireReader reader) {

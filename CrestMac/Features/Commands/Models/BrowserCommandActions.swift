@@ -46,7 +46,9 @@ struct BrowserCommandActions: BrowserNumberedSelectionPerformer {
             openSettings: openSettings,
             switchSpace: selectSpace,
             reopenArchivedTab: reopenArchivedTab,
-            copy: copy
+            copy: copy,
+            themes: { BrowserThemeLibrary.shared.paletteThemes },
+            applyTheme: applySavedTheme
         )
     }
 

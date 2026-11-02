@@ -13,6 +13,9 @@ struct BrowserOnboardingWindowPreview<Page: View>: View {
     let name: String
     var editableName: Binding<String>? = nil
     var showsNameHint = false
+    /// A picture behind the field, as the store keeps it for the owner it
+    /// names, such as a theme's on the Themes page.
+    var backdrop: (ownerID: UUID, store: BrowserSpaceBackdropStore)? = nil
     @ViewBuilder let page: Page
 
     @State private var favicons = FaviconAssets()
@@ -34,7 +37,11 @@ struct BrowserOnboardingWindowPreview<Page: View>: View {
 
     var body: some View {
         ZStack {
-            BrowserSpaceBannerBackground(branding: branding)
+            if let backdrop {
+                BrowserSpaceBackdropLayer(spaceID: backdrop.ownerID, branding: branding, store: backdrop.store)
+            } else {
+                BrowserSpaceBannerBackground(branding: branding)
+            }
             if let space {
                 HStack(spacing: 0) {
                     sidebar(space)

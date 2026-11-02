@@ -72,12 +72,13 @@ public sealed class SpaceHouse {
                 Tincture.VigilAsh],
             trimWeight: 0.9, depth: CrestDepth.None)));
 
-    /// Arma's own arms, as its logo draws them: a white bird on a navy guidon
-    /// with a red pale, wreathed in gold laurel.
+    /// Arma's own arms: a white bird on a navy guidon with a pale in the dark
+    /// grey of the Catppuccin Macchiato theme it starts with, wreathed in gold
+    /// laurel.
     public static readonly SpaceHouse Arma = new("arma", "Arma", "Arma", HouseLook(
         [Tincture.ArmaNavy, Tincture.ArmaRed, Tincture.ArmaGold], SpaceThemeMode.Banner, SpaceBannerPattern.Solid,
         Arms(CrestBackplate.Flag, CrestSymbol.Sparrow, CrestTrim.Laurel, edgeWidth: 0.2,
-            [Tincture.ArmaNavy, Tincture.ArmaNavy, Tincture.ArmaRed, Tincture.ArmaWhite, Tincture.ArmaGold, Tincture.ArmaNavy],
+            [Tincture.ArmaNavy, Tincture.ArmaNavy, Tincture.ArmaGrey, Tincture.ArmaWhite, Tincture.ArmaGold, Tincture.ArmaNavy],
             chargeScale: 1.15) with { Ordinary = CrestOrdinary.Pale }));
 
     /// Every house, in the order the core first knew them; the gallery offers

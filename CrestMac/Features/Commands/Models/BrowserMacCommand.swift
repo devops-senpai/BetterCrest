@@ -58,6 +58,9 @@ struct BrowserMacCommand {
     }
     static let removeTabFromSplit = BrowserMacCommand(.removeTabFromSplit) { $0.removeSelectedTabFromSplit() }
     static let separateSplitTabs = BrowserMacCommand(.separateSplitTabs) { $0.separateSplitTabs() }
+    static let saveSpaceTheme = BrowserMacCommand(.saveSpaceTheme) { $0.saveSpaceTheme() }
+    static let importTheme = BrowserMacCommand(.importTheme) { $0.importTheme() }
+    static let exportTheme = BrowserMacCommand(.exportTheme) { $0.exportTheme() }
     static let moveSplitCardLeft = BrowserMacCommand(
         .moveSplitCardLeft, isAvailable: { $0.canMoveFocusedSplitCard(.left) },
         run: { $0.moveFocusedSplitCard(.left) })
@@ -164,7 +167,7 @@ struct BrowserMacCommand {
         sharePage, exportPDF, saveWebArchive, printPage, capturePage, clearSiteCookies, clearSiteCache,
         toggleSidebar, showHistory, showArchive, showDownloads,
         showWebInspector,
-        toggleTranslationToolbar, toggleDeveloperToolbar, selectNumbered,
+        toggleTranslationToolbar, toggleDeveloperToolbar, selectNumbered, saveSpaceTheme, importTheme, exportTheme,
     ]
 
     // MARK: - Variables

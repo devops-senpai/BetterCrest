@@ -56,5 +56,5 @@ public sealed partial class BrowserContractsTests {
 
     /// What window `window` asks its palette for `text`, completing inline.
     private static PaletteSuggestions Asking(Guid window, string text) =>
-        new(window, text, [], [], [], Provider: null, Scope: null, AllowsCompletion: true, Pasteboard: null);
+        new(window, text, [], [], [], Provider: null, Scope: null, AllowsCompletion: true, Pasteboard: null, Themes: []);
 }

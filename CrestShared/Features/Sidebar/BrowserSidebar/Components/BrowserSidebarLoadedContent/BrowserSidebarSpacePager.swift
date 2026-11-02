@@ -28,6 +28,7 @@ struct BrowserSidebarSpacePager<Page: View>: View {
                 },
                 content: { space, isSelected in
                     page(space, isSelected)
+                        .modifier(BrowserSidebarTabBackingModifier(space: space))
                         .environment(\.browserSidebarDropViewportID, dropViewportID)
                 }
             )

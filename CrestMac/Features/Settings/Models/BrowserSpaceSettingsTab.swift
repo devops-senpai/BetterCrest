@@ -18,7 +18,8 @@ struct BrowserSpaceSettingsTab: Hashable, Identifiable, Sendable {
 
     static let appearance = BrowserSpaceSettingsTab(
         kind: .appearance, name: "appearance", title: "Appearance",
-        searchTerms: "crest studio name icon emblem colors theme banner background sidebar pattern gradient accent",
+        searchTerms:
+            "crest studio name icon emblem colors theme banner background image picture tab backing sidebar pattern gradient accent",
         destination: .spaces)
     static let browsing = BrowserSpaceSettingsTab(
         kind: .browsing, name: "browsing", title: "Browsing",

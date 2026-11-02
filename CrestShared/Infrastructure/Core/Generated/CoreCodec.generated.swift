@@ -7,7 +7,7 @@ import Foundation
 enum CoreCodec {
     /// SHA-256 of the canonical contract schema. The core refuses any other.
     static let fingerprint: [UInt8] = [
-        0x47, 0xdc, 0x46, 0x6b, 0xbd, 0x3d, 0x98, 0x91, 0x4a, 0x2b, 0x44, 0xad, 0xb1, 0x3c, 0x2d, 0x32, 0x57, 0x6c, 0xa1, 0x72, 0x67, 0x64, 0xf2, 0xf0, 0xe9, 0xf8, 0xcf, 0x11, 0x0f, 0xd0, 0x83, 0xd7
+        0x59, 0xf3, 0xf8, 0x47, 0x94, 0x80, 0x6e, 0xfa, 0xe9, 0xce, 0x9a, 0xbd, 0xf5, 0xbc, 0x9a, 0x7c, 0xb0, 0x27, 0x88, 0x4f, 0xfe, 0x31, 0x1e, 0xd2, 0xab, 0x9b, 0x90, 0xfd, 0x39, 0xf2, 0x10, 0xe9
     ]
     /// SHA-256 of the engine contract alone, which an engine binding registers with.
     static let engineFingerprint: [UInt8] = [
@@ -16222,7 +16222,14 @@ extension PaletteSuggestions {
         } else {
             pasteboard = nil
         }
-        self.init(windowID: windowID, text: text, commands: commands, settingsPages: settingsPages, remote: remote, provider: provider, scope: scope, allowsCompletion: allowsCompletion, pasteboard: pasteboard)
+        let themesCount = try reader.readCount()
+        var themes: [PaletteTheme] = []
+        themes.reserveCapacity(themesCount)
+        for _ in 0..<themesCount {
+            let themesElement = try PaletteTheme(from: &reader)
+            themes.append(themesElement)
+        }
+        self.init(windowID: windowID, text: text, commands: commands, settingsPages: settingsPages, remote: remote, provider: provider, scope: scope, allowsCompletion: allowsCompletion, pasteboard: pasteboard, themes: themes)
     }
 
     func encode(into writer: inout WireWriter) {
@@ -16259,6 +16266,10 @@ extension PaletteSuggestions {
         } else {
             writer.writePresence(false)
         }
+        writer.writeCount(themes.count)
+        for element0 in themes {
+            element0.encode(into: &writer)
+        }
     }
 
     func encodeQuery(into writer: inout WireWriter) {
@@ -16269,6 +16280,21 @@ extension PaletteSuggestions {
     static func decodeAnswer(from reader: inout WireReader) throws(WireError) -> PaletteAnswer {
         let answer = try PaletteAnswer(from: &reader)
         return answer
+    }
+}
+
+extension PaletteTheme {
+    init(from reader: inout WireReader) throws(WireError) {
+        let id = try reader.readUUID()
+        let name = try reader.readString()
+        let detail = try reader.readString()
+        self.init(id: id, name: name, detail: detail)
+    }
+
+    func encode(into writer: inout WireWriter) {
+        writer.writeUUID(id)
+        writer.writeString(name)
+        writer.writeString(detail)
     }
 }
 

@@ -78,7 +78,10 @@ public sealed class ShortcutCommand {
         CapturePage,
         MostRecentTabBackward,
         ClearSiteCookies,
-        ClearSiteCache
+        ClearSiteCache,
+        SaveSpaceTheme,
+        ImportTheme,
+        ExportTheme
     }
 
     #endregion
@@ -295,6 +298,16 @@ public sealed class ShortcutCommand {
         ShortcutSection.Page, title: "Clear Cache for This Site", symbol: "trash",
         searchTerms: "cached images files empty delete remove", availableWhen: ShowingWebPage);
 
+    public static readonly ShortcutCommand SaveSpaceTheme = new(Kinds.SaveSpaceTheme, name: "saveSpaceTheme",
+        ShortcutSection.Spaces, title: "Save Look as Theme", symbol: "paintpalette",
+        searchTerms: "theme save colors look appearance");
+    public static readonly ShortcutCommand ImportTheme = new(Kinds.ImportTheme, name: "importTheme", ShortcutSection.Spaces,
+        title: "Import Theme", symbol: "square.and.arrow.down", menuTitle: "Import Theme…",
+        searchTerms: "theme load file colors look appearance");
+    public static readonly ShortcutCommand ExportTheme = new(Kinds.ExportTheme, name: "exportTheme", ShortcutSection.Spaces,
+        title: "Export Theme", symbol: "square.and.arrow.up", menuTitle: "Export Theme…",
+        searchTerms: "theme save file share colors look appearance");
+
     public static IReadOnlyList<ShortcutCommand> All { get; } = [
         NewWindow, NewBlankWindow, NewTab, NewQuickWindow, NewPrivateWindow, CloseTabOrWindow, CloseWindow, OpenLocation, Back,
         Forward, ReloadPage, StopLoading, ReloadFromOrigin, ToggleSelectedTabPinned, DuplicateTab, ReopenClosedTab,
@@ -305,7 +318,8 @@ public sealed class ShortcutCommand {
         ExportPDF, SaveWebArchive, PrintPage, ToggleSidebar, ShowHistory, ShowArchive, ShowDownloads, ShowWebInspector,
         SplitWithNextTab, FocusNextSplitCard, FocusPreviousSplitCard, RemoveTabFromSplit, SeparateSplitTabs,
         MoveSplitCardLeft, MoveSplitCardRight, ToggleDeveloperToolbar, ToggleTranslationToolbar, OpenFile, FindNext,
-        FindPrevious, CapturePage, MostRecentTabBackward, ClearSiteCookies, ClearSiteCache
+        FindPrevious, CapturePage, MostRecentTabBackward, ClearSiteCookies, ClearSiteCache, SaveSpaceTheme, ImportTheme,
+        ExportTheme
     ];
 
     public Kinds Kind { get; }
