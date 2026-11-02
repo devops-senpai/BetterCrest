@@ -4,6 +4,69 @@
     "" : {
 
     },
+    "Automation" : {
+
+    },
+    "Testing frameworks" : {
+
+    },
+    "Allow testing frameworks" : {
+
+    },
+    "Restart Arma" : {
+
+    },
+    "Listening on" : {
+
+    },
+    "Profile" : {
+
+    },
+    "Ephemeral" : {
+
+    },
+    "Tabs it can see" : {
+
+    },
+    "Only tabs it opens" : {
+
+    },
+    "Existing tabs too" : {
+
+    },
+    "Port" : {
+
+    },
+    "Playwright, Puppeteer, Selenium and other tools on this Mac can drive Arma’s Chromium tabs in the profile below, and read the sites signed in there. Only programs on this Mac can connect." : {
+
+    },
+    "Ephemeral starts empty, with no sign-ins, and is forgotten when automation stops or Arma quits." : {
+
+    },
+    "Its tools see only that profile’s Spaces, never your other profiles." : {
+
+    },
+    "Selenium, WebdriverIO and Katalon connect through ChromeDriver %@. WebKit pages can’t be driven by these tools." : {
+
+    },
+    "matching Arma's Chromium" : {
+
+    },
+    "Connects to the running browser." : {
+
+    },
+    "Connects over the Chrome DevTools Protocol; Chromium only." : {
+
+    },
+    "Attaches ChromeDriver to the running browser." : {
+
+    },
+    "Attaches its Chrome driver to the running browser." : {
+
+    },
+    "Runs tests in an Arma tab through TestCafe's remote browser." : {
+
+    },
     "Command-line page control" : {
 
     },

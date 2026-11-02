@@ -369,12 +369,18 @@ EngineBrowsers::KeptBrowser* EngineBrowsers::WindowBrowser(const std::string& pr
 // own. A popup it asked for, which Chromium makes an app popup, joins the
 // window the person is using as a tab it keeps, and never holds that window's
 // other pages, which its extension could otherwise close with the popup.
+//
+// A Browser of a browser context DevTools automation browses in, which is
+// lent to a Space's profile, keeps its tabs the same way: they show in that
+// Space, but their store is the context's, so they never join the Space's own
+// Browser.
 bool EngineBrowsers::Place(Browser* browser) {
   const bool requested = own_window_profile_ == browser->GetProfile();
   own_window_profile_ = nullptr;
-  const bool keeps_tabs = requested && browser->GetType() != BrowserWindowInterface::Type::TYPE_NORMAL;
-  const bool own_window = requested && !keeps_tabs;
   const EngineProfiles& profiles = binding_->Profiles();
+  const bool keeps_tabs = (requested && browser->GetType() != BrowserWindowInterface::Type::TYPE_NORMAL) ||
+                          profiles.IsLent(browser->GetProfile());
+  const bool own_window = requested && !keeps_tabs;
   const std::string profile_id = profiles.IdFor(browser->GetProfile());
   if (profile_id.empty() || profiles.IsDeleting(profile_id)) {
     return false;

@@ -94,6 +94,9 @@
                     },
                     reviewPersistenceID: "chromium-native-ui-review")
                 runtime.engine.follow(application)
+                // Testing frameworks connect to a port only a running engine
+                // opens, so with automation on Chromium starts with the app.
+                if BrowserAutomationPreferences.shared.prepareEngine() { runtime.requestStart() }
                 chromiumEngine = runtime.engine
                 adoptLegacyWindowList(into: application)
                 return application

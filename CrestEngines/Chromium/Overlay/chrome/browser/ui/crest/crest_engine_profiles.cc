@@ -1,5 +1,6 @@
 #include "chrome/browser/ui/crest/crest_engine_profiles.h"
 
+#include <algorithm>
 #include <map>
 #include <set>
 #include <string_view>
@@ -270,7 +271,22 @@ std::string EngineProfiles::IdFor(const content::BrowserContext* context) const 
       return id;
     }
   }
+  for (const auto& [lent, id] : lent_) {
+    if (lent && lent.get() == context) {
+      return id;
+    }
+  }
   return std::string();
+}
+
+void EngineProfiles::Lend(Profile* context, const std::string& id) {
+  std::erase_if(lent_, [](const auto& entry) { return !entry.first; });
+  lent_.emplace_back(context->GetWeakPtr(), id);
+}
+
+bool EngineProfiles::IsLent(const content::BrowserContext* context) const {
+  return std::any_of(lent_.begin(), lent_.end(),
+                     [context](const auto& entry) { return entry.first && entry.first.get() == context; });
 }
 
 bool EngineProfiles::IsDeleting(const std::string& id) const {
@@ -311,7 +327,28 @@ void EngineProfiles::Loaded(const std::string& id,
                                      Profile::OTRProfileID::CreateUnique("Crest::Private::" + id), true)
                                : profile;
   }
+  if (!is_private) {
+    last_regular_ = id;
+  }
   std::move(done).Run(profiles_[id]);
+}
+
+Profile* EngineProfiles::LoadNow(const std::string& id) {
+  if (Profile* loaded = Find(id)) {
+    return loaded;
+  }
+  auto* manager = g_browser_process->profile_manager();
+  if (!root_ || disposing_ || !manager || !IsProfileIdentity(id) || deleting_.contains(id)) {
+    return nullptr;
+  }
+  Profile* profile = manager->GetProfile(ProfilePath(manager, id));
+  if (!profile) {
+    return nullptr;
+  }
+  profiles_[id] = profile;
+  leases_[id] = std::make_unique<ScopedProfileKeepAlive>(profile, ProfileKeepAliveOrigin::kAppWindow);
+  last_regular_ = id;
+  return profile;
 }
 
 void EngineProfiles::Prepare(const std::string& id, base::OnceCallback<void(bool)> done) {
@@ -338,6 +375,7 @@ void EngineProfiles::Prepare(const std::string& id, base::OnceCallback<void(bool
               profiles->leases_[id] =
                   std::make_unique<ScopedProfileKeepAlive>(profile, ProfileKeepAliveOrigin::kAppWindow);
             }
+            profiles->last_regular_ = id;
             std::move(done).Run(true);
           },
           weak_factory_.GetWeakPtr(), id, std::move(done)));

@@ -17,6 +17,7 @@ macOS, with Mac-only panes added beside them rather than forked.
 | --- | --- |
 | `BrowserSettingsView.swift` | The Settings page: sidebar, destinations, Space pages |
 | `BrowserAgentsSettingsPane/` | Settings › Agents: turning agents on and the Spaces they may reach |
+| `BrowserAutomationSettingsPane/` | Settings › Automation: letting testing frameworks drive the Chromium engine over its DevTools port, the profile and tabs they reach, the port, restarting to apply, and each framework's setup (`BrowserAutomationPreferences`, `BrowserAutomationFramework`) |
 | `BrowserEngineSettingsPane/` | Default engine and per-site engine rules: option cards and the rule editor |
 | `BrowserShortcutSettingsView.swift`, `BrowserShortcutSettingsView/` | Keyboard shortcut list, recorder and controls |
 | `BrowserWebKitFeatureFlagSettingsPane/` | WebKit feature flag list and controls over `CrestMac/Infrastructure/WebKit/FeatureFlags/` |

@@ -1,0 +1,1 @@
+{"category": "internal", "message": "The Chromium engine reads Settings › Automation at startup, opens DevTools remote debugging on the loopback interface, makes the chosen profile the default browser context so Playwright connects, and shows testing tools only that profile's tabs."}

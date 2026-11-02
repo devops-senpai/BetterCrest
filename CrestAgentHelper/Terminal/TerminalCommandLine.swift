@@ -27,7 +27,7 @@ enum TerminalCommandLine {
         TerminalSpaceCommandLine.self, TerminalTabCommandLine.self, TerminalWindowCommandLine.self,
         TerminalFolderCommandLine.self, TerminalSplitCommandLine.self, TerminalMenuCommandLine.self,
         TerminalExtensionCommandLine.self, TerminalHistoryCommandLine.self, TerminalDownloadCommandLine.self,
-        TerminalPageCommandLine.self,
+        TerminalPageCommandLine.self, TerminalAutomationCommandLine.self,
         TerminalSettingsCommandLine.self, TerminalSiteCommandLine.self,
     ]
 
