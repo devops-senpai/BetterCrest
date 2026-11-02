@@ -9,6 +9,9 @@ import Foundation
         /// whenever the choice changes, so a difference here is a choice WebKit's
         /// Spelling menu saved since the last launch, and the core records it.
         func reconcileWebKitSpellChecking(defaults: UserDefaults = .standard) {
+            // An isolated launch shares the installed app's defaults domain;
+            // its choice stays in its own core and never reaches that domain.
+            guard !Self.launchIsIsolated else { return }
             guard let engine = defaults.object(forKey: BrowserMacWebTextAssistancePreference.spellCheckingKey) as? Bool
             else {
                 if checksSpelling { defaults.set(true, forKey: BrowserMacWebTextAssistancePreference.spellCheckingKey) }
@@ -21,7 +24,13 @@ import Foundation
         /// the next time Crest opens.
         func setChecksSpellingForWebKit(_ isEnabled: Bool, defaults: UserDefaults = .standard) {
             checksSpelling = isEnabled
+            guard !Self.launchIsIsolated else { return }
             defaults.set(checksSpelling, forKey: BrowserMacWebTextAssistancePreference.spellCheckingKey)
+        }
+
+        /// Whether this launch runs isolated from the installed profile.
+        private static var launchIsIsolated: Bool {
+            BrowserLaunchEnvironment.current.explicitlyRequiresIsolation
         }
     }
 #endif
