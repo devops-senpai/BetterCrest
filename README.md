@@ -62,8 +62,20 @@ Settings › Engines, give a website its own engine, or move one page:
 arma site engine youtube.com webkit          # YouTube always opens in WebKit
 arma site engine servo.org servo             # servo.org opens in Servo
 arma tab open https://example.com --engine servo
-arma tab engine 3f2a chromium                # move one tab's page to Chromium
 arma site list                               # every site with its own engine
+```
+
+To move one tab, list the tabs, take its ID from the first column, and give
+that ID to `arma tab engine`:
+
+```console
+$ arma tab list --space Work
+ID        SPACE  WHERE   FOLDER  ENGINE    TITLE
+6c1124f0  Work   open    -       webkit    Jellyfish - Wikipedia
+7194b03d  Work   open    -       servo     Servo, the embeddable web engine
+29c94624  Work   open    -       chromium  devops-senpai/BetterCrest
+
+$ arma tab engine 6c11 chromium              # the first few characters are enough
 ```
 
 ### The `arma` command line
@@ -77,17 +89,20 @@ and drives the running browser. Every command takes `--json` for scripts.
 arma space list                              # Spaces; * marks the one shown
 arma space switch Work
 arma tab open https://news.ycombinator.com --space Work
-arma tab list --space Work                   # ids, placement, folder, engine
-arma split create 3f2a 9b1c 77d0             # three tabs in one Split View
-arma split arrange 3f2a grid                 # two-across, three-across, grid …
+arma tab list --space Work                   # each tab's <tab-id>, placement, engine
+arma split create <tab-id> <tab-id> <tab-id> # three tabs in one Split View
+arma split arrange <tab-id> grid             # two-across, three-across, grid …
 arma theme list                              # saved themes; * the shown Space's
 arma theme use JellyFish --space Personal
 arma theme edit "Catppuccin Macchiato" --folder-color "#a581ff"
 arma crest set --shape guidon --band pale --emblem sparrow --border laurel
 arma window tile left
-arma settings set appearance.mode dark      
-arma page text 3f2a                          # read a page (Settings › Agents)
+arma settings set appearance.mode dark
+arma page <tab-id> text                      # read a page (Settings › Agents)
 ```
+
+A `<tab-id>` is the start of an ID from `arma tab list`, four characters or
+more, such as `6c11`; `current` names the tab the front window shows.
 
 Run `arma help`, or `arma <section> help`, for every section: space, tab,
 window, folder, split, command, page, extension, history, download,
