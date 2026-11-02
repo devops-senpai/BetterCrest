@@ -60,7 +60,9 @@ private struct BrowserThemePalettePreview: View {
         VStack(alignment: .leading, spacing: 0) {
             Label("Search or Enter URL…", systemImage: "magnifyingglass")
                 .font(.title3)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(
+                    branding.sidebarSecondaryTextColor.map { AnyShapeStyle($0.color) } ?? AnyShapeStyle(.secondary)
+                )
                 .padding(.horizontal, 16)
                 .frame(height: 48)
             Divider()

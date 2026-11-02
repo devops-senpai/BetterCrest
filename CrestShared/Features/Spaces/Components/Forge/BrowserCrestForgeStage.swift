@@ -21,6 +21,7 @@ struct BrowserCrestForgeStage: View {
     @Environment(\.browserCrestForgeStageHero) private var hero
     @State private var openLayer: BrowserCrestForgeLayer?
     @State private var openSidebarColor: BrowserSpaceBrandColorRole?
+    @State private var openTextColor: String?
 
     var body: some View {
         stage
@@ -113,6 +114,9 @@ struct BrowserCrestForgeStage: View {
                     ForEach(BrowserSpaceBrandColorRole.all) { role in
                         sidebarSwatch(role, columnWidth: sidebarColumnWidth ?? columnWidth)
                     }
+                    ForEach(BrowserCrestForgeTextColor.all) { text in
+                        textSwatch(text, columnWidth: sidebarColumnWidth ?? columnWidth)
+                    }
                 }
             }
         }
@@ -190,6 +194,26 @@ struct BrowserCrestForgeStage: View {
         }
     }
 
+    private func textSwatch(_ text: BrowserCrestForgeTextColor, columnWidth: CGFloat) -> some View {
+        let color = text.color(in: branding, over: .dark)
+        return BrowserCrestForgeSwatch(
+            title: text.title, color: color, isOpen: openTextColor == text.id, columnWidth: columnWidth
+        ) {
+            openTextColor = text.id
+        }
+        .popover(
+            isPresented: Binding(
+                get: { openTextColor == text.id }, set: { if !$0, openTextColor == text.id { openTextColor = nil } }),
+            arrowEdge: .bottom
+        ) {
+            BrowserCrestForgePalette(title: text.title, caption: text.caption, color: color) { picked in
+                branding[keyPath: text.keyPath] = picked
+                branding = branding.normalized()
+            }
+            .presentationCompactAdaptation(.popover)
+        }
+    }
+
     private func sidebarSwatch(_ role: BrowserSpaceBrandColorRole, columnWidth: CGFloat) -> some View {
         BrowserCrestForgeSwatch(
             title: role.title, color: branding.forgeColor(of: role), isOpen: openSidebarColor == role,
@@ -209,6 +233,39 @@ struct BrowserCrestForgeStage: View {
             }
             .presentationCompactAdaptation(.popover)
         }
+    }
+}
+
+/// One of the sidebar's text colors the stage offers beside its field's:
+/// the tabs' text, and the quieter system text such as New Tab and Clear.
+private struct BrowserCrestForgeTextColor: Identifiable, Sendable {
+    // MARK: - Static Variables
+
+    static let tabs = BrowserCrestForgeTextColor(
+        id: "tabs", title: "Tab text", caption: "The color of the tabs' titles",
+        keyPath: \.sidebarTextColor, emphasis: 1)
+    static let system = BrowserCrestForgeTextColor(
+        id: "system", title: "System text", caption: "New Tab, Clear and the sidebar's other quieter text",
+        keyPath: \.sidebarSecondaryTextColor, emphasis: 0.6)
+    static let all = [tabs, system]
+
+    // MARK: - Variables
+
+    let id: String
+    let title: LocalizedStringResource
+    let caption: LocalizedStringResource
+    let keyPath: WritableKeyPath<SpaceBranding, BrandColor?> & Sendable
+    /// How strongly the text color shows where this one follows it.
+    let emphasis: Double
+
+    // MARK: - Actions - Colors
+
+    /// The color it draws in `branding` over a window in `appearance`: its
+    /// own, or the tab text faded as the system fades it.
+    func color(in branding: SpaceBranding, over appearance: ColorScheme) -> BrandColor {
+        if let own = branding[keyPath: keyPath] { return own }
+        let text = branding.sidebarTextColor(over: appearance)
+        return BrandColor(red: text.red, green: text.green, blue: text.blue, alpha: text.alpha * emphasis)
     }
 }
 

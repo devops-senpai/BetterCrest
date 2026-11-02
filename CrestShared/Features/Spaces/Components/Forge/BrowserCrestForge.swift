@@ -432,7 +432,7 @@ struct BrowserCrestForge: View {
                 title: "Text color", value: context.setting(\.sidebarTextColor, default: nil),
                 fallback: branding.sidebarTextColor(over: colorScheme))
             BrowserCrestStudioColorPickerRow(
-                title: "Secondary text color", value: context.setting(\.sidebarSecondaryTextColor, default: nil),
+                title: "System text color", value: context.setting(\.sidebarSecondaryTextColor, default: nil),
                 fallback: branding.sidebarTextColor(over: colorScheme))
         }
     }
