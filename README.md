@@ -21,19 +21,19 @@ user guides live in this repository under `HelpCenter/docs/`.
 ### Themes
 
 Arma ships with themes for every kind of person: **Arc Sky** for anyone
-coming from Arc, **Catppuccin** Latte / Mocha, Macchiato, Mocha and Frappé for
-coders, and **JellyFish**, with its own underwater picture behind the tabs,
-for anyone who wants a browser that looks like theirs. Setup offers them
+coming from Arc, and **Catppuccin** Latte / Mocha, Macchiato, Mocha and
+Frappé for coders. Any theme can also put a picture of your own behind the
+tabs; **JellyFish** ships as an example of one. Setup offers them
 beside the **Heraldic** and **Modern** looks, and Settings › Themes edits every
 color, the dark look and the background picture, with a live preview of the
 window and its command palette.
 
 | | |
 |---|---|
-| ![JellyFish](Brand/Readme/theme-jellyfish.jpg) | ![Arc Sky](Brand/Readme/theme-arc-sky.jpg) |
-| **JellyFish** | **Arc Sky** |
-| ![Catppuccin Latte / Mocha](Brand/Readme/theme-catppuccin-latte.jpg) | ![Catppuccin Macchiato](Brand/Readme/theme-catppuccin-macchiato.jpg) |
-| **Catppuccin Latte / Mocha** | **Catppuccin Macchiato** |
+| ![Arc Sky](Brand/Readme/theme-arc-sky.jpg) | ![Catppuccin Macchiato](Brand/Readme/theme-catppuccin-macchiato.jpg) |
+| **Arc Sky** | **Catppuccin Macchiato** |
+| ![Catppuccin Latte / Mocha](Brand/Readme/theme-catppuccin-latte.jpg) | ![JellyFish, with a picture behind the tabs](Brand/Readme/theme-jellyfish.jpg) |
+| **Catppuccin Latte / Mocha** | **A picture of your own** (JellyFish) |
 
 ![Settings › Themes: the theme list, a live preview of the window and its command palette, and the sidebar's colors](Brand/Readme/settings-themes.jpg)
 
@@ -93,7 +93,7 @@ arma tab list --space Work                   # each tab's <tab-id>, placement, e
 arma split create <tab-id> <tab-id> <tab-id> # three tabs in one Split View
 arma split arrange <tab-id> grid             # two-across, three-across, grid …
 arma theme list                              # saved themes; * the shown Space's
-arma theme use JellyFish --space Personal
+arma theme use "Arc Sky" --space Personal
 arma theme edit "Catppuccin Macchiato" --folder-color "#a581ff"
 arma crest set --shape guidon --band pale --emblem sparrow --border laurel
 arma window tile left
@@ -158,7 +158,7 @@ change; the commit of the same name has the detail.
 
 - **Extended theming.** Each Space's Appearance page goes further than upstream: pick the colors of folders and their backs, the sidebar text color, and the command palette's tint, opacity and text color, with a separate look for dark windows. Export a Space's theme as a JSON file and load one back from the page or the Space's menu; four Catppuccin themes ship as examples.
 - **Theme CLI tools.** `arma theme` lists, makes, edits, imports, shows and picks saved themes, light and dark looks alike, and `arma crest` shapes and colors a Space's own crest or icon. Changes show in the running app right away, so a theme can be tuned without reopening Settings.
-- **Themes in setup.** Arma ships with Arc Sky, Catppuccin Latte / Mocha, Macchiato, Mocha and Frappé, and JellyFish, whose underwater picture is Arma's own; setup's Pick your look page offers them beside Heraldic and Modern, and the theme picked dresses every Space it makes.
+- **Themes in setup.** Arma ships with Arc Sky, Catppuccin Latte / Mocha, Macchiato, Mocha and Frappé, and JellyFish, an example of a picture behind the tabs whose drawing is Arma's own; setup's Pick your look page offers them beside Heraldic and Modern, and the theme picked dresses every Space it makes.
 - **Arma's own arms.** The Crest Studio offers the logo's Guidon shape and its bird and the Crane as emblems, first in their galleries, and new Spaces start with the guidon, a pale and the logo's bird in their house colors.
 - **Command-line control.** `arma` manages the running browser from the terminal: Spaces, tabs (open in a chosen engine, move, pin, save, rename), windows (move, resize, tile), folders, Split View, any menu command, extensions, history, downloads, settings (get, set, export, import) and site rules, with `--json` for scripts. `arma page` reads and drives a page (text, snapshot, screenshot, click, type, JavaScript) once Settings › Agents › Command-line page control is on.
 - **Automation for testing frameworks.** Settings › Automation (or `arma automation`) lets Playwright, Puppeteer, Selenium, WebdriverIO, Katalon and TestCafe drive Arma's Chromium tabs over a local DevTools port, limited to one profile or an empty Ephemeral one, and to the tabs they open or existing tabs too, with copyable setup for each tool.
