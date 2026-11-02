@@ -1,0 +1,4 @@
+{
+  "category": "internal",
+  "message": "Closing, deleting or moving a large selection of tabs in a Space with thousands of tabs finishes without a visible pause."
+}
