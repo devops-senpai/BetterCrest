@@ -165,9 +165,19 @@ final class BrowserThemeLibrary {
         try store.setImage(data: data, format: image.format, placed: placement(of: image), for: ownerID)
     }
 
+    /// `theme` without what belongs to a Space alone: its crest and icon,
+    /// whose colors the Space keeps whatever theme it wears.
+    private static func withoutIdentity(_ theme: CrestTheme) -> CrestTheme {
+        var theme = theme
+        theme.icon = nil
+        theme.dark?.icon = nil
+        return theme
+    }
+
     /// Whether Space `space` already wears everything `theme` names: its
     /// looks, whether it has a dark one, and its picture as it sits.
     private static func wears(_ theme: CrestTheme, _ space: SpaceModel) -> Bool {
+        let theme = withoutIdentity(theme)
         let current = space.settings.look
         let currentDark = space.settings.darkBranding
         guard (theme.dark == nil) == (currentDark == nil),
@@ -192,10 +202,20 @@ final class BrowserThemeLibrary {
         }
         let current = space.settings.look
         let currentDark = space.settings.darkBranding
+        // The crest and icon keep the colors they wear now, in both looks.
+        var identity = current
+        identity.keepIdentityColors()
         do {
-            var (look, dark) = try current.dressed(in: entry.theme, dark: currentDark)
+            var (look, dark) = try identity.dressed(in: Self.withoutIdentity(entry.theme), dark: currentDark)
             // A theme with one look takes away a dark look of the Space's own.
             if entry.theme.dark == nil { dark = nil }
+            dark = dark.map { dark in
+                var dark = dark
+                dark.crest = look.crest
+                dark.iconStyle = look.iconStyle
+                dark.symbolColor = look.symbolColor
+                return dark
+            }
             if look != current { browser.updateSpaceBranding(look.normalized(), in: spaceID) }
             if dark != currentDark { browser.updateSpaceDarkBranding(dark?.normalized(), in: spaceID) }
         } catch {

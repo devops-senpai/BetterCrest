@@ -56,9 +56,11 @@ struct BrowserSpaceEditorView: View {
                 light.wrappedValue = edited
                 guard var dark = space.settings.darkBranding,
                     dark.crest != edited.crest || dark.iconStyle != edited.iconStyle
+                        || dark.symbolColor != edited.symbolColor
                 else { return }
                 dark.crest = edited.crest
                 dark.iconStyle = edited.iconStyle
+                dark.symbolColor = edited.symbolColor
                 browser.updateSpaceDarkBranding(dark.normalized(), in: space.id)
             })
     }
